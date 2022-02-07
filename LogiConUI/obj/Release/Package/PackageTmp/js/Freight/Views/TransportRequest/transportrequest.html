@@ -1,0 +1,507 @@
+﻿<div class="container" ng-controller="TransportRequestCntrl">
+    <div id="iFrameMaininner">
+        <div class="card">
+            <div class="lv-header-alt clearfix m-b-5">
+                <h3 class="lvh-label">Transport Request</h3>
+                <button popover="Copy to new Order Entry Form" class="btn bgm-gray waves-effect pull-right" style="margin-right:15px;" aria-hidden="false"><i class="zmdi zmdi-copy"></i></button>
+            </div>
+            <div class="card-body card-padding p-t-25 p-b-25">
+                <div class="row">
+                    <div class="col-xs-12 col-md-4">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Forwarding Job No</label>
+                            <input type="text" class="search-icon" />
+                        </md-input-container>
+                    </div>
+                    <div class="col-xs-12 col-md-4">
+                        <merchant-autocomplete 
+                            filter="haulier"
+                            labeltext="Haulier"
+                            isrequired="true"
+                            iseditable="false"
+                            ng-model="tr.HaulierCode"
+                            merchant-name="tr.HaulierCodeDescription">
+                        </merchant-autocomplete>
+                    </div>
+                    <div class="col-xs-12 col-md-4">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>ROT Serial Number</label>
+                            <input type="text" />
+                        </md-input-container>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-md-4 ">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Requset No./Date/Time</label>
+                            <input type="text" />
+                        </md-input-container>
+                    </div>
+                    <div class="col-xs-12 col-md-4 ">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Container Deposite Area(CDA)</label>
+                            <input type="text" />
+                        </md-input-container>
+                    </div>
+
+                    <div class="col-xs-12 col-md-4 ">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Port Booking Ref. No.</label>
+                            <input type="text" />
+                        </md-input-container>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-md-4 ">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Amount RM</label>
+                            <input type="text" value="0.00" />
+                        </md-input-container>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card" id="Container">
+            <div class="lv-header-alt clearfix m-b-5">
+                <h3 class="lvh-label">
+                    Container
+                </h3>
+            </div>
+            <div class="card-body card-padding p-t-25 p-b-25">
+                <div class="row">
+                    <div class="col-xs-12 col-md-4 ">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>No.of Container</label>
+                            <input type="text" />
+                        </md-input-container>
+                    </div>
+                    <div class="col-xs-12 col-md-4 ">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Container Status</label>
+                            <md-select ng-model="tr.Containerstatus">
+                                <md-option ng-repeat="item in lookup.containerStatusList" ng-value="item.Value">
+                                    {{item.Text}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                    </div>
+                    <div class="col-xs-12 col-md-4 ">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label> Container Weight(TNE)</label>
+                            <input type="text" />
+                        </md-input-container>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-md-2">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Size</label>
+                            <md-select ng-model="tr.transportSize" ng-change="sizeChanged()">
+                                <md-option ng-repeat="item in lookup.sizeList" ng-value="item.Value">
+                                    {{item.Text}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                    </div>
+                    <div class="col-xs-12 col-md-2">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Type</label>
+                            <md-select ng-model="tr.transportType">
+                                <md-option ng-repeat="item in lookup.TypeList" ng-value="item.Value">
+                                    {{item.Text}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                    </div>
+                    <div class="col-xs-12 col-md-4 ">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label> Seal No.</label>
+                            <input type="text" />
+                        </md-input-container>
+                    </div>
+                    <div class="col-xs-12 col-md-4 ">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Commodity (Cargo)</label>
+                            <input type="text" />
+                        </md-input-container>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-md-4 ">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>  Container No.</label>
+                            <input type="text" />
+                        </md-input-container>
+                    </div>
+                </div>
+                <div class="row m-t-20">
+                    <div class="col-xs-12">
+                        <div class="table-responsive">
+                            <table class="table table-vmiddle">
+                                <thead>
+                                    <tr>
+                                        <th>CNTR NO.</th>
+                                        <th>SEAL NO.</th>
+                                        <th>CNTR SIZE</th>
+                                        <th>CNTR Status</th>
+                                        <th>weight</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card" id="Transportation-Details">
+            <div class="lv-header-alt clearfix m-b-5">
+                <h3 class="lvh-label">
+                    Transportation Details
+                </h3>
+            </div>
+            <div class="card-body card-padding p-t-25 p-b-25">
+                <div class="row">
+                    <div class="col-xs-12 col-md-4 ">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>port code(SCN)</label>
+                            <input type="text" />
+                        </md-input-container>
+                    </div>
+                    <div class="col-xs-12 col-md-4 ">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Import/Export/others</label>
+                            <md-select ng-model="transportImportExport">
+                                <md-option ng-value="item.Value">
+                                    {{item.Text}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                    </div>
+                    <div class="col-xs-12 col-md-4 ">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Type of Delivery</label>
+                            <md-select ng-model="transportTypeofDelivery">
+                                <md-option ng-value="item.Value">
+                                    {{item.Text}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-md-4 ">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Special Handling</label>
+                            <md-select ng-model="transportSpecialHandling">
+                                <md-option ng-repeat="item in lookup.splHandlingList" ng-value="item.Value">
+                                    {{item.Text}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                    </div>
+                    <div class="col-xs-12 col-md-4 ">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Trip</label>
+                            <md-select ng-model="transportTrip">
+                                <md-option ng-value="item.Value">
+                                    {{item.Text}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                    </div>
+                    <div class="col-xs-12 col-md-4 ">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Vessel Name</label>
+                            <input type="text" />
+                        </md-input-container>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-md-4 ">
+                        <port-autocomplete 
+                            labeltext="Transhipment Port"
+                            isrequired="true"
+                            iseditable="false"
+                            ng-model="tr.TranshipmentPortCode"
+                            port-name="tr.TranshipmentPortCodeDescription">
+                        </port-autocomplete>
+                    </div>
+                    <div class="col-xs-12 col-md-4 ">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Voyage No.</label>
+                            <input type="text" />
+                        </md-input-container>
+                    </div>
+                    <div class="col-xs-12 col-md-4 ">
+                        <port-autocomplete 
+                            labeltext="Destination Port"
+                            isrequired="true"
+                            iseditable="false"
+                            ng-model="tr.DestinationPortCode"
+                            port-name="tr.DestinationPortCodeDescription">
+                        </port-autocomplete>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-md-4 ">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>ETA</label>
+                            <input mdc-datetime-picker="" class="date-icon" date="true" time="false" type="text" id="dateFrom" format="{{dateFormat}}"
+                                   min-date="date" ng-model="transportETA"
+                                   name="">
+                        </md-input-container>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card" id="Location-and-Billing">
+            <div class="lv-header-alt clearfix m-b-5">
+                <h3 class="lvh-label">
+                    Location and Billing
+                </h3>
+            </div>
+            <div class="card-body card-padding p-t-25 p-b-25">
+                <div class="row">
+                    <div class="col-xs-12 col-md-4">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>from location</label>
+                            <input type="text" class="search-icon" />
+                        </md-input-container>
+                    </div>
+                    <div class="col-xs-12 col-md-4">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>To location</label>
+                            <input type="text" class="search-icon" />
+                        </md-input-container>
+                    </div>
+                    <div class="col-xs-12 col-md-4">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>A/C NO.</label>
+                            <input type="text" class="search-icon" />
+                        </md-input-container>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-md-4">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Bill To</label>
+                            <input type="text" class="search-icon" />
+                        </md-input-container>
+                    </div>
+                    <div class="col-xs-12 col-md-4">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Bill To Tel</label>
+                            <input type="text" />
+                        </md-input-container>
+                    </div>
+                    <div class="col-xs-12 col-md-4">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Bill To Contact</label>
+                            <input type="text" />
+                        </md-input-container>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-md-4">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Empty Container Drop Off</label>
+                            <input type="text" class="search-icon" />
+                        </md-input-container>
+                    </div>
+                    <div class="col-xs-12 col-md-4">
+                        <merchant-autocomplete 
+                            filter="ShipperConsignee"
+                            labeltext="Shipper / Consignee"
+                            isrequired="true"
+                            iseditable="false"
+                            ng-model="tr.ConsigneeCode"
+                            merchant-name="tr.ConsigneeCodeDescription">
+                        </merchant-autocomplete>
+                    </div>
+                    <div class="col-xs-12 col-md-4">
+                        <merchant-autocomplete 
+                            filter="forwarder"
+                            labeltext="Forwarding Agent"
+                            isrequired="true"
+                            iseditable="false"
+                            ng-model="tr.ForwarderCode"
+                            merchant-name="tr.ForwarderCodeDescription">
+                        </merchant-autocomplete>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-md-4">
+                        <merchant-autocomplete 
+                            filter="Liner"
+                            labeltext="Shipping Agent"
+                            isrequired="true"
+                            iseditable="false"
+                            ng-model="tr.ShippingAgentCode"
+                            merchant-name="tr.ShippingAgentCodeDescription">
+                        </merchant-autocomplete>
+                    </div>
+                    <div class="col-xs-12 col-md-4">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label> Container Operator</label>
+                            <input type="text" class="search-icon" />
+                        </md-input-container>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card" id="request">
+            <div class="lv-header-alt clearfix m-b-5">
+                <h3 class="lvh-label">
+                    request
+                </h3>
+            </div>
+            <div class="card-body card-padding p-t-25 p-b-25">
+                <div class="row">
+                    <div class="col-xs-12 col-md-4">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label> required date</label>
+                            <input mdc-datetime-picker="" class="date-icon" date="true" time="false" type="text" id="dateFrom" format="{{dateFormat}}"
+                                   min-date="date" ng-model="transportrequireddate"
+                                   name="">
+                        </md-input-container>
+                    </div><div class="col-xs-12 col-md-4">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label> time</label>
+                            <input mdc-datetime-picker="" class="date-time-icon" date="false" time="true" type="text" id="dateFrom" format="{{dateFormat}}"
+                                   min-date="date" ng-model="transporttime"
+                                   name="">
+                        </md-input-container>
+                    </div>
+
+                    <div class="col-xs-12 col-md-4">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>  off load</label>
+                            <md-select ng-model="transportoffload">
+                                <md-option ng-value="item.Value">
+                                    {{item.Text}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-md-4">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label> requested By</label>
+                            <input type="text" />
+                        </md-input-container>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card" id="for-office-use-only">
+
+            <div class="lv-header-alt clearfix m-b-5">
+                <h3 class="lvh-label">
+                    for office use only
+                </h3>
+            </div>
+            <div class="card-body card-padding p-t-25 p-b-25">
+                <div class="row">
+                    <div class="col-xs-3">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>  mode of payment</label>
+                            <input type="text" />
+                        </md-input-container>
+                    </div><div class="col-xs-1">
+                        <div class="checkbox m-b-15">
+                            <label>
+                                <input ng-click="toggleChksCargo()" aria-label="Priority" type="checkbox">
+                                <i class="input-helper"></i>
+                                EiR
+                            </label>
+                        </div>
+
+                    </div>
+                    <div class="col-xs-4">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label> thers</label>
+                            <input type="text" />
+                        </md-input-container>
+                    </div>
+
+                    <div class="col-xs-3">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>   Bank</label>
+                            <input type="text" />
+                        </md-input-container>
+                    </div><div class="col-xs-1">
+                        <div class="checkbox m-b-15">
+                            <label>
+                                <input ng-click="toggleChksCargo()" aria-label="Priority" type="checkbox">
+                                <i class="input-helper"></i>
+                                CMO
+                            </label>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-4">
+                        <md-input-container class="md-block" flex-gt-sm>
+
+                            <input type="text" />
+                        </md-input-container>
+                    </div>
+
+                    <div class="col-xs-4">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>   cheque No</label>
+                            <input type="text" />
+                        </md-input-container>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body card-padding p-t-25 p-b-25">
+                <div class="row m-t-15">
+                    <div class="col-xs-6 text-left">
+                        <button type="submit" class="btn btn-primary waves-effect">
+                            <i class="fa fa-plus"></i> New
+                        </button>
+                        <button type="submit" class="btn btn-info waves-effect">
+                            <i class="fa fa-repeat" aria-hidden="true"></i> Reset
+                        </button>
+                        <button type="submit" class="btn bgm-bluegray waves-effect">
+                            <i class="fa fa-floppy-o" aria-hidden="true"></i> Save
+                        </button>
+                        <button type="submit" class="btn btn-success waves-effect">
+                            <i class="fa fa-share-square-o" aria-hidden="true"></i> Send
+                        </button>
+                        <a href="{{reportUrl}}" target="_blank" class="btn btn-warning waves-effect">
+                            <!--ng-click="GenerateReport('ROT','DNeX.ROT','ViewROTReport')"-->
+                            <i class="fa fa-print" aria-hidden="true"></i> Print
+                        </a>
+                    </div>
+                    <div class="col-xs-6 text-right">
+                        <button type="submit" class="btn btn-default waves-effect">
+                            <i class="fa fa-ban" aria-hidden="true"></i> cancel
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="feedback">
+        <div class="feedback-links">
+            <button style="display:block;" type="button" class="btn btn-default btn-block waves-effect" ng-click="navigateTo('iFrameMaininner')"> <i class="fa fa-clone f-12" aria-hidden="true"></i>  Header Information</button>
+            <button style="display:block;" type="button" class="btn btn-default btn-block waves-effect" ng-click="navigateTo('Container')"> <i class="fa fa-bar-chart f-12" aria-hidden="true"></i> Container</button>
+            <button style="display:block;" type="button" class="btn btn-default btn-block waves-effect" ng-click="navigateTo('Transportation-Details')"> <i class="fa fa-list-alt f-12" aria-hidden="true"></i> Transportation Details</button>
+            <button style="display:block;" type="button" class="btn btn-default btn-block waves-effect" ng-click="navigateTo('Location-and-Billing')">  <i class="fa fa-ship f-12" aria-hidden="true"></i> Location and Billing</button>
+            <button style="display:block;" type="button" class="btn btn-default btn-block waves-effect" ng-click="navigateTo('request')"> <i class="fa fa-server f-12" aria-hidden="true"></i> Request</button>
+            <button style="display:block;" type="button" class="btn btn-default btn-block waves-effect" ng-click="navigateTo('exemptions')"> <i class="fa fa-object-group f-12" aria-hidden="true"></i> for-office-use-only</button>
+        </div>
+        <a class="pull_feedback" style="display:block; font-size:18px;cursor:pointer;" ng-click="toggleFeedback()"><i class="zmdi zmdi-settings"></i></a>
+    </div>
+</div>

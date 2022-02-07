@@ -1,0 +1,407 @@
+﻿<div class="container" ng-controller="VesselProfileCntrl as Cntrl">
+
+    <script type="text/ng-template" id="vessel-schedule.html">
+        <div class="Activitycontainer">
+            <div class="row" style="height:300px;overflow-y:scroll">
+                <div class="col-xs-12">
+                    <div class="table-responsive">
+                        <table class="table  table-vmiddle">
+                            <thead>
+                                <tr>
+                                    <td>VoyageNo Inward</td>
+                                    <td>VoyageNo Outward</td>
+                                    <td>Loading Port</td>
+                                    <td>Discharge Port</td>
+                                    <td>Destination Port</td>
+                                    <td>Terminal Port</td>
+                                    <td>ETA</td>
+                                    <td>ETD</td>
+                                    <td>Ship Call no</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="item in Cntrl.vs">
+                                    <td>{{ item.VoyageNoInWard }}</td>
+                                    <td>{{ item.VoyageNoOutWard }}</td>
+                                    <td>{{ item.LoadingPortName }}</td>
+                                    <td>{{item.DischargePortName}}</td>
+                                    <td>{{item.DestinationPortName}}</td>
+                                    <td>{{item.TerminalName}}</td>
+                                    <td>{{item.ETA | date:'yyyy-MM-dd HH:mm'}}</td>
+                                    <td>{{item.ETD | date:'yyyy-MM-dd HH:mm'}}</td>
+                                    <td>{{item.ShipCallNo}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </script>
+    <form id="frmVesselProfile" name="frmVesselProfile" ng-class="{'submitted': submitted}" ng-submit="SaveVesselProfile(vp)" autocomplete="off" novalidate>
+
+        <div class="card">
+            <div class="lv-header-alt clearfix ">
+                <h2 class="lvh-label">Vessel Profile</h2>
+                <button type="button" class="btn btn-primary waves-effect pull-right m-r-5" ng-click="addSchedule(-1);">
+                    <i class="zmdi zmdi-plus"></i>
+                </button>&nbsp;&nbsp;&nbsp;
+                <button class="btn btn-primary waves-effect pull-right m-r-5"
+                        type="button"
+                        data-ui-sref="vesselprofile({vesselID: vp.VesselID})"
+                        aria-label="button" popover-placement="bottom-right" uib-popover-template="'vessel-schedule.html'">
+                    <i class="zmdi zmdi-notifications-active"></i>
+                </button>
+
+                &nbsp;&nbsp;&nbsp;
+            </div>
+
+
+            <div class="card-body card-padding p-t-25 p-b-25">
+                <div class="row">
+                    <div class="col-xs-12 col-md-6">
+
+
+                        <h2 class="lvh-label">Vessel Information</h2>
+
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Vessel IMO</label>
+                                    <input type="text"
+                                           ng-required="true"
+                                           ng-model="vp.IMOCode" />
+                                </md-input-container>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Vessel MMSI </label>
+                                    <input type="text"
+                                           ng-model="vp.MSSICode" />
+                                </md-input-container>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Vessel ID</label>
+                                    <input type="text"
+                                           ng-required="true"
+                                           ng-disabled="!IsNew"
+                                           ng-model="vp.VesselID" />
+                                </md-input-container>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Vessel Name</label>
+                                    <input type="text"
+                                           ng-required="true"
+                                           ng-model="vp.VesselName" />
+                                </md-input-container>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Vessel Type</label>
+                                    <md-select ng-model="vp.VesselType" ng-required="true">
+                                        <md-option ng-repeat="item in lookUpData.vesselTypeList" ng-value="item.Value">
+                                            {{item.Text}}
+                                        </md-option>
+                                    </md-select>
+                                </md-input-container>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Vessel Capacity</label>
+                                    <input type="text"
+                                           ng-model="vp.VesselCapacity" />
+                                </md-input-container>
+                            </div>
+                        </div>
+                        <!--<div class="row">
+                            <div class="col-xs-12">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Place Of Registration</label>
+                                    <md-select ng-model="vp.PlaceOfRegistration" ng-required="true">
+                                        <md-option ng-repeat="item in lookUpData.countryList" ng-value="item.Value">
+                                            {{item.Text}}
+                                        </md-option>
+                                    </md-select>
+                                </md-input-container>
+                            </div>
+                        </div>-->
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Nationality Of the Vessel</label>
+                                    <md-select ng-model="vp.CountryCode" ng-required="true">
+                                        <md-option ng-repeat="item in lookUpData.countryList" ng-value="item.Value">
+                                            {{item.Text}}
+                                        </md-option>
+                                    </md-select>
+                                </md-input-container>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Flag Of Ship</label>
+                                    <md-select ng-model="vp.FlagShip" ng-required="true">
+                                        <md-option ng-repeat="item in lookUpData.countryList" ng-value="item.Value">
+                                            {{item.Text}}
+                                        </md-option>
+                                    </md-select>
+                                </md-input-container>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Place Of Registration</label>
+                                    <md-select ng-model="vp.PlaceOfRegistration" ng-required="true">
+                                        <md-option ng-repeat="item in lookUpData.countryList" ng-value="item.Value">
+                                            {{item.Text}}
+                                        </md-option>
+                                    </md-select>
+                                </md-input-container>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Call Sign No.</label>
+                                    <input type="text"
+                                           ng-required="true"
+                                           ng-model="vp.CallSignNo" />
+                                </md-input-container>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Vessel Class</label>
+                                    <md-select ng-model="vp.VesselClass" ng-required="true">
+                                        <md-option ng-repeat="item in lookUpData.vesselClassList" ng-value="item.Value">
+                                            {{item.Text}}
+                                        </md-option>
+                                    </md-select>
+                                </md-input-container>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Vessel Built</label>
+                                    <input type="text"
+                                           ng-required="true"
+                                           ng-model="vp.YearBuilt"
+                                           logicon-number maxlength="4" />
+
+                                </md-input-container>
+                            </div>
+                        </div>
+
+
+
+                        <h2 class="lvh-label">Owner Details</h2>
+
+                        <!--<div class="row">
+                            <div class="col-xs-12">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Owner Code</label>
+                                    <input type="text"
+                                           ng-model="vp.OwnerCode" />
+                                </md-input-container>
+                            </div>
+                        </div>-->
+                        <!--<input type="hidden" ng-model="vp.OwnerCode" ng-init="vp.OwnerCode = ''" />-->
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>SA Code</label>
+                                    <input type="text"
+                                           ng-model="vp.PSACode" ng-required="true" />
+                                </md-input-container>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Owner Name</label>
+                                    <input type="text"
+                                           ng-model="vp.OwnerCode" />
+                                </md-input-container>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Owner Address 1</label>
+                                    <input type="text"
+                                           ng-model="vp.OwnerAddress1" />
+                                </md-input-container>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Owner Address 2</label>
+                                    <input type="text"
+                                           ng-model="vp.OwnerAddress2" />
+                                </md-input-container>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Owner Address 3</label>
+                                    <input type="text"
+                                           ng-model="vp.OwnerAddress3" />
+                                </md-input-container>
+                            </div>
+                        </div>
+                        <!--<div class="row">
+                            <div class="col-xs-12">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Principal SA Code</label>
+                                    <input type="text"
+                                           ng-model="vp.PSACode" ng-required="true" />
+                                </md-input-container>
+                            </div>
+                        </div>-->
+                    </div>
+                    <div class="col-xs-12 col-md-6">
+
+                        <h2 class="lvh-label">Vessel Properties</h2>
+
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Gross Registered Tonnage</label>
+                                    <input type="text"
+                                           ng-model="vp.GrossRegisteredTonnage" ng-required="true" logicon-decimal />
+                                </md-input-container>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Net Registered Tonnage</label>
+                                    <input type="text"
+                                           ng-model="vp.NetRegisteredTonnage" ng-required="true" logicon-decimal />
+                                </md-input-container>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Vessel Overall Length</label>
+                                    <input type="text"
+                                           ng-required="true"
+                                           ng-model="vp.OverallLength"
+                                           logicon-decimal />
+                                </md-input-container>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Dead Tonnage</label>
+                                    <input type="text"
+                                           ng-required="true"
+                                           ng-model="vp.DeadWeight"
+                                           logicon-decimal />
+                                </md-input-container>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Standard Draft</label>
+                                    <input type="text"
+                                           ng-required="true"
+                                           ng-model="vp.StandardDraft"
+                                           logicon-decimal />
+                                </md-input-container>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Vessel Tonnage</label>
+                                    <input type="text"
+                                           ng-required="true"
+                                           ng-model="vp.VesselCapacity"
+                                           logicon-decimal />
+                                </md-input-container>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Beam</label>
+                                    <input type="text"
+                                           ng-required="true"
+                                           ng-model="vp.Beam"
+                                           logicon-decimal />
+                                </md-input-container>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Displacement Tonnage</label>
+                                    <input type="text"
+                                           ng-required="true"
+                                           ng-model="vp.DisplacementWeight"
+                                           logicon-decimal />
+                                </md-input-container>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>LloydID</label>
+                                    <input type="text"
+                                           ng-required="true"
+                                           ng-model="vp.LloydID"
+                                           logicon-number maxlength="20" />
+
+                                </md-input-container>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+              
+    
+        </div>
+       
+    </div>
+        <div class="card">
+            <div class="card-body card-padding p-t-10 m-b-10">
+                <div class="row ">
+                    <div class="col-xs-12">
+                        <div class="pull-left"><button class="btn btn-primary" type="submit" ng-click="submitted = true" has-securable data-module='Order Entry.Save'><i class="fa fa-floppy-o"></i>&nbsp;Save</button></div>
+                        <div class="pull-right">
+                            <button class="btn btn-primary" type="button" ng-click="back();"><i class="fa fa-backward" aria-hidden="true"></i>&nbsp;Back</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+</form>
+    </div> 

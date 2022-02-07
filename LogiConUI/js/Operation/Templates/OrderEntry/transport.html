@@ -1,0 +1,72 @@
+﻿<style type="text/css">
+    .selectedCss {
+        background-color: rgba(0,0,0,0.12);
+    }
+</style>
+<div id="transport">
+    <div class="card">
+        <div class="lv-header-alt clearfix m-b-5">
+            <h2 class="lvh-label">Transport</h2>
+            <div class="text-right pull-right m-r-10">
+                <button type="button" class="btn btn-primary" ng-click="AddTransport(-1);" has-Right data-rightValue="OrderEntry.AddTransportItem"><i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Add</button>
+
+    </div>        </div>
+        <div class="card-body card-padding p-t-5 p-b-5">
+          
+            <div class="row">
+                <div class="col-xs-12">
+                    <table class="table table-vmiddle" 
+                           ng-table="tblTransportInfo">    
+                        <!--ng-class="{'selectedCss': SelectedContainerIndex == tra.index}"-->
+                        <tr ng-repeat="tra in $data"
+                            ng-click="getTruckMovementByValue(tra.ContainerKey, $index)"                              
+                            ng-init="getDefaultRowForTruckMovement(tra.ContainerKey,$index)">
+                            <td data-title="'Size'">
+                                {{tra.Size}}
+                                <input type="hidden" ng-model="con.index" ng-init="tra.index = $index" />
+                            </td>
+                            <td data-title="'SpecialHandlingDesc'">{{tra.SpecialHandlingDesc}}</td>
+                            <td data-title="'CargoTypeDescription'">{{tra.CargoTypeDescription}}</td>
+                            <td data-title="'GrossWeight'">{{tra.GrossWeight}}</td>
+                            <td data-title="'#Action'">
+                                <input type="hidden" ng-model="tra.Index" ng-init="tra.Index = $index" />
+                                <button type="button" ng-click="AddTransport($index);" has-Right data-rightValue="OrderEntry.UpdateTransportItem" class="btn  waves-effect" ng-class="{'btn-default': !IsWebOrder, 'btn-info': IsWebOrder}" aria-label="button">
+                                    <i class="zmdi" ng-class="{'zmdi-edit': !IsWebOrder, 'zmdi-view-dashboard': IsWebOrder}"></i>
+                                </button>
+                                <button class="btn bgm-teal waves-effect" type="button" uib-tooltip="Copy" tooltip-placement="top"
+                                        ng-click="CopyTransport(tra)"  has-Right data-rightValue="OrderEntry.CopyTransportItem">
+                                    <i class="zmdi zmdi-refresh"></i>
+                                </button>
+                                <button type="button" ng-click="DeleteTransport($index,tra.ContainerKey);" has-Right data-rightValue="OrderEntry.DeleteTransportItem" class="btn btn-danger ng-scope waves-effect" aria-label="button" ng-show="!IsWebOrder">
+                                    <i class="zmdi zmdi-delete" aria-hidden="true"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <hr />
+            <div class="row" ng-if="oe.selectedConMovements.length > 0">
+                <div class="col-xs-12">
+                    <div class="table-responsive">
+                        <table class="table table-vmiddle">
+                            <thead>
+                                <tr>
+                                    <th>Container Key</th>
+                                    <th>Movement Code</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="item in oe.selectedConMovements">
+                                    <td>{{item.ContainerKey}}</td>
+                                    <td>{{item.MovementCode}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

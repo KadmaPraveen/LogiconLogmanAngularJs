@@ -1,0 +1,45 @@
+﻿<div class="container " ng-controller="RolesCntrl">
+    <div class="card">
+        <div class="lv-header-alt clearfix m-b-5">
+            <h2 class="lvh-label hidden-xs">Roles</h2>
+            <ul class="lv-actions actions">
+                <li>
+                    <button class="btn bgm-lightgreen btn-icon" ng-click="EditRole('NEW')"><i class="zmdi zmdi-plus"></i></button>&nbsp;&nbsp;&nbsp;
+                </li>
+            </ul>
+        </div>
+        <div class="card-body card-padding">
+            <div class="row">
+                <div class="table-responsive">
+                    <table class="table table-striped table-vmiddle">
+                        <thead>
+                            <tr>
+                                <th>#Action</th>
+                                <th>Role Code</th>
+                                <th>Role Description</th>                                
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="item in rolesList">
+                                <td>
+                                    <button class="btn btn-default ng-scope waves-effect"                                            
+                                            type="button"                                            
+                                            aria-label="button" uib-tooltip="Edit" tooltip-placement="top"
+                                            ng-click="EditRole(item.RoleCode)">
+                                        <i class="zmdi zmdi-edit"></i>
+                                    </button>
+                                </td>
+                                <td>
+                                    {{item.RoleCode}}
+                                </td>
+                                <td>
+                                    {{item.RoleDescription}}
+                                </td>                                
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

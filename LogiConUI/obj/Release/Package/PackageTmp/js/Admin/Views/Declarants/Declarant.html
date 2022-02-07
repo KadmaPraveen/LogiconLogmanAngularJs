@@ -1,0 +1,74 @@
+﻿<div class="container" ng-controller="DeclarantController">
+    <form id="frmDeclarant" name="frmDeclarant" ng-submit="SaveDeclarant(declarant)" 
+          ng-class="{'submitted': submitted}" autocomplete="off" novalidate>
+
+        <div class="card">
+            <div class="lv-header-alt clearfix m-b-5">
+                <h2 class="lvh-label hidden-xs">Declarant</h2>
+            </div>
+            <div class="card-body card-padding p-t-25 p-b-25">
+                <div class="row">
+                    <div class="col-xs-12 col-md-6">
+
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Branch</label>
+                            <md-select ng-model="declarant.BranchID" ng-required="true" ng-change="checkDeclarant(declarant.DeclarantID)" ng-disabled="!IsNew">
+                                <md-option ng-repeat="item in branchList" ng-value="item.Value">{{item.Text}}</md-option>
+                            </md-select>
+                        </md-input-container>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-md-6">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Declarant ID</label>
+                            <input type="text" ng-model="declarant.DeclarantID" ng-required="true" ng-blur="checkDeclarant(declarant.DeclarantID)" ng-disabled="!IsNew" />
+                        </md-input-container>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-md-6">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>NAME</label>
+                            <input type="text" ng-model="declarant.Name" ng-required="true" />
+                        </md-input-container>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-md-6">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>DESIGNATION</label>
+                            <input type="text" ng-model="declarant.Designation" ng-required="true" />
+                        </md-input-container>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-md-6">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>NRIC</label>
+                            <input type="text" ng-model="declarant.NRIC" ng-required="true" logicon-number />
+                        </md-input-container>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div>
+            <div class="card">
+                <div class="card-body card-padding p-t-25 p-b-25">
+                    <div class="row">
+
+                        <div class="col-xs-12 text-left">
+                            <button type="submit" ng-click="submitted = true" class="btn btn-primary waves-effect"><i class="fa fa-floppy-o"></i>&nbsp;Save</button>
+
+
+                            <button class="btn btn-primary pull-right" type="button" data-ui-sref="DeclarantList" data-ng-click="mactrl.sidebarStat($event)">
+                                <i class="fa fa-backward" aria-hidden="true"></i>&nbsp;Back
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

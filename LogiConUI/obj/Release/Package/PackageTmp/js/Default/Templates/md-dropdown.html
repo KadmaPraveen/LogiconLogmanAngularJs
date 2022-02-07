@@ -1,0 +1,13 @@
+﻿<md-input-container class="md-block" flex-gt-sm>
+    <label>{{labelText}}</label>
+    <md-select ng-model="Code"
+               ng-disabled="isdisabled=='true'? true : false"
+               ng-change="valueChanged()"
+               ng-required="isrequired == 'true' ? true : false"
+               >
+        <md-option ng-repeat="item in list" ng-value="item.Value">
+            {{item.Text}}
+        </md-option>
+    </md-select>
+
+</md-input-container>

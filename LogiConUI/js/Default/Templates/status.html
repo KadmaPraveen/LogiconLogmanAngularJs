@@ -1,0 +1,16 @@
+﻿<div class="all-status" ng-switch="OrderStatus | lowercase">
+    <h5 ng-switch-when="partially saved"><span class="label bgm-bluegray">DRAFT</span></h5>
+    <h5 ng-switch-when="declaration validated"><span class="label bgm-blue">DECLARATION VALIDATED</span></h5>
+    <h5 ng-switch-when="order validated"><span class="label bgm-blue">ORDER VALIDATED</span></h5>
+    <h5 ng-switch-when="awaiting declaration approval"><span class="label bgm-lime">AWAITING DECLARATION APPROVAL</span></h5>
+    <h5 ng-switch-when="declaration generated"> <span class="label bgm-cyan">SENT TO AGENT</span></h5>
+    <h5 ng-switch-when="awaiting order approval"><span class="label bgm-teal">AWAITING ORDER APPROVAL</span></h5>
+    <h5 ng-switch-when="sent to customs"><span class="label bgm-indigo">SENT TO CUSTOMS</span></h5>
+    <h5 ng-switch-when="declaration approved"><span class="label bgm-lightgreen">DECLARATION APPROVED</span></h5>
+    <h5 ng-switch-when="declaration rejected"><span class="label bgm-orange">DECLARATION REJECTED</span></h5>
+    <h5 ng-switch-when="declaration declined"><span class="label bgm-brown">DECLARATION DECLINED</span></h5>
+    <h5 ng-switch-when="order approved"><span class="label bgm-green">ORDER APPROVED</span></h5>
+    <h5 ng-switch-when="order rejected"><span class="label bgm-deeporange">ORDER REJECTED</span></h5>
+    <h5 ng-switch-when="active"><span class="label label-success">ACTIVE</span></h5>
+    <h5 ng-switch-default><span class="label label-default">{{OrderStatus}}</span></h5>
+</div>

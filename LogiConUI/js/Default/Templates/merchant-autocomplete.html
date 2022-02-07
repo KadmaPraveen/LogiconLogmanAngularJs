@@ -1,0 +1,13 @@
+﻿<md-input-container class="md-block" flex-gt-sm>
+    <label>{{labelText}}</label>
+    <input type="text"
+           class="search-icon"
+           ng-model="merchantName"
+           typeahead-min-length="3"
+           uib-typeahead="d.Text as d.Text for d in GenericMerchantResults($viewValue, filter)"
+           typeahead-loading="merchantNameLoading"
+           typeahead-wait-ms="300"
+           typeahead-editable="iseditable == 'true' ? true : false"
+           typeahead-on-select="merchantSelected($item)"
+           ng-required="isrequired == 'true' ? true : false" />
+</md-input-container>

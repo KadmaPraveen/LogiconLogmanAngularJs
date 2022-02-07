@@ -1,0 +1,390 @@
+﻿<!--<form id="frmCustomerInvoice" name="frmCustomerInvoice" ng-class="{'submitted':submitted}" ng-submit="SaveCustomerInvoice(ci)" novalidate>
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" ng-click="cancel();">&times;</button>
+        <h4 class="modal-title">Customer Invoice</h4>
+    </div>
+    <div class="modal-body">
+        <div class="row" >
+            <div class="col-xs-12 col-md-6">
+               <md-input-container class="md-block" flex-gt-sm><label>Order No.</label>
+
+                 <input type="text"
+                                                        class="search-icon"
+
+
+                    ng-model="ci.OrderNo"
+                    typeahead-min-length="3"
+                    uib-typeahead="d.Text as d.Text for d in OrderNoResults($viewValue)"
+                    typeahead-loading="loading"
+                    typeahead-wait-ms="1000"
+                    typeahead-on-select="OrderNoSelected($item, 'OrderNo')" />
+                </md-input-container>
+            </div>
+            <div class="col-xs-12 col-md-6">
+                <md-input-container class="md-block" flex-gt-sm>
+                    <label>Job No.</label>
+                    <md-select ng-model="ci.JobNo">
+                        <md-option >
+                        </md-option>
+                    </md-select>
+                </md-input-container>
+            </div>
+
+        </div>
+        <div class="row" >
+            <div class="col-xs-12 col-md-6">
+                <md-input-container class="md-block" flex-gt-sm>
+                    <label>Container No.</label>
+
+                    <input type="text"
+                                                        class="search-icon"
+
+                           ng-model="ci.ContainerNo"
+                           typeahead-min-length="3"
+                           uib-typeahead="d.Text as d.Text for d in ContainerNoResults($viewValue)"
+                           typeahead-loading="loading"
+                           typeahead-wait-ms="1000"
+                           typeahead-on-select="ContainerNoSelected($item, 'ContainerNo')" />
+                </md-input-container>
+
+            </div>
+            <div class="col-xs-12 col-md-6">
+                <md-input-container class="md-block" flex-gt-sm>
+                    <label>Prd Category</label>
+                    <md-select ng-model="ci.ProductCategory"  >
+                        <md-option ng-repeat="item in lookupData.productCategoryList" ng-value="item.Value">
+                            {{item.Text}}
+                        </md-option>
+                    </md-select>
+                </md-input-container></div>
+        </div>
+        <div class="row" >
+            <div class="col-xs-12 col-md-6">
+                <md-input-container class="md-block" flex-gt-sm>
+                    <label>Charge Code</label>
+
+                    <input type="text"
+                                                        class="search-icon"
+
+                           ng-model="ci.ChargeCode"
+                           typeahead-min-length="3"
+                           uib-typeahead="d.Text as d.Text for d in ChargeCodeResults($viewValue)"
+                           typeahead-loading="loading"
+                           typeahead-wait-ms="1000"
+
+                           typeahead-on-select="ChargeCodeSelected($item, 'ChargeCode')" />
+                </md-input-container>
+            </div>
+        </div>
+         <div class="row" >
+                    <div class="col-xs-12 col-md-6">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Output GST Code</label>
+
+                            <input type="text" ng-model="ci.OutPutGSTDescription"  />
+                        </md-input-container>
+                    </div>
+
+                    <div class="col-xs-12 col-md-6">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Input GST Code</label>
+
+                            <input type="text" ng-model="ci.InPutGSTDescription"  />
+                        </md-input-container>
+                    </div>
+                </div>
+
+        <div class="row">
+            <div class="col-xs-12 col-md-4">
+                <md-input-container class="md-block" flex-gt-sm>
+                    <label>Billing Unit</label>
+
+                    <md-select ng-model="ci.BillingUnit"
+                            ng-change="ci.BillingUnitDescription=(lookupData.billingUnitList | filter : {Value:cs.BillingUnit})[0].Text">
+                        <md-option ng-repeat="item in lookupData.billingUnitList" ng-value="item.Value">
+                            {{item.Text}}
+                        </md-option>
+                    </md-select>
+                    </md-input-container>
+            </div>
+            <div class="col-xs-12 col-md-4">
+                <md-input-container class="md-block" flex-gt-sm>
+                    <label>Currency</label>
+                    <md-select ng-model="ci.CurrencyCode"
+                             ng-change="SelectCurrencyCode(ci.CurrencyCode)">
+                        <md-option ng-repeat="item in lookupData.currencyList" ng-value="item.Value">
+                            {{item.Text}}
+                        </md-option>
+                    </md-select>
+
+                </md-input-container>
+            </div>
+            <div class="col-xs-12 col-md-2">
+                <md-input-container class="md-block" flex-gt-sm>
+                    <label>Amount With Tax</label>
+                </md-input-container>
+            </div>
+            <div class="col-md 2">
+                <md-input-container class="md-block" flex-gt-sm>
+                    <label ng-model="ci.TotalAmount">{{ci.TotalAmount}} </label>
+                </md-input-container>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-12 col-md-4">
+                <md-input-container class="md-block" flex-gt-sm>
+                    <label>Quantity</label>
+
+                    <input type="text" class="form-control input-sm logiconNumber" ng-model="ci.Qty" ng-change="CaliculateAmounts()"  />
+                </md-input-container> </div>
+            <div class="col-xs-12 col-md-2">
+                <md-input-container class="md-block" flex-gt-sm>
+                    <label>Exchange Amount</label>
+                </md-input-container></div>
+                    <div class="col-xs-12 col-md-2">
+                        <md-input-container class="md-block" flex-gt-sm>
+
+                            <label class="control-label logiconDecimal" ng-model="ci.ExRate">{{ci.ExRate}} </label>
+                        </md-input-container>
+                    </div>
+            <div class="col-xs-12 col-md-2">
+                <md-input-container class="md-block" flex-gt-sm>
+                    <label>Local Amount</label>
+                </md-input-container>
+            </div>
+            <div class="col-xs-12 col-md-2">
+                <md-input-container class="md-block" flex-gt-sm>
+                    <label ng-model="ci.LocalAmount">{{ci.LocalAmount}} </label>
+                </md-input-container>
+            </div>
+</div>
+        <div class="row" >
+            <div class="col-xs-12 col-md-6">
+                <md-input-container class="md-block" flex-gt-sm>
+                    <label>Unit Price</label>
+
+                    <input type="text" class="form-control input-sm logiconDecimal" ng-model="ci.Price" ng-change="CaliculateAmounts()"  />
+                </md-input-container> </div>
+            <div class="col-xs-6 col-md-3">
+                <md-input-container class="md-block" flex-gt-sm>
+                    <label>Tax Amount</label>
+                    </md-input-container>
+                </div>
+                    <div class="col-xs-6 col-md-3">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label ng-model="ci.TaxAmount">{{ci.TaxAmount}} </label>
+                        </md-input-container>
+                    </div>
+</div>
+
+        <div class="row" >
+            <div class="col-xs-12">
+                <md-input-container class="md-block" flex-gt-sm>
+                    <label>Remarks</label>
+
+                    <textarea></textarea>
+                </md-input-container>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <div class="row" >
+            <div class="col-xs-12 col-md-9"></div>
+            <div class="col-md-3 pull-right">
+                <button class="btn btn-primary btn-sm" ng-click="submitted = true"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Save</button>
+                <button class="btn btn-default btn-sm" ng-click="cancel();"><i class="fa fa-times" aria-hidden="true"></i>&nbsp;Close</button>
+            </div>
+        </div>
+    </div>
+</form>-->
+<form id="frmCostsheet" name="frmCostsheet" ng-class="{'submitted':submitted}" ng-submit="SaveCoseSheet(cs)" novalidate>
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" ng-click="cancel();">&times;</button>
+        <h4 class="modal-title">Customer Invoice</h4>
+    </div>
+    <div class="modal-body">
+        <div class="c-overflow" ng-style="{'max-height': iframeHeight - 80 + 'px'}" resize >
+            <div class="modalbodymain">
+
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="row">
+                            <div class="col-xs-12 col-md-4">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Container Key</label>
+                                    <md-select ng-model="cs.ContainerKey" disabled>
+                                        <md-option ng-repeat="item in lookupData.containerKeyList" ng-value="item.Value">
+                                            {{item.Text}}
+                                        </md-option>
+                                    </md-select>
+                                </md-input-container>
+                            </div>
+                            <div class="col-xs-12 col-md-4">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Job No.</label>
+                                    <md-select ng-model="cs.JobNo" disabled>
+                                        <md-option>
+                                        </md-option>
+                                    </md-select>
+                                </md-input-container>
+                            </div>
+                            <div class="col-xs-12 col-md-4">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Prd Category</label>
+                                    <md-select ng-model="cs.ProductCategory" disabled>
+                                        <md-option ng-repeat="item in lookupData.productCategoryList" ng-value="item.Value">
+                                            {{item.Text}}
+                                        </md-option>
+                                    </md-select>
+                                </md-input-container>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 col-md-6">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Charge Code</label>
+                                    <input type="text"
+                                           class="search-icon"
+                                           ng-model="cs.ChargeCode"
+                                           typeahead-min-length="3"
+                                           uib-typeahead="d.Text as d.Text for d in ChargeCodeResults($viewValue)"
+                                           typeahead-loading="loading"
+                                           typeahead-wait-ms="1000"
+                                           typeahead-on-select="ChargeCodeSelected($item, 'ChargeCode')" disabled />
+                                </md-input-container>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 col-md-6">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Output GST Code</label>
+                                    <input type="text" ng-model="cs.OutPutGSTDescription" ng-disabled="true" disabled />
+                                </md-input-container>
+                            </div>
+                            <div class="col-xs-12 col-md-6">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Input GST Code</label>
+                                    <input type="text" ng-model="cs.InPutGSTDescription" ng-disabled="true" disabled />
+                                </md-input-container>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 col-md-4">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Vendor</label>
+                                    <md-select ng-model="cs.VendorCode" disabled>
+                                        <md-option ng-repeat="item in lookupData.vendorList" ng-value="item.Value">
+                                            {{item.Text}}
+                                        </md-option>
+                                    </md-select>
+                                </md-input-container>
+                            </div>
+                            <div class="col-xs-12 col-md-8">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Remarks</label>
+                                    <textarea type="text" ng-model="cs.Remark" disabled></textarea>
+                                </md-input-container>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 col-md-4">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Billing Unit</label>
+                                    <md-select ng-model="cs.BillingUnit" disabled
+                                               ng-change="cs.BillingUnitDesc=(lookupData.billingUnitList | filter : {Value:cs.BillingUnit})[0].Text">
+                                        <md-option ng-repeat="item in lookupData.billingUnitList" ng-value="item.Value">
+                                            {{item.Text}}
+                                        </md-option>
+                                    </md-select>
+                                </md-input-container>
+                            </div>
+                            <div class="col-xs-12 col-md-4">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Quantity</label>
+                                    <input type="text" disabled logiconNumber ng-model="cs.Qty" ng-blur="CaliculateAmounts()" />
+                                </md-input-container>
+                            </div>
+                            <div class="col-xs-12 col-md-4">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Price</label>
+                                    <input type="text" disabled logiconDecimal ng-model="cs.Price" ng-blur="CaliculateAmounts()" />
+                                </md-input-container>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 col-md-4">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Currency</label>
+                                    <md-select ng-model="cs.CurrencyCode" disabled
+                                               ng-change="SelectCurrencyCode()">
+                                        <md-option ng-repeat="item in lookupData.currencyList" ng-value="item.Value">
+                                            {{item.Text}}
+                                        </md-option>
+                                    </md-select>
+                                </md-input-container>
+                            </div>
+                            <div class="col-xs-12 col-md-4">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Exchange Rate</label>
+                                    <input type="text" logiconNumber ng-model="cs.ExRate" disabled />
+                                </md-input-container>
+                            </div>
+                            <div class="col-xs-12 col-md-4">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Tax Amount</label>
+                                    <input type="text" logiconDecimal ng-model="cs.TaxAmount" disabled="disabled" />
+                                </md-input-container>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 col-md-4">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Actual Amount</label>
+                                    <input type="text" ng-model="cs.ActualAmount" disabled="disabled" />
+                                </md-input-container>
+                            </div>
+                            <div class="col-xs-12 col-md-4">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Discount Type</label>
+                                    <md-select ng-model="cs.DiscountType" disabled ng-change="CalDiscountAmt()">
+                                        <md-option ng-repeat="item in lookupData.discountTypeList" ng-value="item.Value">
+                                            {{item.Text}}
+                                        </md-option>
+                                    </md-select>
+                                </md-input-container>
+                            </div>
+                            <div class="col-xs-12 col-md-4">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Discount Amount</label>
+                                    <input type="text" ng-model="cs.DiscountAmount" disabled ng-blur="CalDiscountAmt()" />
+                                </md-input-container>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 col-md-4">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Total Amount</label>
+                                    <input type="text" ng-model="cs.TotalAmount" disabled="disabled" />
+                                </md-input-container>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+        <div class="modal-footer">
+            <div class="row">
+                <div class="col-md-3 col-md-offset-9 pull-right text-right">
+                    <!--<button class="btn btn-primary btn-sm" ng-click="submitted = true"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Save</button>-->
+                    <button class="btn btn-default btn-sm" ng-click="cancel();"><i class="fa fa-times" aria-hidden="true"></i>&nbsp;Close</button>
+                </div>
+            </div>
+        </div>
+   
+
+</form>
+
+

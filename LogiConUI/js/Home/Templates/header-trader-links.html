@@ -1,0 +1,452 @@
+﻿<!--<ul class="nav navbar-nav">
+    <li uib-dropdown on-toggle="toggled('FilesMenu')">
+        <a uib-dropdown-toggle>Master Data <span class="caret"></span></a>
+        <ul class="dropdown-menu" role="menu" uib-dropdown-menu>
+            <li><a href="#/masterdata/company">Company</a></li>
+            <li><a href="#/masterdata/merchantlist">Merchant Profile</a></li>
+            <li><a href="#/masterdata/chargecodelist">Charge Code Master</a></li>
+            <li class="dropdown dropdown-submenu">
+                <a>Work Flow</a>
+                <ul class="dropdown-menu" role="menu" uib-dropdown-menu>
+                    <li><a href="#/masterdata/processmaster">Process Master</a></li>
+                    <li><a href="#/masterdata/jobcategory">Job Category</a></li>
+                    <li><a href="#/masterdata/gstrate">GST Rate</a></li>
+                    <li><a href="#/masterdata/vesselmaster">Vessel Master</a></li>
+                </ul>
+            </li>
+            <li class="dropdown dropdown-submenu">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Product</a>
+                <ul class="dropdown-menu" role="menu">
+                    <li><a href="#/masterdata/productmaster">Product Master</a></li>
+                    <li><a href="#/masterdata/productlocation">Product Location</a></li>
+                </ul>
+            </li>
+            <li class="dropdown dropdown-submenu">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">CFS / WMS</a>
+                <ul class="dropdown-menu" role="menu">
+                    <li><a href="#/masterdata/warehouse">Warehouse</a></li>
+                    <li><a href="#/masterdata/cfs">CFS Work Order Type</a></li>
+                    <li><a href="#/masterdata/zonemaster">Zone Master</a></li>
+                </ul>
+            </li>
+            <li class="dropdown dropdown-submenu">
+                <a class="dropdown-toggle" data-toggle="dropdown">Transport</a>
+                <ul class="dropdown-menu" role="menu">
+                    <li><a href="#/masterdata/drivermasterlist">Driver Master</a></li>
+                    <li><a href="#/masterdata/truckmaster">Truck Master</a></li>
+                    <li><a href="#/masterdata/trailermaster">Trailer Master</a></li>
+                    <li><a href="#/masterdata/driverassignment">Driver Assignment</a></li>
+                    <li><a href="#/masterdata/driverallocation">Driver Allocation</a></li>
+                </ul>
+            </li>
+            <li class="dropdown dropdown-submenu">
+                <a>Tariff</a>
+                <ul class="dropdown-menu" role="menu" uib-dropdown-menu>
+                    <li><a href="#/MasterData/standardquotation">Standard Quotation</a></li>
+                    <li><a href="#/MasterData/customerquotation/list">Customer Quotation</a></li>
+                    <li><a href="#/MasterData/vendorquotation/list">Vendor Quotation</a></li>
+                </ul>
+            </li>
+            <li class="dropdown dropdown-submenu">
+                <a class="dropdown-toggle" data-toggle="dropdown">Others</a>
+                <ul class="dropdown-menu" role="menu">
+                    <li><a href="#/masterdata/portareacode">Port / Area Master</a></li>
+                    <li><a href="#/masterdata/currencyrate">Currency Rate</a></li>
+                    <li><a href="#/masterdata/railterminal">Rail Terminal</a></li>
+                    <li><a href="#/masterdata/holiday">Holiday</a></li>
+                    <li><a href="#/masterdata/pudomaster">PUDO Master</a></li>
+                    <li><a href="#/masterdata/equipmentsizetype">Equipment Size/Type</a></li>
+                    <li><a href="#/masterdata/containerstatus">Container Status</a></li>
+                    <li><a href="#/masterdata/countries">Countries</a></li>
+                    <li><a href="#/masterdata/currencylist">Currency</a></li>
+                    <li><a href="#/masterdata/portlist">Port</a></li>
+                    <li><a href="#/masterdata/uom">UOM</a></li>
+                    <li><a href="#/masterdata/commoditycode">Commodity Code</a></li>
+                    <li><a href="#/masterdata/holdstatus">Hold Status</a></li>
+                    <li><a href="#/masterdata/imocode">IMOCode</a></li>
+                    <li><a href="#/masterdata/lookupconfig">Lookup Configuration</a></li>
+                </ul>
+            </li>
+            <li><a href="#">User Profile</a></li>
+        </ul>
+    </li>
+    <li uib-dropdown on-toggle="toggled('OperationMenu')">
+        <a uib-dropdown-toggle>Operation <span class="caret"></span></a>
+        <ul class="dropdown-menu" role="menu" uib-dropdown-menu>
+            <li><a href="#/operation/orderentry">Order Entry</a></li>
+            <li><a href="#/operation/vesselschedule">Vessel Schedule</a></li>
+            <li class="divider"></li>
+            <li class="dropdown dropdown-submenu">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Monitoring</a>
+                <ul class="dropdown-menu" role="menu">
+                    <li><a href="#">Import / Export Container</a></li>
+                    <li><a href="#">Order Hold Status</a></li>
+                    <li><a href="#">Container Hold Status</a></li>
+                    <li><a href="#">Cargo Hold Status</a></li>
+                    <li><a href="#">Expiry Date</a></li>
+                    <li><a href="#">EDI</a></li>
+                </ul>
+            </li>
+        </ul>
+    </li>
+    <li uib-dropdown on-toggle="toggled('BillingCostingMenu')">
+        <a uib-dropdown-toggle>Billing <span class="caret"></span></a>
+        <ul class="dropdown-menu" role="menu" uib-dropdown-menu>
+            <li><a href="#/billing/costsheet">Cost Sheet</a></li>
+            <li><a href="#/billing/unbilledorders">Unbilled Orders</a></li>
+            <li><a href="#">Ad-hoc Charge Verification</a></li>
+            <li><a href="#">Rebates Processing</a></li>
+            <li class="divider"></li>
+            <li><a href="#/billing/customerinvoice">Customer Invoice</a></li>
+            <li><a href="#/billing/customercashbill">Customer Cash Bill</a></li>
+            <li><a href="#/billing/customercreditnote">Customer Credit Note</a></li>
+            <li><a href="#/billing/cnsubmission">Customer Invoice / CN Submission</a></li>
+            <li><a href="#/billing/whcustomerinvoice">WH Customer Invoice </a></li>
+            <li><a href="#">WMS Storage Invoice Monitoring</a></li>
+            <li class="divider"></li>
+            <li><a href="#/billing/vendorinvoice">Vendor Invoice </a></li>
+            <li><a href="#/billing/vendorreversebilling">Vendor Reverse Billing</a></li>
+            <li><a href="#/billing/vendorcreditnote">Vendor Credit Note</a></li>
+            <li><a href="#/billing/paymentrequest">Payment Request</a></li>
+            <li><a href="#">Payment Status Inquiry</a></li>
+            <li class="divider"></li>
+            <li><a href="#">Advance Template</a></li>
+            <li><a href="#/billing/advanceentry">Advance Entry</a></li>
+            <li><a href="#/billing/advancesettlement">Advance Settlement</a></li>
+            <li><a href="#">Advance Payment Monitoring</a></li>
+            <li class="divider"></li>
+            <li><a href="#/billing/billcostapproval">Approval</a></li>
+        </ul>
+    </li>
+    <li uib-dropdown on-toggle="toggled('InquiriesMenu')">
+        <a uib-dropdown-toggle>Inquiries <span class="caret"></span></a>
+        <ul class="dropdown-menu" role="menu" uib-dropdown-menu>
+            <li><a href="#/inquires/orderinquiry">Order Inquiry</a></li>
+            <li><a href="#">Container Movement Overdue Inquiry</a></li>
+            <li><a href="#/inquires/outstandingmvtsinquiry">Outstanding Movements Inquiry</a></li>
+            <li><a href="#/inquires/containercargostatus">Container & Cargo Status Inquiry</a></li>
+            <li class="divider"></li>
+            <li><a href="#">Vendor Rate Inquiry</a></li>
+            <li class="divider"></li>
+            <li><a href="#">Customer History</a></li>
+            <li><a href="#">Trailer Status Inquiry</a></li>
+            <li><a href="#">Driver History</a></li>
+            <li><a href="#">Truck History</a></li>
+            <li><a href="#">Trailer History</a></li>
+            <li class="divider"></li>
+            <li><a href="#/inquires/bookinginquiry">Booking Inquiry</a></li>
+            <li><a href="#">Container Movement Inquiry</a></li>
+            <li><a href="#/inquires/truckmvmtinquiry">Truck Movement Inquiry</a></li>
+            <li><a href="#">EDI Orders Inquiry</a></li>
+        </ul>
+    </li>
+    <li uib-dropdown on-toggle="toggled('ReportsMenu')">
+        <a uib-dropdown-toggle>Reports <span class="caret"></span></a>
+        <ul class="dropdown-menu" role="menu" uib-dropdown-menu>
+            <li><a href="#/reports/operational">Operational Reports</a></li>
+            <li><a href="#/reports/management">Management Reports</a></li>
+        </ul>
+    </li>
+    <li uib-dropdown on-toggle="toggled('AdministrationMenu')">
+        <a uib-dropdown-toggle>Administration <span class="caret"></span></a>
+        <ul class="dropdown-menu" role="menu" uib-dropdown-menu>
+            <li><a href="#">System Settings </a></li>
+            <li><a href="#/admin/companyprofile">Company Profile</a></li>
+            <li><a href="#/admin/userlist">Users</a></li>
+            <li><a href="#">Document Number Settings</a></li>
+            <li><a href="#">Activity Master</a></li>
+            <li><a href="#">User Login Status</a></li>
+            <li class="divider"></li>
+            <li><a href="#">Import Data</a></li>
+        </ul>
+    </li>
+</ul>-->
+<ul class="nav navbar-nav">
+    <!-- style="display:none;" -->
+    <li uib-dropdown on-toggle="toggled('FilesMenu')">
+        <a uib-dropdown-toggle>Master Data <span class="caret"></span></a>
+        <ul class="dropdown-menu" role="menu" uib-dropdown-menu>
+            <!--<li><a href="#/masterdata/company">Company</a></li>-->
+            <li><a href="#/masterdata/merchantlist">Merchant Profile</a></li>
+            <!--<li><a href="#/masterdata/chargecodelist">Charge Code Master</a></li>-->
+            <!--<li><a href="#">Charge Rules</a></li>-->
+            <!--<li class="dropdown dropdown-submenu">
+                <a>Work Flow</a>
+                <ul class="dropdown-menu" role="menu" uib-dropdown-menu>
+                    <li><a href="#/masterdata/processmaster">Process Master</a></li>
+                    <li><a href="#/masterdata/jobcategory">Job Category</a></li>
+                    <li><a href="#/masterdata/gstrate">GST Rate</a></li>
+                    <li><a href="#/masterdata/vesselmaster">Vessel Master</a></li>
+                </ul>
+            </li>-->
+            <!--<li class="dropdown dropdown-submenu">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Product</a>
+                <ul class="dropdown-menu" role="menu">
+                    <li><a href="#/masterdata/productmaster">Product Master</a></li>
+                    <li><a href="#/masterdata/productlocation">Product Location</a></li>
+                </ul>
+            </li>-->
+            <!--<li class="dropdown dropdown-submenu">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">CFS / WMS</a>
+                <ul class="dropdown-menu" role="menu">
+                    <li><a href="#/masterdata/warehouse">Warehouse</a></li>
+                    <li><a href="#/masterdata/cfs">CFS Work Order Type</a></li>
+                    <li><a href="#/masterdata/zonemaster">Zone Master</a></li>
+                </ul>
+            </li>-->
+            <!--<li class="dropdown dropdown-submenu">
+                <a class="dropdown-toggle" data-toggle="dropdown">Transport</a>
+                <ul class="dropdown-menu" role="menu">
+                    <li><a href="#/masterdata/drivermasterlist">Driver Master</a></li>
+                    <li><a href="#/masterdata/truckmaster">Truck Master</a></li>
+                    <li><a href="#/masterdata/trailermaster">Trailer Master</a></li>
+                    <li><a href="#/masterdata/driverassignment">Driver Assignment</a></li>
+                    <li><a href="#/masterdata/driverallocation">Driver Allocation</a></li>
+                </ul>
+            </li>-->
+            <li class="dropdown dropdown-submenu">
+                <a>Tariff</a>
+                <ul class="dropdown-menu" role="menu" uib-dropdown-menu>
+                    <li><a href="#/MasterData/standardquotation">Standard Quotation</a></li>
+                    <li><a href="#/MasterData/customerquotation/list">Customer Quotation</a></li>
+                    <li><a href="#/MasterData/vendorquotation/list">Vendor Quotation</a></li>
+                </ul>
+            </li>
+            <!--<li class="dropdown dropdown-submenu">
+                <a class="dropdown-toggle" data-toggle="dropdown">Others</a>
+                <ul class="dropdown-menu" role="menu">
+                    <li><a href="#/masterdata/portareacode">Port / Area Master</a></li>
+                    <li><a href="#/masterdata/currencyrate">Currency Rate</a></li>
+                    <li><a href="#/masterdata/railterminal">Rail Terminal</a></li>
+                    <li><a href="#/masterdata/holiday">Holiday</a></li>
+                    <li><a href="#/masterdata/pudomaster">PUDO Master</a></li>
+                    <li><a href="#/masterdata/equipmentsizetype">Equipment Size/Type</a></li>
+                    <li><a href="#/masterdata/containerstatus">Container Status</a></li>
+                    <li><a href="#/masterdata/countries">Countries</a></li>
+                    <li><a href="#/masterdata/currencylist">Currency</a></li>
+                    <li><a href="#/masterdata/portlist">Port</a></li>
+                    <li><a href="#/masterdata/uom">UOM</a></li>
+                    <li><a href="#/masterdata/commoditycode">Commodity Code</a></li>
+                    <li><a href="#/masterdata/holdstatus">Hold Status</a></li>
+                    <li><a href="#/masterdata/imocode">IMOCode</a></li>
+                    <li><a href="#/masterdata/lookupconfig">Lookup Configuration</a></li>
+                </ul>
+            </li>-->
+            <!--<li><a href="#">User Profile</a></li>-->
+        </ul>
+    </li>
+    <li uib-dropdown on-toggle="toggled('ManifestMenu')">
+        <a uib-dropdown-toggle>Manifest <span class="caret"></span></a>
+        <ul class="dropdown-menu" role="menu">
+            <!--<li><a href="#/operation/manifest/vesselprofilelist">Vessel Profiles</a></li>
+            <li><a href="#/operation/manifest/cusrep">CUSREP</a></li>
+            <li><a href="#">CUSCAR</a></li>
+            <li><a href="#/operation/manifest/oceanbl">Manifest Details</a></li>-->
+            <li><a href="#">K4 (inward)</a></li>
+            <li><a href="#">K5 (outward)</a></li>
+            <li><a href="#">K6 (transhipment)</a></li>
+            <li><a href="#/operation/manifest/vesselprofilelist">Vessel Information</a></li>
+            <li><a href="#">File Upload</a></li>
+            <li><a href="#/operation/manifest/oceanbl">Manifest Details</a></li>
+        </ul>
+    </li>
+    <li uib-dropdown on-toggle="toggled('OperationMenu')">
+        <a uib-dropdown-toggle>Operation <span class="caret"></span></a>
+        <ul class="dropdown-menu" role="menu" uib-dropdown-menu>
+            <li><a href="#/operation/vesselschedule">Vessel Schedule</a></li>
+            <li><a href="#/operation/orderentry">Order Entry</a></li>
+            <li class="divider"></li>
+            <li class="dropdown dropdown-submenu">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Monitoring</a>
+                <ul class="dropdown-menu" role="menu">
+                    <li><a href="#">Import / Export Container</a></li>
+                    <li><a href="#">Order Hold Status</a></li>
+                    <li><a href="#">Container Hold Status</a></li>
+                    <li><a href="#">Cargo Hold Status</a></li>
+                    <li><a href="#">Expiry Date</a></li>
+                    <li><a href="#">EDI</a></li>
+                </ul>
+            </li>
+        </ul>
+    </li>       
+    <li uib-dropdown on-toggle="toggled('BillingCostingMenu')">
+        <a uib-dropdown-toggle>Billing <span class="caret"></span></a>
+        <ul class="dropdown-menu" role="menu" uib-dropdown-menu>
+            <li><a href="#/billing/costsheet">Cost Sheet</a></li>
+            <li><a href="#/billing/unbilledorders">Unbilled Orders</a></li>
+            <li><a href="#">Ad-hoc Charge Verification</a></li>
+            <li><a href="#">Rebates Processing</a></li>
+            <li class="divider"></li>
+            <li><a href="#/billing/customerinvoice">Customer Invoice</a></li>
+            <li><a href="#/billing/customercashbill">Customer Cash Bill</a></li>
+            <li><a href="#/billing/customercreditnote">Customer Credit Note</a></li>
+            <li><a href="#/billing/cnsubmission">Customer Invoice / CN Submission</a></li>
+            <!--<li><a href="#/billing/whcustomerinvoice">WH Customer Invoice </a></li>
+            <li><a href="#">WMS Storage Invoice Monitoring</a></li>-->
+            <li class="divider"></li>
+            <li><a href="#/billing/vendorinvoice">Vendor Invoice </a></li>
+            <li><a href="#/billing/vendorreversebilling">Vendor Reverse Billing</a></li>
+            <li><a href="#/billing/vendorcreditnote">Vendor Credit Note</a></li>
+            <li><a href="#/billing/paymentrequest">Payment Request</a></li>
+            <li><a href="#">Payment Status Inquiry</a></li>
+            <li class="divider"></li>
+            <li><a href="#">Advance Template</a></li>
+            <li><a href="#/billing/advanceentry">Advance Entry</a></li>
+            <li><a href="#/billing/advancesettlement">Advance Settlement</a></li>
+            <li><a href="#">Advance Payment Monitoring</a></li>
+            <li class="divider"></li>
+            <li><a href="#/billing/billcostapproval">Approval</a></li>
+        </ul>
+    </li>
+    <li uib-dropdown on-toggle="toggled('InquiriesMenu')">
+        <a uib-dropdown-toggle>Inquiries <span class="caret"></span></a>
+        <ul class="dropdown-menu" role="menu" uib-dropdown-menu>
+            <li><a href="#/inquires/orderinquiry">Order Inquiry</a></li>
+            <li><a href="#">Container Movement Overdue Inquiry</a></li>
+            <li><a href="#/inquires/outstandingmvtsinquiry">Outstanding Movements Inquiry</a></li>
+            <li><a href="#/inquires/containercargostatus">Container & Cargo Status Inquiry</a></li>
+            <li class="divider"></li>
+            <li><a href="#">Vendor Rate Inquiry</a></li>
+            <li class="divider"></li>
+            <li><a href="#">Customer History</a></li>
+            <!--<li><a href="#">Trailer Status Inquiry</a></li>
+            <li><a href="#">Driver History</a></li>
+            <li><a href="#">Truck History</a></li>
+            <li><a href="#">Trailer History</a></li>-->
+            <li class="divider"></li>
+            <li><a href="#/inquires/bookinginquiry">Booking Inquiry</a></li>
+            <li><a href="#">Container Movement Inquiry</a></li>
+            <!--<li><a href="#/inquires/truckmvmtinquiry">Truck Movement Inquiry</a></li>-->
+            <li><a href="#">EDI Orders Inquiry</a></li>
+        </ul>
+    </li>
+    <li uib-dropdown on-toggle="toggled('FreightMenu')">
+        <a uib-dropdown-toggle>Freight <span class="caret"></span></a>
+        <ul class="dropdown-menu" role="menu" uib-dropdown-menu>
+            <li><a href="#/freight/containerrequest">Container Request</a></li>
+            <li><a href="#/freight/containermonitor">Container Monitoring</a></li>
+            <li><a href="#/freight/collectionadvice">Collection Advice</a></li>
+            <li class="divider"></li>
+            <li><a href="#/freight/transportrequest">Transport Request</a></li>
+            <li><a href="#/freight/transportmonitor">Transport Monitoring</a></li>
+            <li class="divider"></li>
+            <li><a href="#/freight/billoflad">Bill Of Lading</a></li>
+            <li><a href="#/freight/shippinginstruction">Shipping Instruction</a></li>
+            <li><a href="#/freight/shipperinvoice">Shipper Invoice</a></li>
+            <li><a href="#/freight/documentation">Documentation</a></li>
+            <li><a href="#/freight/houseairwaybill">House Air Waybill</a></li>
+        </ul>
+    </li>
+    <li uib-dropdown on-toggle="toggled('NetTms')">
+        <a uib-dropdown-toggle>Depot&nbsp;<span class="caret"></span></a>
+        <ul class="dropdown-menu" role="menu" uib-dropdown-menu>
+            <li><a href="#/tms/bookingentrylist">Booking Entry</a></li>
+            <li><a href="#/tms/gatein">Gate In</a></li>
+            <li><a href="#/tms/gateout">Gate Out</a></li>
+            <li class="divider"></li>
+            <li><a href="#/tms/containermaster">Container Master</a></li>
+        </ul>
+    </li>
+    <li uib-dropdown on-toggle="toggled('HaulageMenu')">
+        <a uib-dropdown-toggle>Haulage <span class="caret"></span></a>
+        <ul class="dropdown-menu" role="menu" uib-dropdown-menu>
+            <li><a href="#/haulage/equipmentplanning">Equipment Planning</a></li>
+            <li><a href="#/haulage/operationmonitor">Operation Monitor</a></li>
+            <li><a href="#">Haulage Timeline</a></li>
+            <li><a href="#/haulage/collectionadvice">Collection Advice</a></li>
+            <li class="divider"></li>
+            <li><a href="#/haulage/driverpayment">Driver Payment By Vendor</a></li>
+            <li><a href="#/haulage/driverpaymentbreakdown">Driver Payment Breakdown</a></li>
+            <li><a href="#/haulage/driverpaymentapproval">Driver Payment Approval</a></li>
+            <li><a href="#/haulage/equipmentcostentry">Equipment Cost Entry</a></li>
+            <li><a href="#/haulage/fuelusage">Fuel Usage</a></li>
+            <li class="divider"></li>
+            <li><a href="#/haulage/porttimeslot">Port Time Slot Maintenance</a></li>
+            <li><a href="#/haulage/driverincentive">Driver Rate Table</a></li>
+        </ul>
+    </li>
+    <li uib-dropdown on-toggle="toggled('TransportMenu')">
+        <a uib-dropdown-toggle>Transport <span class="caret"></span></a>
+        <ul class="dropdown-menu" role="menu" uib-dropdown-menu>
+            <li><a href="#/transport/loadplanning">Load Planning</a></li>
+            <li><a href="#/transport/equipmentplanning">Equipment Planning</a></li>
+            <li><a href="#">Operation Monitor</a></li>
+            <li class="divider"></li>
+            <li><a href="#/transport/driverpaymentvendor">Driver Payment By Vendor</a></li>
+            <li><a href="#/transport/driverpaymentbreakdown">Driver Payment Breakdown</a></li>
+            <li><a href="#/transport/equipmentcostentry">Equipment Cost Entry</a></li>
+            <li><a href="#/transport/fuelusage">Fuel Usage</a></li>
+            <li class="divider"></li>
+            <li><a href="#">Activity Update</a></li>
+            <li><a href="#/transport/varianceackmonitor">Variance Acknowledgement</a></li>
+            <li><a href="#/transport/driverratetbl">Driver Rate Table</a></li>
+        </ul>
+    </li>
+    <li uib-dropdown on-toggle="toggled('WMSMenu')">
+        <a uib-dropdown-toggle>WMS <span class="caret"></span></a>
+        <ul class="dropdown-menu" role="menu" uib-dropdown-menu>
+            <li><a href="#">Tally In</a></li>
+            <li><a href="#">Tally In Approval</a></li>
+            <li><a href="#">Put Away</a></li>
+            <li class="divider"></li>
+            <li><a href="#">Wave Planning</a></li>
+            <li><a href="#">Shipping Instruction</a></li>
+            <li><a href="#">Picking Task</a></li>
+            <li><a href="#">Tally Out</a></li>
+            <li><a href="#">Tally Out Approval</a></li>
+            <li><a href="#">Load Manifest</a></li>
+            <li class="divider"></li>
+            <li><a href="#">Work Order</a></li>
+            <li><a href="#">Stock Adjustment</a></li>
+            <li><a href="#">Cycle Count</a></li>
+            <li><a href="#">Cargo Details Correction</a></li>
+            <li><a href="#">Opening Balance</a></li>
+            <li class="divider"></li>
+            <li><a href="#">WMS Product Inquiry</a></li>
+            <li><a href="#">WMS Cargo Tracking</a></li>
+            <li><a href="#">Location Status</a></li>
+            <li><a href="#">Warehouse Map</a></li>
+            <li><a href="#">WMS Monitoring</a></li>
+            <li><a href="#">WMS Pallet Inquiry</a></li>
+        </ul>
+    </li>
+    <li uib-dropdown on-toggle="toggled('CFSMenu')">
+        <a uib-dropdown-toggle>CFS <span class="caret"></span></a>
+        <ul class="dropdown-menu" role="menu" uib-dropdown-menu>
+            <li><a href="#">Tally In</a></li>
+            <li><a href="#">Tally In Approval</a></li>
+            <li class="divider"></li>
+            <li><a href="#">Shipping Instruction</a></li>
+            <li><a href="#">Tally Out</a></li>
+            <li><a href="#">Tally Out Approval</a></li>
+            <li class="divider"></li>
+            <li><a href="#">Work Order</a></li>
+            <li><a href="#">Cycle Count</a></li>
+            <li><a href="#">Cargo Details Correction</a></li>
+            <li class="divider"></li>
+            <li><a href="#">CFS Product Inquiry</a></li>
+            <li><a href="#">CFS Map</a></li>
+            <li><a href="#">CFS Monitoring</a></li>
+        </ul>
+    </li>
+    <li uib-dropdown on-toggle="toggled('InquiriesMenu')">
+        <a uib-dropdown-toggle>Administration <span class="caret"></span></a>
+        <ul class="dropdown-menu" role="menu" uib-dropdown-menu>
+            <!--<li><a href="#">System Settings </a></li>-->
+            <li><a href="#/masterdata/company">Company Profile</a></li>
+            <li><a href="#/admin/userlist">Users</a></li>
+            <!--<li><a href="#">Document Number Settings</a></li>
+            <li><a href="#">Activity Master</a></li>
+            <li><a href="#">User Login Status</a></li>-->
+            <li class="divider"></li>
+            <li><a href="#">Import Data</a></li>
+        </ul>
+    </li>
+    <li uib-dropdown on-toggle="toggled('ReportsMenu')">
+        <a uib-dropdown-toggle>Reports <span class="caret"></span></a>
+        <ul class="dropdown-menu" role="menu" uib-dropdown-menu>
+            <li><a href="#/reports/operational">Operational Reports</a></li>
+            <li><a href="#/reports/management">Management Reports</a></li>
+        </ul>
+    </li>    
+</ul>

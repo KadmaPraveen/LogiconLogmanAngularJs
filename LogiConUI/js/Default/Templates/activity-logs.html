@@ -1,0 +1,39 @@
+﻿<ul class="top-menu chart-notification p-0 m-b-20">
+    <li class="dropdown" uib-dropdown style="width:100%;">
+        <a uib-dropdown-toggle class="btn p-0 m-0 {{widgetclass}} waves-effect ">
+            <div id="pie-charts" class="p-0 m-0 dash-widget-item">
+                <div class="{{widgetclass}}">
+                    <div class="dash-widget-header text-left">
+                        <div class="dash-widget-title">{{widgettitle}}</div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="text-center easy-pie main-pie p-t-5 m-t-30">  
+                        <div easypiechart options="options" percent="percent">
+                            <div class="percent">{{percent}}</div>
+                        </div>                        
+                    </div>
+                </div>
+            </div>
+        </a>
+        <div class="dropdown-menu dropdown-menu-lg" ng-class="{'pull-right': ispullright, 'pull-left': !ispullright}">
+            <div class="listview" id="notifications">
+                <div class="lv-header">
+                    {{title}}
+                </div>
+                <div class="lv-body c-overflow">
+                    <a class="lv-item p-l-10 p-r-10" ng-repeat="activityItem in activityList">
+                        <div class="media">
+                            <div class="media-body">
+                                <div class="lv-title">{{activityItem.ActivityCodeDescription}}</div>
+                                <strong class="c-gray f-10">{{activityItem.CreatedOn | date : 'MMM dd, yyyy'}}</strong>
+                                <small class="c-gray">{{activityItem.CreatedOn | date : 'hh:mm a'}}</small>
+                                <small class="lv-small">{{activityItem.CompanyName}}</small>
+                                <small class="lv-small username">{{activityItem.CreatedBy}}</small>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </li>
+</ul>

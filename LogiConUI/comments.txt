@@ -1,0 +1,21 @@
+﻿
+LOGICON2@DESKTOP-A229BVV MINGW64 /d/Projects/LogiCon/LogiConUI/LogiConUI (master)
+$ git checkout new && git merge -s ours old
+error: pathspec 'new' did not match any file(s) known to git.
+
+LOGICON2@DESKTOP-A229BVV MINGW64 /d/Projects/LogiCon/LogiConUI/LogiConUI (master)
+$ git checkout new
+error: pathspec 'new' did not match any file(s) known to git.
+
+LOGICON2@DESKTOP-A229BVV MINGW64 /d/Projects/LogiCon/LogiConUI/LogiConUI (master)
+$ git push -f origin master
+Counting objects: 4585, done.
+Delta compression using up to 4 threads.
+Compressing objects: 100% (3441/3441), done.
+Writing objects: 100% (4585/4585), 20.21 MiB | 283.00 KiB/s, done.
+Total 4585 (delta 1384), reused 3960 (delta 932)
+remote: Resolving deltas: 100% (1384/1384), done.
+To https://github.com/vijay868/LogiConUI.git
+ + 5df1f45...181a08a master -> master (forced update)
+
+LOGICON2@DESKTOP-A229BVV MINGW64 /d/Projects/LogiCon/LogiConUI/LogiConUI (master)

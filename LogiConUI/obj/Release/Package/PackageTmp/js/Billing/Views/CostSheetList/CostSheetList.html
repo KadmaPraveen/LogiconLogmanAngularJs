@@ -1,0 +1,65 @@
+﻿<div class="container" ng-controller="CostSheetListCntrl">
+    <div class="card">
+        <div class="lv-header-alt clearfix m-b-5">
+            <h2 class="lvh-label">CostSheet List</h2>
+            <ul class="lv-actions actions">
+                <li>
+                    <button class="btn btn-info btn-icon m-r-10" tooltip-placement="bottom" uib-tooltip="Refresh" ng-click="refresh();" type="button"><i class="fa fa-refresh"></i></button>
+                </li>
+            </ul>
+        </div>
+        <!--<table class="table table-responsive">
+        <thead>
+            <tr>
+                <th>OrderNo.</th>
+                <th>#Action.</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="list in CostSheetList">
+
+
+                <td data-title="'OrderNo.'" sortable="'OrderNo'"><a style="cursor:pointer;" ng-click="BroadCastCostSheet({orderno:list.OrderNo})">{{list.OrderNo}}</a></td>
+                <td>
+                    <button class="btn btn-default ng-scope waves-effect"
+                            type="button"
+                            ng-click="BroadCastCostSheet({orderno:list.OrderNo})"
+                            aria-label="button" uib-tooltip="Edit" tooltip-placement="top">
+                        <i class="zmdi zmdi-edit"></i>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>-->
+
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="table-responsive">
+                    <div style="min-height: 250px;">
+                        <div class="table-responsive">
+                            <table class="table table-vmiddle" ng-table="ngTblData">
+                                <tr ng-repeat="w in $data">
+                                    <td data-title="'Order No.'"><a style="cursor:pointer;" ng-click="BroadCastCostSheet({orderno:w.OrderNo})">{{w.OrderNo}}</a></td>
+                                    <td data-title="'#Action'">
+                                        <button class="btn btn-default ng-scope waves-effect"
+                                                type="button"
+                                                ng-click="BroadCastCostSheet({orderno:w.OrderNo})"
+                                                aria-label="button" uib-tooltip="Edit" tooltip-placement="top">
+                                            <i class="zmdi zmdi-edit"></i>
+                                        </button>
+                                        <!--<button type="button" ng-click="DeleteCustomerInvoice(Invoiceno);" ng-disabled="item.Status" class="btn btn-danger  waves-effect" aria-label="button">
+                                        <i class="zmdi zmdi-delete" aria-hidden="true"></i>
+                                    </button>-->
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>

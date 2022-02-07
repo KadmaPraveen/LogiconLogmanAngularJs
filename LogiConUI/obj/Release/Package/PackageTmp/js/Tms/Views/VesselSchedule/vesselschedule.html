@@ -1,0 +1,256 @@
+﻿<div class="container" ng-controller="VesselScheduleCntrl">
+    <div class="card">
+        <div  class="lv-header-alt clearfix m-b-5">
+            <h3  class="lvh-label">Vessel Schedule List</h3>
+        </div>
+        <div  class="card-body card-padding p-t-25 p-b-25">
+            <div class="row" >
+                <div class="col-xs-12">
+                    <div class="well well-sm" style="min-height: 250px;">
+                        <table class="table table-striped table-vmiddle">
+                            <thead >
+                                <tr>
+                                    <th>Booking Type</th>
+                                    <th>Agent</th>
+                                    <th>Vessel</th>
+                                    <th>Voyage No.</th>
+                                    <th>ETA/ETD</th>
+                                    <th>Terminal</th>
+                                    <th>Closing Date(Normal)</th>
+                                    <th>Closing Date(Reefer)</th>
+                                    <th>Is Active</th>
+                                    <th>Is Closed</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="row" >
+                <div class="col-xs-12 col-md-6">
+                    <div class="card">
+                        <div  class="lv-header-alt clearfix m-b-5">
+                            <h3  class="lvh-label">Vessel Schedule</h3>
+                        </div>
+                        <div  class="card-body card-padding p-t-25 p-b-25">
+                            <div class="row" >
+                                <div class="col-xs-12 col-md-2">
+                                    <label>Vessel Code</label>
+                                </div>
+                                <div class="col-xs-12 col-md-4">
+                                    <input type="text" class="form-control input-sm" />
+                                </div>
+                                <div class="col-xs-12 col-md-6">
+                                    <div class="input-group">
+                                        <div class="input-group-btn ">
+                                            <button class="btn btn-sm btn-default" type="button"><i class="fa fa-search"></i></button>
+                                        </div>
+                                        <input class="form-control input-sm pull-right" type="text" value="">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" >
+                                <div class="col-xs-12 col-md-2">
+                                    <label>Voyage No.</label>
+                                </div>
+                                <div class="col-xs-12 col-md-4">
+                                    <input type="text" class="form-control input-sm" />
+                                </div>
+                                <div class="col-xs-12 col-md-2">
+                                    <label>Wharf</label>
+                                </div>
+                                <div class="col-xs-12 col-md-4">
+                                    <select class="form-control input-sm"></select>
+                                </div>
+                            </div>
+                            <div class="row" >
+                                <div class="col-xs-12 col-md-2">
+                                    <label>Booking Type</label>
+                                </div>
+                                <div class="col-xs-12 col-md-4">
+                                    <select class="form-control input-sm"></select>
+                                </div>
+                                <div class="col-xs-12 col-md-2">
+                                    <label>Paperless Code</label>
+                                </div>
+                                <div class="col-xs-12 col-md-4">
+                                    <input type="text" class="form-control input-sm" />
+                                </div>
+                            </div>
+                            <div class="row" >
+                                <div class="col-xs-12 col-md-2">
+                                    <label>Agent Code</label>
+                                </div>
+                                <div class="col-xs-12 col-md-4">
+                                    <input type="text" class="form-control input-sm" />
+                                </div>
+                                <div class="col-xs-12 col-md-6">
+                                    <div class="input-group">
+                                        <div class="input-group-btn ">
+                                            <button class="btn btn-sm btn-default" type="button"><i class="fa fa-search"></i></button>
+                                        </div>
+                                        <input class="form-control input-sm pull-right" type="text" value="">
+                                    </div>
+                                </div>                                
+                            </div>
+                            <div class="row" >
+                                <div class="col-xs-12 col-md-2">
+                                    <label>ETD</label>
+                                </div>
+                                <div class="col-xs-12 col-md-4">
+                                    <div class="input-group my-datepicker">
+                                        <input type="text" class="form-control input-sm datepicker" uib-datepicker-popup="{{format}}" ng-model="dt" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
+                                        <span class="input-group-btn">
+                                            <button type="button" class="btn btn-default input-sm" ng-click="open1()"><i class="fa fa-calendar" aria-hidden="true"></i></button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" >
+                                <div class="col-xs-12 col-md-2">
+                                    <label>Port Closing(Dry)</label>
+                                </div>
+                                <div class="col-xs-12 col-md-4">
+                                    <div class="input-group my-datepicker">
+                                        <input type="text" class="form-control input-sm datepicker" uib-datepicker-popup="{{format}}" ng-model="dt" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
+                                        <span class="input-group-btn">
+                                            <button type="button" class="btn btn-default input-sm" ng-click="open1()"><i class="fa fa-calendar" aria-hidden="true"></i></button>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-md-2">
+                                    <label>Port Closing(reefer)</label>
+                                </div>
+                                <div class="col-xs-12 col-md-4">
+                                    <div class="input-group my-datepicker">
+                                        <input type="text" class="form-control input-sm datepicker" uib-datepicker-popup="{{format}}" ng-model="dt" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
+                                        <span class="input-group-btn">
+                                            <button type="button" class="btn btn-default input-sm" ng-click="open1()"><i class="fa fa-calendar" aria-hidden="true"></i></button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" >
+                                <div class="col-xs-12 col-md-2">
+                                    <label>CY Cut-Off(Dry)</label>
+                                </div>
+                                <div class="col-xs-12 col-md-4">
+                                    <div class="input-group my-datepicker">
+                                        <input type="text" class="form-control input-sm datepicker" uib-datepicker-popup="{{format}}" ng-model="dt" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
+                                        <span class="input-group-btn">
+                                            <button type="button" class="btn btn-default input-sm" ng-click="open1()"><i class="fa fa-calendar" aria-hidden="true"></i></button>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-md-2">
+                                    <label>CY Cut-Off(reefer)</label>
+                                </div>
+                                <div class="col-xs-12 col-md-4">
+                                    <div class="input-group my-datepicker">
+                                        <input type="text" class="form-control input-sm datepicker" uib-datepicker-popup="{{format}}" ng-model="dt" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
+                                        <span class="input-group-btn">
+                                            <button type="button" class="btn btn-default input-sm" ng-click="open1()"><i class="fa fa-calendar" aria-hidden="true"></i></button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" >
+                                <div class="col-xs-12 col-md-2">
+                                    <label>CFS Cut-Off(Dry)</label>
+                                </div>
+                                <div class="col-xs-12 col-md-4">
+                                    <div class="input-group my-datepicker">
+                                        <input type="text" class="form-control input-sm datepicker" uib-datepicker-popup="{{format}}" ng-model="dt" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
+                                        <span class="input-group-btn">
+                                            <button type="button" class="btn btn-default input-sm" ng-click="open1()"><i class="fa fa-calendar" aria-hidden="true"></i></button>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-md-2">
+                                    <label>CFS Cut-Off(reefer)</label>
+                                </div>
+                                <div class="col-xs-12 col-md-4">
+                                    <div class="input-group my-datepicker">
+                                        <input type="text" class="form-control input-sm datepicker" uib-datepicker-popup="{{format}}" ng-model="dt" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
+                                        <span class="input-group-btn">
+                                            <button type="button" class="btn btn-default input-sm" ng-click="open1()"><i class="fa fa-calendar" aria-hidden="true"></i></button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" >
+                                <div class="col-xs-12 col-md-2">
+                                    <label>Laden Release</label>
+                                </div>
+                                <div class="col-xs-12 col-md-4">
+                                    <div class="input-group my-datepicker">
+                                        <input type="text" class="form-control input-sm datepicker" uib-datepicker-popup="{{format}}" ng-model="dt" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
+                                        <span class="input-group-btn">
+                                            <button type="button" class="btn btn-default input-sm" ng-click="open1()"><i class="fa fa-calendar" aria-hidden="true"></i></button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" >
+                                <div class="col-xs-12 col-md-2">
+                                    <label>Remarks</label>
+                                </div>
+                                <div class="col-xs-12 col-md-10">
+                                    <textarea class="form-control input-sm"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="box-footer">
+                            <div class="row">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-md-6">
+                    <div class="card">
+                        <div  class="lv-header-alt clearfix m-b-5">
+                            <h3  class="lvh-label">Relevant Orders</h3>
+                        </div>
+                        <div  class="card-body card-padding p-t-25 p-b-25">
+                            <div class="row" >
+                                <div class="col-xs-12">
+                                    <div class="well well-sm" style="min-height: 250px;">
+                                        <table class="table table-striped table-vmiddle">
+                                            <thead >
+                                                <tr>
+                                                    <th>Booking-B/L No.</th>
+                                                    <th>Booking Date</th>
+                                                    <th>Booking Type</th>
+                                                    <th>Order Type</th>
+                                                    <th>Agent</th>
+                                                    <th>Customer</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+       
+    </div>
+</div>

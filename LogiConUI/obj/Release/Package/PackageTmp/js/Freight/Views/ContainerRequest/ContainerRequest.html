@@ -1,0 +1,275 @@
+﻿<div class="container" ng-controller="ContainerRequestCntrl">
+    <form id="frmContainerRequest" name="frmContainerRequest" ng-class="{'submitted':submitted}" ng-submit="SaveConRequest(cr)" autocomplete="off" novalidate>
+
+        <div class="card">
+            <div class="lv-header-alt clearfix m-b-5">
+                <h3 class="lvh-label">Container Request</h3>
+                <!--<ul class="lv-actions actions">
+                    <li>
+                        <button class="btn bgm-lightgreen btn-icon m-r-5" data-ui-sref="Addcontainerrequest()"><i class="zmdi zmdi-plus"></i></button>
+                    </li>
+                </ul>-->
+                <input type="hidden" ng-model="cr.containerHeader.RequestNo" />
+            </div>
+            <div class="card-body card-padding p-t-5 p-b-5">
+                <div class="row">
+                    <div class="col-xs-12 col-md-4">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>ROT No.</label>
+                            <input type="text" ng-model="cr.containerHeader.RequestNo" ng-disabled="true" />
+                        </md-input-container>
+                    </div>
+                    <div class="col-md-4">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Request Date</label>
+                            <input mdc-datetime-picker="" class="date-icon" date="true" time="true" ng-model="cr.containerHeader.RequestDate"
+                                   ng-required="true" type="text" id="TransactionDate" format="{{DateTimeFormat}}"
+                                   min-date="date">
+                        </md-input-container>
+                    </div>
+                    <div class="col-md-4">
+
+                        <!--<input type="text"
+                               class="search-icon"
+                               ng-model="cr.containerHeader.ConsigneeName"
+                               name="cr.containerHeader.Consignee"
+                               typeahead-min-length="3"
+                               uib-typeahead="d.Text as d.Text for d in GenericMerchantResults($viewValue, 'Shipper')"
+                               typeahead-wait-ms="300"
+                               typeahead-editable="false"
+                               typeahead-on-select="CustomerSelected($item, 'Consignee')"
+                               ng-required="true" />-->
+                        <merchant-autocomplete filter="consignee"
+                                               labeltext="Consignee"
+                                               isrequired="false"
+                                               iseditable="false"
+                                               ng-model="cr.containerHeader.Consignee"
+                                               merchant-name="cr.containerHeader.ConsigneeName">
+                        </merchant-autocomplete>
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <merchant-autocomplete filter="haulier"
+                                               labeltext="Haulier"
+                                               isrequired="true"
+                                               iseditable="false"
+                                               ng-model="cr.containerHeader.HaulierCode"
+                                               merchant-name="cr.containerHeader.HaulierName">
+                        </merchant-autocomplete>
+                    </div>
+                    <div class="col-md-4">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Job Type</label>
+                            <md-select ng-model="cr.containerHeader.JobType" ng-disabled="true">
+                                <md-option ng-repeat="item in lookUpData.jobTypeList" ng-value="item.Value">
+                                    {{item.Text}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                    </div>
+                    <div class="col-md-4">
+                        <merchant-autocomplete filter="Liner"
+                                               labeltext="Shipping Agent"
+                                               iseditable="false"
+                                               ng-model="cr.containerHeader.ShippingAgent"
+                                               merchant-name="cr.containerHeader.ShippingAgentName"
+                                               isrequired="false">
+                        </merchant-autocomplete>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Bill To</label>
+                            <md-select ng-model="cr.containerHeader.BillToCode" ng-required="">
+                                <md-option ng-repeat="item in lookUpData.billTo" ng-value="item.Value">
+                                    {{item.Text}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                    </div>
+                    <div class="col-xs-12 col-md-2">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Vessel Name</label>
+                            <input type="text"
+                                   class="search-icon"
+                                   ng-model="cr.containerHeader.VesselName"
+                                   typeahead-min-length="3"
+                                   uib-typeahead="d.Text as d.Text for d in VesselCodeLoadingResults($viewValue)"
+                                   typeahead-wait-ms="100"
+                                   typeahead-editable="false"
+                                   typeahead-on-select="CustomerSelected($item, 'VesselID')" />
+                        </md-input-container>
+
+
+                    </div>
+
+                    <div class="col-xs-12 col-md-2">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Voyage No</label>
+                            <input type="text" ng-model="cr.containerHeader.VoyageNo" />
+                        </md-input-container>
+                    </div>
+                    <div class="col-md-4">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Ship Call No.</label>
+                            <input type="text" ng-model="cr.containerHeader.ShipCallNo" ng-required="true" />
+                        </md-input-container>
+                    </div>
+                </div>
+                <div class="row">
+
+                    <div class="col-md-4">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Commodity</label>
+                            <input type="text" ng-model="cr.containerHeader.Commodity" />
+                        </md-input-container>
+                    </div>
+
+                    <div class="col-md-4">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Location From</label>
+                            <input type="text" ng-model="cr.containerHeader.LocationFromName" ng-disabled="true" />
+                        </md-input-container>
+                    </div>
+                    <div class="col-md-4">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Location From Address</label>
+                            <textarea ng-model="cr.containerHeader.LocationFromAddress"></textarea>
+                        </md-input-container>
+                    </div>
+                </div>
+                <div class="row">
+
+                    <div class="col-md-4">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Location To</label>
+                            <input type="text" ng-model="cr.containerHeader.LocationToName" ng-disabled="true"/>
+                        </md-input-container>
+                    </div>
+
+                    <div class="col-md-4">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Location To Address</label>
+                            <textarea ng-model="cr.containerHeader.LocationToAddress"></textarea>
+                        </md-input-container>
+                    </div>
+                    <div class="col-md-4">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Port Code</label>
+                            <input type="text" ng-model="cr.containerHeader.PortCodeName" ng-disabled="true" />
+                        </md-input-container>
+                    </div>
+                </div>
+                <div class="row">
+
+                    <div class="col-md-4">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Special Handling</label>
+                            <input type="text" ng-model="cr.containerHeader.SpecialHandling" />
+                        </md-input-container>
+                    </div>
+
+                    <div class="col-md-4">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Delivery Type</label>
+                            <input type="text" ng-model="cr.containerHeader.DeliveryType" />
+                        </md-input-container>
+                    </div>
+                    <div class="col-md-4">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Liner Ref.</label>
+                            <input type="text" ng-model="cr.containerHeader.LinerRef" />
+                        </md-input-container>
+                    </div>
+                </div>
+                <div class="row">
+
+                    <div class="col-md-4">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Remarks</label>
+                            <textarea ng-model="cr.containerHeader.Remark"></textarea>
+                        </md-input-container>
+                    </div>
+                </div>
+
+                <!--<div class="row">
+                    <div class="col-xs-12 text-right">
+                        <button type="button" ng-click="AddContainerRequest(-1);" has-Right data-rightValue="DeclarationK1.UploadDocument" class="btn btn-primary"><i class="fa fa-plus"></i>&nbsp;Add</button>
+                    </div>
+                </div>-->
+                <div class="row m-b-20 m-t-20">
+                    <div class="col-xs-12">
+                        <div class="table-responsive">
+                            <table class="table  table-vmiddle" ng-table="tblContainerInfo">
+
+                                <tr ng-repeat="item in $data">
+                                    <td data-title="'Item No'" class="no">
+                                        {{containerInfoIndex +($index+1)}}
+                                    </td>
+                                    <td data-title="'Size'">{{item.Size}}</td>
+                                    <td data-title="'Type'">{{item.Type}}</td>
+                                    <td data-title="'Seal No'">{{item.SealNo}}</td>
+                                    <td data-title="'VGM'">{{item.VGM}}</td>
+                                    <td data-title="'Container No'">{{item.ContainerNo}}</td>
+                                    <td data-title="'Order No'">{{item.MasterOrderNo}}</td>
+                                    <td data-title="'Status'">{{item.Status}}</td>
+                                    <td data-title="'Delivery Address'">{{item.DeliveryAddress}}</td>
+                                    <td data-title="'Required Date'">{{formatDate(item.RequiredDate)}}</td>
+                                    <td data-title="'Empty Dehire'">{{(lookUpData.emptyDehireList | filter:{Value:item.EmptyDehire})[0].Text}}</td>
+                                    <td data-title="'Trailer Type'">{{(lookUpData.trailerTypeList | filter : {Value:item.TrailerType})[0].Text}}</td>
+                                    <td data-title="'Container Operator'">{{item.ContainerOperator}}</td>
+                                    <td data-title="'Remarks'">{{item.Remarks}}</td>
+                                    <td data-title="'Action'">
+                                        <button class="btn bgm-lightgreen waves-effect"
+                                                type="button"
+                                                ng-click="AddContainerRequest(conIndex + ($index))"
+                                                aria-label="button" uib-tooltip="Edit" tooltip-placement="top">
+                                            <i class="zmdi zmdi-edit"></i>
+                                        </button>
+                                        <!--<button class="btn bgm-teal waves-effect"
+                                                type="button"
+                                                uib-tooltip="Copy" tooltip-placement="top" ng-click="CopyContainer(item)">
+                                            <i class="zmdi zmdi-refresh"></i>
+                                        </button>
+                                        <button class="btn btn-danger waves-effect"
+                                                type="button"
+                                                ng-click="deleteContainer(containerInfoIndex + ($index))"
+                                                aria-label="button" uib-tooltip="Delete" tooltip-placement="top">
+                                            <i class="zmdi zmdi-delete"></i>
+                                        </button>-->
+                                    </td>
+                                </tr>
+
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div>
+            <div class="card">
+                <div class="card-body card-padding p-t-15 p-b-15">
+                    <div class="row m-t-15">
+                        <div class="col-xs-6 text-left">
+                            <button type="submit" class="btn btn-primary" ng-click="submitted=true;"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Save</button>
+                            <button type="button" class="btn btn-danger" ng-click="DelteContainerRequest()" ng-if="!IsNew"><i class="fa fa-trash" aria-hidden="true"></i>&nbsp;Delete</button>
+                            <a href="{{reportUrl}}" target="_blank" class="btn btn-warning waves-effect" ng-if="!IsNew">
+                                <!--ng-click="GenerateReport('ROT','DNeX.ROT','ViewROTReport')"-->
+                                <i class="fa fa-print" aria-hidden="true"></i> Print
+                            </a>
+                        </div>
+                        <div class="col-xs-6 text-right">
+                            <button class="btn btn-primary" type="button" data-ui-sref="containerrequestinquiry" data-ng-click="mactrl.sidebarStat($event)">
+                                <i class="fa fa-backward" aria-hidden="true"></i>&nbsp;Back
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

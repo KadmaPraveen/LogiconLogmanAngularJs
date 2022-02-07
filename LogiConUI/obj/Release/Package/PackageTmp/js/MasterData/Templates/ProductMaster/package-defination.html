@@ -1,0 +1,163 @@
+﻿<div class="row">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-body card-padding p-t-25 p-b-25">
+                <div class="row">
+                    <div class="col-xs-6 col-md-3">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Base Unit</label>
+                            <md-select ng-model="productmaster.BaseUOM" ng-required="true">
+                                <md-option ng-repeat="item in lookUpData.baseuniList" ng-value="item.Value">
+                                    {{item.Text}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>                   
+                        <!--<select 
+                            ng-model="productmaster.BaseUOM"
+                            ng-required="true"
+                            ng-options="s.Value as s.Text for s in lookUpData.baseuniList">
+                        </select>-->
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-6 col-md-3">                        
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Storage Unit</label>
+                            <md-select ng-model="productmaster.StorageUOM" ng-required="true">
+                                <md-option ng-repeat="item in lookUpData.baseuniList" ng-value="item.Value">
+                                    {{item.Text}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>                                         
+                        <!--<select 
+                            ng-model="productmaster.StorageUOM"
+                            ng-required="true"
+                            ng-options="s.Value as s.Text for s in lookUpData.baseuniList">
+                        </select>-->
+                    </div>
+                    <div class="col-xs-6 col-md-3">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>TI</label>
+                            <input type="text"
+                                   ng-model="" ng-required="" />
+                        </md-input-container>
+                        <!--<input type="text"  placeholder="TI" />-->
+                    </div>
+                    <div class="col-xs-6 col-md-3">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>HI</label>
+                            <input type="text"
+                                   ng-model="" ng-required="" />
+                        </md-input-container>
+                        <!--<input type="text"  placeholder="HI" />-->
+                    </div>
+                    <div class="col-xs-6 col-md-3">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Unit Size</label>
+                            <input type="text"
+                                   ng-model="productmaster.UnitSize" ng-required="true" />
+                        </md-input-container>
+                        <!--<input type="text"  placeholder="Unit Size" ng-model="productmaster.UnitSize" ng-required="true" />-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-12 col-md-4">
+        <div class="row">
+            <div class="col-xs-12">
+                <md-input-container class="md-block" flex-gt-sm>
+                    <label>Width (cm)</label>
+                    <input type="text"
+                           ng-model="productmaster.BaseWidth" ng-required="true" />
+                </md-input-container>            
+                <!--<input type="text"  placeholder="0.000" ng-model="productmaster.BaseWidth" ng-required="true" />-->
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <md-input-container class="md-block" flex-gt-sm>
+                    <label>Length (cm)</label>
+                    <input type="text"
+                           ng-model="productmaster.BaseSQFt" ng-required="true" />
+                </md-input-container>
+                <!--<input type="text"  placeholder="0.000" ng-required="true" ng-model="productmaster.BaseSQFt" />-->
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <md-input-container class="md-block" flex-gt-sm>
+                    <label>Height (cm)</label>
+                    <input type="text"
+                           ng-model="productmaster.BaseHeight" ng-required="true" />
+                </md-input-container>
+                <!--<input type="text"  placeholder="0.000" ng-required="true" ng-model="productmaster.BaseHeight" />-->
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <md-input-container class="md-block" flex-gt-sm>
+                    <label>M3 Per Unit (cm)</label>
+                    <input type="text"
+                           ng-model="" ng-required="true" />
+                </md-input-container>
+                <!--<input type="text"  placeholder="0.000" ng-required="true" />-->
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-8">
+        <div class="col-xs-12 col-md-5">
+            <md-input-container class="md-block" flex-gt-sm>
+                <label>1 Packing Unit</label>
+                <md-select ng-model="productmaster.StorageUOM" ng-required="true">
+                    <md-option ng-repeat="item in lookUpData.baseuniList" ng-value="item.Value">
+                        {{item.Text}}
+                    </md-option>
+                </md-select>
+            </md-input-container>       
+            <!--<select 
+                ng-model="productmaster.StorageUOM"
+                ng-required="true"
+                ng-options="s.Value as s.Text for s in lookUpData.baseuniList">
+            </select>-->
+        </div>
+        <div class="col-md-1">
+            <md-input-container class="md-block" flex-gt-sm>
+                <label>=</label>                
+            </md-input-container>
+            <!--<label class="label-control" style="font-weight: bold;">=</label>-->
+        </div>
+        <div class="col-xs-12 col-md-5">
+            <md-input-container class="md-block" flex-gt-sm>
+                <input type="text" ng-model="" ng-required="" />
+            </md-input-container>
+            <!--<input type="text"  placeholder="0" />-->
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-8">
+        <div class="col-xs-12 col-md-5">
+            <md-input-container class="md-block" flex-gt-sm>
+                <label>1 Storage Unit</label>
+                <input type="text"
+                       ng-model="" ng-required="" />
+            </md-input-container>
+            <!--<input type="text"  placeholder="PLT" />-->
+        </div>
+        <div class="col-md-1">
+            <md-input-container class="md-block" flex-gt-sm>
+                <label>=</label>
+            </md-input-container>
+            <!--<label class="label-control" style="font-weight: bold;">=</label>-->
+        </div>
+        <div class="col-xs-12 col-md-5">
+            <md-input-container class="md-block" flex-gt-sm>                
+                <input type="text" ng-model="" ng-required="" />
+            </md-input-container>
+            <!--<input type="text"  placeholder="0" />-->
+        </div>
+    </div>
+</div>

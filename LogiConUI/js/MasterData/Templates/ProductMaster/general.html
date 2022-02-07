@@ -1,0 +1,204 @@
+﻿<div class="row">
+    <div class="col-xs-12 col-md-6">
+        <div class="row">
+            <div class="col-xs-12 col-md-6">
+                <md-input-container class="md-block" flex-gt-sm>
+                    <label>Product Category</label>
+                    <md-select ng-model="productmaster.ProductCategory" ng-required="true">
+                        <md-option ng-repeat="item in lookUpData.productcatList" ng-value="item.Value">
+                            {{item.Text}}
+                        </md-option>
+                    </md-select>
+                </md-input-container>           
+                <!--<select 
+                    ng-model="productmaster.ProductCategory"
+                    ng-required="true"
+                    ng-options="s.Value as s.Text for s in lookUpData.productcatList">
+                </select>-->
+            </div>
+            <div class="col-xs-12 col-md-6">
+                <md-input-container class="md-block" flex-gt-sm>
+                    <input type="text"
+                           ng-model="productmaster.ProductCategoryDescription" />
+                </md-input-container>
+                <!--<input type="text"  ng-model="productmaster.ProductCategoryDescription" />-->
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-md-6">
+                <md-input-container class="md-block" flex-gt-sm>
+                    <label>Commodity</label>
+                    <md-select ng-model="productmaster.CommodityCode" ng-required="true">
+                        <md-option ng-repeat="item in lookUpData.commodityList" ng-value="item.Value">
+                            {{item.Text}}
+                        </md-option>
+                    </md-select>
+                </md-input-container>
+                <!--<select ng-model="productmaster.CommodityCode"
+                        ng-required="true"
+                        ng-options="s.Value as s.Text for s in lookUpData.commodityList"></select>-->
+            </div>
+            <div class="col-xs-12 col-md-6">
+                <md-input-container class="md-block" flex-gt-sm>
+                    <input type="text"
+                           ng-model="productmaster.CommodityDescription" />
+                </md-input-container>
+                <!--<input type="text"  ng-model="productmaster.CommodityDescription"/>-->
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <md-input-container class="md-block" flex-gt-sm>
+                    <label>Bar Code</label>
+                    <input type="text"
+                           ng-model="productmaster.BarCode" ng-required="true" />
+                </md-input-container>           
+                <!--<input type="text"  ng-model="productmaster.BarCode" ng-required="true" />-->
+            </div>
+            <!-- <div class="col-xs-6 col-md-3">
+                <label>Country Of Origin</label>
+            </div>
+            <div class="col-xs-6 col-md-3">
+                <select ></select>
+            </div>-->
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <md-input-container class="md-block">
+                    <label>Remarks</label>
+                    <textarea ng-required="true"
+                              ng-model=""></textarea>
+                </md-input-container>            
+                <!--<textarea ></textarea>-->
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-12 col-md-6">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="card">
+                    <div class="lv-header-alt clearfix m-b-5">
+                        <h3 class="lvh-label">Control Fields</h3>
+                    </div>
+                    <div class="card-body card-padding p-t-25 p-b-25">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-6">
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                            <label>Consignment No.</label>
+                                            <md-select ng-model="productmaster.ConsignmentControlMode" ng-required="true">
+                                                <md-option ng-repeat="item in lookUpData.productControlList" ng-value="item.Value">
+                                                    {{item.Text}}
+                                                </md-option>
+                                            </md-select>
+                                        </md-input-container>                                                                       
+                                         <!--<select 
+                                             ng-model="productmaster.ConsignmentControlMode"
+                                             ng-required="true"
+                                             ng-options="s.Value as s.Text for s in lookUpData.productControlList">
+                                         </select>-->                                        
+                                    </div>
+
+                                    <div class="col-xs-12 col-md-6">
+                                        <md-switch class="md-primary" aria-label="Active Product" ng-model="IsActive">Active Product</md-switch>
+                                    </div>
+
+
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12">                                        
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                            <label>Batch / Lot No.</label>
+                                            <md-select ng-model="productmaster.BatchNoControlMode" ng-required="true">
+                                                <md-option ng-repeat="item in lookUpData.productControlList" ng-value="item.Value">
+                                                    {{item.Text}}
+                                                </md-option>
+                                            </md-select>
+                                        </md-input-container>
+                                         <!--<select 
+                                             ng-model="productmaster.BatchNoControlMode"
+                                             ng-required="true"
+                                             ng-options="s.Value as s.Text for s in lookUpData.productControlList">
+                                         </select>-->                                          
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12">                                        
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                            <label>P / O No.</label>
+                                            <md-select ng-model="productmaster.PONoControlMode" ng-required="true">
+                                                <md-option ng-repeat="item in lookUpData.productControlList" ng-value="item.Value">
+                                                    {{item.Text}}
+                                                </md-option>
+                                            </md-select>
+                                        </md-input-container>
+                                         <!--<select 
+                                             ng-model="productmaster.PONoControlMode"
+                                             ng-required="true"
+                                             ng-options="s.Value as s.Text for s in lookUpData.productControlList">
+                                         </select>-->                                          
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                            <label>Expiry Date</label>
+                                            <md-select ng-model="productmaster.ExpiryDateControlMode" ng-required="true">
+                                                <md-option ng-repeat="item in lookUpData.productControlList" ng-value="item.Value">
+                                                    {{item.Text}}
+                                                </md-option>
+                                            </md-select>
+                                        </md-input-container>
+                                         <!--<select 
+                                             ng-model="productmaster.ExpiryDateControlMode"
+                                             ng-required="true"
+                                             ng-options="s.Value as s.Text for s in lookUpData.productControlList">
+                                         </select>-->     
+                                       
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12">                                        
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                            <label>Serial No.</label>
+                                            <md-select ng-model="productmaster.SerialNoControlMode" ng-required="true">
+                                                <md-option ng-repeat="item in lookUpData.productControlList" ng-value="item.Value">
+                                                    {{item.Text}}
+                                                </md-option>
+                                            </md-select>
+                                        </md-input-container>
+                                         <!--<select 
+                                             ng-model="productmaster.SerialNoControlMode"
+                                             ng-required="true"
+                                             ng-options="s.Value as s.Text for s in lookUpData.productControlList">
+                                         </select>-->                                        
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12">                                        
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                            <label>Manufacture Date</label>
+                                            <md-select ng-model="productmaster.SerialNoControlMode" ng-required="true">
+                                                <md-option ng-repeat="item in lookUpData.productControlList" ng-value="item.Value">
+                                                    {{item.Text}}
+                                                </md-option>
+                                            </md-select>
+                                        </md-input-container>                                  
+                                         <!--<select 
+                                             ng-model="productmaster.SerialNoControlMode"
+                                             ng-required="true"
+                                             ng-options="s.Value as s.Text for s in lookUpData.productControlList">
+                                         </select>-->   
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

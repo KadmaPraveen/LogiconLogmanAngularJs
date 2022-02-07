@@ -1,0 +1,79 @@
+﻿<div class="row">
+    <div class="col-xs-12">
+        <md-button class="md-raised md-primary pull-right" ng-click="CostSheetDetails(-1);"><i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Add</md-button>
+    </div>
+</div>
+<div class="row" >
+    <div class="col-xs-12 col-md-2">
+        <label>Customer</label>
+    </div>
+    <div class="col-xs-12 col-md-4">
+        <input type="text"  />
+    </div>
+    <div class="col-xs-12 col-md-2">
+        <label>Customer</label>
+    </div>
+    <div class="col-xs-12 col-md-4">
+        <input type="text"  />
+    </div>
+</div>
+<div class="row" >
+    <div class="col-xs-12 col-md-2">
+        <label>Billing Status</label>
+    </div>
+    <div class="col-xs-12 col-md-4">
+        <input type="text"  />
+    </div>
+    <div class="col-xs-12 col-md-2">
+        <label>Customer Ref.</label>
+    </div>
+    <div class="col-xs-12 col-md-4">
+        <input type="text"  />
+    </div>
+</div>
+<div class="row" >
+    <div class="col-xs-12">
+         <div class="table-responsive"> <table class="table table-striped table-vmiddle">
+            <thead >
+                <tr>
+                    <th></th>
+                    <th>Order No.</th>
+                    <th>Container No.</th>
+                    <th>Charge Code</th>
+                    <th>Description</th>
+                    <th>Curr.</th>
+                    <th>Ex. Rate</th>
+                    <th>Billing Unit</th>
+                    <th>Qty.</th>
+                    <th>Price</th>
+                    <th>Actual Amt.</th>
+                    <th>Discount Amt.</th>
+                    <th>Total Amt.</th>
+                    <th>GST  Code</th>
+                    <th>Remarks</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="item in costSheetList">
+                    <td></td>
+                    <td>Order No</td>
+                    <td>{{item.ContainerNo}}</td>
+                    <td>{{item.ChargeCode}}</td>
+                    <td>Description</td>
+                    <td>{{item.CurrencyCode}}</td>
+                    <td>{{item.ExchangeRate}}</td>
+                    <td>{{item.BillingUnit}}</td>
+                    <td>{{item.Qty}}</td>
+                    <td>{{item.Price}}</td>
+                    <td>{{item.ActualAmount}}</td>
+                    <td>{{item.DiscountAmount}}</td>
+                    <td>{{item.TotalAmount}}</td>
+                    <td>GST CODE</td>
+                    <td>{{item.Remark}}</td>
+                </tr>
+            </tbody>
+        </table></div>        
+    </div>
+</div>
+
+

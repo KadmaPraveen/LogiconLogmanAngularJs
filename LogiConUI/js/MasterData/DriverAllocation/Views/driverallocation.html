@@ -1,0 +1,145 @@
+﻿<div class="container">
+    <!--ng-controller="DriverAllocationCntrl"-->
+    <div class="card">
+        <div class="lv-header-alt clearfix m-b-5">
+            <h3 class="lvh-label">Driver Allocation</h3>
+        </div>
+        <div class="card-body card-padding p-t-25 p-b-25">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Working Date</label>
+                                <md-select ng-model="" ng-required="">
+                                    <md-option ng-repeat="" ng-value="item.Value">
+                                        {{item.Text}}
+                                    </md-option>
+                                </md-select>
+                            </md-input-container>
+                            <!--<select></select>-->
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-md-6">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Shift Code</label>
+                                <md-select ng-model="" ng-required="">
+                                    <md-option ng-repeat="" ng-value="item.Value">
+                                        {{item.Text}}
+                                    </md-option>
+                                </md-select>
+                            </md-input-container>
+                            <!--<select ></select>-->
+                        </div>
+                        <div class="col-xs-12 col-md-6">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <input type="text" ng-model="" ng-required="" />
+                            </md-input-container>
+                            <!--<input type="text"  />-->
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-md-6">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Start Time</label>
+                                <input type="text" ng-model="" ng-required="" />
+                            </md-input-container>
+                            <!--<input type="text"  />-->
+                        </div>
+
+                        <div class="col-xs-12 col-md-6">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>End Time</label>
+                                <input type="text" ng-model="" ng-required="" />
+                            </md-input-container>
+                            <!--<input type="text"  />-->
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-md-4">
+                    <div class="card">
+                        <div class="card-body card-padding p-t-25 p-b-25">
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <div class="table-responsive">
+                                        <table class="table table-striped table-vmiddle">
+                                            <thead>
+                                                <tr>
+                                                    <th>Zone</th>
+                                                    <th>Dialy Demand</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td></td>
+                                                    <td></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-vmiddle">
+                            <thead>
+                                <tr>
+                                    <th>Driver Id</th>
+                                    <th>Driver Name</th>
+                                    <th>Truck Id</th>
+                                    <th>Reg No.</th>
+                                    <th>Group</th>
+                                    <th>Current Zone</th>
+                                    <th>Shift Code</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div><div class="row">
+                    <div class="col-xs-12  m-t-20 text-right">
+                        <button class="btn btn-primary ng-scope waves-effect"
+                                type="button"
+                                data-ui-sref=""
+                                aria-label="button" uib-tooltip="Save" tooltip-placement="top">
+                            Save
+                        </button>
+                        <!--<md-button class="md-raised md-primary"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Save</md-button>-->
+
+                        <button class="btn btn-danger ng-scope waves-effect"
+                                type="button"
+                                data-ui-sref=""
+                                aria-label="button" uib-tooltip="Delete" tooltip-placement="top">
+                            Delete
+                        </button>
+                        <!--<md-button class="md-raised md-danger"><i class="zmdi zmdi-delete" aria-hidden="true"></i>&nbsp;Delete</md-button>-->
+
+                        <button class="btn btn-info btn-sm"><i class="fa fa-eraser" aria-hidden="true"></i>&nbsp;Clear</button>
+                        <!--<button class="btn btn-warning btn-sm" data-ui-sref="owner"><i class="fa fa-undo" aria-hidden="true"></i>&nbsp;Back</button>-->
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+

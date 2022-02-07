@@ -1,0 +1,336 @@
+﻿<section class="content container" ng-controller="CollectionAdviceCntrl">
+    <script type="text/ng-template" id="filtertemplate.html">
+        <div style="margin: 5px 5px 5px 5px">
+
+        </div>
+    </script>
+    <style type="text/css">
+        .filterPopOver .popover-inner {
+            width: 300px;
+        }
+    </style>
+    <div class="card">
+        <div class="lv-header-alt clearfix m-b-5">
+            <h2 class="lvh-label">Collection Advices</h2>
+            <!--<ul class="lv-actions actions">
+                <li>
+                    <button class="btn bgm-lightgreen btn-icon waves-effect waves-circle m-r-15" type="button" aria-label="button"
+                            uib-popover-template="'filtertemplate.html'"
+                            popover-placement="left-top"
+                            popover-is-open="filterPOIsOpen"
+                            popover-trigger="click outsideClick">
+                        <i class="zmdi zmdi-plus btn-small"></i>
+
+                    </button>
+                </li>
+            </ul>-->
+        </div>
+        <div class="card-body card-padding p-t-25 p-b-25">
+            <uib-accordion close-others="oneAtATime">
+                <div uib-accordion-group class="panel-default" heading="" is-open="status.isFirstOpen" is-disabled="status.isFirstDisabled">
+                    <uib-accordion-heading>
+                        <i class="pull-left zmdi zmdi-hc-fw" ng-class="{'zmdi-minus': status.isFirstOpen, 'zmdi-plus': !status.isFirstOpen}"></i>&nbsp;Advanced Search
+                    </uib-accordion-heading>
+                  
+                        <div class="card-body card-padding ">
+                            <form id="k8InquiryCntrl.frmSearch" name="k8InquiryCntrl.frmSearch" ng-class="{'submitted': SearchSubmitted}" ng-submit="GetTableData(true)" autocomplete="off" novalidate>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                            <label>Filter By</label>
+                                            <md-select ng-model="filterBy">
+                                                <md-option ng-repeat="item in lookUpData.filterTypeList" ng-value="item.Value">
+                                                    {{item.Text}}
+                                                </md-option>
+                                            </md-select>
+                                            <!--<select
+                                ng-model="filterBy"
+                                ng-options="s.Value as s.Text for s in lookUpData.filterTypeList"></select>-->
+                                        </md-input-container>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                            <label>Movement Status</label>
+                                            <md-select ng-model="movementStatus">
+                                                <md-option ng-repeat="item in lookUpData.stateTypeList" ng-value="item.Value">
+                                                    {{item.Text}}
+                                                </md-option>
+                                            </md-select>
+                                            <!--<select
+                                ng-model="movementStatus"
+                                ng-options="s.Value as s.Text for s in lookUpData.stateTypeList"></select>-->
+                                        </md-input-container>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                            <label>Trailer Type</label>
+                                            <md-select ng-model="trailerType">
+                                                <md-option ng-repeat="item in lookUpData.trailerTypeList" ng-value="item.Value">
+                                                    {{item.Text}}
+                                                </md-option>
+                                            </md-select>
+                                            <!--<select
+                                ng-model="trailerType"
+                                ng-options="s.Value as s.Text for s in lookUpData.trailerTypeList"></select>-->
+                                        </md-input-container>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                            <label>Order No.</label>
+
+                                            <input type="text" />
+                                        </md-input-container>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                            <label>Container No.</label>
+
+                                            <input type="text" />
+                                        </md-input-container>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                            <label>Liner Ref.</label>
+
+                                            <input type="text" />
+                                        </md-input-container>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                            <label>Pickup From</label>
+
+                                            <input type="text" />
+                                        </md-input-container>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                            <label>Deliver To</label>
+
+                                            <input type="text" />
+                                        </md-input-container>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                            <label>Pickup Area</label>
+
+                                            <input type="text"
+                                                   class="search-icon"
+                                                   ng-class="{'loadinggif': PortOfLoadingNameLoading}"
+                                                   ng-model="PortOfLoadingName"
+                                                   typeahead-min-length="3"
+                                                   uib-typeahead="d.PortName as d.PortName for d in portResults($viewValue)"
+                                                   typeahead-loading="PortOfLoadingNameLoading"
+                                                   typeahead-wait-ms="100"
+                                                   typeahead-editable="false"
+                                                   typeahead-on-select="PortSelected($item, 'PortOfLoading')"
+                                                   ng-required="true" />
+                                        </md-input-container>
+                                    </div>
+                                    <div class="col-xs-12 col-md-6">
+                                        <div class="text-left">
+                                            <button class="btn btn-primary" type="button" ng-click="filterPOIsOpen = false;">
+                                                <i class="fa fa-search" aria-hidden="true"></i>
+                                                Search
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12 m-t-15">
+                                        
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                  
+                </div>
+            </uib-accordion>
+
+            <div class="row m-b-20">
+                <div class="col-xs-12">
+                    <div class="table-responsive">
+                        <table class="table table-vmiddle">
+                            <thead>
+                                <tr>
+                                    <th>Select</th>
+                                    <th>New</th>
+                                    <th>Closing/Dehire Date & Time</th>
+                                    <th>Request Date & Time</th>
+                                    <th>Container No.</th>
+                                    <th>Type Size</th>
+                                    <th>Job No.</th>
+                                    <th>Customer Name</th>
+                                    <th>Pickup From</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Job No.</label>
+
+                        <input type="text" />
+                    </md-input-container>
+                </div>
+                <div class="col-md-6">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Empty Dehire</label>
+                        <md-select ng-model="" ng-required="">
+                            <md-option ng-repeat="" ng-value="item.Value">
+                                {{item.Text}}
+                            </md-option>
+                        </md-select>
+                        <!--<select></select>-->
+                    </md-input-container>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Container No.</label>
+
+                        <input type="text" />
+                    </md-input-container>
+                </div>
+                <div class="col-md-3">
+                    <md-input-container class="md-block" flex-gt-sm> <input type="text" /></md-input-container>
+                </div>
+                <div class="col-md-6">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Movement</label>
+
+                        <input type="text" />
+                    </md-input-container>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Pickup From</label>
+
+                        <input type="text" />
+                    </md-input-container>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Delivery To</label>
+
+                        <input type="text" />
+                    </md-input-container>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Calling Date</label>
+                        <input mdc-datetime-picker="" class="date-icon" date="true" time="false" ng-model="dt"
+                               ng-required="true" type="text" id="TransactionDate" format="{{DateFormat}}"
+                               min-date="date">
+                        <!--<div class="input-group my-datepicker">
+                            <input type="text" class="form-control input-sm datepicker" uib-datepicker-popup="{{format}}" ng-model="dt" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-default input-sm" ng-click="open1()"><i class="fa fa-calendar" aria-hidden="true"></i></button>
+                            </span>
+                        </div>-->
+                    </md-input-container>
+                </div>
+                <div class="col-md-3">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <input mdc-datetime-picker="" class="date-icon" date="true" time="false" ng-model="dt"
+                               ng-required="true" type="text" id="TransactionDate" format="{{DateFormat}}"
+                               min-date="date">
+                        <!--<div class="input-group my-datepicker">
+                            <input type="text" class="form-control input-sm datepicker" uib-datepicker-popup="{{format}}" ng-model="dt" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-default input-sm" ng-click="open1()"><i class="fa fa-clock-o" aria-hidden="true"></i></button>
+                            </span>
+                        </div>-->
+                    </md-input-container>
+                </div>
+                <div class="col-md-6">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Acknowledge By</label>
+
+                        <input type="text" />
+                    </md-input-container>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        
+                        <label>Request Date</label>
+                        <input mdc-datetime-picker="" class="date-icon" date="true" time="false" ng-model="dt"
+                               ng-required="true" type="text" id="TransactionDate" format="{{DateFormat}}"
+                               min-date="date">
+                        <!--<div class="input-group my-datepicker">
+                            <input type="text" class="form-control input-sm datepicker" uib-datepicker-popup="{{format}}" ng-model="dt" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-default input-sm" ng-click="open1()"><i class="fa fa-calendar" aria-hidden="true"></i></button>
+                            </span>
+                        </div>-->
+                    </md-input-container>
+                </div>
+                <div class="col-md-3">
+                    <md-input-container class="md-block" flex-gt-sm>
+
+                        <input mdc-datetime-picker="" class="date-icon" date="true" time="false" ng-model="dt"
+                               ng-required="true" type="text" id="TransactionDate" format="{{DateFormat}}"
+                               min-date="date">
+                        <!--<div class="input-group my-datepicker">
+                            <input type="text" class="form-control input-sm datepicker" uib-datepicker-popup="{{format}}" ng-model="dt" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-default input-sm" ng-click="open1()"><i class="fa fa-clock-o" aria-hidden="true"></i></button>
+                            </span>
+                        </div>-->
+                    </md-input-container>
+                </div>
+                <div class="col-md-6">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Acknowledge Date</label>
+
+                        <input type="text" />
+                    </md-input-container>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Remarks</label>
+
+                        <textarea rows="3"></textarea>
+                    </md-input-container>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 text-right m-t-15">
+                    <button class="btn btn-primary"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Save</button>
+
+                    <button class="btn btn-primary"><i class="fa fa-print" aria-hidden="true"></i>&nbsp;Print</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</section>

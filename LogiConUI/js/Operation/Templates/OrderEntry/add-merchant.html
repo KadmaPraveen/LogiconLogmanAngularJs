@@ -1,0 +1,104 @@
+﻿
+<form id="frmMerchant" name="frmMerchant" ng-class="{'submitted':submitted}" ng-submit="SaveMerchant(mp)" novalidate>
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" ng-click="cancel();">&times;</button>
+        <h4 class="modal-title">Merchant</h4>
+    </div>
+    <div class="modal-body">
+        <div class="c-overflow" ng-style="{'max-height': iframeHeight - 80 + 'px'}" resize>
+            <div class="modalbodymain">
+                <div class="row ">
+                    <div class="col-xs-12 col-md-2">
+                        <label>Merchant Name</label>
+
+                        <input type="text" class="form-control input-sm" ng-model="mp.MerchantName" ng-required="true" />
+                    </div>
+                    <div class="col-xs-12 col-md-2">
+                        <label>Registration No.</label>
+
+                        <input type="text" class="form-control input-sm" ng-model="mp.RegNo" />
+                    </div>
+                </div>
+                <div class="row ">
+                    <div class="col-xs-12 col-md-2">
+                        <label>GST No.</label>
+                    </div>
+                    <div class="col-xs-12 col-md-4">
+                        <input type="text" class="form-control input-sm" ng-model="mp.TaxID" />
+                    </div>
+                    <div class="col-xs-12 col-md-2">
+                        <label>Contact Person</label>
+                    </div>
+                    <div class="col-xs-12 col-md-4">
+                        <input type="text" class="form-control input-sm" ng-model="mp.BillingCustomer" />
+                    </div>
+                </div>
+                <div class="row ">
+                    <div class="col-xs-12 col-md-2">
+                        <label>Address</label>
+                    </div>
+                    <div class="col-xs-12 col-md-4">
+                        <input type="text" class="form-control input-sm" ng-model="mp.address.Address1" ng-required="true" />
+                    </div>
+                    <div class="col-xs-12 col-md-2">
+                        <label>Post Code</label>
+                    </div>
+                    <div class="col-xs-12 col-md-4">
+                        <input type="text" class="form-control input-sm" ng-model="mp.address.ZipCode" ng-required="true" logicon-number />
+                    </div>
+                </div>
+                <div class="row ">
+                    <div class="col-xs-12 col-md-2">
+                        <label></label>
+                    </div>
+                    <div class="col-xs-12 col-md-4">
+                        <input type="text" class="form-control input-sm" ng-model="mp.address.Address2" ng-required="true" />
+                    </div><div class="col-xs-12 col-md-2">
+                        <label>State</label>
+                    </div>
+                    <div class="col-xs-12 col-md-4">
+                        <input type="text" class="form-control input-sm" ng-model="mp.address.State" ng-required="true" />
+                    </div>
+                </div>
+                <div class="row ">
+                    <div class="col-xs-12 col-md-2">
+                        <label>City / Suburb</label>
+                    </div>
+                    <div class="col-xs-12 col-md-4">
+                        <input type="text" class="form-control input-sm" ng-model="mp.address.City" ng-required="true" />
+                    </div>
+
+                    <div class="col-xs-12 col-md-2">
+                        <label>Country</label>
+                    </div>
+                    <div class="col-xs-12 col-md-4">
+                        <!--<select class="form-control input-sm"
+                        ng-model="address.CountryCode"
+                        ng-options="s.CompanyName as s.CompanyName for s in CountriesList"
+                        ng-required="true"></select>-->
+                        <input type="text"
+                               class="search-icon"
+                               ng-class="{'loadinggif': address.CountryNameLoading}"
+                               placeholder="Country"
+                               ng-model="mp.address.CountryName"
+                               typeahead-min-length="3"
+                               uib-typeahead="s.Text as s.Text for s in countryResults($viewValue)"
+                               typeahead-loading="mp.address.CountryNameLoading"
+                               typeahead-wait-ms="100"
+                               typeahead-editable="false"
+                               typeahead-on-select="countrySelect($item)" />
+                    </div>
+                </div>
+            </div>
+            </div>
+</div>
+            <div class="modal-footer">
+                <div class="row">
+                    <div class="col-xs-12 col-md-9"></div>
+                    <div class="col-md-3 pull-right">
+                        <button class="btn btn-primary btn-sm" ng-click="submitted = true"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Save</button>
+                        <button type="button" class="btn btn-default btn-sm" ng-click="cancel();"><i class="fa fa-times" aria-hidden="true"></i>&nbsp;Close</button>
+                    </div>
+                </div>
+            </div>
+</form>

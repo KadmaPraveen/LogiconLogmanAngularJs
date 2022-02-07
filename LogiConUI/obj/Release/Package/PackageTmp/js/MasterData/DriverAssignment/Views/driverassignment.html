@@ -1,0 +1,82 @@
+<div class="container"> <!--ng-controller="DriverAssignmentCntrl"-->
+    <div class="card">
+        <div class="lv-header-alt clearfix m-b-5">
+            <h3 class="lvh-label">Driver Assignment</h3>
+        </div>
+        <div class="card-body card-padding p-t-25 p-b-25">
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2">
+                    <div class="row">
+                        <div class="col-xs-12 col-md-4">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Group</label>
+                                <md-select ng-model="" ng-required="">
+                                    <md-option ng-repeat="" ng-value="item.Value">
+                                        {{item.Text}}
+                                    </md-option>
+                                </md-select>
+                            </md-input-container>
+                            <!--<select></select>-->
+            	</div>
+                        <div class="col-xs-12 col-md-4">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <input type="text" ng-model="" ng-required="" />
+                            </md-input-container>
+                            <!--<input type="text" />-->
+                </div>
+                <div class="col-xs-12 col-md-4">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Year</label>
+                                <md-select ng-model="" ng-required="">
+                                    <md-option ng-repeat="" ng-value="item.Value">
+                                        {{item.Text}}
+                                    </md-option>
+                                </md-select>
+                            </md-input-container>
+                            <!--<select></select>-->
+                </div>
+                </div>
+                </div>
+            </div>
+           
+            <div class="row">
+                <div class="col-xs-12 col-md-4">
+                    <div class="card">
+                        <div class="card-body card-padding p-t-25 p-b-25">
+                            <div class="table-responsive">
+                                <table class="table table-striped table-vmiddle">
+                                    <thead>
+                                        <tr>
+                                            <th>Day</th>
+                                            <th>Zone</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xs-12 col-md-8">
+                    <div class="card">
+                        <div class="card-body card-padding p-t-25 p-b-25">
+                            <div class="table-responsive">
+                                <table class="table table-striped table-vmiddle">
+                                    <thead>
+                                        <tr>
+                                            <th>Select</th>
+                                            <th>Driver Id</th>
+                                            <th>Driver Name</th>
+                                            <th>Truck Id</th>
+                                            <th>Reg No</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                    </div>
+                </div>
+            </div>
+</div>

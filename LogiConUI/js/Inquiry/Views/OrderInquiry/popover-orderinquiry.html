@@ -1,0 +1,146 @@
+﻿<style class="cp-pen-styles">
+    .timeline {
+        list-style-type: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .li {
+        transition: all 200ms ease-in;
+    }
+
+    .timestamp {
+        margin-bottom: 20px;
+        padding: 0px 30px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        font-weight: 100;
+    }
+
+    .status {
+        /*padding: 0px 40px;*/
+        display: flex;
+        justify-content: center;
+        border-top: 2px solid #D6DCE0;
+        position: relative;
+        transition: all 200ms ease-in;
+    }
+
+        .status h4 {
+            font-weight: 600;
+        }
+
+        .status:before {
+            content: "";
+            width: 25px;
+            height: 25px;
+            background-color: white;
+            border-radius: 25px;
+            border: 1px solid #ddd;
+            position: absolute;
+            top: -15px;
+            left: 42%;
+            transition: all 200ms ease-in;
+        }
+
+    .li.complete .status {
+        border-top: 2px solid #66DC71;
+    }
+
+        .li.complete .status:before {
+            background-color: #66DC71;
+            border: none;
+            transition: all 200ms ease-in;
+        }
+
+        .li.complete .status h5 {
+            color: #66DC71;
+        }
+
+    @media (min-device-width: 320px) and (max-device-width: 700px) {
+        .timeline {
+            list-style-type: none;
+            display: block;
+        }
+
+        .li {
+            transition: all 200ms ease-in;
+            display: flex;
+            width: inherit;
+        }
+
+        .timestamp {
+            width: 100px;
+        }
+
+        .status:before {
+            left: -8%;
+            top: 30%;
+            transition: all 200ms ease-in;
+        }
+
+        .popovercontent {
+            height: 125px !important;
+            padding: 15px;
+            margin-right: auto;
+            margin-left: auto;
+            padding-left: 15px;
+            padding-right: 15px;
+        }
+    }
+</style>
+<div class="popovercontent">
+    <div class="row">
+        <div class="col-xs-12">
+            <ul class="timeline" id="timeline">
+                <li class="li complete">
+                    <div class="timestamp">
+                        <span class="author">EDI&nbsp;</span>
+                        <span class="date">09/08/2016</span>
+                    </div>
+                    <div class="status">
+                        <h5>Web Order&nbsp;&nbsp;</h5>
+                    </div>
+                </li>
+                <li class="li complete">
+                    <div class="timestamp">
+                        <span class="author">Admin</span>
+                        <span class="date">09/08/2016</span>
+                    </div>
+                    <div class="status">
+                        <h5>Order Accepted</h5>
+                    </div>
+                </li>
+                <li class="li complete">
+                    <div class="timestamp">
+                        <span class="author">User1</span>
+                        <span class="date">10/08/2016</span>
+                    </div>
+                    <div class="status">
+                        <h5>Job Opened</h5>
+                    </div>
+                </li>
+                <li class="li complete">
+                    <div class="timestamp">
+                        <span class="author">Cashier</span>
+                        <span class="date">10/08/2016</span>
+                    </div>
+                    <div class="status">
+                        <h5>Invoice Created</h5>
+                    </div>
+                </li>
+                <li class="li">
+                    <div class="timestamp">
+                        <span class="author">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <span class="date">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                    </div>
+                    <div class="status">
+                        <h5>Order Closed</h5>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

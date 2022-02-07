@@ -1,0 +1,15 @@
+D:\LogiConUI\LogiConUI\bin\ApplicationInsights.config
+D:\LogiConUI\LogiConUI\bin\LogiConUI.dll.config
+D:\LogiConUI\LogiConUI\bin\LogiConUI.dll
+D:\LogiConUI\LogiConUI\bin\LogiConUI.pdb
+D:\LogiConUI\LogiConUI\obj\Debug\LogiConUI.csprojResolveAssemblyReference.cache
+D:\LogiConUI\LogiConUI\obj\Debug\LogiConUI.dll
+D:\LogiConUI\LogiConUI\obj\Debug\LogiConUI.pdb
+D:\AngularJs\LogiConUI\LogiConUI\LogiConUI\bin\ApplicationInsights.config
+D:\AngularJs\LogiConUI\LogiConUI\LogiConUI\bin\LogiConUI.dll.config
+D:\AngularJs\LogiConUI\LogiConUI\LogiConUI\bin\LogiConUI.dll
+D:\AngularJs\LogiConUI\LogiConUI\LogiConUI\bin\LogiConUI.pdb
+D:\AngularJs\LogiConUI\LogiConUI\LogiConUI\obj\Debug\LogiConUI.csproj.AssemblyReference.cache
+D:\AngularJs\LogiConUI\LogiConUI\LogiConUI\obj\Debug\LogiConUI.csproj.CoreCompileInputs.cache
+D:\AngularJs\LogiConUI\LogiConUI\LogiConUI\obj\Debug\LogiConUI.dll
+D:\AngularJs\LogiConUI\LogiConUI\LogiConUI\obj\Debug\LogiConUI.pdb

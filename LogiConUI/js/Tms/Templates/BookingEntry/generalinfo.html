@@ -1,0 +1,787 @@
+﻿<style>
+    .custom-popup-wrapper {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        z-index: 1000;
+        display: none;
+        background-color: #f9f9f9;
+    }
+
+        .custom-popup-wrapper > .message {
+            padding: 10px 20px;
+            border-bottom: 1px solid #ddd;
+            color: #868686;
+        }
+
+        .custom-popup-wrapper > .dropdown-menu {
+            position: static;
+            float: none;
+            display: block;
+            min-width: 160px;
+            background-color: transparent;
+            border: none;
+            border-radius: 0;
+            box-shadow: none;
+        }
+
+    tr.dropdown-menu {
+        display: block;
+    }
+
+    .mytable {
+        background-color: #fff;
+        -webkit-background-clip: padding-box;
+        background-clip: padding-box;
+        border: 1px solid #ccc;
+        border: 1px solid rgba(0,0,0,.15);
+        border-radius: 4px;
+        -webkit-box-shadow: 0 6px 12px rgba(0,0,0,.175);
+        box-shadow: 0 6px 12px rgba(0,0,0,.5);
+        position: absolute;
+        width: 800px;
+        z-index: 99999;
+    }
+
+        .mytable thead tr {
+            background-color: #367fa9;
+            color: #fff;
+        }
+</style>
+<!--<form name="frmgeneralinfoPort" id="frmgeneralinfoPort" ng-submit="generalinfoPort(gp)" ng-class="{'submitted':submitted}" novalidate>-->
+<div class="row">
+
+    <div class="col-xs-12 col-md-6">
+        <div class="card">
+            <div class="lv-header-alt clearfix m-b-5">
+                <h3 class="lvh-label">General</h3>
+            </div>
+            <div class="card-body card-padding p-t-25 p-b-25">
+
+                <div class="row">
+                    <div class="col-xs-12 col-md-2">
+                        <label>Forwarder</label>
+                    </div>
+                    <div class="col-xs-12 col-md-10">
+                        <input type="text"
+                               class="search-icon"
+                               ng-class="{'loadinggif': bookingHeader.FFNameLoading}"
+                               placeholder="Search Customer"
+                               ng-model="bookingHeader.ForwarderName"
+                               typeahead-min-length="3"
+                               uib-typeahead="d.Text as d.Text for d in ForwarderResults($viewValue)"
+                               typeahead-loading="bookingHeader.FFNameLoading"
+                               typeahead-wait-ms="1000"
+                               typeahead-editable="false"
+                               ng-required="true"
+                               typeahead-on-select="CustomerSelected($item, 'ForwarderCode')" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-md-2">
+                        <label>Shipping Liner</label>
+                    </div>
+                    <div class="col-xs-12 col-md-10">
+                        <input type="text" class="form-control input-sm" ng-model="bookingHeader.ShippingAgent" />
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-12 col-md-2">
+                        <label>Owner Code</label>
+                    </div>
+                    <div class="col-xs-12 col-md-10">
+                        <input type="text" class="form-control input-sm" ng-model="bookingHeader.OwnerCode" ng-required="true" />
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-12 col-md-2">
+                        <label>Mode of Transport</label>
+                    </div>
+                    <div class="col-xs-12 col-md-4">
+                        <select class="form-control input-sm"
+                                ng-model="bookingHeader.TransportType"
+                                ng-options="s.Value as s.Text for s in lookUpData.transportList"
+                                ng-required="true"
+                                ng-change="transportTypeChanged()"></select>
+                    </div>
+
+
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-md-2">
+                        <label>Job Type</label>
+                    </div>
+                    <div class="col-xs-12 col-md-4">
+                        <select class="form-control input-sm"
+                                ng-model="bookingHeader.BookingType"
+                                ng-options="s.Value as s.Text for s in lookUpData.bookingType"
+                                ng-change="bookingTypeChange()" ng-required="true"></select>
+                    </div>
+                    <div class="col-xs-12 col-md-2">
+                        <label>Order Type</label>
+                    </div>
+                    <div class="col-xs-12 col-md-4">
+                        <select ng-disabled="bookingHeader.BookingType == null"
+                                class="form-control input-sm"
+                                ng-model="bookingHeader.OrderType"
+                                ng-options="s.Value as s.Text for s in lookUpData.orderTypeList"
+                                ng-required="true"></select>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-12 col-md-2">
+                        <label>Booking No</label>
+                    </div>
+                    <div class="col-xs-12 col-md-4">
+                        <input type="text" class="form-control input-sm" ng-model="bookingHeader.BookingNo" ng-required="true" />
+                    </div>
+                    <div class="col-xs-12 col-md-2">
+                        <label>Booking Date</label>
+                    </div>
+                    <div class="col-xs-12 col-md-4">
+                        <div class="dropdown">
+                            <a class="dropdown-toggle" id="BookingDate" role="button" data-toggle="dropdown">
+                                <div class="input-group">
+                                    <input type="text"
+                                           class="form-control input-sm datepicker"
+                                           ng-model="bookingHeader.OrderDate"
+                                           ng-required="true"
+                                           date-time-input="MM/DD/YYYY">
+                                    <span class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true"></i></span>
+                                </div>
+                            </a>
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                <datetimepicker ng-model="bookingHeader.BookingDate"
+                                                data-datetimepicker-config="{
+                                        dropdownSelector: '#BookingDate',
+                                        startView: 'day',
+                                        minView: 'day' }" />
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-12 col-md-2">
+                        <label>BL No</label>
+                    </div>
+                    <div class="col-xs-12 col-md-4">
+                        <input type="text" class="form-control input-sm" ng-model="bookingHeader.BLNo" ng-required="true" />
+                    </div>
+                </div>
+                <div class="row">
+
+
+
+                    <div class="col-xs-12 col-md-2">
+                        <label>Customer</label>
+                    </div>
+                    <div class="col-xs-12 col-md-10">
+                        <input type="text"
+                               class="search-icon"
+                               ng-class="{'loadinggif': bookingHeader.CustomerNameLoading}"
+                               placeholder="Search Customer"
+                               ng-model="bookingHeader.CustomerName"
+                               typeahead-min-length="3"
+                               uib-typeahead="d.Text as d.Text for d in CustomerResults($viewValue)"
+                               typeahead-loading="bookingHeader.CustomerNameLoading"
+                               typeahead-wait-ms="1000"
+                               typeahead-editable="false"
+                               ng-required="true"
+                               typeahead-on-select="CustomerSelected($item, 'CustomerCode')" />
+                    </div>
+                </div>
+                <div class="row">
+
+                </div>
+
+
+
+
+
+                <div class="row">
+                    <div class="col-xs-12 col-md-2">
+                        <label>Loading Port</label>
+                    </div>
+                    <div class="col-xs-12 col-md-6">
+                        <input type="text"
+                               class="search-icon"
+                               ng-class="{'loadinggif': bookingHeader.LoadingPortNameLoading}"
+                               placeholder="Search Port"
+                               ng-model="bookingHeader.LoadingPort"
+                               typeahead-min-length="3"
+                               uib-typeahead="d.PortName as d.PortName for d in PortResults($viewValue)"
+                               typeahead-loading="bookingHeader.LoadingPortNameLoading"
+                               typeahead-wait-ms="1000"
+                               typeahead-editable="false"
+                               ng-required="true"
+                               typeahead-on-select="CustomerSelected($item, 'LoadingPort')" />
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-md-2">
+                        <label>Discharge Port</label>
+                    </div>
+                    <div class="col-xs-12 col-md-6">
+                        <input type="text"
+                               class="search-icon"
+                               ng-class="{'loadinggif': bookingHeader.DischargePortNameLoading}"
+                               placeholder="Search Port"
+                               ng-model="bookingHeader.DischargePort"
+                               typeahead-min-length="3"
+                               uib-typeahead="d.PortName as d.PortName for d in PortResults($viewValue)"
+                               typeahead-loading="bookingHeader.DischargePortNameLoading"
+                               typeahead-wait-ms="1000"
+                               typeahead-editable="false"
+                               ng-required="true"
+                               typeahead-on-select="CustomerSelected($item, 'DischargePort')" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-md-2">
+                        <label>Destination Port</label>
+                    </div>
+                    <div class="col-xs-12 col-md-6">
+                        <input type="text"
+                               class="search-icon"
+                               ng-class="{'loadinggif': bookingHeader.DestinationPortNameLoading}"
+                               placeholder="Search Port"
+                               ng-model="bookingHeader.DestinationPort"
+                               typeahead-min-length="3"
+                               uib-typeahead="d.PortName as d.PortName for d in PortResults($viewValue)"
+                               typeahead-loading="bookingHeader.DestinationPortNameLoading"
+                               typeahead-wait-ms="1000"
+                               typeahead-editable="false"
+                               ng-required="true"
+                               typeahead-on-select="CustomerSelected($item, 'DestinationPort')" />
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-12 col-md-6">
+        <div class="card">
+            <div class="lv-header-alt clearfix m-b-5">
+                <h3 class="lvh-label">Other Information</h3>
+            </div>
+            <div class="card-body card-padding p-t-25 p-b-25">
+                <div class="row">
+                    <div class="col-xs-12 col-md-2">
+                        <label>Total Qty</label>
+                    </div>
+                    <div class="col-xs-12 col-md-4">
+                        <input type="text" class="form-control input-sm" ng-model="bookingHeader.TotalQty" ng-required="true" logicon-number />
+                    </div>
+                    <div class="col-xs-12 col-md-2">
+                        <label>UOM</label>
+                    </div>
+                    <div class="col-xs-12 col-md-4">
+                        <select class="form-control input-sm"
+                                ng-model="bookingHeader.UOM"
+                                ng-options="s.Value as s.Text for s in lookUpData.UOMList" ng-required="true"></select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-md-2">
+                        <label>Total Volume</label>
+                    </div>
+                    <div class="col-xs-12 col-md-4">
+                        <input type="text" class="form-control input-sm" ng-model="bookingHeader.TotalVolume" ng-required="true" logicon-decimal />
+                    </div>
+                    <div class="col-xs-12 col-md-2">
+                        <label>Total Weight</label>
+                    </div>
+                    <div class="col-xs-12 col-md-4">
+                        <input type="text" class="form-control input-sm" ng-model="bookingHeader.TotalWeight" ng-required="true" logicon-decimal />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-md-2">
+                        <label>Commodity</label>
+                    </div>
+                    <div class="col-xs-12 col-md-10">
+                        <input type="text" class="form-control input-sm" ng-model="bookingHeader.BookingText.CommodityDesc" ng-required="true" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-md-2">
+                        <label>Marks & No</label>
+                    </div>
+                    <div class="col-xs-12 col-md-10">
+                        <input type="text" class="form-control input-sm" ng-model="bookingHeader.BookingText.MarksAndNos" ng-required="true" />
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="col-xs-12">
+                        <label>Special Instruction</label>
+                        <textarea class="form-control input-sm" ng-model="bookingHeader.BookingText.SpecialInstruction"></textarea>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <label>Remarks</label>
+                        <textarea class="form-control input-sm" ng-model="bookingHeader.BookingText.Remarks"></textarea>
+                    </div>
+                </div>
+
+
+
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+
+    <div class="col-xs-12 col-md-6" ng-if="bookingHeader.TransportType == 1021">
+        <div class="card">
+            <div class="lv-header-alt clearfix m-b-5">
+                <h3 class="lvh-label">Vessel & Voyage Details</h3>
+            </div>
+            <div class="card-body card-padding p-t-25 p-b-25">
+                <div class="row">
+                    <div class="col-xs-12 col-md-2">
+                        <label>Vessel Code</label>
+                    </div>
+                    <div class="col-xs-12 col-md-10">
+                        <script type="text/ng-template" id="customTemplate.html">
+                            <table ng-show="isOpen() && !moveInProgress"
+                                   aria-hidden="{{!isOpen()}}"
+                                   class="table table-striped table-vmiddle table-hover table-bordered mytable"
+                                   ng-style="{top: position().top+'px', left: position().left+'px'}"
+                                   style="">
+                                <thead>
+                                    <tr>
+                                        <th>Voyage</th>
+                                        <th>Vessel Name</th>
+                                        <th>ETA</th>
+                                        <th>ETD</th>
+                                        <th>Terminal</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="match in matches track by $index" ng-click="selectMatch($index)">
+                                        <td>{{match.model.VoyageNo}}</td>
+                                        <td>{{match.model.VesselName}}</td>
+                                        <td>{{match.model.ETA | date :  'dd/MM/yyyy hh:mm a' }}</td>
+                                        <td>{{match.model.ETD | date :  'dd/MM/yyyy hh:mm a' }}</td>
+                                        <td>{{match.model.TerminalName}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </script>
+
+                        <input type="text"
+                               class="search-icon"
+                               ng-class="{'loadinggif': bookingHeader.VesselCodeLoading}"
+                               placeholder="Search Vessel"
+                               ng-model="bookingHeader.VesselName"
+                               typeahead-min-length="3"
+                               uib-typeahead="d.Text as d.Text for d in VesselCodeLoadingResults($viewValue)"
+                               typeahead-loading="bookingHeader.VesselCodeLoading"
+                               typeahead-wait-ms="1000"
+                               typeahead-editable="false"
+                               ng-required="true"
+                               ng-blur="OnBlur('VesselName','VesselID')"
+                               typeahead-on-select="CustomerSelected($item, 'VesselID')" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-md-2">
+                        <label>Voyage No</label>
+                    </div>
+                    <div class="col-xs-12 col-md-4">
+
+                        <input type="text"
+                               class="search-icon"
+                               ng-disabled="bookingHeader.BookingType == null || bookingHeader.AgentName == null"
+                               ng-class="{'loadinggif': bookingHeader.VoyageNoNameLoading}"
+                               placeholder="Search Customer"
+                               ng-model="bookingHeader.VoyageNo"
+                               typeahead-min-length="3"
+                               uib-typeahead="d.VoyageNo for d in VoyageLoadingResults($viewValue)"
+                               typeahead-loading="bookingHeader.VoyageNoNameLoading"
+                               typeahead-popup-template-url="customTemplate.html"
+                               typeahead-wait-ms="1000"
+                               typeahead-editable="false"
+                               ng-required="true"
+                               typeahead-on-select="VoyageSearchSelect($item)" />
+                    </div>
+                    <div class="col-md-1">
+                        <md-button class="md-raised md-primary"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Search</md-button>
+                    </div>
+                    <div class="col-xs-12 col-md-2">
+                        <label>Wharf</label>
+                    </div>
+                    <div class="col-xs-6 col-md-3">
+                        <select class="form-control input-sm"
+                                ng-model="bookingHeader.Wharf"
+                                ng-options="s.Value as s.Text for s in lookUpData.WharfList" ng-required="true"></select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-md-2">
+                        <label>ETA</label>
+                    </div>
+                    <div class="col-xs-12 col-md-4">
+                        <div class="dropdown">
+                            <a class="dropdown-toggle" id="ETA" role="button" data-toggle="dropdown">
+                                <div class="input-group">
+                                    <input type="text"
+                                           class="form-control input-sm datepicker"
+                                           ng-model="bookingHeader.ETA"
+                                           ng-required="true"
+                                           date-time-input="DD/MM/YYYY hh:mm A">
+                                    <span class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true"></i></span>
+                                </div>
+                            </a>
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                <datetimepicker ng-model="bookingHeader.ETA"
+                                                data-datetimepicker-config="{
+                                        dropdownSelector: '#ETA',
+                                        startView: 'day',
+                                        minView: 'minute' }" />
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-md-2">
+                        <label>ETD</label>
+                    </div>
+                    <div class="col-xs-12 col-md-4">
+                        <div class="dropdown">
+                            <a class="dropdown-toggle" id="ETD" role="button" data-toggle="dropdown">
+                                <div class="input-group">
+                                    <input type="text"
+                                           class="form-control input-sm datepicker"
+                                           ng-model="bookingHeader.ETD"
+                                           ng-required="true"
+                                           date-time-input="DD/MM/YYYY hh:mm A">
+                                    <span class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true"></i></span>
+                                </div>
+                            </a>
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                <datetimepicker ng-model="bookingHeader.ETD"
+                                                data-datetimepicker-config="{
+                                        dropdownSelector: '#ETD',
+                                        startView: 'day',
+                                        minView: 'minute' }" />
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-md-2">
+                        <label>CY Cut-Off(Dry)</label>
+                    </div>
+                    <div class="col-xs-12 col-md-4">
+                        <div class="dropdown">
+                            <a class="dropdown-toggle" id="YardCutOffDry" role="button" data-toggle="dropdown">
+                                <div class="input-group">
+                                    <input type="text"
+                                           class="form-control input-sm datepicker"
+                                           ng-model="bookingHeader.YardCutOffDry"
+                                           ng-required="true"
+                                           date-time-input="DD/MM/YYYY hh:mm A">
+                                    <span class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true"></i></span>
+                                </div>
+                            </a>
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                <datetimepicker ng-model="bookingHeader.YardCutOffDry"
+                                                data-datetimepicker-config="{
+                                        dropdownSelector: '#YardCutOffDry',
+                                        startView: 'day',
+                                        minView: 'minute' }" />
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-md-4">
+                        <div class="checkbox m-b-15">
+                            <label>
+                                <input type="checkbox" value="" aria-label="Allow Late Gate In" ng-model="bookingHeader.AllowLateGate">
+                                <i class="input-helper"></i>
+                                Allow Late Gate In
+                            </label>
+                        </div>
+                        <!--<md-checkbox class="md-primary" aria-label="Allow Late Gate In" ng-model="bookingHeader.AllowLateGate">Allow Late Gate In</md-checkbox>-->
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-md-2">
+                        <label>CY Cut-Off(reefer)</label>
+                    </div>
+                    <div class="col-xs-12 col-md-4">
+                        <div class="dropdown">
+                            <a class="dropdown-toggle" id="YardCutOffReefer" role="button" data-toggle="dropdown">
+                                <div class="input-group">
+                                    <input type="text"
+                                           class="form-control input-sm datepicker"
+                                           ng-model="bookingHeader.YardCutOffReefer"
+                                           ng-required="true"
+                                           date-time-input="DD/MM/YYYY hh:mm A">
+                                    <span class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true"></i></span>
+                                </div>
+                            </a>
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                <datetimepicker ng-model="bookingHeader.YardCutOffReefer"
+                                                data-datetimepicker-config="{
+                                        dropdownSelector: '#YardCutOffReefer',
+                                        startView: 'day',
+                                        minView: 'minute' }" />
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-md-2">
+                        <label>CFS Cut-Off(Dry)</label>
+                    </div>
+                    <div class="col-xs-12 col-md-4">
+                        <div class="dropdown">
+                            <a class="dropdown-toggle" id="CFSCutOffDry" role="button" data-toggle="dropdown">
+                                <div class="input-group">
+                                    <input type="text"
+                                           class="form-control input-sm datepicker"
+                                           ng-model="bookingHeader.CFSCutOffDry"
+                                           ng-required="true"
+                                           date-time-input="DD/MM/YYYY hh:mm A">
+                                    <span class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true"></i></span>
+                                </div>
+                            </a>
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                <datetimepicker ng-model="bookingHeader.CFSCutOffDry"
+                                                data-datetimepicker-config="{
+                                        dropdownSelector: '#CFSCutOffDry',
+                                        startView: 'day',
+                                        minView: 'minute' }" />
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-md-2">
+                        <label>CFS Cut-Off(reefer)</label>
+                    </div>
+                    <div class="col-xs-12 col-md-4">
+                        <div class="dropdown">
+                            <a class="dropdown-toggle" id="CFSCutOffReefer" role="button" data-toggle="dropdown">
+                                <div class="input-group">
+                                    <input type="text"
+                                           class="form-control input-sm datepicker"
+                                           ng-model="bookingHeader.CFSCutOffReefer"
+                                           ng-required="true"
+                                           date-time-input="DD/MM/YYYY hh:mm A">
+                                    <span class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true"></i></span>
+                                </div>
+                            </a>
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                <datetimepicker ng-model="bookingHeader.CFSCutOffReefer"
+                                                data-datetimepicker-config="{
+                                        dropdownSelector: '#CFSCutOffReefer',
+                                        startView: 'day',
+                                        minView: 'minute' }" />
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-md-2">
+                        <label>Port Cut-Off(Dry)</label>
+                    </div>
+                    <div class="col-xs-12 col-md-4">
+                        <div class="dropdown">
+                            <a class="dropdown-toggle" id="PortCutOff" role="button" data-toggle="dropdown">
+                                <div class="input-group">
+                                    <input type="text"
+                                           class="form-control input-sm datepicker"
+                                           ng-model="bookingHeader.PortCutOffDry"
+                                           ng-required="true"
+                                           date-time-input="DD/MM/YYYY hh:mm A">
+                                    <span class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true"></i></span>
+                                </div>
+                            </a>
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                <datetimepicker ng-model="bookingHeader.PortCutOffDry"
+                                                data-datetimepicker-config="{
+                                        dropdownSelector: '#PortCutOff',
+                                        startView: 'day',
+                                        minView: 'minute' }" />
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-md-2">
+                        <label>Port Cut-Off(reefer)</label>
+                    </div>
+                    <div class="col-xs-12 col-md-4">
+                        <div class="dropdown">
+                            <a class="dropdown-toggle" id="PortCutOffReefer" role="button" data-toggle="dropdown">
+                                <div class="input-group">
+                                    <input type="text"
+                                           class="form-control input-sm datepicker"
+                                           ng-model="bookingHeader.PortCutOffReefer"
+                                           ng-required="true"
+                                           date-time-input="DD/MM/YYYY hh:mm A">
+                                    <span class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true"></i></span>
+                                </div>
+                            </a>
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                <datetimepicker ng-model="bookingHeader.PortCutOffReefer"
+                                                data-datetimepicker-config="{
+                                        dropdownSelector: '#PortCutOffReefer',
+                                        startView: 'day',
+                                        minView: 'minute' }" />
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="row">
+                    <div class="col-xs-12 col-md-2">
+                        <label>Ship Call No</label>
+                    </div>
+                    <div class="col-xs-12 col-md-4">
+                        <input type="text" class="form-control input-sm" ng-model="bookingHeader.ShipCallNo" ng-required="true" />
+                    </div>
+                    <div class="col-xs-12 col-md-2">
+                        <label>Vessel Call Sign</label>
+                    </div>
+                    <div class="col-xs-12 col-md-4">
+                        <input type="text" class="form-control input-sm" ng-model="bookingHeader.ShipCallNo" ng-required="true" />
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-12 col-md-6" ng-if="bookingHeader.TransportType == 1020">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="card">
+                    <div class="lv-header-alt clearfix m-b-5">
+                        <h3 class="lvh-label">FLIGHT DETAILS</h3>
+                    </div>
+                    <div class="card-body card-padding p-t-25 p-b-25">
+                        <div class="row">
+                            <div class="col-xs-6 col-md-3">
+                                <label>Flight No.</label>
+                            </div>
+                            <div class="col-xs-12 col-md-6">
+                                <input type="text" class="form-control input-sm" ng-model="bookingHeader.FlightNo" ng-maxlength="70" logicon-limit />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-6 col-md-3">
+                                <label>ARN No.</label>
+                            </div>
+                            <div class="col-xs-12 col-md-6">
+                                <input type="text" class="form-control input-sm" ng-model="bookingHeader.ARNNo" ng-maxlength="70" logicon-limit />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-6 col-md-3">
+                                <label>ETA</label>
+                            </div>
+                            <div class="col-xs-12 col-md-6">
+                                <div class="dropdown">
+                                    <a class="dropdown-toggle" id="ETA" role="button" data-toggle="dropdown">
+                                        <div class="input-group">
+                                            <input type="text"
+                                                   class="form-control input-sm datepicker" ng-model="bookingHeader.ETA" ng-required="true"
+                                                   date-time-input="{{dateTimeFormat}}">
+                                            <span class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true"></i></span>
+                                        </div>
+                                    </a>
+                                    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                        <datetimepicker ng-model="bookingHeader.ETA"
+                                                        data-datetimepicker-config="{ dropdownSelector: '#ETA', startView:'day', minView:'minute' }" />
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-12 col-md-6" ng-if="bookingHeader.TransportType == 1022">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="card">
+                    <div class="lv-header-alt clearfix m-b-5">
+                        <h3 class="lvh-label">RAIL DETAILS</h3>
+                    </div>
+                    <div class="card-body card-padding p-t-25 p-b-25">
+                        <div class="row">
+                            <div class="col-xs-6 col-md-3">
+                                <label>Wagon No.</label>
+                            </div>
+                            <div class="col-xs-12 col-md-6">
+                                <input type="text" class="form-control input-sm" ng-model="bookingHeader.WagonNo" ng-maxlength="70" logicon-limit />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-12 col-md-6" ng-if="bookingHeader.TransportType == 1023">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="card">
+                    <div class="lv-header-alt clearfix m-b-5">
+                        <h3 class="lvh-label">ROAD DETAILS</h3>
+                    </div>
+                    <div class="card-body card-padding p-t-25 p-b-25">
+                        <div class="row">
+                            <div class="col-xs-6 col-md-3">
+                                <label>Vehicle Registration No. 1</label>
+                            </div>
+                            <div class="col-xs-12 col-md-6">
+                                <input type="text" class="form-control input-sm" ng-model="bookingHeader.VehicleNo1" ng-maxlength="70" logicon-limit />
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-xs-6 col-md-3">
+                                <label>Vehicle Registration No. 2</label>
+                            </div>
+                            <div class="col-xs-12 col-md-6">
+                                <input type="text" class="form-control input-sm" ng-model="bookingHeader.VehicleNo2" ng-maxlength="70" logicon-limit />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-12 col-md-6" ng-if="bookingHeader.TransportType == 1024">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="card">
+                    <div class="lv-header-alt clearfix m-b-5">
+                        <h3 class="lvh-label">POST DETAILS</h3>
+                    </div>
+                    <div class="card-body card-padding p-t-25 p-b-25">
+                        <div class="row">
+                            <div class="col-xs-6 col-md-3">
+                                <label>JK78 Information No.</label>
+                            </div>
+                            <div class="col-xs-12 col-md-6">
+                                <input type="text" class="form-control input-sm" ng-model="bookingHeader.JKNo" ng-maxlength="70" logicon-limit />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--</form>--> 

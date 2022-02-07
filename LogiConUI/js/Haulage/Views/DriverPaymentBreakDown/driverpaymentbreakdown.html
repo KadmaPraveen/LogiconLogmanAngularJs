@@ -1,0 +1,109 @@
+﻿<div class="container" ng-controller="driverpaymentbreakdown">
+    <div class="card">
+        <div class="lv-header-alt clearfix m-b-5">
+            <h3 class="lvh-label">Driver Payment Breakdown(Haulage)</h3>
+            <ul class="lv-actions actions m-r-5">
+                <li>
+                    <button class="btn bgm-lightgreen btn-icon" data-ui-sref="addDriverPaymentBreakDown()" data-ng-click="mactrl.sidebarStat($event)">
+                        <i class="zmdi zmdi-plus"></i>
+                    </button>
+                </li>
+            </ul> 
+        </div>
+        <div class="card-body card-padding p-t-25 p-b-25">
+            <div class="row">
+                <div class="col-xs-12 col-md-4">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Driver ID</label>
+
+                        <md-select ng-model="" ng-required="">
+                            <md-option ng-repeat="" ng-value="item.Value">
+                                {{item.Text}}
+                            </md-option>
+                        </md-select>
+                    </md-input-container>
+                </div>
+                <div class="col-xs-12 col-md-4">
+                    <md-input-container class="md-block" flex-gt-sm><input type="text" class="form-control input-sm" /> </md-input-container>
+                </div>
+                <div class="col-xs-12 col-md-4">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Prepare Date</label>
+
+                        <input mdc-datetime-picker="" date="true" time="false" type="text" id="dateFrom" format="{{dateFormat}}" class="date-icon"
+                               min-date="date" name="k1.declarationInvoice.InvoiceDate"
+                               ng-required="true"
+                               ng-model="k1.declarationInvoice.InvoiceDate">
+                    </md-input-container>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-md-4">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Remarks</label>
+
+                        <textarea rows="1"></textarea>
+                    </md-input-container>
+                </div>
+                <div class="col-xs-12 col-md-4">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Date From</label>
+
+                        <input mdc-datetime-picker="" date="true" time="false" type="text" id="dateFrom" format="{{dateFormat}}" class="date-icon"
+                               min-date="date" name="k1.declarationInvoice.InvoiceDate"
+                               ng-required="true"
+                               ng-model="k1.declarationInvoice.InvoiceDate">
+                    </md-input-container>
+                </div>
+                <div class="col-xs-12 col-md-4">
+                    <md-input-container class="md-block" flex-gt-sm>
+                      
+                        <input mdc-datetime-picker="" date="true" time="false" type="text" id="dateFrom" format="{{dateFormat}}" class="date-icon"
+                               min-date="date" name="k1.declarationInvoice.InvoiceDate"
+                               ng-required="true"
+                               ng-model="k1.declarationInvoice.InvoiceDate">
+                    </md-input-container>
+                </div>
+            </div>
+            <div class="row m-t-20">
+                <div class="col-xs-12">
+                    <div class="table-responsive">
+                        <table class="table  table-vmiddle">
+                            <thead>
+                                <tr>
+                                    <th>Order No.</th>
+                                    <th>JOb No.</th>
+                                    <th>Container No.</th>
+                                    <th>Size</th>
+                                    <th>Movement</th>
+                                    <th>End Date</th>
+                                    <th>End Time</th>
+                                    <th>Amount</th>
+                                    <th>Adjustment</th>
+                                    <th>Pickup Area</th>
+                                    <th>Delivery Area</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+       
+    </div>
+</div>

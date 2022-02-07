@@ -1,0 +1,207 @@
+﻿<form id="frmBookingConInfo" name="frmBookingConInfo" ng-class="{'submitted': submitted }" ng-submit="SaveBookingContainer(bc);" novalidate>
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" ng-click="cancel();">&times;</button>
+        <h4 class="modal-title">Container Info</h4>
+    </div>
+    <div class="modal-body">
+        <div class="c-overflow" ng-style="{'max-height': iframeHeight - 80 + 'px'}" resize>
+            <div class="modalbodymain">
+                <div class="row">
+                    <div class="col-xs-12 col-md-2">
+                        <label>Container No</label>
+                    </div>
+                    <div class="col-xs-12 col-md-4">
+                        <input type="text" class="form-control input-sm" ng-model="bc.ContainerNo" ng-required="true" />
+                    </div>
+                    <div class="col-xs-12 col-md-2">
+                        <label>Size Type</label>
+                    </div>
+                    <div class="col-xs-12 col-md-2">
+                        <select class="form-control input-sm"
+                                ng-change="sizeChanged()"
+                                ng-model="bc.Size"
+                                ng-options="s.Value as s.Text for s in lookUpData.SizeList" ng-required="true"></select>
+                    </div>
+                    <div class="col-xs-12 col-md-2">
+                        <select class="form-control input-sm"
+                                ng-model="bc.Type"
+                                ng-disabled="bc.Size == null"
+                                ng-options="s.Text as s.Text for s in lookUpData.TypeList" ng-required="true"></select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-md-2">
+                        <label>Container Class</label>
+                    </div>
+                    <div class="col-xs-12 col-md-4">
+                        <select class="form-control input-sm"
+                                ng-model="bc.ContainerGrade"
+                                ng-options="s.Value as s.Text for s in lookUpData.ContainerClassList" ng-required="true"></select>
+                    </div>
+
+
+
+                    <div class="col-xs-12 col-md-2">
+                        <label>P/U Mode</label>
+                    </div>
+                    <div class="col-xs-12 col-md-4">
+                        <select class="form-control input-sm"
+                                ng-model="bc.PickupDropOffMode"
+                                ng-options="s.Value as s.Text for s in lookUpData.puModeList" ng-required="true"></select>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-12 col-md-2">
+                        <label>Container Status</label>
+                    </div>
+                    <div class="col-xs-12 col-md-2">
+                        <select class="form-control input-sm"
+                                ng-model="bc.IMOCode"
+                                ng-options="s.Value as s.Text for s in lookUpData.efIndicatorList" ng-required="true"></select>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-12 col-md-2">
+                        <label>IMO/UN No</label>
+                    </div>
+                    <div class="col-xs-12 col-md-2">
+                        <select class="form-control input-sm"
+                                ng-model="bc.IMOCode"
+                                ng-options="s.Value as s.Text for s in lookUpData.IMOCodeList" ng-required="true"></select>
+                    </div>
+                    <div class="col-xs-12 col-md-2">
+                        <input type="text" class="form-control input-sm" ng-model="bc.UNNumber" ng-required="true" />
+                    </div>
+                    <div class="col-xs-12 col-md-2">
+                        <label>Cargo Cat</label>
+                    </div>
+                    <div class="col-xs-12 col-md-4">
+                        <select class="form-control input-sm"
+                                ng-model="bc.CargoCategory"
+                                ng-options="s.Value as s.Text for s in lookUpData.CargoCategoryList"
+                                ng-required="true"></select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-md-2">
+                        <label>Weight/Vol</label>
+                    </div>
+                    <div class="col-xs-12 col-md-2">
+                        <input type="text" class="form-control input-sm" ng-model="bc.Weight" ng-required="true" logicon-decimal />
+                    </div>
+                    <div class="col-xs-12 col-md-2">
+                        <input type="text" class="form-control input-sm" ng-model="bc.Volume" ng-required="true" logicon-decimal />
+                    </div>
+                    <div class="col-xs-12 col-md-2">
+                        <label>Pickup Date</label>
+                    </div>
+                    <div class="col-xs-12 col-md-4">
+                        <div class="dropdown">
+                            <a class="dropdown-toggle" id="RequiredDate" role="button" data-toggle="dropdown">
+                                <div class="input-group">
+                                    <input type="text"
+                                           class="form-control input-sm datepicker"
+                                           ng-model="bc.RequiredDate"
+                                           ng-required="true"
+                                           date-time-input="MM/DD/YYYY">
+                                    <span class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true"></i></span>
+                                </div>
+                            </a>
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                <datetimepicker ng-model="bc.RequiredDate"
+                                                data-datetimepicker-config="{
+                                        dropdownSelector: '#RequiredDate',
+                                        startView: 'day',
+                                        minView: 'day' }" />
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-md-2">
+                        <label>Temperature</label>
+                    </div>
+                    <div class="col-xs-12 col-md-2">
+                        <input type="text" class="form-control input-sm" ng-model="bc.Temperature" ng-required="true" logicon-decimal />
+                    </div>
+                    <div class="col-xs-12 col-md-2">
+                        <select class="form-control input-sm"
+                                ng-model="bc.TempratureMode"
+                                ng-options="s.Value as s.Text for s in lookUpData.TmpTypeList"
+                                ng-required="true"></select>
+                    </div>
+                    <div class="col-xs-12 col-md-2">
+                        <label>Agent Seal</label>
+                    </div>
+                    <div class="col-xs-12 col-md-4">
+                        <input type="text" class="form-control input-sm" ng-model="bc.SealNo1" ng-required="true" />
+                    </div>
+                </div>
+                <div class="row">
+
+                    <div class="col-xs-12 col-md-2">
+                        <label>Vent</label>
+                    </div>
+                    <div class="col-xs-12 col-md-2">
+                        <input type="text" class="form-control input-sm" ng-model="bc.Humidity" ng-required="true" />
+                    </div>
+                    <div class="col-xs-12 col-md-2">
+                        <select class="form-control input-sm"
+                                ng-model="bc.VentMode"
+                                ng-options="s.Value as s.Text for s in lookUpData.VentTypeList"
+                                ng-required="true"></select>
+                    </div>
+
+                    <div class="col-xs-12 col-md-2">
+                        <label>Cust Seal</label>
+                    </div>
+
+
+                    <div class="col-xs-12 col-md-4">
+                        <input type="text" class="form-control input-sm" ng-model="bc.SealNo2" ng-required="true" />
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-md-2">
+                        <label>VGM</label>
+                    </div>
+                    <div class="col-xs-12 col-md-2">
+                        <input type="text" class="form-control input-sm" ng-model="bc.Temperature" ng-required="true" logicon-decimal />
+                    </div>
+                    <div class="col-xs-12 col-md-2">
+
+                    </div>
+                    <div class="col-xs-12 col-md-2">
+                        <label>Stowage Cell</label>
+                    </div>
+                    <div class="col-xs-12 col-md-4">
+                        <input type="text" class="form-control input-sm" ng-model="bc.Humidity" ng-required="true" />
+                    </div>
+
+                </div>
+
+
+                <div class="row">
+                    <div class="col-xs-12 col-md-2">
+                        <label>Remarks</label>
+                    </div>
+                    <div class="col-xs-12 col-md-10">
+                        <textarea class="form-control input-sm" ng-model="bc.Remarks"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+        <div class="modal-footer">
+            <div class="row">
+                <div class="col-xs-12 col-md-9"></div>
+                <div class="col-md-3 pull-right">
+                    <button class="btn btn-primary" type="submit" ng-click="submitted = true;"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Save</button>
+                    <button class="btn btn-default" ng-click="cancel();"><i class="fa fa-times" aria-hidden="true"></i>&nbsp;Close</button>
+                </div>
+            </div>
+        </div>
+</form>

@@ -1,0 +1,121 @@
+﻿<div class="container" data-ng-controller="CrInquiryCntrl">
+    <div class="card">
+        <div class="lv-header-alt clearfix m-b-5">
+            <h2 class="lvh-label">Container Request</h2>
+            <!--<ul class="lv-actions actions">
+                <li>
+                    <button class="btn bgm-lightgreen btn-icon" ng-click="BroadCastDeclaration({RequestNo:'NEW'})"><i class="zmdi zmdi-plus"></i></button>&nbsp;&nbsp;&nbsp;
+                </li>
+            </ul>-->
+        </div>
+        <div class="card-body card-padding p-t-5 p-b-5">
+            <uib-accordion close-others="oneAtATime">
+                <div uib-accordion-group class="panel-default" heading="" is-open="status.isFirstOpen" is-disabled="status.isFirstDisabled">
+                    <uib-accordion-heading>
+                        <i class="pull-left zmdi zmdi-hc-fw" ng-class="{'zmdi-minus': status.isFirstOpen, 'zmdi-plus': !status.isFirstOpen}"></i>&nbsp;Advanced Search
+                    </uib-accordion-heading>
+                  
+                        <div class="card-body card-padding p-t-10 p-b-10">
+                            <form id="CrInquiryCntrl.frmSearch" name="CrInquiryCntrl.frmSearch" ng-class="{'submitted': SearchSubmitted}" ng-submit="GetTableData(true)" autocomplete="off" novalidate>
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-4">
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                            <label>Order No.</label>
+                                            <input type="text"
+                                                   ng-model="i.requestNo" />
+                                        </md-input-container>
+                                    </div>
+                                    <div class="col-xs-12 col-md-4">
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                            <label>Date From</label>
+                                            <input mdc-datetime-picker="" class="date-icon" date="true" time="false" type="text" id="dateFrom" format="{{dateFormat}}"
+                                                   min-date="date" ng-model="i.dateFrom">
+                                        </md-input-container>
+                                    </div>
+
+                                    <div class="col-xs-12 col-md-4">
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                            <label>Date To</label>
+                                            <input mdc-datetime-picker="" class="date-icon" date="true" time="false" type="text" id="dateTo" format="{{dateFormat}}"
+                                                   min-date="date" ng-model="i.dateTo">
+                                        </md-input-container>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-4">
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                            <label>Haulier Name</label>
+                                            <input type="text"
+                                                   ng-model="i.HaulierName" />
+                                        </md-input-container>
+                                    </div>
+                                    <div class="col-xs-12 col-md-4">
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                            <label>Shipping Agent</label>
+                                            <input type="text"
+                                                   ng-model="i.ShippingAgentName" />
+                                        </md-input-container>
+                                    </div>
+                                    <div class="col-xs-12 col-md-4">
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                            <label>Consignee</label>
+                                            <input type="text"
+                                                   ng-model="i.ConsigneeName" />
+                                        </md-input-container>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-1">
+
+                                        <button ng-click="SearchSubmitted = true;" type="submit" class="btn btn-primary"><i class="fa fa-search" aria-hidden="true"></i>&nbsp;Search</button>
+                                    </div>
+                                </div>
+
+
+                            </form>
+                        </div>
+                   
+                </div>
+            </uib-accordion>
+            <div class="row">
+                <div class="table-responsive">
+                    <div  style="min-height: 250px;">
+                        <div class="table-responsive">
+                            <table class="table table-vmiddle" ng-table="ngTblData">
+                                <tr ng-repeat="w in $data">
+
+                                    <td data-title="'#Action'">
+                                        <button class="btn btn-default ng-scope waves-effect"
+                                                type="button"
+                                                ng-click="BroadCastDeclaration({requestNo:w.RequestNo})"
+                                                aria-label="button" uib-tooltip="Edit" tooltip-placement="top">
+                                            <i class="zmdi zmdi-edit"></i>
+                                        </button>
+                                    </td>
+
+                                    <td data-title="'Request No.'" sortable="'RequestNo'"><a style="cursor:pointer;" ng-click="BroadCastDeclaration({requestNo:w.RequestNo})">{{w.RequestNo}}</a></td>
+                                    <td data-title="'Shipping Agent.'" sortable="'ShippingAgentName'">{{w.ShippingAgentName}}</td>
+                                    <td data-title="'Consignee.'" sortable="'ConsigneeName'">{{w.ConsigneeName}}</td>
+                                    <td data-title="'Haulier Name.'" sortable="'HaulierName'">{{w.HaulierName}}</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <span class="col-md-3">
+                        <button type="button" class="btn btn-info" ng-click="refresh()"><i class="fa fa-refresh "></i> Refresh</button>
+                    </span>
+                    <span class="text-center col-md-6">
+                        <div class="lv-header-alt clearfix m-b-10">
+                            <label style="color:green;">Please use "Advance Search for  listing more Container Request Entries"</label>
+                        </div>
+                    </span>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

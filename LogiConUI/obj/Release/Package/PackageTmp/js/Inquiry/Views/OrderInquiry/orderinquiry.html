@@ -1,0 +1,156 @@
+﻿<div class="container" data-ng-controller="OrderInquiryCntrl">
+
+    <div class="card">
+        <div class="lv-header-alt clearfix m-b-5">
+            <h2 class="lvh-label">Order Inquiry</h2>
+            <ul class="lv-actions actions">
+                <li>
+                    <button type="button" class="btn btn-info btn-icon m-r-10" tooltip-placement="bottom" uib-tooltip="Refresh" ng-click="refresh()"><i class="fa fa-refresh "></i></button>
+                </li>
+            </ul>
+        </div>
+
+        <div class="card-body card-padding p-t-25 p-b-25">
+            <div class="row">
+                <div class="col-xs-12">
+                    <uib-accordion close-others="oneAtATime">
+                        <div uib-accordion-group class="panel-default" heading="Advanced Search" is-open="status.isFirstOpen" is-disabled="status.isFirstDisabled">
+                            <uib-accordion-heading>
+                                <i class="pull-left zmdi zmdi-hc-fw" ng-class="{'zmdi-minus': status.isFirstOpen, 'zmdi-plus': !status.isFirstOpen}"></i>&nbsp;Advanced Search
+                            </uib-accordion-heading>
+                            <div class="row">
+                                <div class="col-xs-12">
+
+                                        <div class="card-body card-padding p-t-25 p-b-25">
+                                            <form id="frmSearch" name="frmSearch" ng-class="{'submitted': SearchSubmitted}" 
+                                                  ng-submit="OrderInquirySearch(i)" autocomplete="off" novalidate>
+                                                <div class="row">
+                                                    <div class="col-xs-12  col-md-4">
+                                                        <md-input-container class="md-block" flex-gt-sm>
+                                                            <label>Order No.</label>
+                                                            <input type="text"
+                                                                   ng-model="i.declarationNo" />
+                                                        </md-input-container>
+                                                    </div>
+                                                    <div class="col-xs-12  col-md-4">
+                                                        <md-input-container class="md-block" flex-gt-sm>
+                                                            <label>Manifest No.</label>
+                                                            <input type="text"
+                                                                   ng-model="i.manifestNo" />
+                                                        </md-input-container>
+                                                    </div>
+                                                    <div class="col-xs-12  col-md-4">
+                                                        <md-input-container class="md-block" flex-gt-sm>
+                                                            <label>Ocean B/L No.</label>
+                                                            <input type="text"
+                                                                   ng-model="i.oceanBLNo" />
+                                                        </md-input-container>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+
+                                                    <div class="col-xs-12 col-md-4">
+                                                        <md-input-container class="md-block" flex-gt-sm>
+                                                            <label>House B/L No.</label>
+                                                            <input type="text"
+                                                                   ng-model="i.HouseBLNo" />
+                                                        </md-input-container>
+                                                    </div>
+                                                    <div class="col-xs-12 col-md-4">
+                                                        <md-input-container class="md-block" flex-gt-sm>
+                                                            <label>Voyage No.</label>
+                                                            <input type="text"
+                                                                   ng-model="i.voyageNo" />
+                                                        </md-input-container>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+
+
+                                                    <div class="col-sm-12 col-md-4">
+                                                        <md-input-container class="md-block" flex-gt-sm>
+                                                            <label>Date From</label>
+                                                            <input mdc-datetime-picker="" class="date-icon" date="true" time="false" type="text" id="DateFrom" format="{{dateFormat}}"
+                                                                   min-date="date" ng-model="i.DateFrom">
+                                                        </md-input-container>
+                                                    </div>
+                                                    <div class="col-sm-12 col-md-4">
+                                                        <md-input-container class="md-block" flex-gt-sm>
+                                                            <label>Date To</label>
+                                                            <input mdc-datetime-picker="" class="date-icon" date="true" time="false" type="text" id="DateTo" format="{{dateFormat}}"
+                                                                   min-date="date" ng-model="i.DateTo">
+                                                        </md-input-container>
+                                                    </div>
+                                                    <div class="col-sm-12 col-md-2">
+                                                        <button ng-click="SearchSubmitted = true;" type="submit" class="btn btn-primary"><i class="fa fa-search" aria-hidden="true"></i>&nbsp;Search</button>
+                                                    </div>
+                                                </div>
+
+
+                                            </form>
+                                        </div>
+                                   
+                                </div>
+                            </div>
+                        </div>
+                    </uib-accordion>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-vmiddle">
+                            <thead>
+                                <tr>
+                                    <!--<th>#Action</th>-->
+                                    <th>Order No.</th>
+                                    <th>Vessel Name</th>
+                                    <th>Voyage No</th>
+                                    <th>House B/L No.</th>
+                                    <th>Manifest No.</th>
+                                    <th>Shipper Name</th>
+                                    <th>Consignee Name</th>
+                                    <th>Order Date</th> 
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="item in orders">
+                                    <!--<td>
+                                        <button class="btn btn-default ng-scope waves-effect"
+                                                type="button"
+                                                data-ui-sref="orderentry({orderno:item.OrderNo})"
+                                                aria-label="button" uib-tooltip="Edit" tooltip-placement="top">
+                                            <i class="zmdi zmdi-edit"></i>
+                                        </button>
+                                    </td>
+                                    <td><a data-ui-sref="orderentry({orderno:orderentry.OrderNo})" uib-tooltip="Open" tooltip-placement="top">{{orderentry.OrderNo}}</a></td>-->
+                                    <td>{{item.OrderNo}}</td>
+                                    <td>{{item.VesselName}}</td>
+                                    <td>{{item.VoyageNo}}</td>
+                                    <td>{{item.HouseBLNo}}</td>
+                                    <td>{{item.ManifestNo}}</td>
+                                    <td>{{item.ShipperName}}</td>
+                                    <td>{{item.ConsigneeName}}</td>
+                                    <td>{{item.OrderDate | date: 'dd/MM/yyyy'}}</td>
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-md-6">
+                    <div class="col-xs-12" ng-if="orders.length == 0">
+                        <label>{{dataGridNorecords}}</label>
+                    </div>
+                </div>
+            </div>
+
+        
+        </div>
+      
+    </div>
+
+</div>

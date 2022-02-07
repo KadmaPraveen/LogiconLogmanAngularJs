@@ -1,0 +1,373 @@
+﻿<div class="container" ng-controller="CustomerCashBillCntrl as Cntrl">
+    <style type="text/css">
+        .myCustomerPopOver .popover-inner {
+            width: 580px;
+        }
+    </style>
+    <form id="frmCustomerBillInfo" name="frmCustomerBillInfo" ng-class="{'submitted':submitted}" ng-submit="SaveCustomerCashBillInvoiceDetails(ccb)" autocomplete="off" novalidate>
+        <script type="text/ng-template" id="myPopoverTemplate.html">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="table-responsive">
+                        <table class="table table-vmiddle">
+                            <thead>
+                                <tr>
+                                    <th>Address</th>
+                                    <th>Address2</th>
+                                    <th>Post Code</th>
+                                    <th>State</th>
+                                    <th>Country</th>
+                                    <th>TEL NO</th>
+                                    <th>FAX NO</th>
+                                    <th>Mobile No.</th>
+                                    <!--<th>Email</th>-->
+                                    <th>City/Suburb</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="item in Details" ng-click="DataAddress(item)">
+                                    <td>{{item.Address1}}</td>
+                                    <td>{{item.Address2}}</td>
+                                    <td>{{item.ZipCode}}</td>
+                                    <td>{{item.State}}</td>
+                                    <td>{{item.CountryCode}}</td>
+                                    <td>{{item.TelNo}}</td>
+                                    <td>{{item.FaxNo}}</td>
+                                    <td>{{item.MobileNo}}</td>
+                                    <!--<td>{{item.Email}}</td>-->
+                                    <td>{{item.City}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="row p-t-25" ng-if="IsaddressValidated">
+                <div class="col-xs-12 ">
+                    <div class="card">
+                        <div class="card-body card-padding p-t-25 p-b-25">
+                            <div class="row">
+                                <div class="col-xs-12 col-md-12">
+
+                                    <label ng-bind="SelectedDetails.Address1">Address</label><br />
+
+
+
+                                    <label ng-bind="SelectedDetails.Address2">Address2</label><br />
+
+                                    <label ng-bind="SelectedDetails.City">City/Suburb</label><br />
+                                    <label ng-bind="SelectedDetails.State">State</label><br />
+                                    <label ng-bind="SelectedDetails.CountryCode">Country</label><br />
+                                    <label ng-bind="SelectedDetails.ZipCode">Post Code</label><br />
+                                    <label ng-bind="SelectedDetails.MobileNo">Mobile No</label><br />
+                                    <label ng-bind="SelectedDetails.TelNo">TEL NO.</label><br />
+                                    <label ng-bind="SelectedDetails.FaxNo">FAX NO.</label>
+                                </div>
+
+
+                            </div>
+
+
+                        </div>
+                    </div>
+                    <div class="text-right">
+
+
+                        <button class="btn btn-primary " type="submit" ng-click="SaveAddress(SelectedDetails)">
+                            <i class="fa fa-check" aria-hidden="true"></i>&nbsp;Ok
+                        </button>
+                        <!--<button class="btn btn-primary" type="button" ng-click="cancel()">
+                            <i class="fa fa-backward" aria-hidden="true"></i>&nbsp;Cancel
+                        </button>-->
+                        <!--<button type="button" class="close" data-dismiss="modal" ng-click="cancel();">&times;</button>-->
+                        <button ng-click="ccb.isAddressOpen = false" type="button" class="btn btn-default "> <i class="fa fa-eraser" aria-hidden="true"></i>&nbsp;Cancel</button>
+                    </div>
+
+                </div>
+            </div>
+        </script>
+
+        <div class="card">
+            <div class="lv-header-alt clearfix m-b-5">
+                <h3 class="lvh-label">Customer Cash Bills </h3>
+                <div class="box-tools pull-right">
+                </div>
+            </div>
+            <div class="card-body card-padding p-t-25 p-b-25">
+                <div class="row m-b-15">
+                    <div class="col-xs-12 col-md-9">
+                        <div class="row">
+                            <div class="col-xs-12 col-md-4">
+                                <div class="row">
+                                    <input type="hidden"
+                                           ng-model="ccb.InvoiceType"
+                                           ng-init="ccb.InvoiceType = 1191" />
+                                    <div class="col-xs-12 ">
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                            <label>Customer</label>
+                                            <input type="text" ng-model="ccb.CustomerName" disabled />
+                                            <!--<input type="text"
+                                            class="search-icon"
+                                            ng-class="{'loadinggif': ccb.CustomerCodeNameLoading}"
+                                            ng-model="ccb.ConsigneeName"
+                                            typeahead-min-length="3"
+                                            uib-typeahead="d.Text as d.Text for d in MerchantResults($viewValue)"
+                                            typeahead-loading="ccb.CustomerCodeNameLoading"
+                                            typeahead-wait-ms="1000"
+                                            typeahead-editable="false"
+                                            typeahead-on-select="CustomerSelected($item, 'CustomerCode')" />-->
+
+                                        </md-input-container>
+
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12 ">
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                            <label>Remarks</label>
+
+                                            <textarea ng-model="ccb.Remark"
+                                                      md-maxlength="70" logicon-limit rows="3" md-select-on-focus style="overflow-y:auto" ></textarea>
+                                        </md-input-container>
+                                    </div>
+                                </div>
+                                <div class="row">
+
+                                    <div class="col-md-12 text-right">
+                                        <button class="btn btn-primary btn-sm"
+                                                uib-popover-template="'myPopoverTemplate.html'"
+                                                popover-placement="right"
+                                                popover-is-open="ccb.isAddressOpen"
+                                                popover-title="Address"
+                                                type="button">
+                                            Address
+                                        </button>
+
+                                        <!--<button class="btn btn-primary btn-sm">Summary</button>-->
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-md-8">
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-6">
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                            <label>Invoice No</label>
+                                            <input type="text" ng-model="ccb.InvoiceNo" disabled />
+                                        </md-input-container>
+                                    </div>
+                                    <div class="col-xs-12 col-md-6">
+                                        <md-input-container class="md-block" flex-gt-sm style="border-bottom-color: rgb(40,53,147);">
+                                            <label>Invoice Date</label>
+                                            <input mdc-datetime-picker=""
+                                                   date="true" class="date-icon"
+                                                   time="false"
+                                                   type="text"
+                                                   id="UsedVehicleRegistrationDate"
+                                                   format="{{dateFormat}}"
+                                                   min-date="date"
+                                                   ng-model="ccb.InvoiceDate"
+                                                   name="ie.UsedVehicleRegistrationDate">
+                                        </md-input-container>
+                                        <!--<md-input-container class="md-block" flex-gt-sm>  <label>Invoice Date</label>
+
+                                        <div class="input-group my-datepicker">
+                                            <input type="text"
+                                                   class="form-control input-sm datepicker"
+                                                   uib-datepicker-popup="{{format}}"
+                                                   ng-model="ccb.InvoiceDate"
+                                                   is-open="popup.InvoiceDate"
+                                                   ng-required="true"
+                                                   close-text="Close"
+                                                   alt-input-formats="altInputFormats" />
+                                            <span class="input-group-btn">
+                                                <button type="button" class="btn btn-default input-sm" ng-click="open('InvoiceDate')"><i class="fa fa-calendar" aria-hidden="true"></i></button>
+                                            </span>
+                                        </div>
+                                        </md-input-container>-->
+                                    </div>
+                                    <!--<div class="col-xs-12 col-md-3">
+                                        <label>Tax Amount</label>
+                                    </div>
+                                    <div class="col-xs-12 col-md-3">
+                                        <label class="control-label nowrapCss" ng-model="ccb.TaxAmount" disabled>{{ccb.TaxAmount}}</label>
+                                    </div>-->
+
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-6">
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                            <label>Credit Term</label>
+
+                                            <input type="text" ng-model="ccb.CreditTerm" disabled />
+                                        </md-input-container>
+                                    </div>
+                                    <!--<div class="col-xs-12 col-md-3">
+
+                                        <label>Total Amount</label>
+                                    </div>  <div class="col-xs-12 col-md-3">
+                                        <label class="control-label nowrapCss" ng-model="ccb.TotalAmount" disabled>{{ccb.TotalAmount}}</label>
+
+                                    </div>-->
+
+
+
+
+                                    <div class="col-xs-6 col-md-6">
+
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                            
+                                            <label>Tax Amount</label>
+                                            <input type="text" id="TaxAmount" name="TaxAmount" ng-pattern="'^[0-9]{0,9}.?[0-9]{0,2}$'" logicon-format2="2" ng-model="ccb.TaxAmount" disabled />
+                                        </md-input-container>
+                                    </div>
+
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-6">
+                                        <!--<md-input-container class="md-block" flex-gt-sm>
+                                         <label>Currency</label>
+
+                                        <select ng-model="ccb.CurrencyCode" ng-options="s.Value as s.Text for s in lookupData.currencyList" ng-change="SelectCurrencyCode(ccb.CurrencyCode);"></select>
+                                        </md-input-container>-->
+                                        <!--<md-input-container class="md-block" flex-gt-sm style="border-bottom-color: rgb(40,53,147);">
+                                            <label>Currency</label>
+                                            <md-select ng-model="ccb.CurrencyCode" name="ie.VehicleType" ng-required="ie.IsVehicle">
+                                                <md-option ng-repeat="item in lookupData.currencyList" ng-value="item.Value">
+                                                    {{item.Text}}
+                                                </md-option>
+                                            </md-select>
+                                        </md-input-container>-->
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                            <label>Currency</label>
+                                            <md-select ng-model="ccb.CurrencyCode" ng-change="SelectCurrencyCode(ccb.CurrencyCode);" ng-init="ccb.CurrencyCode = 'MYR'" disabled>
+                                                <md-option ng-repeat="item in lookupData.currencyList" ng-value="item.Value">
+                                                    {{item.Text}}
+                                                </md-option>
+                                            </md-select>
+                                        </md-input-container>
+                                    </div>
+                                    <div class="col-xs-6 col-md-6">
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                            <label>Total Amount</label>
+                                            <input type="text" id="TotalAmount" name="TotalAmount" ng-pattern="'^[0-9]{0,9}.?[0-9]{0,2}$'" logicon-format2="2" ng-model="ccb.TotalAmount" disabled />
+                                        </md-input-container>
+                                    </div>
+                                </div>
+                                
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-6">
+                                        <md-input-container class="md-block" flex-gt-sm style="border-bottom-color: rgb(40,53,147);">
+                                            <label>Type</label>
+                                            <md-select ng-model="ccb.Module" ng-init="ccb.Module = 4058" disabled>
+                                                <md-option ng-repeat="item in lookupData.moduleList" ng-value="item.Value">
+                                                    {{item.Text}}
+                                                </md-option>
+                                            </md-select>
+                                        </md-input-container>
+                                        <!--<md-input-container class="md-block" flex-gt-sm>    <label>Module</label>
+
+                                        <select ng-model="ccb.Module" ng-options="s.Value as s.Text for s in lookupData.moduleList"></select>
+                                        </md-input-container>-->
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-md-3" id="profile-main" style="min-height:100px;">
+                        <div class="pmo-block pmo-contact hidden-xs p-5" ng-if="ccb.AddressId>0">
+                            <h2>Address</h2>
+                            <ul>
+                                <li>
+                                    <i class="zmdi zmdi-pin"></i>
+                                    <address class="m-b-0 ng-binding">
+                                        {{ Address1 }}<br>{{ Address2 }}
+                                        <br />{{ City }} , {{ State }} , {{ ZipCode }}
+                                    </address>
+                                </li>
+                                <li ng-if="TelNo != null && TelNo != ''" class="ng-binding"><i class="zmdi zmdi-phone"></i> {{TelNo}}</li>
+                                <li ng-if="MobileNo != null && MobileNo != ''" class="ng-binding"><i class="zmdi zmdi-smartphone-android"></i>{{MobileNo}}</li>
+                                <li ng-if="FaxNo != null && FaxNo != ''" class="ng-binding"><i class="fa fa-fax" aria-hidden="true"></i>{{FaxNo}}</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!--<div class="row">
+                    <div class="col-xs-12">
+                        <div class="pull-right">
+                            <button class="btn btn-primary" type="button" ng-click="customercashbillDetails(-1);"><i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Add</button>
+                        </div>
+                    </div>
+                </div>-->
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="table-responsive">
+                            <table class="table table-vmiddle">
+                                <thead>
+                                    <tr>
+                                        <!--<th>
+                                            <md-checkbox class="md-primary"
+                                                         ng-click="toggleCustCash()"
+                                                         aria-label="Priority"></md-checkbox>
+                                        </th>-->
+                                        <th>Order No.</th>
+                                        <th>Container No.</th>
+                                        <th>Size</th>
+                                        <th>Charge Code</th>
+                                        <th>Curr.</th>
+                                        <th>Ex. Rate</th>
+                                        <th>Billing Unit</th>
+                                        <th>Qty.</th>
+                                        <th>Price</th>
+                                        <th>Base Amt.</th>
+                                        <th>Local Amt.</th>
+                                        <th>Tax Amt.</th>
+                                        <th>Total Amount</th>
+                                        <th>GST  Code</th>
+                                        <th>Remarks</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="item in ccb.invoiceDetailList">
+                                        <td>{{item.OrderNo}}</td>
+                                        <td>{{item.ContainerKey}}</td>
+                                        <td>{{item.Size}}</td>
+                                        <td>{{item.ChargeCode}}</td>
+                                        <td>{{item.CurrencyCode}}</td>
+                                        <td>{{item.ExRate.toFixed(4)}}</td>
+                                        <td>{{item.BillingUnitDescription}}</td>
+                                        <td>{{item.Qty.toFixed(2)}}</td>
+                                        <td>{{item.Price.toFixed(2)}}</td>
+                                        <td>{{item.ActualAmount.toFixed(2)}}</td>
+                                        <td>{{item.LocalAmount.toFixed(2)}}</td>
+                                        <td>{{item.TaxAmount.toFixed(2)}}</td>
+                                        <td>{{item.TotalAmount.toFixed(2)}}</td>
+                                        <td>{{item.OutPutGSTDescription}}</td>
+                                        <td>{{item.Remark}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="row m-t-15">
+                    <div class="col-xs-12 col-md-8">
+                        <button class="btn bgm-bluegray"  ng-disabled="ccb.invoiceDetailList.length == 0" ng-click="submitted=true;"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Save</button>
+                        <!--<button type="button" class="btn btn-danger" ng-click="DeletecustomercashbillDetails()"><i class="fa fa-trash-o" aria-hidden="true"></i>&nbsp;Delete</button>-->
+                        <button class="btn btn-primary"  type="button" ng-click="PrintcustomercashbillDetails()"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Print</button>
+                        <button class="btn btn-success" type="button" ng-disabled="!IsInvoiceApproved" ng-click="ApproveCancelCustomerDetails()" ng-value="approveCancelBtn"
+                                ng-class="approveCancelBtn == 'Approve'?'btn btn-success':'btn btn-danger'" ><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;{{approveCancelBtn}}</button>
+                        <!--<button class="btn btn-success"  ng-disabled="!ccb.IsApproved" ng-click="approvecustomercashbillDetails(false)"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Disapprove</button>-->
+                    </div>
+                    <div class="col-xs-12 col-md-4 text-right">
+                        <!--<button class="btn btn-primary" type="button" data-ui-sref="customercashbilllist" data-ng-click="mactrl.sidebarStat($event)">
+                            <i class="fa fa-backward" aria-hidden="true"></i>&nbsp;Back
+                        </button>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+        </div>
+
+

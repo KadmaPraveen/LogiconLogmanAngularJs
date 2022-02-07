@@ -1,0 +1,94 @@
+﻿<style>
+    .deleted {
+        color: red;
+        text-decoration: line-through;
+    }
+
+    .radio, .checkbox {
+        position: relative;
+        display: block;
+        margin-top: 1px !important;
+        margin-bottom: 1px !important;
+    }
+</style>
+<div class="container" ng-controller="ActivityMaster">
+    <div class="card">
+        <div class="lv-header-alt clearfix m-b-5">
+            <h2 class="lvh-label">Activity Master</h2>
+            <ul class="lv-actions actions">
+                <li>
+                    <button class="btn bgm-lightgreen btn-icon" 
+                            ng-disabled="Module == null || Module == ''"
+                            ng-click="AddActivityMasterIndex(-1);"><i class="zmdi zmdi-plus"></i></button>&nbsp;&nbsp;&nbsp;
+                </li>
+            </ul>
+        </div>
+        <div class="card-body card-padding p-t-5 p-b-5">   
+            <div class="row">
+                <div class="col-xs-12 col-md-2">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Modules</label>
+                        <md-select name="Module"
+                                   ng-model="Module" ng-change="moduleSelected(Module)">
+                            <md-option md-option-empty></md-option>
+                            <md-option ng-repeat="item in modules" ng-value="item.Value">
+                                {{item.Text}}
+                            </md-option>
+                        </md-select>
+                    </md-input-container>
+                </div>
+            </div>
+            <div class="table-responsive m-t-20">
+                <table class="table table-vmiddle">
+                    <thead>
+                        <tr>
+                            <th>#Action</th>
+                            <th>Code</th>
+                            <th>Description</th>
+                            <th>Tracking</th>                            
+                            <th>Mode</th>
+                            <th>Exp</th>
+                            <th>Imp</th>
+                            <th>Local</th>
+                            <th>System</th>
+                            <th>IsEDI</th>
+                            
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="row in data">
+                            <td>
+                                <button class="btn btn-default ng-scope waves-effect" type="button" ng-click="AddActivityMasterIndex(row.ActCode);" aria-label="button">
+                                    <i class="zmdi zmdi-edit" aria-hidden="true"></i>
+                                </button>                                
+                            </td>
+                            <td>{{row.ActCode}}</td>
+                            <td>{{row.Description}}</td>
+                            <td>{{row.TrackingTypeDescription}}</td>
+                            <td>{{row.TrackingModeDescription}}</td>
+                            <td>{{row.ExpLeadTime}}</td>
+                            <td>{{row.ImpLeadTime}}</td>
+                            <td>{{row.LocalLeadTime}}</td>
+                            <td>
+                                <div class="checkbox m-0">
+                                    <label>
+                                        <input type="checkbox" value="" aria-label="System Activity" ng-disabled="true" ng-model="row.IsSystemActivity">
+                                        <i class="input-helper"></i>
+                                    </label>
+                                </div>
+                            </td>  
+                            <td>
+                                <div class="checkbox m-0">
+                                    <label>
+                                        <input type="checkbox" value="" aria-label="Is EDI" ng-disabled="true" ng-model="row.IsEDI">
+                                        <i class="input-helper"></i>
+                                    </label>
+                                </div>
+                            </td> 
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

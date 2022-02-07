@@ -1,0 +1,59 @@
+﻿<div class="container" ng-controller="NewsSNN">
+    <div class="card">
+        <div class="lv-header-alt clearfix m-b-5">
+            <h2 class="lvh-label">News List</h2>
+        </div>
+        <div class="card-body card-padding p-t-5 p-b-5">
+            <div class="row">
+                <div class="col-xs-4">
+                    <button data-ui-sref="AddNews" data-ng-click="mactrl.sidebarstat($even)" aria-label="button" class="btn btn-primary m-b-10" type="button"><i class="fa fa-plus"></i>&nbsp; Add NEW NEWS</button>
+                </div>
+                <div class="col-md-4 col-md-offset-4">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Search</label>
+                        <input type="text"
+                               class="search-icon"
+                               name="k1.DeclarantIDText"
+                               ng-required="true"
+                               ng-class="{'loadinggif': k1.DeclarantIDLoading}"
+                               ng-model="k1.DeclarantIDText"
+                               typeahead-min-length="3"
+                               uib-typeahead="d.Text as d.Text for d in CustomDeclarantResults($viewValue)"
+                               typeahead-loading="k1.DeclarantIDLoading"
+                               typeahead-wait-ms="100"
+                               typeahead-editable="false"
+                               typeahead-on-select="CustomDeclarantSelected($item)" />
+                    </md-input-container>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-vmiddle" ng-table="ngTblData">
+
+                            <tbody>
+                                <tr ng-repeat="user in $data">
+
+                                    <td data-title="'News Heading.'" sortable="'EmailID'">{{user.EmailID}}</td>
+                                    <td data-title="'Image.'" sortable="'UserName'">
+                                        <img src="../../../../img/news.png" />
+                                    </td>
+                                    <td data-title="'Date.'" sortable="'UserDesignationDescription'">{{user.UserDesignationDescription}}</td>
+                                    <td data-title="'Category.'" sortable="'UserGroupDescription'">{{user.UserGroupDescription}}</td>
+                                    <td data-title="'#Action.'">
+                                        <button class="btn btn-default ng-scope waves-effect"
+                                                type="button"
+                                                data-ui-sref="userprofile({userID:user.UserID})"
+                                                aria-label="button" uib-tooltip="Edit" tooltip-placement="top">
+                                            <i class="zmdi zmdi-edit"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,1249 @@
+﻿<style>
+    .custom-popup-wrapper {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        z-index: 1000;
+        display: none;
+        background-color: #f9f9f9;
+    }
+
+        .custom-popup-wrapper > .message {
+            padding: 10px 20px;
+            border-bottom: 1px solid #ddd;
+            color: #868686;
+        }
+
+        .custom-popup-wrapper > .dropdown-menu {
+            position: static;
+            float: none;
+            display: block;
+            min-width: 160px;
+            background-color: transparent;
+            border: none;
+            border-radius: 0;
+            box-shadow: none;
+        }
+
+    tr.dropdown-menu {
+        display: block;
+    }
+
+    .mytable {
+        background-color: #fff;
+        -webkit-background-clip: padding-box;
+        background-clip: padding-box;
+        border: 1px solid #ccc;
+        border: 1px solid rgba(0,0,0,.15);
+        border-radius: 4px;
+        -webkit-box-shadow: 0 6px 12px rgba(0,0,0,.175);
+        box-shadow: 0 6px 12px rgba(0,0,0,.5);
+        position: absolute;
+        width: 550px;
+        z-index: 99999;
+    }
+
+        .mytable thead tr {
+            background-color: #367fa9;
+            color: #fff;
+        }
+
+            .mytable thead tr td {
+                background-color: #367fa9;
+                color: #fff;
+                font-weight: bold;
+            }
+
+        .mytable > tbody > tr > td, .mytable > tbody > tr > th, .mytable > tfoot > tr > td, .mytable > tfoot > tr > th,
+        .mytable > thead > tr > td, .mytable > thead > tr > th {
+            padding: 3px;
+        }
+
+    .chart-width > div {
+        width: 20%;
+    }
+
+    .table-bordered {
+        border-bottom: 1px solid #f0f0f0;
+        border-left: 1px solid #f0f0f0;
+        border-right: 1px solid #f0f0f0;
+    }
+
+    .table tr td, .table tr th {
+        text-align: right;
+    }
+
+    /*.table tr th {
+           text-align: left;
+       }*/
+
+    .card {
+        margin-bottom: 10px !important;
+    }
+
+    /*@media screen and (min-width: 768px) .ng-table-pager {
+           background: #f4f4f4;
+       }*/
+</style>
+<div class="container" ng-controller="BookingEntryCntrl as Cntrl">
+    <form id="frmBookingEntry" name="frmBookingEntry" ng-class="{'submitted': submitted}" ng-submit="SaveBookingEntry(bookingHeader);" autocomplete="off" novalidate>
+        <div class="card">
+            <div class="lv-header-alt clearfix m-b-5">
+                <h3 class="lvh-label">Booking Entry</h3>
+                <!--<ul class="top-menu pull-right m-r-5 m-b-0 ">
+                    <li class="dropdown" uib-dropdown>
+                        <a uib-dropdown-toggle class="btn bgm-gray waves-effect ">
+                            <i class="tmn-counts">9</i>
+                            <i class="tm-icon zmdi zmdi-notifications"></i>
+
+
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-lg pull-right">
+                            <div class="listview" id="notifications">
+                                <div class="lv-header">
+                                    Notification
+
+                                    <ul class="actions">
+                                        <li class="dropdown">
+                                            <a href="" data-clear="notification">
+                                                <i class="zmdi zmdi-check-all"></i>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="lv-body c-overflow">
+                                    <a class="lv-item p-l-10 p-r-10" href="">
+                                        <div class="media">
+                                            <div class="pull-left  p-r-10 m-r-10 border-row-right">
+
+                                                <strong class="c-gray f-10">May 21, 2015</strong><br />
+                                                <small class="c-gray">09:49 AM</small>
+                                            </div>
+                                            <div class="media-body">
+                                                <div class="lv-title">document received</div>
+                                                <small class="lv-small username">syamsul</small>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <a class="lv-item p-l-10 p-r-10" href="">
+                                        <div class="media">
+                                            <div class="pull-left  p-r-10 m-r-10 border-row-right">
+
+                                                <strong class="c-gray f-10">May 21, 2015</strong><br />
+                                                <small class="c-gray">09:49 AM</small>
+                                            </div>
+                                            <div class="media-body">
+                                                <div class="lv-title">Order Accepted</div>
+                                                <small class="lv-small username">syamsul</small>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <a class="lv-item p-l-10 p-r-10" href="">
+                                        <div class="media">
+                                            <div class="pull-left  p-r-10 m-r-10 border-row-right">
+
+                                                <strong class="c-gray f-10">May 21, 2015</strong><br />
+                                                <small class="c-gray">09:49 AM</small>
+                                            </div>
+                                            <div class="media-body">
+                                                <div class="lv-title">rate matched</div>
+                                                <small class="lv-small username">syamsul</small>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <a class="lv-item p-l-10 p-r-10" href="">
+                                        <div class="media">
+                                            <div class="pull-left  p-r-10 m-r-10 border-row-right">
+
+                                                <strong class="c-gray f-10">May 21, 2015</strong><br />
+                                                <small class="c-gray">09:49 AM</small>
+                                            </div>
+                                            <div class="media-body">
+                                                <div class="lv-title">
+                                                    job opened
+                                                </div>
+                                                <small class="lv-small username">syamsul</small>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <a class="lv-item p-l-10 p-r-10" href="">
+                                        <div class="media">
+                                            <div class="pull-left  p-r-10 m-r-10 border-row-right">
+
+                                                <strong class="c-gray f-10">May 21, 2015</strong><br />
+                                                <small class="c-gray">09:49 AM</small>
+                                            </div>
+                                            <div class="media-body">
+                                                <div class="lv-title">
+                                                    cost sheet updated by user
+                                                </div>
+                                                <small class="lv-small username">syamsul</small>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <a class="lv-item p-l-10 p-r-10" href="">
+                                        <div class="media">
+                                            <div class="pull-left  p-r-10 m-r-10 border-row-right">
+
+                                                <strong class="c-gray f-10">May 21, 2015</strong><br />
+                                                <small class="c-gray">10:28 AM</small>
+                                            </div>
+                                            <div class="media-body">
+                                                <div class="lv-title">payment request created </div>
+                                                <small class="lv-small username">diyana</small>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <a class="lv-item p-l-10 p-r-10" href="">
+                                        <div class="media">
+                                            <div class="pull-left  p-r-10 m-r-10 border-row-right">
+
+                                                <strong class="c-gray f-10">May 21, 2015</strong><br />
+                                                <small class="c-gray">10:28 AM</small>
+                                            </div>
+                                            <div class="media-body">
+                                                <div class="lv-title">
+                                                    cost sheet updated by user
+                                                </div>
+                                                <small class="lv-small username">diyana</small>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <a class="lv-item p-l-10 p-r-10" href="">
+                                        <div class="media">
+                                            <div class="pull-left  p-r-10 m-r-10 border-row-right">
+
+                                                <strong class="c-gray f-10">May 21, 2015</strong><br />
+                                                <small class="c-gray">10:29 AM</small>
+                                            </div>
+                                            <div class="media-body">
+                                                <div class="lv-title">customer invoice created</div>
+                                                <small class="lv-small username">diyana</small>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <a class="lv-item p-l-10 p-r-10" href="">
+                                        <div class="media">
+                                            <div class="pull-left  p-r-10 m-r-10 border-row-right">
+
+                                                <strong class="c-gray f-10">May 21, 2015</strong><br />
+                                                <small class="c-gray">10:30 AM</small>
+                                            </div>
+                                            <div class="media-body">
+                                                <div class="lv-title">cost sheet updated by user</div>
+                                                <small class="lv-small username">diyana</small>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <a class="lv-item p-l-10 p-r-10" href="">
+                                        <div class="media">
+                                            <div class="pull-left  p-r-10 m-r-10 border-row-right">
+
+                                                <strong class="c-gray f-10">May 21, 2015</strong><br />
+                                                <small class="c-gray">10:35 AM</small>
+                                            </div>
+                                            <div class="media-body">
+                                                <div class="lv-title">payment request printed</div>
+                                                <small class="lv-small username">diyana</small>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <a class="lv-item p-l-10 p-r-10" href="">
+                                        <div class="media">
+                                            <div class="pull-left  p-r-10 m-r-10 border-row-right">
+
+                                                <strong class="c-gray f-10">May 21, 2015</strong><br />
+                                                <small class="c-gray">08:50 PM</small>
+                                            </div>
+                                            <div class="media-body">
+                                                <div class="lv-title">customer invoice approved</div>
+                                                <small class="lv-small username">thomas</small>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <a class="lv-item p-l-10 p-r-10" href="">
+                                        <div class="media">
+                                            <div class="pull-left  p-r-10 m-r-10 border-row-right">
+
+                                                <strong class="c-gray f-10">May 21, 2015</strong><br />
+                                                <small class="c-gray">09:16 AM</small>
+                                            </div>
+                                            <div class="media-body">
+                                                <div class="lv-title">customer invoice printed</div>
+                                                <small class="lv-small username">syamsul</small>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <a class="lv-item p-l-10 p-r-10" href="">
+                                        <div class="media">
+                                            <div class="pull-left  p-r-10 m-r-10 border-row-right">
+
+                                                <strong class="c-gray f-10">May 21, 2015</strong><br />
+                                                <small class="c-gray">08:43 AM</small>
+                                            </div>
+                                            <div class="media-body">
+                                                <div class="lv-title">cost sheet updated by user</div>
+                                                <small class="lv-small username">diyana</small>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <a class="lv-item p-l-10 p-r-10" href="">
+                                        <div class="media">
+                                            <div class="pull-left  p-r-10 m-r-10 border-row-right">
+
+                                                <strong class="c-gray f-10">May 21, 2015</strong><br />
+                                                <small class="c-gray">02:07 PM</small>
+                                            </div>
+                                            <div class="media-body">
+                                                <div class="lv-title">payment request approved </div>
+                                                <small class="lv-small username">diyana</small>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <a class="lv-item p-l-10 p-r-10" href="">
+                                        <div class="media">
+                                            <div class="pull-left  p-r-10 m-r-10 border-row-right">
+
+                                                <strong class="c-gray f-10">May 21, 2015</strong><br />
+                                                <small class="c-gray">01:51 PM</small>
+                                            </div>
+                                            <div class="media-body">
+                                                <div class="lv-title">cost sheet updated by user</div>
+                                                <small class="lv-small username">diyana</small>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+
+                                <a class="lv-footer" href="">View Previous</a>
+                            </div>
+
+                        </div>
+                    </li>
+                </ul>-->
+
+            </div>
+            <div class="card-body card-padding p-t-25 p-b-25">
+
+                <div class="row">
+
+                    <div class="col-xs-12 col-md-6">
+
+
+                        <h2 class="lvh-label">General</h2>
+                        <div class="row ">
+                            <div class="col-xs-12 col-md-6">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Master Order No</label>
+                                    <input type="text" ng-model="bookingHeader.MasterOrderNo" ng-disabled="true" />
+                                </md-input-container>
+                            </div>
+                            <div class="col-xs-12 col-md-6">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Port Booking No</label>
+                                    <input type="text" ng-model="bookingHeader.OrderNo" ng-disabled="true" />
+                                </md-input-container>
+                            </div>
+                        </div>
+
+                        <div class="row ">
+                            <div class="col-xs-12 col-md-6">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Mode of Transport</label>
+                                    <md-select ng-model="bookingHeader.TransportType"
+                                               ng-change="transportTypeChanged()" ng-disabled="!IsNew">
+                                        <md-option ng-repeat="item in lookUpData.transportList" ng-value="item.Value">
+                                            {{item.Text}}
+                                        </md-option>
+                                    </md-select>
+                                </md-input-container>
+                                <!--<select
+                                ng-model="bookingHeader.TransportType"
+                                ng-options="s.Value as s.Text for s in lookUpData.transportList"
+                                ng-required="true"
+                                ng-change="transportTypeChanged()"></select>-->
+                            </div>
+
+                            <div class="col-xs-12 col-md-6">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Booking Type</label>
+                                    <md-select ng-model="bookingHeader.BookingType" ng-change="bookingTypeChange()" ng-required="true" ng-disabled="!IsNew">
+                                        <md-option ng-repeat="item in lookUpData.bookingType" ng-value="item.Value">
+                                            {{item.Text}}
+                                        </md-option>
+                                    </md-select>
+                                </md-input-container>
+                                <!--<select
+                                ng-model="bookingHeader.BookingType"
+                                ng-options="s.Value as s.Text for s in lookUpData.bookingType"
+                                ng-change="bookingTypeChange()" ng-required="true"></select>-->
+                            </div>
+
+                        </div>
+                        <div class="row ">
+                            <div class="col-xs-12 col-md-6">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Order Type</label>
+                                    <md-select ng-disabled="bookingHeader.BookingType == null" ng-required="true" ng-model="bookingHeader.OrderType">
+                                        <md-option ng-repeat="item in lookUpData.orderTypeList" ng-value="item.Value">
+                                            {{item.Text}}
+                                        </md-option>
+                                    </md-select>
+                                </md-input-container>
+
+                                <!--<select ng-disabled="bookingHeader.BookingType == null"
+
+                                ng-model="bookingHeader.OrderType"
+                                ng-options="s.Value as s.Text for s in lookUpData.orderTypeList" ng-required="true"></select>-->
+                            </div>
+
+                            <div class="col-xs-12 col-md-6">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Booking No.</label>
+
+                                    <input type="text" ng-model="bookingHeader.BookingNo" ng-required="bookingHeader.BookingType !=1060" />
+                                </md-input-container>
+
+                            </div>
+                        </div>
+                        <div class="row ">
+                            <div class="col-xs-12 col-md-6">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Booking Date</label>
+                                    <input mdc-datetime-picker="" class="date-icon" date="true" time="false" type="text" id="DateFrom" format="{{dateFormat}}"
+                                           min-date="date" ng-model="bookingHeader.OrderDate">
+                                    <!--<div class="dropdown">
+                                        <a class="dropdown-toggle" id="OrderDate" role="button" data-toggle="dropdown">
+                                            <div class="input-group">
+                                                <input type="text"
+                                                       class="form-control input-sm datepicker"
+                                                       ng-model="bookingHeader.OrderDate"
+                                                       ng-required="true"
+                                                       date-time-input="{{dateFormat}}">
+                                                <span class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true"></i></span>
+                                            </div>
+                                        </a>
+                                        <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                            <datetimepicker ng-model="bookingHeader.OrderDate"
+                                                            data-datetimepicker-config="{ dropdownSelector: '#OrderDate', startView:'day', minView:'day' }" />
+                                        </ul>
+                                    </div>-->
+                                </md-input-container>
+                            </div>
+
+                            <div class="col-xs-12 col-md-6">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>BL No.</label>
+                                    <input type="text"
+                                           ng-model="bookingHeader.BLNo"
+                                           ng-required="bookingHeader.BookingType !=1061"
+                                           ng-maxlength="5"
+                                           logicon-limit />
+                                </md-input-container>
+                            </div>
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col-xs-12">
+
+                                <div class="row ">
+                                    <div class="col-xs-12">
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                            <label>Forwarder</label>
+
+                                            <input type="text"
+                                                   class="search-icon"
+                                                   ng-class="{'loadinggif': bookingHeader.FFNameLoading}"
+                                                   ng-model="bookingHeader.ForwarderName"
+                                                   typeahead-min-length="3"
+                                                   uib-typeahead="d.Text as d.Text for d in GenericMerchantResults($viewValue,'freightForwarder')"
+                                                   typeahead-loading="bookingHeader.FFNameLoading"
+                                                   typeahead-wait-ms="1000"
+                                                   typeahead-editable="false"
+                                                   ng-required="true"
+                                                   typeahead-on-select="CustomerSelected($item, 'ForwarderCode')" />
+                                        </md-input-container>
+                                    </div>
+                                </div>
+                                <div class="row ">
+                                    <div class="col-xs-12">
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                            <label>Shipping Agent</label>
+
+                                            <input type="text"
+                                                   class="search-icon"
+                                                   ng-class="{'loadinggif': bookingHeader.ShippingAgentLoading}"
+                                                   ng-model="bookingHeader.ShippingAgentName"
+                                                   typeahead-min-length="3"
+                                                   uib-typeahead="d.Text as d.Text for d in GenericMerchantResults($viewValue,'Liner')"
+                                                   typeahead-loading="bookingHeader.ShippingAgentLoading"
+                                                   typeahead-wait-ms="1000"
+                                                   typeahead-editable="false"
+                                                   ng-required="true"
+                                                   typeahead-on-select="CustomerSelected($item, 'ShippingAgent')" />
+                                        </md-input-container>
+                                    </div>
+                                </div>
+
+                                <!--<div class="row ">
+                                    <div class="col-xs-12 col-md-2">
+                                        <label>Owner Code</label>
+                                    </div>
+                                    <div class="col-xs-12 col-md-10">
+                                        <input type="text"
+                                               ng-model="bookingHeader.OwnerCode"
+                                               ng-required="true"
+                                               ng-maxlength="18"
+                                               logicon-limit
+                                               logicon-number />
+                                    </div>
+                                </div>-->
+
+                                <div class="row ">
+                                    <div class="col-xs-12">
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                            <label>Billing Customer</label>
+
+                                            <input type="text"
+                                                   class="search-icon"
+                                                   ng-class="{'loadinggif': bookingHeader.CustomerNameLoading}"
+                                                   ng-model="bookingHeader.CustomerName"
+                                                   typeahead-min-length="3"
+                                                   uib-typeahead="d.Text as d.Text for d in GenericMerchantResults($viewValue, 'billingCustomer')"
+                                                   typeahead-loading="bookingHeader.CustomerNameLoading"
+                                                   typeahead-wait-ms="1000"
+                                                   typeahead-editable="false"
+                                                   ng-required="true"
+                                                   typeahead-on-select="CustomerSelected($item, 'CustomerCode')" />
+                                        </md-input-container>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="row ">
+                                    <div class="col-xs-12">
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                            <label>Loading Port</label>
+
+                                            <input type="text"
+                                                   class="search-icon"
+                                                   ng-class="{'loadinggif': bookingHeader.LoadingPortNameLoading}"
+                                                   ng-model="bookingHeader.LoadingPortName"
+                                                   typeahead-min-length="3"
+                                                   uib-typeahead="d.PortName as d.PortName for d in PortResults($viewValue)"
+                                                   typeahead-loading="bookingHeader.LoadingPortNameLoading"
+                                                   typeahead-wait-ms="1000"
+                                                   typeahead-editable="false"
+                                                   ng-required="true"
+                                                   typeahead-on-select="PortSelected($item, 'LoadingPort')" />
+                                        </md-input-container>
+                                    </div>
+
+                                </div>
+                                <div class="row ">
+                                    <div class="col-xs-12">
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                            <label>Discharge Port</label>
+
+                                            <input type="text"
+                                                   class="search-icon"
+                                                   ng-class="{'loadinggif': bookingHeader.DischargePortNameLoading}"
+                                                   ng-model="bookingHeader.DischargePortName"
+                                                   typeahead-min-length="3"
+                                                   uib-typeahead="d.PortName as d.PortName for d in PortResults($viewValue)"
+                                                   typeahead-loading="bookingHeader.DischargePortNameLoading"
+                                                   typeahead-wait-ms="1000"
+                                                   typeahead-editable="false"
+                                                   ng-required="true"
+                                                   typeahead-on-select="PortSelected($item, 'DischargePort')" />
+                                        </md-input-container>
+                                    </div>
+                                </div>
+                                <div class="row ">
+                                    <div class="col-xs-12">
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                            <label>Destination Port</label>
+
+                                            <input type="text"
+                                                   class="search-icon"
+                                                   ng-class="{'loadinggif': bookingHeader.DestinationPortNameLoading}"
+                                                   ng-model="bookingHeader.DestinationPortName"
+                                                   typeahead-min-length="3"
+                                                   uib-typeahead="d.PortName as d.PortName for d in PortResults($viewValue)"
+                                                   typeahead-loading="bookingHeader.DestinationPortNameLoading"
+                                                   typeahead-wait-ms="1000"
+                                                   typeahead-editable="false"
+                                                   ng-required="true"
+                                                   typeahead-on-select="PortSelected($item, 'DestinationPort')" />
+                                        </md-input-container>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <!--<div class="col-xs-12 col-md-6">
+                        <div class="card">
+                            <div  class="lv-header-alt clearfix m-b-5">
+                                <h3  class="lvh-label">Other Information</h3>
+                            </div>
+                            <div class="card-body card-padding p-t-25 p-b-25">
+                                <div class="row ">
+                                    <div class="col-xs-12 col-md-2">
+                                        <label>Total Qty</label>
+                                    </div>
+                                    <div class="col-xs-12 col-md-4">
+                                        <input type="text"
+                                               ng-model="bookingHeader.TotalQty"
+                                               ng-maxlength="5"
+                                               logicon-limit
+                                               logicon-number />
+                                    </div>
+                                    <div class="col-xs-12 col-md-2">
+                                        <label>UOM</label>
+                                    </div>
+                                    <div class="col-xs-12 col-md-4">
+                                        <select
+                                                ng-model="bookingHeader.UOM"
+                                                ng-options="s.Value as s.Text for s in lookUpData.UOMList"></select>
+                                    </div>
+                                </div>
+                                <div class="row ">
+                                    <div class="col-xs-12 col-md-2">
+                                        <label>Total Volume</label>
+                                    </div>
+                                    <div class="col-xs-12 col-md-4">
+                                        <input type="text" ng-model="bookingHeader.TotalVolume" logicon-decimal />
+                                    </div>
+                                    <div class="col-xs-12 col-md-2">
+                                        <label>Total Weight</label>
+                                    </div>
+                                    <div class="col-xs-12 col-md-4">
+                                        <input type="text" ng-model="bookingHeader.TotalWeight" logicon-decimal />
+                                    </div>
+                                </div>
+                                <div class="row ">
+                                    <div class="col-xs-12 col-md-2">
+                                        <label>Commodity</label>
+                                    </div>
+                                    <div class="col-xs-12 col-md-10">
+                                        <input type="text" ng-model="bookingHeader.Commodity" />
+                                    </div>
+                                </div>
+                                <div class="row ">
+                                    <div class="col-xs-12 col-md-2">
+                                        <label>Marks & No.</label>
+                                    </div>
+                                    <div class="col-xs-12 col-md-10">
+                                        <input type="text" ng-model="bookingHeader.MarksNos" />
+                                    </div>
+                                </div>
+
+
+                                <div class="row ">
+                                    <div class="col-xs-12">
+                                        <label>Special Instruction</label>
+                                        <textarea ng-model="bookingHeader.SpecialInstructions"></textarea>
+                                    </div>
+                                </div>
+                                <div class="row ">
+                                    <div class="col-xs-12">
+                                        <label>Remarks</label>
+                                        <textarea ng-model="bookingHeader.Remarks"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>-->
+                    <div class="col-md-6 col-xs-12" ng-if="bookingHeader.TransportType == 1021">
+
+                        <h3 class="lvh-label">Vessel &amp; Voyage Details</h3>
+
+
+                        <div class="card-body card-padding p-t-25 p-b-25">
+                            <div class="row">
+                                <div class="col-xs-12 col-md-6">
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>Vessel Name</label>
+                                        <input type="text"
+                                               class="search-icon"
+                                               ng-class="{'loadinggif': bookingHeader.VesselCodeLoading}"
+                                               ng-model="bookingHeader.VesselName"
+                                               typeahead-min-length="3"
+                                               uib-typeahead="d.Text as d.Text for d in VesselCodeLoadingResults($viewValue)"
+                                               typeahead-loading="bookingHeader.VesselCodeLoading"
+                                               typeahead-wait-ms="1000"
+                                               typeahead-editable="false"
+                                               ng-required="bookingHeader.TransportType == 1021"
+                                               typeahead-on-select="CustomerSelected($item, 'VesselID')" />
+                                    </md-input-container>                     <!--ng-blur="OnBlur('VesselName','VesselID')"-->
+                                </div>
+                                <div class="col-xs-12 col-md-6">
+                                    <!--<div class="checkbox m-b-15">
+                                        <label>
+                                            <input value="" aria-label="Allow Late Gate In" ng-model="bookingHeader.IsAllowLateGate" type="checkbox">
+                                            <i class="input-helper"></i>
+                                            Allow Late Gate In
+                                        </label>
+                                    </div>-->
+                                    <div class="checkbox m-b-15">
+                                        <label>
+                                            <input type="checkbox" value="" aria-label="Allow Late Gate In" ng-model="bookingHeader.IsAllowLateGate">
+                                            <i class="input-helper"></i>
+                                            Allow Late Gate In
+                                        </label>
+                                    </div>
+                                    <!--<md-checkbox class="md-primary" aria-label="Allow Late Gate In" ng-model="bookingHeader.IsAllowLateGate">Allow Late Gate In</md-checkbox>-->
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-6 ">
+                                        <script type="text/ng-template" id="customTemplate.html">
+                                            <table ng-show="isOpen() && !moveInProgress"
+                                                   aria-hidden="{{!isOpen()}}"
+                                                   class="table  table-vmiddle table-hover table-bordered mytable"
+                                                   ng-style="{top: position().top+'px', left: position().left+'px'}"
+                                                   style="">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Voyage</th>
+                                                        <th>Vessel Name</th>
+                                                        <th>ETA</th>
+                                                        <th>ETD</th>
+                                                        <th>Terminal</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr ng-repeat="match in matches track by $index" ng-click="selectMatch($index)">
+                                                        <td>{{match.model.VoyageNo}}</td>
+                                                        <td>{{match.model.VesselName}}</td>
+                                                        <td>{{match.model.ETA | date :  'dd/MM/yyyy hh:mm a' }}</td>
+                                                        <td>{{match.model.ETD | date :  'dd/MM/yyyy hh:mm a' }}</td>
+                                                        <td>{{match.model.TerminalName}}</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </script>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="row ">
+                                <div class="col-xs-12 col-md-6">
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>Voyage No.</label>
+
+                                        <input type="text"
+                                               class="search-icon"
+                                               ng-disabled="bookingHeader.BookingType == null || bookingHeader.VesselName==null"
+                                               ng-class="{'loadinggif': bookingHeader.VoyageNoNameLoading}"
+                                               ng-model="bookingHeader.VoyageNo"
+                                               typeahead-min-length="3"
+                                               uib-typeahead="d.VoyageNo for d in VoyageLoadingResults($viewValue)"
+                                               typeahead-loading="bookingHeader.VoyageNoNameLoading"
+                                               typeahead-popup-template-url="customTemplate.html"
+                                               typeahead-wait-ms="1000"
+                                               typeahead-editable="false"
+                                               ng-required="bookingHeader.TransportType == 1021"
+                                               typeahead-on-select="VoyageSearchSelect($item)"
+                                               ng-blur="ValidateTheVesselDetails()" />
+                                    </md-input-container>
+                                </div>
+                                <div class="col-xs-12 col-md-6">
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>Wharf</label>
+                                        <md-select ng-model="bookingHeader.WharfList">
+                                            <md-option ng-repeat="item in lookUpData.WharfList" ng-value="item.Value">
+                                                {{item.Text}}
+                                            </md-option>
+                                        </md-select>
+                                        <!--<select ng-model="bookingHeader.Wharf"
+                                        ng-options="s.Value as s.Text for s in lookUpData.WharfList"></select>-->
+                                    </md-input-container>
+                                </div>
+                            </div>
+                            <div class="row ">
+                                <div class="col-xs-12 col-md-6">
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>Ship Call No.</label>
+
+                                        <input type="text"
+                                               ng-model="bookingHeader.ShipCallNo"
+                                               ng-required="bookingHeader.TransportType == 1021" />
+                                    </md-input-container>
+                                </div>
+                                <div class="col-xs-12 col-md-6">
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>Vessel Call Sign</label>
+
+                                        <input type="text"
+                                               ng-model="bookingHeader.CallSignNo"
+                                               ng-required="bookingHeader.TransportType == 1021" />
+                                    </md-input-container>
+                                </div>
+                            </div>
+                            <div class="row ">
+                                <div class="col-xs-12 col-md-6">
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>ETA</label>
+
+                                        <input mdc-datetime-picker="" class="date-icon" date="true" time="true" ng-model="bookingHeader.ETA"
+                                               ng-required="bookingHeader.TransportType == 1021 || bookingHeader.TransportType == 1020" type="text" id="DateFrom" format="{{dateTimeFormat12}}"
+                                               min-date="date">
+                                    </md-input-container>
+                                    <!--<div class="dropdown">
+                                        <a class="dropdown-toggle" id="ETA" role="button" data-toggle="dropdown">
+                                            <div class="input-group">
+                                                <input type="text"
+                                                       class="form-control input-sm datepicker"
+                                                       ng-model="bookingHeader.ETA"
+                                                       ng-required="bookingHeader.TransportType == 1021 || bookingHeader.TransportType == 1020"
+                                                       date-time-input="{{dateTimeFormat12}}">
+                                                <span class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true"></i></span>
+                                            </div>
+                                        </a>
+                                        <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                            <datetimepicker ng-model="bookingHeader.ETA"
+                                                            data-datetimepicker-config="{
+                                                    dropdownSelector: '#ETA',
+                                                    startView: 'day',
+                                                    minView: 'minute' }" />
+                                        </ul>
+                                    </div>-->
+                                </div>
+                                <div class="col-xs-12 col-md-6">
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>ETD</label>
+                                        <input mdc-datetime-picker="" class="date-icon" date="true" time="true" ng-model="bookingHeader.ETD"
+                                               ng-required="bookingHeader.TransportType == 1021" type="text" id="DateFrom" format="{{dateTimeFormat12}}"
+                                               min-date="date">
+                                    </md-input-container>
+                                    <!--<div class="dropdown">
+                                        <a class="dropdown-toggle" id="ETD" role="button" data-toggle="dropdown">
+                                            <div class="input-group">
+                                                <input type="text"
+                                                       class="form-control input-sm datepicker"
+                                                       ng-model="bookingHeader.ETD"
+                                                       ng-required="bookingHeader.TransportType == 1021"
+                                                       date-time-input="{{dateTimeFormat12}}">
+                                                <span class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true"></i></span>
+                                            </div>
+                                        </a>
+                                        <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                            <datetimepicker ng-model="bookingHeader.ETD"
+                                                            data-datetimepicker-config="{
+                                                    dropdownSelector: '#ETD',
+                                                    startView: 'day',
+                                                    minView: 'minute' }" />
+                                        </ul>
+                                    </div>-->
+                                </div>
+                            </div>
+                            <div class="row ">
+                                <div class="col-xs-12 col-md-6">
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>Port Cut-Off (Dry)</label>
+                                        <input mdc-datetime-picker="" class="date-icon" date="true" time="true" ng-model="bookingHeader.PortCutOffDry"
+                                               ng-required="bookingHeader.TransportType == 1021" type="text" id="DateFrom" format="{{dateTimeFormat12}}"
+                                               min-date="date">
+                                    </md-input-container>
+                                    <!--<div class="dropdown">
+                                        <a class="dropdown-toggle" id="PortCutOffDry" role="button" data-toggle="dropdown">
+                                            <div class="input-group">
+                                                <input type="text"
+                                                       class="form-control input-sm datepicker"
+                                                       ng-model="bookingHeader.PortCutOffDry"
+                                                       ng-required="bookingHeader.TransportType == 1021"
+                                                       date-time-input="{{dateTimeFormat12}}">
+                                                <span class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true"></i></span>
+                                            </div>
+                                        </a>
+                                        <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                            <datetimepicker ng-model="bookingHeader.PortCutOffDry"
+                                                            data-datetimepicker-config="{
+                                                    dropdownSelector: '#PortCutOffDry',
+                                                    startView: 'day',
+                                                    minView: 'minute' }" />
+                                        </ul>
+                                    </div>-->
+                                </div>
+                                <div class="col-xs-12 col-md-6">
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>Port Cut-Off (Reefer)</label>
+                                        <input mdc-datetime-picker="" class="date-icon" date="true" time="true" ng-model="bookingHeader.PortCutOffReefer"
+                                               ng-required="bookingHeader.TransportType == 1021" type="text" id="DateFrom" format="{{dateTimeFormat12}}"
+                                               min-date="date">
+                                    </md-input-container>
+
+                                </div>
+                                <!--<div class="col-sm-3  col-md-4">
+                                    <div class="dropdown">
+                                        <a class="dropdown-toggle" id="PortCutOffReefer" role="button" data-toggle="dropdown">
+                                            <div class="input-group">
+                                                <input type="text"
+                                                       class="form-control input-sm datepicker"
+                                                       ng-model="bookingHeader.PortCutOffReefer"
+                                                       ng-required="bookingHeader.TransportType == 1021"
+                                                       date-time-input="{{dateTimeFormat12}}">
+                                                <span class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true"></i></span>
+                                            </div>
+                                        </a>
+                                        <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                            <datetimepicker ng-model="bookingHeader.PortCutOffReefer"
+                                                            data-datetimepicker-config="{
+                                                    dropdownSelector: '#PortCutOffReefer',
+                                                    startView: 'day',
+                                                    minView: 'minute' }" />
+                                        </ul>
+                                    </div>
+                                </div>-->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-xs-12" ng-if="bookingHeader.TransportType == 1020">
+                        <div class="row">
+                            <div class="col-xs-12">
+
+                                <h2 class="lvh-label">
+                                    FLIGHT DETAILS
+                                </h2>
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                            <label>Flight No.</label>
+
+                                            <input type="text"
+                                                   ng-model="bookingHeader.FlightNo"
+                                                   ng-maxlength="70" logicon-limit />
+                                        </md-input-container>
+                                    </div>
+                                </div>
+                                <div class="row ">
+                                    <div class="col-xs-12">
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                            <label>ARN No.</label>
+
+                                            <input type="text"
+                                                   ng-model="bookingHeader.ARNNo"
+                                                   ng-maxlength="70" logicon-limit />
+                                        </md-input-container>
+                                    </div>
+                                </div>
+                                <div class="row ">
+                                    <div class="col-xs-12">
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                            <label>ETA</label>
+                                            <input mdc-datetime-picker="" class="date-icon" date="true" time="true" ng-model="bookingHeader.ETA" ng-required="bookingHeader.TransportType == 1020 || bookingHeader.TransportType == 1021" type="text" id="DateFrom" format="{{dateTimeFormat12}}"
+                                                   min-date="date">
+                                        </md-input-container>
+
+                                    </div>
+                                    <!--<div class="col-xs-12 col-md-6"><label>ETA</label>
+                                        <div class="dropdown">
+                                            <a class="dropdown-toggle" id="ETA" role="button" data-toggle="dropdown">
+                                                <div class="input-group">
+                                                    <input type="text"
+                                                           class="form-control input-sm datepicker" ng-model="bookingHeader.ETA" ng-required="bookingHeader.TransportType == 1020 || bookingHeader.TransportType == 1021"
+                                                           date-time-input="{{dateTimeFormat12}}">
+                                                    <span class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true"></i></span>
+                                                </div>
+                                            </a>
+                                            <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                                <datetimepicker ng-model="bookingHeader.ETA"
+                                                                data-datetimepicker-config="{ dropdownSelector: '#ETA', startView:'day', minView:'minute' }" />
+                                            </ul>
+                                        </div>
+                                    </div>-->
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-xs-12" ng-if="bookingHeader.TransportType == 1022">
+                        <div class="row">
+                            <div class="col-xs-12">
+
+                                <h2 class="lvh-label">
+                                    RAIL DETAILS
+                                </h2>
+                                <div class="row ">
+                                    <div class="col-xs-12">
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                            <label>Wagon No.</label>
+
+                                            <input type="text"
+                                                   ng-model="bookingHeader.WagonNo"
+                                                   ng-maxlength="70" logicon-limit />
+                                        </md-input-container>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-xs-12" ng-if="bookingHeader.TransportType == 1023">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <h2 class="lvh-label">
+                                    ROAD DETAILS
+                                </h2>
+
+                                <div class="row ">
+                                    <div class="col-xs-12">
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                            <label>
+                                                V
+                                                <label>>Vehicle Registration No. 1</label>
+
+                                                <input type="text"
+                                                       ng-model="bookingHeader.VehicleNo1"
+                                                       ng-maxlength="70" logicon-limit />
+                                        </md-input-container>
+                                    </div>
+                                </div>
+
+                                <div class="row ">
+                                    <div class="col-xs-12">
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                            <label>Vehicle Registration No. 2</label>
+
+                                            <input type="text"
+                                                   ng-model="bookingHeader.VehicleNo2"
+                                                   ng-maxlength="70" logicon-limit />
+                                        </md-input-container>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-md-6" ng-if="bookingHeader.TransportType == 1024">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <h2 class="lvh-label">
+                                    POST DETAILS
+                                </h2>
+
+                                <div class="row ">
+                                    <div class="col-xs-12">
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                            <label>JK78 Information No.</label>
+
+                                            <input type="text"
+                                                   ng-model="bookingHeader.JKNo"
+                                                   ng-maxlength="70" logicon-limit />
+                                        </md-input-container>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--<div class="box-footer">
+                        <div class="row" >
+                            <div class="col-xs-12 col-md-9"></div>
+                            <div class="col-md-2 pull-right">
+                                <button class="btn btn-primary" type="submit" ng-click="submitted = true;"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Save</button>
+                                <button class="btn btn-default" ng-click="cancel();"><i class="fa fa-times" aria-hidden="true"></i>&nbsp;Close</button>
+                            </div>
+                        </div>
+                    </div>-->
+                </div>
+
+
+            </div>
+
+        </div>
+        <div>
+            <div class="card">
+                <div class="lv-header-alt clearfix m-b-5">
+                    <h3 class="lvh-label">Container Details</h3>
+                    <div class="text-right m-r-10 pull-right">
+                        <button type="button" class="btn btn-primary  waves-effect" ng-click="AddContainerDetails(-1);" has-Right data-rightValue="Booking.AddContainer"><i class="fa fa-plus"></i>&nbsp;Add</button>&nbsp;&nbsp;&nbsp;
+                    </div><div class="clearfix"></div>
+
+                </div>
+                <div class="card-body card-padding p-t-25 p-b-25">
+                    <div class="row">
+                        <div class="col-xs-12">
+
+
+                            <!--<div  class="lv-header-alt clearfix m-b-5">
+                                <h3  class="lvh-label">Container Details</h3>
+                                <div class="box-tools pull-right">
+                                    <button type="button" class="btn btn-box-tool" ng-click="AddContainerDetails(-1);">
+                                        <i class="fa fa-plus"></i>
+                                    </button>
+                                </div>
+                            </div>-->
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <div class="table-responsive">
+                                        <table class="table  table-vmiddle">
+                                            <thead>
+                                                <tr>
+                                                    <th>#Action</th>
+                                                    <th>Container No.</th>
+                                                    <th>Container Class</th>
+                                                    <th>Container Status</th>
+                                                    <th>Size</th>
+                                                    <th>Type</th>
+                                                    <th>P/U Mode</th>
+                                                    <th>Pickup Date</th>
+                                                    <th>IMO</th>
+                                                    <th>UNNo</th>
+                                                    <th>Cargo Category</th>
+                                                    <th>Weight</th>
+                                                    <th>Volume</th>
+                                                    <th>Agent Seal</th>
+                                                    <th>Customer Seal</th>
+                                                    <th>Vent</th>
+                                                    <th>Temperature</th>
+
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="bc in bookingHeader.BookingContainers" ng-click="containerDetailRowClick(bc.ContainerKey)">
+                                                    <td>
+                                                        <button class="btn btn-danger" type="button" ng-click="AddContainerDetails($index)" has-Right data-rightValue="Booking.UpdateContainer"><i class="zmdi zmdi-edit"></i></button>
+                                                        <input type="hidden" ng-model="bc.index" ng-init="bc.index = $index" />
+                                                    </td>
+                                                    <td>{{bc.ContainerNo}}</td>
+                                                    <td>{{(lookUpData.ContainerClassList | filter : {Value:bc.ContainerGrade})[0].Text}}</td>
+                                                    <td>{{(lookUpData.efIndicatorList | filter : {Value:bc.EFIndicator})[0].Text}}</td>
+                                                    <td>{{(lookUpData.SizeList | filter : {Value:bc.Size})[0].Text}}</td>
+                                                    <td>{{(lookUpData.TypeList | filter : {Value:bc.Type})[0].Text}}</td>
+                                                    <td>{{(lookUpData.puModeList | filter : {Value:bc.PickupDropOffMode})[0].Text}}</td>
+                                                    <td>{{FormatDate(bc.PickupDate)}}</td>
+                                                    <td>{{(lookUpData.IMOCodeList | filter : {Value:bc.IMOCode})[0].Text}}</td>
+                                                    <td>{{bc.UNNo}}</td>
+                                                    <td>{{(lookUpData.CargoCategoryList | filter : {Value:bc.CargoCategory})[0].Text}}</td>
+                                                    <td>{{bc.Weight}}</td>
+                                                    <td>{{bc.Volume}}</td>
+                                                    <td>{{bc.SealNo1}}</td>
+                                                    <td>{{bc.SealNo2}}</td>
+                                                    <td>{{bc.Vent}}</td>
+                                                    <td>{{bc.Temperature}}</td>
+
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div>
+            <div class="card">
+                <div class="lv-header-alt clearfix m-b-5">
+                    <h3 class="lvh-label">Movements</h3>
+
+                </div>
+                <div class="card-body card-padding p-t-25 p-b-25">
+
+                    <div class="row">
+                        <div class="col-xs-12 col-md-8">
+
+                            <div class="card-body card-padding p-t-25 p-b-25">
+                                <div class="row">
+                                    <div class="col-xs-12">
+
+                                        <div class="table-responsive">
+                                            <table class="table  table-vmiddle">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Movement</th>
+                                                        <th>Transaction No.</th>
+                                                        <!--<th>Movement Date</th>-->
+                                                        <!--<th>Container Key</th>-->
+                                                        <th>Sequence No.</th>
+                                                        <th>Movement Date</th>
+                                                        <!--<th>Status</th>
+                                                        <th>Yard Location</th>
+                                                        <th>Truck Transaction No</th>-->
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr ng-repeat="mvt in bookingHeader.BookingMovements | filter:{ContainerKey: tblSearch.ContainerKey}">
+                                                        <td>
+                                                            {{mvt.MovementCode}}
+                                                        </td>
+                                                        <td></td>
+                                                        <!--<td>
+                                                            {{mvt.ContainerKey}}
+                                                        </td>-->
+                                                        <td>
+                                                            {{mvt.Sequence}}
+                                                        </td>
+                                                        <!--<td>
+                                                            {{mvt.MovementDate}}
+                                                        </td>-->
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+
+        </div>
+
+
+        <div>
+            <div class="card">
+                <div class="card-body card-padding p-t-25 p-b-25">
+                    <div class="row">
+                        <div class="col-xs-12 m-t-15">
+                            <button type="submit" class="btn btn-primary" ng-click="submitted = true;" has-Right data-rightValue="Booking.Booking" data-accessRight="2"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Save</button>
+
+                            <!--<button type="button" ng-show="!IsNew" class="btn btn-default" ng-click="DeleteBookingEntry()"><i class="fa fa-trash-o" aria-hidden="true"></i>&nbsp;Delete</button>-->
+                            <button type="button" class="btn btn-default ng-scope waves-effect" 
+                                    aria-label="button" uib-tooltip="Delete" tooltip-placement="top" ng-click="DeleteBookingEntry()" has-Right data-rightValue="Booking.Booking" data-accessRight="3" ng-show="!IsNew">
+                                <i class="fa fa-trash-o" aria-hidden="true"></i>&nbsp;Delete
+                            </button>
+                            <a data-ui-sref="bookingentrylist" uib-tooltip="Open" tooltip-placement="top"></a>
+                            <!--<button class="btn btn-default ng-scope waves-effect"
+                                    type="button"
+                                    data-ui-sref="bookingentry({orderNo:bh.OrderNo})"
+                                    aria-label="button" uib-tooltip="Edit" tooltip-placement="top">
+                                <i class="zmdi zmdi-edit"></i>
+                            </button>
+                            </td>
+                            <td><a data-ui-sref="bookingentry({orderNo:bh.OrderNo})" uib-tooltip="Open" tooltip-placement="top">{{bh.OrderNo}}</a></td>-->
+                         
+
+                               
+                                    <span class="pull-right">
+                                        <button class="btn btn-primary waves-effect" type="button" ng-click="back();">
+
+                                            <i class="fa fa-backward" aria-hidden="true"></i>&nbsp;Back
+                                        </button> <button class="btn btn-default" type="button" ng-click="clear();">
+                                            <i class="fa fa-eraser" aria-hidden="true"></i>&nbsp;Clear
+                                        </button>
+                                     
+                                    </span>
+                               
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

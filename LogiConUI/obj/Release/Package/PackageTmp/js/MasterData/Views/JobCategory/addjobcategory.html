@@ -1,0 +1,227 @@
+﻿<form name="frmAddJobCategory" id="frmAddJobCategory" ng-controller="addEditJobCategoryCntrl" ng-submit="AddJobCategory(jc)" ng-class="{'submitted':submitted}" novalidate>
+    <div class="container">
+        <div class="card">
+            <div class="lv-header-alt clearfix m-b-5">
+                <h3 class="lvh-label">Add Job Category</h3>
+            </div>
+            <div class="card-body card-padding p-t-25 p-b-25">
+                <div class="row">
+                    <div class="col-xs-12 col-md-6">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Code</label>
+                                    <input type="text" ng-model="jc.Code" ng-required="true" ng-maxlength="15" logicon-limit ng-disabled="!isNew" ng-blur="isjobcategoryExists(jc.Code)" />
+                                </md-input-container>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Description</label>
+                                    <textarea ng-model="jc.Description" md-maxlength="100" rows="2" ng-disabled="!isNew" ng-required="true"></textarea>
+                                </md-input-container>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Transport Type</label>
+                                    <md-select ng-model="jc.TransportMode" ng-change="transportTypeChanged()" ng-required="true">
+                                        <md-option ng-repeat="item in lookupData.transportList" ng-value="item.Value">
+                                            {{item.Text}}
+                                        </md-option>
+                                    </md-select>
+                                </md-input-container>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 col-md-6">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Job Type</label>
+                                    <md-select ng-model="jc.JobType" ng-required="true">
+                                        <md-option ng-repeat="item in lookupData.jobTypeList" ng-value="item.Value" ng-required="true">
+                                            {{item.Text}}
+                                        </md-option>
+                                    </md-select>
+                                </md-input-container>
+                            </div>
+                            <div class="col-xs-12 col-md-6">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Lead Time (Hour)</label>
+                                    <input type="text"
+                                           ng-model="jc.MinLeadTime"
+                                           logicon-decimal
+                                           logicon-limit
+                                           ng-maxlength="5" />
+                                </md-input-container>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 col-md-6">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Shipment Type</label>
+                                    <md-select ng-model="jc.ShipmentType" ng-required="true">
+                                        <md-option ng-repeat="item in lookupData.shipmentTypeList" ng-value="item.Value">
+                                            {{item.Text}}
+                                        </md-option>
+                                    </md-select>
+                                </md-input-container>
+                            </div>
+                            <div class="col-xs-12 col-md-6">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Freight Mode</label>
+                                    <md-select ng-model="jc.FreightMode" ng-required="true">
+                                        <md-option ng-repeat="item in lookupData.freightModeList" ng-value="item.Value">
+                                            {{item.Text}}
+                                        </md-option>
+                                    </md-select>
+                                </md-input-container>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 col-md-6">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Billing Rule</label>
+                                    <md-select ng-model="jc.BillingRule" ng-required="true">
+                                        <md-option ng-repeat="item in lookupData.billingRuleList" ng-value="item.Value">
+                                            {{item.Text}}
+                                        </md-option>
+                                    </md-select>
+                                </md-input-container>
+                            </div>
+                            <div class="col-xs-12 col-md-6">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Haulage Charge Code (%)</label>
+                                    <input type="number"
+                                           ng-model="jc.ChargePercent"
+                                           logicon-limit
+                                           ng-maxlength="5" ng-blur="validatePercentage()" />
+                                </md-input-container>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-xs-12 col-md-6">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <h5>&nbsp;&nbsp;&nbsp;Modules Required</h5>
+                            </div>
+                        </div>
+                        <input type="hidden" ng-model="jc.IsModuleSelected" ng-init="jc.IsModuleSelected == false" />
+                        <div class="row">
+                            <div class="col-xs-12 col-md-6" ng-repeat="item in SubscriptionmodulesList">
+                                <md-switch class="md-primary"
+                                           ng-model="jc['Is' + toCamelCase(item.Text)]"
+                                           aria-label="item.ModuleID"
+                                           ng-change="moduleSelectionWrapper(item.ModuleID, item.Text,jc.TransportMode, jc['Is' + toCamelCase(item.Text)]);"
+                                           ng-disabled="jc.TransportMode == null || jc.TransportMode == ''">
+                                    {{item.Text}}
+                                </md-switch>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <md-tabs md-dynamic-height md-border-bottom>
+                            <md-tab label="Work Rules" class="md-primary">
+                                <div class="row m-t-10">
+                                    <div class="col-xs-12 col-md-6">
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                            <label>Module</label>
+                                            <md-select ng-model="selectedMovementItem" ng-change="movementTypeChange(selectedMovementItem)" ng-disabled="!jc.IsModuleSelected">
+                                                <md-option ng-repeat="item in moduleList" ng-value="item.Value">
+                                                    {{item.Text}}
+                                                </md-option>
+                                            </md-select>
+                                        </md-input-container>
+                                    </div>
+
+                                    <div class="col-xs-12 col-md-2">
+                                        <button class="btn btn-primary" type="button" ng-disabled="!jc.IsModuleSelected" ng-click="addMovementItem()"><i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Add</button>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <div class="table-responsive">
+                                            <table class="table table-vmiddle">
+                                                <thead>
+                                                    <tr>
+                                                        <td>#Action</td>
+                                                        <td>Sequence</td>
+                                                        <td>Process Code</td>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr ng-repeat="mvt in JobCategoryMovements">
+                                                        <td>
+                                                            <!--<button class="btn btn-default ng-scope waves-effect" type="button" ng-click="editMovementItem(mvt.MovementCode);" aria-label="button">
+                                                                <i class="zmdi zmdi-edit" aria-hidden="true"></i>
+                                                            </button>-->
+                                                            <button class="btn btn-danger ng-scope waves-effect" type="button" ng-click="removeMovementItem(mvt.Code);" aria-label="button">
+                                                                <i class="zmdi zmdi-delete" aria-hidden="true"></i>
+                                                            </button>
+                                                        </td>
+                                                        <td>{{mvt.SeqNo}}</td>
+                                                        <td>{{mvt.MovementCode}}</td>
+
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </md-tab>
+                            <md-tab label="Settings" class="md-primary">
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-6" ng-repeat="jcRuleType in lookupData.jobCategoryRuleDTOList">
+                                        <div class="row m-t-10">
+                                            <div class="col-xs-12">
+                                                <div class="checkbox m-b-15">
+                                                    <label>
+                                                        <input type="checkbox" value="" naria-label="Select All"
+                                                               ng-checked="isChecked(jcRuleType.jobCategoryRuleType)" md-indeterminate="isIndeterminate(jcRuleType.jobCategoryRuleType)"
+                                                               ng-click="toggleAll(jcRuleType.jobCategoryRuleType)">
+                                                        <i class="input-helper"></i>
+                                                        {{jcRuleType.jobCategoryRuleTypeDesc}}
+                                                    </label>
+                                                </div>
+                                                <div ng-repeat="ruleType in jcRuleType.ruleTypeList" style="margin-left:20px;margin-top:10px;">
+                                                    <div class="demo-select-all-checkboxes" flex="100">
+                                                        <div class="checkbox m-b-15">
+                                                            <label>
+                                                                <input type="checkbox" value="" ng-checked="exists(ruleType, selected)"
+                                                                       ng-click="toggle(ruleType, selected)">
+                                                                <i class="input-helper"></i>
+                                                                {{ ruleType.ruleTypeDesc }}
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </md-tab>
+                        </md-tabs>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    <div><div class="card">
+    <div class="card-body card-padding p-t-10 p-b-10">
+        <div class="row">
+            <div class="col-xs-12">
+                <button class="btn btn-primary" type="submit" ng-click="submitted = true;"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Save</button>
+                <span class="pull-right">
+                    <button class="btn btn-primary" ng-click="backClick();"><i class="fa fa-backward" aria-hidden="true"></i>&nbsp;Back</button>
+                </span>
+            </div>
+        </div>
+    </div>
+</div></div>
+    </div>
+  
+</form>

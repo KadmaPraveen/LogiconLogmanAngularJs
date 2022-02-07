@@ -1,0 +1,40 @@
+﻿<form class="signin" id="Cntrl.frmLogin" name="Cntrl.frmLogin" ng-class="{'submitted': submitted}" autocomplete="off" ng-submit="Login(log)" novalidate>
+    <div class="form-group" style="margin-bottom:70px;">
+        <img src="img/logman-logo.png" class="main-login-logo" />
+    </div>
+    <div class="form-group">
+        <input type="text"
+               class="form-control"
+               id="usr"
+               placeholder="Email"
+               ng-model="log.Email"
+               ng-required="true" />
+    </div>
+    <div class="form-group">
+        <input type="password"
+               class="form-control"
+               id="pwd"
+               placeholder="Password"
+               ng-model="log.Password"
+               ng-required="true" />
+    </div>
+    <div class="form-group">
+        <button type="submit"
+                ng-click="submitted = true;"
+                class="btn btn-danger btn-frmt">
+            &nbsp;&nbsp;&nbsp;Sign in&nbsp;&nbsp;&nbsp;
+        </button>
+        <!--<button type="button" data-ui-sref="registration" data-ng-click="mactrl.sidebarStat($event)"
+                class="btn btn-danger btn-frmt pull-right">
+            Subscribe
+        </button>-->
+        <!--hidepk-->
+        <!--<button type="button" onclick="location.href = 'index.html#/registration'"
+                class="btn btn-danger btn-frmt pull-right">
+            Subscribe
+        </button>-->
+    </div>
+    <div class="form-group">
+        <a href="index.html#/forgotpassword">Forgot password ?</a>
+    </div>
+</form>

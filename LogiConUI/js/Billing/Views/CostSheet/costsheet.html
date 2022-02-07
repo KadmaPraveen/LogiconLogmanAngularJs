@@ -1,0 +1,179 @@
+﻿<div class="container" ng-controller="CostSheetController">
+    <div class="card">
+        <div class="lv-header-alt clearfix m-b-5">
+            <h3 class="lvh-label">Cost Sheet</h3>
+            <div class="box-tools pull-right">
+                <div class="" uib-dropdown is-open="status.mainMenu">
+                    <button ng-disabled="costSheetList.length == 0"  class="btn bgm-lightgreen btn-icon waves-effect waves-circle m-r-10" popover-placement="bottom-right" aria-label="button" uib-dropdown-toggle>
+                        <i class="zmdi zmdi-caret-down" aria-hidden="true"></i>
+                    </button>
+                    <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button" style="right:0px;left:inherit;min-width:200px;">
+                        <li role="menuitem" ng-class="{'disabled': !checkEnable}"><a style="cursor:pointer" ng-click="ExistingCustometInvoice()">New Customer Invoice</a></li>
+                        <li class="divider"></li>
+                        <li role="menuitem" ng-class="{'disabled': !checkEnable}"><a style="cursor:pointer" ng-click="ExistingCustomerCashBill()">New Cash Bill</a></li>
+                        <!--<li role="menuitem"><a href="#">Existing Cash Bill</a></li>-->
+                        <!--<li class="divider"></li>-->
+                        <!--<li role="menuitem"><a href="#">New Vendor Invoice</a></li>-->
+                        <!--<li role="menuitem"><a href="#">Existing Vendor Invoice</a></li>-->
+                        <!--<li class="divider"></li>-->
+                        <!--<li role="menuitem"><a href="#">New Payment Request</a></li>
+                        <li role="menuitem"><a href="#">Existing Payment Request</a></li>-->
+                        <li class="divider"></li>
+                        <!--<li role="menuitem"><a href="#">Select All Charges</a></li>-->
+                        <li role="menuitem"><a href="#">Select Cash Charges</a></li>
+                        <li role="menuitem"><a href="#">Select Credit Charges</a></li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+        <div class="card-body card-padding p-t-5 p-b-5">
+            <div class="row">
+
+                <div class="col-md-3 col-md-offset-9">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Order No.</label>
+                        <input type="text"
+                               class="search-icon"
+                               ng-model="cs.OrderNo"
+                               typeahead-min-length="3"
+                               uib-typeahead="d.Text as d.Text for d in OrderResults($viewValue)"
+                               typeahead-wait-ms="100"
+                               typeahead-editable="false"
+                               typeahead-on-select="orderNoSelected($item)" />
+                    </md-input-container>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-md-6">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Customer</label>
+                        <input type="text"
+                               class="search-icon"
+                               ng-model="orderHeaderDetails.CustomerName"
+                               typeahead-min-length="3"
+                               uib-typeahead="d.Text as d.Text for d in MerchantResults($viewValue)"
+                               typeahead-loading="loadingcustomers"
+                               typeahead-wait-ms="1000"
+                               typeahead-on-select="CustomerSelected($item, 'CustomerCode')"
+                               disabled />
+                    </md-input-container>
+                </div>
+                <div class="col-xs-12 col-md-6">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Customer Ref.</label>
+                        <input type="text" ng-model="orderHeaderDetails.CustomerRef" disabled />
+                    </md-input-container>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-md-6">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Billing Status</label>
+                        <input type="text" ng-model="orderHeaderDetails.Billable" disabled />
+                    </md-input-container>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="pull-right"><!--cs.OrderNo-->
+                        <!--<button class="btn btn-primary m-b-5" type="button" ng-disabled="cs.OrderNo==''" ng-click="CostSheetDetails(-1);"><i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Add</button>-->
+                        <button class="btn btn-primary m-b-5" type="button" ng-disabled="orderNo==''" ng-click="CostSheetDetails(-1);"><i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Add</button>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="table-responsive">
+                        <table class="table  table-vmiddle">
+                            <thead>
+                                <tr>
+                                    <th>#Action</th>
+                                    <th>
+                                        <div class="checkbox m-0">
+                                            <label>
+                                                <input value="" ng-click="toggleCostSheet()" ng-disabled="!hdrChkEnabled"
+                                                       aria-label="Priority" type="checkbox">
+                                                <i class="input-helper"></i>
+
+                                            </label>
+                                        </div>
+                                    </th>
+                                    <th>Order No.</th>
+                                    <th>Container Key</th>
+                                    <th>Charge Code</th>
+                                    <th>Curr.</th>
+                                    <th>Ex. Rate</th>
+                                    <th>Billing Unit</th>
+                                    <th>Qty.</th>
+                                    <th>Price</th>
+                                    <th>Actual Amt.</th>
+                                    <th>Discount Amt.</th>
+                                    <th>Total Amt.</th>
+                                    <th>Output GST</th>
+                                    <th>Input GST</th>
+                                    <th>Remarks</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="item in costSheetList">
+                                    <td>
+                                        <input type="hidden" ng-model="item.Index" ng-init="item.Index = $index" />
+                                        <button type="button" ng-click="CostSheetDetails($index);" ng-disabled="!item.Status" class="btn btn-default ng-scope waves-effect" aria-label="button">
+                                            <i class="zmdi zmdi-edit" aria-hidden="true"></i>
+                                        </button>
+                                        <button type="button" ng-click="DeleteCostSheet($index);" ng-disabled="!item.Status" class="btn btn-danger  waves-effect" aria-label="button">
+                                            <i class="zmdi zmdi-delete" aria-hidden="true"></i>
+                                        </button>
+                                    </td>
+                                    <td>
+                                        <div class="checkbox m-0">
+                                            <label>
+                                                <input value="" ng-model="item.chk"
+                                                       ng-init="item.chk = false"
+                                                       aria-label="Priority" type="checkbox" ng-disabled="!item.Status" ng-change="onChanged(item.chk)">
+                                                <i class="input-helper"></i>
+                                            </label>
+                                        </div>
+                                    </td>
+
+                                    <td>{{item.OrderNo}}</td>
+                                    <td>{{item.ContainerKey}}</td>
+                                    <td>{{item.ChargeCode}}</td>
+                                    <td>{{item.CurrencyCode}}</td>
+                                    <td>{{item.ExRate}}</td>
+                                    <td>{{item.BillingUnitDescription}}</td>
+                                    <td>{{item.Qty.toFixed(2)}}</td>
+                                    <td>{{item.Price.toFixed(2)}}</td>
+                                    <td>{{item.ActualAmount.toFixed(2)}}</td>
+                                    <td>{{item.DiscountAmount}}</td>
+                                    <td>{{item.TotalAmount.toFixed(2)}}</td>
+                                    <td>{{item.OutPutGSTDescription}}</td>
+                                    <td>{{item.InPutGSTDescription}}</td>
+                                    <td>{{item.Remark}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div><div class="row">
+                <div class="col-xs-12">
+                    <!--<button class="btn btn-primary waves-effect m-t-10" ng-disabled="costSheetList.length == 0" ng-click="SaveCostSheet()"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Save</button>-->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    li.disabled {
+        cursor: not-allowed;
+        pointer-events: none;
+    }
+
+    !li.disabled {
+        pointer-events: all;
+    }
+</style>
+<!--//costsheet.html-->

@@ -1,0 +1,215 @@
+﻿<form id="frmDriverIncentive" name="frmDriverIncentive" ng-class="{'submitted': submitted}" ng-submit="SaveDriverIncentive(DriverIncentiveDetails)" novalidate>
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" ng-click="cancel();">&times;</button>
+        <h4 class="modal-title">Add Driver Incentive</h4>
+    </div>
+    <div class="modal-body">
+        <div class="c-overflow" ng-style="{'max-height': iframeHeight - 80 + 'px'}" resize>
+            <div class="modalbodymain">
+                <div class="row" style="margin-top: 10px;">
+                    <div class="col-md-2">
+                        <label class="control-label pull-right">Charge Code</label>
+                    </div>
+                    <div class="col-md-10">
+                        <input type="text"
+                               class="search-icon"
+                               ng-class="{'loadinggif': DriverIncentiveDetails.ChargeCodeNameLoading}"
+                               ng-model="DriverIncentiveDetails.ChargeCodeName"
+                               typeahead-min-length="3"
+                               uib-typeahead="d.Text as d.Text for d in ChargeCodeResults($viewValue)"
+                               typeahead-loading="DriverIncentiveDetails.ChargeCodeNameLoading"
+                               typeahead-wait-ms="100"
+                               typeahead-editable="false"
+                               ng-required="true"
+                               typeahead-on-select="CustomerSelected2($item, 'ChargeCode')" />
+                    </div>
+                </div>
+                <div class="row" style="margin-top: 10px;">
+                    <div class="col-md-2">
+                        <label class="control-label pull-right">Job Type</label>
+                    </div>
+                    <div class="col-md-4">
+                        <select ng-model="DriverIncentiveDetails.JobType"
+                                ng-required="true"
+                                ng-options="s.Value as s.Text for s in lookUpData.jobTypeList" class="form-control input-sm"></select>
+                    </div>
+                    <div class="col-md-2">
+                        <label class="control-label pull-right">From Area</label>
+                    </div>
+                    <div class="col-md-4">
+                        <input ng-model="DriverIncentiveDetails.PickupFrom"
+                               ng-required="true" type="text" class="form-control input-sm" />
+                    </div>
+                </div>
+                <div class="row" style="margin-top: 10px;">
+                    <div class="col-md-2">
+                        <label class="control-label pull-right">Job Category</label>
+                    </div>
+                    <div class="col-md-4">
+                        <select ng-model="DriverIncentiveDetails.JobCategory"
+                                ng-change="JobCategoryChanged()"
+                                ng-required="true"
+                                ng-options="s.Value as s.Text for s in lookUpData.jobCategoryList" class="form-control input-sm"></select>
+                    </div>
+                    <div class="col-md-2">
+                        <label class="control-label pull-right">To Area</label>
+                    </div>
+                    <div class="col-md-4">
+                        <input ng-model="DriverIncentiveDetails.DeliveryTo"
+                               ng-required="true" type="text" class="form-control input-sm" />
+                    </div>
+                </div>
+                <div class="row" style="margin-top: 10px;">
+                    <div class="col-md-2">
+                        <label class="control-label pull-right">Shipment Type</label>
+                    </div>
+                    <div class="col-md-4">
+                        <select ng-model="DriverIncentiveDetails.ShipmentType"
+                                ng-required="true"
+                                ng-options="s.Value as s.Text for s in lookUpData.shipmentTypeList" class="form-control input-sm"></select>
+                    </div>
+                </div>
+                <div class="row" style="margin-top: 10px;">
+                    <div class="col-md-2">
+                        <label class="control-label pull-right">Customer</label>
+                    </div>
+                    <div class="col-md-10">
+                        <input type="text"
+                               class="search-icon"
+                               ng-class="{'loadinggif': DriverIncentiveDetails.CustomerNameLoading}"
+                               ng-model="DriverIncentiveDetails.CustomerName"
+                               typeahead-min-length="3"
+                               uib-typeahead="d.Text as d.Text for d in MerchantResults($viewValue)"
+                               typeahead-loading="DriverIncentiveDetails.CustomerNameLoading"
+                               typeahead-wait-ms="100"
+                               typeahead-editable="false"
+                               ng-required="true"
+                               typeahead-on-select="CustomerSelected2($item, 'CustomerCode')" />
+
+                    </div>
+                </div>
+                <div class="row" style="margin-top: 10px;">
+                    <div class="col-md-2">
+                        <label class="control-label pull-right">Transport Type</label>
+                    </div>
+                    <div class="col-md-4">
+                        <select ng-model="DriverIncentiveDetails.TransportType"
+                                ng-required="true"
+                                ng-options="s.Value as s.Text for s in lookUpData.transportModeList" class="form-control input-sm"></select>
+                    </div>
+                    <div class="col-md-2">
+                        <label class="control-label pull-right">Billing Unit</label>
+                    </div>
+                    <div class="col-md-4">
+                        <select ng-model="DriverIncentiveDetails.BillingUnit"
+                                ng-required="true"
+                                ng-options="s.Value as s.Text for s in lookUpData.billingUnitList" class="form-control input-sm"></select>
+                    </div>
+                </div>
+                <div class="row" style="margin-top: 10px;">
+                    <div class="col-md-2">
+                        <label class="control-label pull-right">Size/Type</label>
+                    </div>
+                    <div class="col-md-2">
+                        <select ng-model="DriverIncentiveDetails.Size" ng-change="sizeChanged()"
+                                ng-required="true"
+                                ng-options="s.Value as s.Text for s in lookUpData.sizeList" class="form-control input-sm"></select>
+                    </div>
+                    <div class="col-md-2">
+                        <select ng-model="DriverIncentiveDetails.Type"
+                                ng-required="true" ng-disabled="DriverIncentiveDetails.Size == null"
+                                ng-options="s.Value as s.Text for s in lookUpData.TypeList" class="form-control input-sm"></select>
+                    </div>
+                </div>
+                <div class="row" style="margin-top: 10px;">
+                    <div class="col-md-2">
+                        <label class="control-label pull-right">Trailer Type</label>
+                    </div>
+                    <div class="col-md-4">
+                        <select ng-model="DriverIncentiveDetails.TrailerType"
+                                ng-options="s.Value as s.Text for s in lookUpData.trailerTypeList"
+                                ng-required="true" class="form-control input-sm"></select>
+                    </div>
+                    <div class="col-md-2">
+                        <label class="control-label pull-right">Incentive Type</label>
+                    </div>
+                    <div class="col-md-4">
+                        <select ng-model="DriverIncentiveDetails.IncentiveType"
+                                ng-required="true"
+                                ng-options="s.Value as s.Text for s in lookUpData.incentiveTypeList" class="form-control input-sm"></select>
+                    </div>
+                </div>
+                <div class="row" style="margin-top: 10px;">
+                    <div class="col-md-2">
+                        <label class="control-label pull-right">Handling</label>
+                    </div>
+                    <div class="col-md-4">
+                        <select ng-model="DriverIncentiveDetails.HandlingType"
+                                ng-required="true"
+                                ng-options="s.Value as s.Text for s in lookUpData.handlingList" class="form-control input-sm"></select>
+                    </div>
+                    <div class="col-md-2">
+                        <label class="control-label pull-right">Percentage</label>
+                    </div>
+                    <div class="col-md-4">
+                        <input type="text" class="form-control input-sm" placeholder="%" />
+                    </div>
+                </div>
+                <div class="row" style="margin-top: 10px;">
+                    <div class="col-md-2">
+                        <label class="control-label pull-right">Movement Code</label>
+                    </div>
+                    <div class="col-md-4">
+                        <select ng-model="DriverIncentiveDetails.MovementCode"
+                                ng-disabled="DriverIncentiveDetails.JobCategory == null"
+                                ng-options="s.Value as s.Text for s in lookUpData.MovementCodeList"
+                                class="form-control input-sm"></select>
+                    </div>
+                    <div class="col-md-2">
+                        <label class="control-label pull-right">Fixed Rate</label>
+                    </div>
+                    <div class="col-md-4">
+                        <input type="text" class="form-control input-sm" />
+                    </div>
+                </div>
+                <div class="row" style="margin-top: 10px;">
+                    <div class="col-md-2">
+                        <label class="control-label pull-right">Movement Type</label>
+                    </div>
+                    <div class="col-md-4">
+                        <select ng-model="DriverIncentiveDetails.MovementType"
+                                ng-required="true"
+                                ng-options="s.Value as s.Text for s in lookUpData.movementTypeList" class="form-control input-sm"></select>
+                    </div>
+                    <div class="col-md-2">
+                        <label class="control-label pull-right">Cargo Type</label>
+                    </div>
+                    <div class="col-md-4">
+                        <select ng-model="DriverIncentiveDetails.CargoType"
+                                ng-required="true"
+                                ng-options="s.Value as s.Text for s in lookUpData.cargoTypeList" class="form-control input-sm"></select>
+                    </div>
+
+                </div>
+                <div class="row" style="margin-top: 10px;">
+                    <div class="col-md-2">
+                        <label class="control-label pull-right">Remarks</label>
+                    </div>
+                    <div class="col-md-10">
+                        <textarea ng-model="DriverIncentiveDetails.Remarks" class="form-control input-sm"></textarea>
+                    </div>
+                </div>
+            </div>
+            </div>
+</div>
+            <div class="modal-footer">
+                <div class="row" style="margin-top: 10px;">
+                    <div class="col-md-9"></div>
+                    <div class="col-md-3 pull-right">
+                        <button type="submit" class="btn btn-primary btn-sm" ng-click="submitted = true"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Save</button>
+                        <button class="btn btn-default btn-sm" ng-click="cancel();"><i class="fa fa-times" aria-hidden="true"></i>&nbsp;Close</button>
+                    </div>
+                </div>
+            </div>
+</form>
+

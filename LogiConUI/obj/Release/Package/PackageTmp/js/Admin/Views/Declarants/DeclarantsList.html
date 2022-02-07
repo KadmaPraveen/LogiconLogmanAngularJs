@@ -1,0 +1,64 @@
+﻿<div class="container" ng-controller="DeclarantListController">
+
+
+    <div class="card">
+        <div class="lv-header-alt clearfix m-b-5">
+            <h2 class="lvh-label">
+                Declarant List
+            </h2>
+            <div class="lv-actions actions">
+                <button class="btn bgm-lightgreen btn-icon  waves-effect waves-circle m-r-10"
+                        type="button"
+                        aria-label="button"
+                        data-ui-sref="Declarant({declarantno:NEW})" data-ng-click="mactrl.sidebarStat($event)">
+                    <i class="zmdi zmdi-plus" aria-hidden="true"></i>
+
+                </button>&nbsp;&nbsp;&nbsp;
+            </div>
+        </div>
+
+
+        <div class="card-body card-padding p-t-25 p-b-25">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-vmiddle"  ng-table="tblDeclarant">
+                          
+                            <tr ng-repeat="item in $data">
+                                <td data-title="'Action'">
+                                    <button class="btn btn-default ng-scope waves-effect"
+                                            type="button"
+                                            aria-label="button"
+                                            data-ui-sref="Declarant({branchid:item.BranchID,declarantno:item.DeclarantID})" data-ng-click="mactrl.sidebarStat($event)">
+                                        <i class="zmdi zmdi-edit"></i>
+                                    </button>
+                                    <button class="btn btn-default ng-scope waves-effect btn-danger"
+                                            type="button"
+                                            ng-click="DeleteDeclarant(item.DeclarantID)">
+                                        <i class="zmdi zmdi-delete"></i>
+                                    </button>
+                                </td>                                
+                                <td data-title="'DeclarantID'" data-sortable="'DeclarantID'">
+                                    {{item.DeclarantID}}
+                                </td>
+                                <td data-title="'Name'" data-sortable="'Name'"> 
+                                    {{item.Name}}
+                                </td>
+                                <td data-title="'Designation'"  data-sortable="'Designation'">
+                                    {{item.Designation}}
+                                </td>
+                                <td  data-title="'NRIC'"  data-sortable="'NRIC'">
+                                    {{item.NRIC}}
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--<div class="col-xs-12 text-left">
+
+            <button type="submit" ng-click="refresh()" class="btn btn-primary waves-effect"><i class="fa fa-plus"></i>&nbsp;Refresh</button>
+        </div>-->
+    </div>
+</div>

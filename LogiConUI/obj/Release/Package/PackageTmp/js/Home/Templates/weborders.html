@@ -1,0 +1,108 @@
+﻿<!--<div class="container" ng-init="DoWebOrderSearch({
+        Value: 'TEMP',
+        filter: 'TEMP'
+    })">
+    <div class="row" style="margin-top: 0px;">
+        <div class="col-md-1">
+            <label>Search By</label>
+        </div>
+        <div class="col-xs-12 col-md-2">
+            <select ng-model="weborders.filter" class="form-control input-sm" ng-change="WebOrdersFilterChanged();">
+                <option value="containerNo" selected="selected">Container No</option>
+                <option value="customerName">Customer Name</option>
+            </select>
+        </div>
+        <div class="col-xs-12 col-md-2">
+            <input type="text"
+                   class="form-control input-sm"
+                   placeholder="Search By"
+                   ng-model="weborders.text"
+                   typeahead-min-length="3"
+                   uib-typeahead="d.Text as d.Text for d in webOrdersSearchResults($viewValue)"
+                   typeahead-loading="loading"
+                   typeahead-wait-ms="1000"
+                   typeahead-on-select="webOrdersSearchSelected($item, 'Value')" />
+        </div>
+        <div class="col-md-1">
+            <button class="btn btn-primary" ng-click="webOrdersSearch(weborders);">
+                <i class="fa fa-search" aria-hidden="true"></i>&nbsp;Search
+            </button>
+        </div>
+        <div class="col-xs-12 col-md-4" style="color:red;font-weight:bold;">
+            {{errorMesssage}}
+        </div>
+    </div>
+    <div class="row"  ng-show="weborders.containerNoSearchResults.length > 0">
+        <div class="col-xs-12">
+            <table class="table table-striped table-vmiddle">
+                <thead style="color:#fff;background-color:#3c8dbc;">
+                    <tr>
+                        <th>Order No.<input ng-hide="OrderNoHeader" type="text" class="form-control input-sm" /></th>
+                        <th>Container Key</th>
+                        <th>Container No</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="item in weborders.containerNoSearchResults">
+                        <td><a ng-click="addContainerTab(item.OrderNo)">{{item.OrderNo}}</a></td>
+                        <td>{{item.ContainerKey}}</td>
+                        <td>{{item.ContainerNo}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row"  ng-show="weborders.customerNameSearchResults.length > 0">
+        <div class="col-xs-12">
+            <table class="table table-striped table-vmiddle">
+                <thead style="color:#fff;background-color:#3c8dbc;">
+                    <tr>
+                        <th ng-dblclick="headerDblClick('OrderNoHeader')">Order No. <input ng-hide="header.OrderNoHeader" ng-model="header.search" type="text" style="width:150px;" /></th>
+                        <th>ETA</th>
+                        <th>ETD</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="item in weborders.customerNameSearchResults | filter: header.search">
+                        <td><a href="#/operation/orderentry/{{item.OrderNo}}">{{item.OrderNo}}</a></td>
+                        <td>{{item.ETA | date : 'dd/MM/yyyy HH:MM:ss a'}}</td>
+                        <td>{{item.ETD | date : 'dd/MM/yyyy HH:MM:ss a'}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-6 col-md-3" ng-show="weborders.containerNoSearchResults.length <= 0 && weborders.customerNameSearchResults.length <= 0" style="padding-left:50px;">
+            <h4>No data found...</h4>
+        </div>
+    </div>
+</div>-->
+<div class="content">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="table-responsive">
+                <table class="table table-striped table-vmiddle">
+                    <thead>
+                        <tr>
+                            <th>#Action</th>
+                            <th>Branch ID</th>
+                            <th>Order No</th>
+                            <th>Order Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="order in webOrders">
+                            <td>
+                                <a data-ui-sref="orderentry({orderno:order.OrderNo})" uib-tooltip="Open" tooltip-placement="top">{{order.OrderNo}}</a>
+                            </td>
+                            <td>{{order.BranchID}}</td>
+                            <td>{{order.OrderNo}}</td>
+                            <td>{{order.OrderDate | date : 'dd/MM/yyyy HH:MM:ss a'}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

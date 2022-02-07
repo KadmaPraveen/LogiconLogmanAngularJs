@@ -1,0 +1,60 @@
+﻿<!DOCTYPE html>
+<html ng-app="SNN">
+<head>
+    <title></title>
+	<meta charset="utf-8" />
+</head>
+<body>
+    <!--<script type="text/javascript">
+        var app = angular.module('LogiCon').controller('NewsListCntrl', ['$scope', function ($scope) {
+            $scope.Snnnews = [{ id: '001', CategoryCODE: 'COO1', Title: 'SnnNEWS', Message: 'Txt', newsdate: '6/6/2016', ExpiryDate: '6/7/2016', Image: 'Jpg' }];
+        }]);
+    </script>-->
+    <script src="Scripts/angular/angular.js"></script>
+    <script type="text/javascript">
+        //var app = angular.module('SNN', ['']);
+    </script>
+    <!--<script type="text/javascript">
+
+        function WriteScripts() {            
+            document.write('<script src=\"Scripts/app.connection.js?v=' + version + '\"><\/script>');            
+        }
+        WriteScripts();
+    </script>-->
+    <script type="text/javascript">
+        var app = angular.module('SNN', []);
+        app.controller('NewsListCntrl',function ($scope) {
+            $scope.Snnnews = [{ id: '001', CategoryCODE: 'COO1', Title: 'SnnNEWS', Message: 'Txt', newsdate: '6/6/2016', ExpiryDate: '6/7/2016', Image: 'Jpg' },
+                              { id: '002', CategoryCODE: 'COO2', Title: 'SnnNEWSs', Message: 'Txts', newsdate: '6/17/2016', ExpiryDate: '6/17/2016', Image: '1.Jpg' }];
+        });
+        app.service('NewsService', ['$http', '$q', function ($http, $q) {
+
+        }]);
+    </script>
+    <table ng-controller="NewsListCntrl" >
+        <tr  ng-repeat="ITEMS in Snnnews">
+            <td>
+            {{ITEMS.id}}
+                </td>
+            <td>
+                {{ITEMS.CategoryCODE}}
+            </td>
+            <td>
+                {{ITEMS.Title}}
+            </td>
+            <td>
+                {{ITEMS.Message}}
+            </td>
+            <td>
+                {{ITEMS.newsdate}}
+            </td>
+            <td>
+                {{ITEMS.ExpiryDate}}
+            </td>
+            <td>
+                {{ITEMS.Image}}
+            </td>
+        </tr>
+    </table>
+</body>
+</html>

@@ -1,0 +1,849 @@
+﻿<div class="container " ng-controller="CompanyBillingCtrl as Cntrl">
+    <div class="card">
+        <div class="lv-header-alt clearfix ">
+            <h2 class="lvh-label">Company Billing</h2>
+        </div>
+
+        <div class="card-body card-padding p-t-5 p-b-5">
+            <div class="row">
+                <div class="col-xs-12 col-md-5">
+                    <div class="card">
+                        <div class="lv-header-alt clearfix m-b-5">
+                            <h2 class="lvh-label">Company Information</h2>
+                        </div>
+                        <div class="card-body card-padding p-t-5 p-b-5">
+                            <div class="row">
+                                <div class="col-xs-12 col-md-4">
+                                    <label>Company Name</label>
+                                </div>
+                                <div class="col-md-8">
+                                    <label style="font-weight:bold">{{companyInfo.CompanyName}}</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12 col-md-4">
+                                    <label>Company Address</label>
+                                </div>
+                                <div class="col-md-8">
+                                    <label style="font-weight:bold">{{companyInfo.address.Address1}},{{companyInfo.address.Address2}}</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12 col-md-4">
+                                    <label>ROC No.</label>
+                                </div>
+                                <div class="col-md-8">
+                                    <label style="font-weight:bold">{{companyInfo.RegNo}}</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12 col-md-4">
+                                    <label style="font-style:italic">Member Since</label>
+                                </div>
+                                <div class="col-md-8">
+                                    <label style="font-weight:bold">{{companyInfo.CreatedOn | date}}</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12 col-md-4">
+                                    <label>DAGANG NET A/C NO</label>
+                                </div>
+                                <div class="col-md-8">
+                                    <label style="font-weight:bold">{{regDetails.CPAMAccountNo}}</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-md-7">
+                    <div class="row">
+                        <div class="col-xs-12 col-md-4">
+                            <div class="small-box bgm-orange color-box p-10">
+                                <div class="inner ">
+                                    <b>{{UserCount}}</b><br />
+                                    <u>User Traffic</u>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-md-4">
+                            <div class="small-box bgm-lightgreen color-box p-10">
+                                <div class="inner ">
+                                    <b>{{DeclarationCount}}</b><br />
+                                    <u>Declaration Count</u>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-md-4">
+                            <div class="small-box bgm-bluegray color-box p-10">
+                                <div class="inner ">
+                                    <b>{{OrderCount}}</b><br />
+                                    <u>Order Count</u>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row m-t-25 m-b-25">
+                        <div class="col-xs-12 col-md-4">
+                            <button type="button" ng-click="GenerateInvoiceReport()" class="btn btn-primary btn-block"><i class="fa fa-code-fork" aria-hidden="true"></i>&nbsp;View Invoice</button>
+                        </div>                        
+                        <div class="col-xs-12 col-md-4">
+                            <button type="button" ng-click="GenerateReport()" class="btn btn-info btn-block"><i class="fa fa-sticky-note"></i>&nbsp;Current Statement</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <md-tabs md-dynamic-height md-border-bottom>
+                        <md-tab label="General" class="md-primary">
+                            <md-content class="md-padding">
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-6">
+                                        <div class="card">
+                                            <div class="lv-header-alt clearfix m-b-5">
+                                                <h2 class="lvh-label">Branches</h2>
+                                            </div>
+                                            <div class="card-body card-padding p-t-5 p-b-5">
+                                                <div class="row">
+                                                    <div class="col-xs-12">
+                                                        <div class="row m-t-5 m-b-5" ng-repeat="b in companyInfo.Branches">
+                                                            <div class="col-xs-12 col-md-4 ">
+                                                                <b class="text-content">{{b.BranchName}}&nbsp;:</b>
+                                                                <div class="col-xs-12 ">
+                                                                    <br />
+                                                                    <md-input-container class="md-block" flex-gt-sm>
+                                                                        <label>DAGANG NET A/C NO</label>
+                                                                        <input type="text" disabled ng-model="regDetails.CPAMAccountNo" />
+                                                                    </md-input-container>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-md-8">
+                                                                <div class="small-box card-header ch-alt p-10">
+                                                                    <div class="inner">
+                                                                        {{b.address.Address1}}<br />
+                                                                        {{b.address.Address2}}<br />
+                                                                        {{b.address.City}}<br />
+                                                                        {{b.address.State}}
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-md-6">
+                                        <div class="card">
+                                            <div class="lv-header-alt clearfix m-b-5">
+                                                <h2 class="lvh-label">Users</h2>
+                                            </div>
+                                            <div class="card-body card-padding p-t-5 p-b-5">
+                                                <div class="row">
+                                                    <div class="col-xs-12">
+                                                        <div class="table-responsive">
+                                                            <table class="table table-striped table-vmiddle">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>Email</th>
+                                                                        <th>Designation</th>
+                                                                        <th>Status</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr ng-repeat="user in usersList">
+                                                                        <td>{{user.EmailID}}</td>
+                                                                        <td>{{user.UserDesignationDescription}}</td>
+                                                                        <td>
+                                                                            <label class="label" ng-class="{'label-success': user.IsActive, 'label-danger': !user.IsActive}">{{user.IsActive ? 'Active' : 'Suspended'}}</label>
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </md-content>
+                        </md-tab>
+
+
+                        <md-tab label="Billing" class="md-primary">
+                            <md-content class="md-padding">
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-6">
+                                        <div class="card">
+                                            <div class="lv-header-alt clearfix m-b-5">
+                                                <h2 class="lvh-label">Billing</h2>
+                                            </div>
+                                            <div class="card-body card-padding p-t-25 p-b-25">
+                                                <div class="row">
+                                                    <div class="col-xs-12">
+                                                        <md-input-container class="md-block" flex-gt-sm>
+                                                            <label>GST No.</label>
+                                                            <input type="text"
+                                                                   ng-model="companyInfo.GSTNo"
+                                                                   ng-required="true" ng-disabled="true" />
+                                                        </md-input-container>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-xs-12">
+                                                        <md-input-container class="md-block" flex-gt-sm>
+                                                            <label>Default Currency</label>
+                                                            <md-select ng-model="mp.DefaultCurrency" ng-disabled="true">
+                                                                <md-option ng-repeat="item in lookupData.defaultCurrency" ng-value="item.Value">
+                                                                    {{item.Text}}
+                                                                </md-option>
+                                                            </md-select>
+                                                        </md-input-container>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-xs-12">
+                                                        <md-input-container class="md-block" flex-gt-sm>
+                                                            <label>Debtor Code</label>
+                                                            <input type="text"
+                                                                   ng-model="mp.DebtorCode" ng-disabled="true" />
+                                                        </md-input-container>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-xs-12">
+                                                        <md-input-container class="md-block" flex-gt-sm>
+                                                            <label>Creditor Code</label>
+                                                            <input type="text"
+                                                                   ng-model="mp.CreditorCode" ng-disabled="true" />
+                                                        </md-input-container>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-xs-12">
+                                                        <md-input-container class="md-block" flex-gt-sm>
+                                                            <label>Credit Term</label>
+                                                            <input type="text"
+                                                                   ng-model="mp.CreditTerm" ng-disabled="true" />
+                                                        </md-input-container>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-xs-12">
+                                                        <md-input-container class="md-block" flex-gt-sm>
+                                                            <label>Billing Method</label>
+                                                            <md-select ng-model="mp.BillingMethod">
+                                                                <md-option ng-repeat="item in lookupData.billingMethod" ng-value="item.Value" ng-disabled="true">
+                                                                    {{item.Text}}
+                                                                </md-option>
+                                                            </md-select>
+                                                        </md-input-container>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-xs-12">
+                                                        <md-input-container class="md-block" flex-gt-sm>
+                                                            <label>Credit Limit</label>
+                                                            <input type="text"
+                                                                   ng-model="mp.CreditLimit" ng-disabled="true" />
+                                                        </md-input-container>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-xs-12">
+                                                        <md-input-container class="md-block" flex-gt-sm>
+                                                            <label>Current Balance</label>
+                                                            <input type="text"
+                                                                   ng-model="mp.CurrentBalance" ng-disabled="true" />
+                                                        </md-input-container>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-xs-12 col-md-6">
+                                        <div class="card">
+                                            <div class="lv-header-alt clearfix m-b-5">
+                                                <h2 class="lvh-label">Business Modules</h2>
+                                            </div>
+                                            <div class="card-body card-padding p-t-5 p-b-5">
+                                                <div class="row">
+                                                    <div class="col-xs-12 col-md-6" ng-repeat="item in companySubscripbersList">
+                                                        <md-switch class="md-primary" ng-model="item.isSelected" disabled="true" aria-label="item.registrationDescription">{{item.ModuleDescription}}</md-switch>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    <div class="card">
+                                        <div class="lv-header-alt clearfix m-b-5">
+                                            <h2 class="lvh-label">Billing Modules</h2>
+                                        </div>
+                                        <div class="card-body card-padding p-t-25 p-b-25">
+                                            <div class="row" ng-repeat="item in billingModules">
+                                                <div class="col-xs-12">
+                                                    <md-switch class="md-primary"
+                                                               disabled="true"
+                                                               ng-model="item.isSelected"
+                                                               aria-label="item.registrationDescription">
+                                                        {{item.ModuleDescription}}&nbsp;&nbsp;<span style="color:red;font-weight:bolder;font-style:italic;" ng-if="item.isSelected">RM {{item.Rate}} Monthly</span>
+                                                    </md-switch>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" ng-if="affiliationList.length!=0">
+                                <div class="col-xs-12">
+                                    <div class="card">
+                                        <div class="lv-header-alt clearfix m-b-5">
+                                            <h2 class="lvh-label">Affiliation List</h2>
+                                        </div>
+                                        <div class="card-body card-padding p-t-25 p-b-25">
+                                            <div class="row">
+                                                <div class="col-xs-12">
+                                                    <div class="table-responsive">
+                                                        <table class="table table-striped table-vmiddle">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Affiliation Name</th>
+                                                                    <th>Date Joined</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr ng-repeat="affiliation in affiliationList">
+                                                                    <td>{{affiliation.AssociationName}}</td>
+                                                                    <td>{{affiliation.JoinDate | date}}</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <div class="card">
+                                            <div class="lv-header-alt clearfix m-b-5">
+                                                <h2 class="lvh-label">Tariff Table</h2>
+                                            </div>
+                                            <div class="card-body card-padding p-t-5 p-b-5">
+                                                <div class="row">
+                                                    <div class="col-xs-12">
+                                                        <div class="table-responsive">
+                                                            <table class="table table-vmiddle">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th colspan="2">Standard Tariff</th>
+                                                                        <th>Rebate</th>
+                                                                        <th>Discount</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr ng-repeat="tariff in tariffList">
+                                                                        <td>{{tariff.TariffDescription}}</td>
+                                                                        <td>RM {{tariff.TariffRate | number:2}}</td>
+                                                                        <td>{{tariff.Rebate | number:2}}%</td>
+                                                                        <td>{{tariff.DiscountPercent | number:2}}%</td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <div class="card">
+                                            <div class="lv-header-alt clearfix m-b-5">
+                                                <h2 class="lvh-label">Current Usage</h2>
+                                            </div>
+                                            <div class="card-body card-padding p-t-5 p-b-5">
+                                                <div class="row">
+                                                    <div class="col-xs-3">
+                                                        <div class="row">
+                                                            <div class="col-xs-12">
+                                                                <h4>Users</h4>
+                                                            </div>
+                                                            <div class="col-xs-12">
+                                                                <div class="table-responsive">
+                                                                    <table class="table table-vmiddle">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th># Of Users</th>
+                                                                                <th>Rate</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            <tr ng-repeat="currentUsage in currentUsageList | filter: { TariffType: 'Users' } ">
+                                                                                <td>{{currentUsage.TariffDescription}}</td>
+                                                                                <td>RM {{currentUsage.TariffRate | number:2}}</td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="col-xs-4">
+                                                        <div class="row">
+                                                            <div class="col-xs-12">
+                                                                <h4>Modules</h4>
+                                                            </div>
+                                                            <div class="col-xs-12">
+                                                                <div class="table-responsive">
+                                                                    <table class="table table-vmiddle">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th>Subscription</th>
+                                                                                <th>Rate</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            <tr ng-repeat="currentUsage in currentUsageList | filter: { TariffType: 'Modules' } ">
+                                                                                <td>{{currentUsage.TariffDescription}}</td>
+                                                                                <td>RM {{currentUsage.TariffRate | number:2}}</td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="col-xs-5">
+                                                        <div class="row">
+                                                            <div class="col-xs-12">
+                                                                <h4>Transactions</h4>
+                                                            </div>
+                                                            <div class="col-xs-12">
+                                                                <div class="table-responsive">
+                                                                    <table class="table table-vmiddle">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th>Module</th>
+                                                                                <th># of Transaction</th>
+                                                                                <th>Total KB</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            <tr ng-repeat="currentUsage in currentUsageList | filter: { TariffType: 'Transactions' } ">
+                                                                                <td>{{currentUsage.TariffDescription}}</td>
+                                                                                <td>{{currentUsage.TariffRate | number:2}}</td>
+                                                                                <td>{{currentUsage.TariffRate | number:2}}</td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </md-content>
+                        </md-tab>
+
+                        <md-tab label="Address" class="md-primary">
+                            <md-content class="md-padding">
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <div class="card">
+                                            <div class="lv-header-alt clearfix m-b-5">
+                                                <h2 class="lvh-label">Address</h2>
+                                            </div>
+                                            <div class="card-body card-padding p-t-5 p-b-5">
+                                                <div class="row">
+                                                    <div class="col-xs-12 col-md-6">
+                                                        <div class="row">
+                                                            <div class="col-xs-12">
+                                                                <md-input-container class="md-block" flex-gt-sm>
+                                                                    <label>Address</label>
+                                                                    <input type="text"
+                                                                           ng-model="companyInfo.address.Address1" ng-required="true" ng-disabled="true" />
+                                                                </md-input-container>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-xs-12">
+                                                                <md-input-container class="md-block" flex-gt-sm>
+                                                                    <label>Address 2</label>
+                                                                    <input type="text" ng-model="companyInfo.address.Address2"
+                                                                           ng-required="true" ng-disabled="true" />
+                                                                </md-input-container>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-xs-12 col-md-6">
+                                                                <md-input-container class="md-block" flex-gt-sm>
+                                                                    <label>Post Code</label>
+                                                                    <input type="text" ng-model="companyInfo.address.ZipCode" ng-disabled="true" ng-required="true" logicon-number />
+                                                                </md-input-container>
+                                                            </div>
+                                                            <div class="col-xs-12 col-md-6">
+                                                                <md-input-container class="md-block" flex-gt-sm>
+                                                                    <label>City / Suburb</label>
+                                                                    <input type="text"
+                                                                           ng-model="companyInfo.address.City" ng-disabled="true" ng-required="true" />
+                                                                </md-input-container>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-xs-12">
+                                                                <md-input-container class="md-block" flex-gt-sm>
+                                                                    <label>State</label>
+                                                                    <input type="text"
+                                                                           ng-model="companyInfo.address.State"
+                                                                           ng-required="true" ng-disabled="true" />
+                                                                </md-input-container>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-xs-12">
+                                                                <md-input-container class="md-block" flex-gt-sm>
+                                                                    <label>Country</label>
+                                                                    <input type="text"
+                                                                           class="search-icon"
+                                                                           ng-class="{'loadinggif': companyInfo.address.CountryNameLoading}"
+                                                                           ng-model="companyInfo.address.CountryName"
+                                                                           typeahead-min-length="3"
+                                                                           uib-typeahead="s.Text as s.Text for s in countryResults($viewValue)"
+                                                                           typeahead-loading="companyInfo.address.CountryNameLoading"
+                                                                           typeahead-wait-ms="100"
+                                                                           typeahead-editable="false"
+                                                                           typeahead-on-select="countrySelect($item)" ng-disabled="true" />
+                                                                </md-input-container>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-xs-12 col-md-6">
+                                                                <md-input-container class="md-block" flex-gt-sm>
+                                                                    <label>Tel No.</label>
+                                                                    <input type="text"
+                                                                           ng-model="companyInfo.address.TelNo" ng-disabled="true" />
+                                                                </md-input-container>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-xs-12 col-md-6">
+                                                                <md-input-container class="md-block" flex-gt-sm>
+                                                                    <label>Fax No.</label>
+                                                                    <input type="text"
+                                                                           ng-model="companyInfo.address.FaxNo" ng-disabled="true" />
+                                                                </md-input-container>
+                                                            </div>
+
+                                                            <div class="col-xs-12 col-md-6">
+                                                                <md-input-container class="md-block" flex-gt-sm>
+                                                                    <label>Mobile No.</label>
+                                                                    <input type="text"
+                                                                           ng-model="companyInfo.address.MobileNo" ng-disabled="true" />
+                                                                </md-input-container>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-xs-12">
+                                                                <md-input-container class="md-block" flex-gt-sm>
+                                                                    <label>Email</label>
+                                                                    <input type="text"
+                                                                           ng-model="companyInfo.address.Email" ng-disabled="true" />
+                                                                </md-input-container>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-xs-12">
+                                                                <md-input-container class="md-block" flex-gt-sm>
+                                                                    <label>Website</label>
+                                                                    <input type="text"
+                                                                           ng-model="companyInfo.address.WebSite" ng-disabled="true" />
+                                                                </md-input-container>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xs-12 col-md-6">
+                                                        <div class="row">
+                                                            <div class="col-xs-12 col-md-6">
+                                                                <md-switch class="md-primary"
+                                                                           aria-label="Billing"
+                                                                           ng-model="companyInfo.address.IsBilling"
+                                                                           ng-init="companyInfo.address.IsBilling = false" disabled="true">Billing</md-switch>
+                                                            </div>
+                                                            <div class="col-xs-12 col-md-6">
+                                                                <md-switch class="md-primary"
+                                                                           aria-label="Active"
+                                                                           ng-model="companyInfo.address.IsActive"
+                                                                           ng-init="companyInfo.address.IsActive = false" disabled="true">Active</md-switch>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-xs-12 col-md-6">
+                                                                <md-switch class="md-primary"
+                                                                           aria-label="Operation"
+                                                                           ng-model="companyInfo.address.IsOperation"
+                                                                           ng-init="companyInfo.address.IsOperation = false" disabled="true">Operation</md-switch>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-xs-12 col-md-6">
+                                                                <md-switch class="md-primary"
+                                                                           aria-label="Operation"
+                                                                           ng-model="companyInfo.address.IsPickup"
+                                                                           ng-init="companyInfo.address.IsPickup = false" disabled="true">Pickup / Delivery</md-switch>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-xs-12">
+                                                                <md-input-container class="md-block" flex-gt-sm>
+                                                                    <label>EDI Mapping</label>
+                                                                    <input type="text"
+                                                                           ng-model="companyInfo.address.EDIMapping" ng-disabled="true" />
+                                                                </md-input-container>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-xs-12">
+                                                                <md-input-container class="md-block" flex-gt-sm>
+                                                                    <label>Area Code</label>
+                                                                    <md-select ng-model="companyInfo.address.AreaCode" ng-disabled="true">
+                                                                        <md-option>
+                                                                        </md-option>
+                                                                    </md-select>
+                                                                </md-input-container>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-xs-12">
+                                                                <md-input-container class="md-block" flex-gt-sm>
+                                                                    <label>Zone Code</label>
+                                                                    <md-select ng-model="companyInfo.address.ZoneCode" ng-disabled="true">
+                                                                        <md-option>
+                                                                        </md-option>
+                                                                    </md-select>
+                                                                </md-input-container>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </md-content>
+                        </md-tab>
+
+                        <md-tab label="Contact Details" class="md-primary">
+                            <md-content class="md-padding">
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-6">
+                                        <div class="card">
+                                            <div class="lv-header-alt clearfix m-b-5">
+                                                <h2 class="lvh-label">Billing Contact Person</h2>
+                                            </div>
+                                            <div class="card-body card-padding p-t-25 p-b-25">
+                                                <div class="row">
+                                                    <div class="col-xs-12">
+                                                        <div class="row">
+                                                            <div class="col-xs-6 col-md-3">
+                                                                <label>Name:</label>
+                                                            </div>
+                                                            <div class="col-xs-12 col-md-4">
+                                                                <label>{{contactDetails.ContactPerson1}}</label>
+                                                            </div>
+                                                            <div class="col-xs-6 col-md-3">
+                                                                <label>Designation:</label>
+                                                            </div>
+                                                            <div class="col-xs-12 col-md-2">
+                                                                <label>{{contactDetails.Designation1}}</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-xs-6 col-md-3">
+                                                                <label>Phone No.:</label>
+                                                            </div>
+                                                            <div class="col-xs-12 col-md-4">
+                                                                <label>({{DailingCode1}}) {{contactDetails.Phone1}}</label>
+                                                            </div>
+                                                            <div class="col-xs-6 col-md-3">
+                                                                <label>Ext:</label>
+                                                            </div>
+                                                            <div class="col-xs-12 col-md-2">
+                                                                <label>{{registeredCompany.companyAddress.Extension1}}</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-xs-6 col-md-3">
+                                                                <label>Mob. Ph. No.:</label>
+                                                            </div>
+                                                            <div class="col-xs-12 col-md-4">
+                                                                <label>({{DailingCode2}}) {{contactDetails.Mobile1}}</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-xs-6 col-md-3">
+                                                                <label>Email:</label>
+                                                            </div>
+                                                            <div class="col-xs-12 col-md-4">
+                                                                <label>{{contactDetails.ContactEmailID1}}</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-md-6">
+                                        <div class="card">
+                                            <div class="lv-header-alt clearfix m-b-5">
+                                                <h2 class="lvh-label">Operations Contact Person</h2>
+                                            </div>
+                                            <div class="card-body card-padding p-t-25 p-b-25">
+                                                <div class="row">
+                                                    <div class="col-xs-12">
+                                                        <div class="row">
+                                                            <div class="col-xs-6 col-md-3">
+                                                                <label>Name:</label>
+                                                            </div>
+                                                            <div class="col-xs-12 col-md-4">
+                                                                <label>{{contactDetails.ContactPerson2}}</label>
+                                                            </div>
+                                                            <div class="col-xs-6 col-md-3">
+                                                                <label>Designation:</label>
+                                                            </div>
+                                                            <div class="col-xs-12 col-md-2">
+                                                                <label>{{contactDetails.Designation2}}</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-xs-6 col-md-3">
+                                                                <label>Phone No.:</label>
+                                                            </div>
+                                                            <div class="col-xs-12 col-md-4">
+                                                                <label>({{DailingCode3}}) {{contactDetails.Phone2}}</label>
+                                                            </div>
+                                                            <div class="col-xs-6 col-md-3">
+                                                                <label>Ext:</label>
+                                                            </div>
+                                                            <div class="col-xs-12 col-md-2">
+                                                                <label>{{contactDetails.Extension2}}</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-xs-6 col-md-3">
+                                                                <label>Mob. Ph. No:</label>
+                                                            </div>
+                                                            <div class="col-xs-12 col-md-4">
+                                                                <label>({{DailingCode4}}) {{contactDetails.Mobile2}}</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-xs-6 col-md-3">
+                                                                <label>Email:</label>
+                                                            </div>
+                                                            <div class="col-xs-12 col-md-4">
+                                                                <label>{{contactDetails.ContactEmailID2}}</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </md-content>
+                        </md-tab>
+
+                        <md-tab label="Documents" class="md-primary">
+                            <md-content class="md-padding">
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <div class="card">
+                                            <div class="card-body card-padding p-t-25 p-b-25">
+                                                <div class="table-responsive">
+                                                    <table class="table table-striped table-vmiddle">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>No.</th>
+                                                                <th>Name</th>
+                                                                <th>Document Type</th>
+                                                                <th>View</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr ng-repeat="item in docList">
+                                                                <td>{{$index + 1}}</td>
+                                                                <td>{{item.FileName}}</td>
+                                                                <td>{{item.RegistrationDocTypeDescription}}</td>
+                                                                <td>
+                                                                    <a ng-disabled="item.FileName == ''" href="#"
+                                                                       target="_blank"
+                                                                       ng-href="{{BaseUrl + '/UploadImages/' + companyInfo.RegistrationReferenceNo + '/' + item.FileName}}"
+                                                                       class="btn btn-primary waves-effect">
+                                                                        <i class="zmdi zmdi-exposure"></i>
+                                                                    </a>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </md-content>
+                        </md-tab>
+
+                        <md-tab label="Declaration" class="md-primary">
+                            <md-content class="md-padding">
+                                <div class="card">
+                                    <div class="card-body card-padding p-t-25 p-b-25">
+                                        <div class="row" style="padding-right:10px;font-size:14px;color:#333;height:450px;overflow-y:scroll;">
+                                            <div class="col-xs-12">
+                                                <p style="text-align:justify">
+                                                    I/We <span style="text-decoration:underline;">{{companyInfo.CompanyName}}</span> (name of company) having company registration number <span style="text-decoration:underline">{{companyInfo.RegNo}}</span>, hereby confirm that I/We have read,  understood and accepted the Terms and Conditions as attached herewith.<br />
+                                                    <span style="font-weight:bold;text-decoration:underline;">Privacy Policy and Consent to Use Personal Data</span><br />
+                                                    At DNeXPORT, we are committed to protecting your privacy as our valued customers and pledge to comply with the Personal Data Protection Act (“PDPA”) 2010.<br />
+                                                    Please note that any personal information (“Personal Data”) in respect of commercial transactions that relates directly or indirectly to you as an individual, that had been collected, processed and retained by DNeXPORT is protected under our Privacy Policy, formulated in pursuant to the PDPA 2010.<br />
+                                                    Please refer to our Privacy Policy at <a style="color:blue;text-decoration:underline" href="www.dnex.com.my/privacy-policy">www.dnex.com.my/privacy-policy</a> to understand how we do this and feel free to reach us at pdpa@dnex.com.my should you have any additional enquiries.
+                                                    IMPORTANT: By submitting this form, you agree and consent to the use, processing and disclosure of your Personal Data by DNeXPORT for the purpose as described in this form.
+
+                                                </p>
+                                                <div ng-include="'Js/Default/Templates/declaration.html'"></div>
+                                            </div>
+                                            <div class="col-xs-12">
+
+                                                <div class="checkbox m-b-15">
+                                                    <label>
+                                                        <input type="checkbox" value="" ng-disabled="true" ng-model="checkBox" ng-init="checkBox = true">
+                                                        <i class="input-helper"></i>
+                                                        BY TICKING THIS BOX, YOU DECLARE THAT YOU HAVE READ, UNDERSTOOD AND ACCEPT THE TERMS AND CONDITIONS AS STATED.
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </md-content>
+                        </md-tab>
+                    </md-tabs>
+                </div>
+            </div>
+        </div>        
+    </div>
+</div>

@@ -1,0 +1,61 @@
+﻿<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" ng-click="cancel();">&times;</button>
+    <h4 class="modal-title">Currency Details</h4>
+</div>
+<div class="modal-body">
+    <div class="row" >
+        <div class="col-md-6">
+            <md-input-container class="md-block" flex-gt-sm>
+                <label>Expiry Date</label>
+                <input mdc-datetime-picker="" date="true" time="false" type="text" id="ExpiryDate" format="{{dateFormat}}"
+                       min-date="date" ng-model="currencyRate.ExpiryDate" ng-model-options="{ updateOn: 'blur' }">
+            </md-input-container>
+        </div>
+        <!--<div class="col-xs-6 col-md-3">
+            <label>Expiry Date</label>
+        </div>
+        <div class="col-xs-12 col-md-4">
+            <div class="input-group my-datepicker">
+            <input type="text" class="form-control input-sm datepicker" uib-datepicker-popup="{{format}}" ng-model="dt" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
+            <span class="input-group-btn">
+                <button type="button" class="btn btn-default input-sm" ng-click="open1()"><i class="fa fa-calendar" aria-hidden="true"></i></button>
+            </span>
+            </div>
+            <div class="input-group"
+                     moment-picker="currencyRate.ExpiryDate"
+                     format="MM/DD/YYYY" min-view="month">
+                <input 
+                       placeholder="Expiry Date"
+                           ng-model="currencyRate.ExpiryDate"
+                           ng-model-options="{ updateOn: 'blur' }">
+                    <span class="input-group-addon">
+                        <i class="fa fa-calendar"></i>
+                    </span>
+            </div>
+                </div>-->
+    </div>
+    <div class="row" >
+        <div class="col-md-6">
+            <md-input-container class="md-block" flex-gt-sm>
+                <label>Exchange Rate</label>
+                <input type="text"
+                       ng-model="currencyRate.ExchangeRate" />
+                </md-input-container>
+</div>
+        <!--<div class="col-xs-6 col-md-3">
+            <label>Exchange Rate</label>
+        </div>
+        <div class="col-xs-12 col-md-4">
+            <input type="text"  ng-model="currencyRate.ExchangeRate" />
+        </div>-->
+    </div>
+</div>
+<div class="modal-footer">
+    <div class="row" >
+        
+        <div class="col-xs-12 text-right">
+            <button class="btn btn-primary btn-sm" ng-click="cancel();"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Save</button>
+            <button class="btn btn-default btn-sm" ng-click="cancel();"><i class="fa fa-times" aria-hidden="true"></i>&nbsp;Close</button>
+        </div>
+    </div>
+</div>

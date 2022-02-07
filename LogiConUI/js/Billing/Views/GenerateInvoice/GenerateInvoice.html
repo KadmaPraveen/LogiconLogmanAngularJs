@@ -1,0 +1,262 @@
+﻿<div class="container" ng-controller="GenerateInvoiceCntrl">
+    <style type="text/css">
+        .myCustomerPopOver .popover-inner {
+            width: 580px;
+        }
+    </style>
+    <script type="text/ng-template" id="myPopoverTemplate.html">
+        <div class="row" >
+            <div class="col-xs-12 col-md-2">
+                <label>Address</label>
+            </div>
+            <div class="col-xs-12 col-md-10">
+                <input type="text"  ng-model="BranchDetails.address.Address1" required />
+            </div>
+        </div>
+        <div class="row" >
+            <div class="col-xs-12 col-md-2">
+            </div>
+            <div class="col-xs-12 col-md-10">
+                <input type="text"  ng-model="BranchDetails.address.Address2" required />
+            </div>
+        </div>
+        <div class="row" >
+            <div class="col-xs-12 col-md-2">
+                <label>Post Code</label>
+            </div>
+            <div class="col-xs-6 col-md-3">
+                <input type="text"  ng-model="BranchDetails.address.ZipCode" />
+            </div>
+            <div class="col-xs-12 col-md-2">
+                <label>City/Suburb</label>
+            </div>
+            <div class="col-xs-12 col-md-5">
+                <input type="text"  ng-model="BranchDetails.address.City" />
+            </div>
+        </div>
+        <div class="row" >
+            <div class="col-xs-12 col-md-2">
+                <label>State</label>
+            </div>
+            <div class="col-xs-12 col-md-10">
+                <input type="text"  ng-model="BranchDetails.address.State" />
+            </div>
+        </div>
+        <div class="row" >
+            <div class="col-xs-12 col-md-2">
+                <label>Country</label>
+            </div>
+            <div class="col-xs-6 col-md-3">
+                <select  ng-model="cin.address.CountryCode" ng-options="s.Value as s.Text for s in lookupData.countriesList"></select>
+            </div>
+            <!--<div class="col-xs-12 col-md-7">
+                <input type="text"  />
+            </div>-->
+        </div>
+        <div class="row" >
+            <div class="col-xs-12 col-md-2">
+                <label>Tel No.</label>
+            </div>
+            <div class="col-xs-12 col-md-4">
+                <input type="text"  ng-model="cin.address.TelNo" />
+            </div>
+            <!--<div class="col-xs-12 col-md-2">
+                <label>Contact</label>
+            </div>
+            <div class="col-xs-12 col-md-4">
+                <input type="text"  />
+            </div>-->
+        </div>
+        <div class="row" >
+            <div class="col-xs-12 col-md-2">
+                <label>Fax No.</label>
+            </div>
+            <div class="col-xs-12 col-md-4">
+                <input type="text"  ng-model="cin.address.FaxNo" />
+            </div>
+            <div class="col-xs-12 col-md-2">
+                <label>Mobile No.</label>
+            </div>
+            <div class="col-xs-12 col-md-4">
+                <input type="text"  ng-model="cin.address.MobileNo" />
+            </div>
+        </div>
+        <div class="row" >
+            <div class="col-xs-12 col-md-2">
+                <label>Email</label>
+            </div>
+            <div class="col-xs-12 col-md-10">
+                <input type="text"  ng-model="cin.address.Email" />
+            </div>
+        </div>
+        <div class="row" >
+            <div class="col-xs-12 col-md-2">
+                <label>Website</label>
+            </div>
+            <div class="col-xs-12 col-md-10">
+                <input type="text"  ng-model="cin.address.WebSite" />
+            </div>
+        </div>
+    </script>
+
+    <div class="card">
+        <div  class="lv-header-alt clearfix m-b-5">
+            <h3  class="lvh-label">Generate Invoice</h3>
+            <div class="box-tools pull-right">
+                <label>Statement No: <span>{{gi.StatementNo}}</span></label>
+            </div>
+        </div>
+        <div  class="card-body card-padding p-t-25 p-b-25">
+            <div class="row" >
+                <div class="col-xs-12 col-md-5">
+                    <div class="row" >
+                        <div class="col-xs-12 col-md-2">
+                            <label>Customer</label>
+                        </div>
+                        <div class="col-xs-12 col-md-10">
+                            <input type="text" ng-model="gi.AccountNo"  />
+                        </div>
+                    </div>
+                    <div class="row" >
+                        <div class="col-xs-12 col-md-2">
+                            <label>Remarks</label>
+                        </div>
+                        <div class="col-xs-12 col-md-10">
+                            <textarea ></textarea>
+                        </div>
+                    </div>                    
+                </div>
+                <div class="col-xs-12 col-md-7">
+                    <div class="row" >
+                        <div class="col-xs-12 col-md-2">
+                            <label>Statement Date</label>
+                        </div>
+                        <div class="col-xs-12 col-md-4">
+                            <div class="dropdown">
+                                <a class="dropdown-toggle" id="StatementDate" role="button" data-toggle="dropdown">
+                                    <div class="input-group">
+                                        <input type="text"
+                                               class="form-control input-sm datepicker" ng-model="gi.StatementDate" ng-required="true"
+                                               date-time-input="MM/DD/YYYY hh:mm A">
+                                        <span class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true"></i></span>
+                                    </div>
+                                </a>
+                                <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                    <datetimepicker ng-model="gi.StatementDate"
+                                                    data-datetimepicker-config="{ dropdownSelector: '#StatementDate', startView:'day', minView:'minute' }" />
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-md-2">
+                            <label>Statement Amount</label>
+                        </div>
+                        <div class="col-xs-12 col-md-4">
+                            <label class="control-label nowrapCss" ng-model="gi.StatementAmount">{{gi.StatementAmount}}</label>
+                            <!--<input type="text"  ng-model="cin.TaxAmount" />-->
+                        </div>
+                    </div>
+                    <!--<div class="row" >
+                        <div class="col-xs-12 col-md-2">
+                            <label>Credit Term</label>
+                        </div>
+                        <div class="col-xs-12 col-md-4">
+                            <input type="text"  />
+                        </div>
+                        
+                    </div>-->
+                    <div class="row" >
+                        <div class="col-xs-12 col-md-2">
+                            <label>Currency</label>
+                        </div>
+                        <div class="col-xs-12 col-md-4">
+                            <select  ng-model="gi.CurrencyCode" ng-options="s.Value as s.Text for s in lookupData.currencyList" ng-change="SelectCurrencyCode(cin.CurrencyCode);"></select>
+                        </div>                        
+                        <div class="col-xs-12 col-md-2">
+                            <label>Total Amount</label>
+                        </div>
+                        <div class="col-xs-12 col-md-4">
+                            <label class="control-label nowrapCss" ng-model="gi.TotalAmount">{{gi.TotalAmount}}</label>                            
+                        </div>
+                    </div>                    
+                </div>
+            </div>
+            <div class="row" >
+                <div class="col-xs-12">
+                    <div class="pull-right">
+                        <button class="btn btn-primary" type="button" ng-click="customerInvoiceDetails(-1);"><i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Add</button>
+                        <!-- <button type="button" class="btn btn-box-tool" ng-click="AddCustomerInvoice();">
+                            <i class="fa fa-plus"></i>
+                        </button>-->
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row" >
+                <div class="col-xs-12">
+                     <div class="table-responsive"> <table class="table table-striped table-vmiddle">
+                        <thead >
+                            <tr>                                
+                                <th>Charge Code</th>
+                                <th>Charge Description</th>
+                                <th>Billing Unit</th>
+                                <th>Quantity</th>
+                                <th>Amount</th>
+                                <th>Total Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="item in gi.StatementDetails">                                
+                                <td>{{item.ChargeCode}}</td>
+                                <td>{{item.ChargeDescription}}</td>
+                                <td>{{item.BillingUnit}}</td>
+                                <td>{{item.Quantity}}</td>
+                                <td>{{item.Amount}}</td>
+                                <td>{{item.TotalAmount}}</td>
+                        </tbody>
+                    </table></div>
+                </div>
+            </div>
+        </div>
+        <div class="box-footer">
+            <div class="row">
+                <div class="col-xs-12">
+                    <!--<div class="col-md-1">
+                        <button class="btn btn-primary" 
+                                type="button">
+                        <i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Save</button>                        
+                    </div>
+                    <div class="col-md-1">
+                        <button class="btn btn-default" 
+                                type="button">
+                        <i class="fa fa-print" aria-hidden="true"></i>&nbsp;Print</button>                        
+                    </div>-->
+                    <div class="col-md-1">
+                        <button class="btn btn-success" 
+                                type="button" 
+                                ng-click="ApproveStatement(gi.BranchID, gi.StatementNo)"
+                                ng-disabled="gi.IsApproved">
+                        <i class="fa fa-print" aria-hidden="true"></i>&nbsp;Approve</button>                                                
+                    </div>
+                    <div class="col-md-1">
+                        <button class="btn btn-danger" 
+                                type="button" 
+                                ng-click="DeleteStatement(gi.BranchID, gi.StatementNo)"
+                                ng-disabled="!gi.IsApproved">
+                        <i class="fa fa-trash" aria-hidden="true"></i>&nbsp;Delete</button>                                                
+                    </div>
+                    <div class="col-md-1">
+                        <button class="btn btn-success" 
+                                type="button" 
+                                ng-click="GeneratePayment(gi.BranchID, gi.StatementNo)"
+                                ng-disabled="!gi.IsApproved">
+                        Generate Receipt</button>                        
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="overlay" style="opacity:0.8;" ng-show="showLoading">
+            <i class="fa fa-refresh fa-spin"></i>
+        </div>
+    </div>
+</div>

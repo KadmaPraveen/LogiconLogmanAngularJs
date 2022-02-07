@@ -1,0 +1,490 @@
+﻿<form id="frmQuotationDetails" name="frmQuotationDetails" ng-class="{'submitted': submitted}" autocomplete="off" ng-submit="SaveQuotationDetail(details);" novalidate>
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" ng-click="cancel();">&times;</button>
+        <div>
+            <h4 class="modal-title" ng-switch="quotation">
+                <span ng-switch-when="standard">Standard</span>
+                <span ng-switch-when="customer">Merchant</span>
+                <span ng-switch-when="vendor">Vendor</span>
+                Quotation Details
+            </h4>
+        </div>
+
+        <input type="hidden" ng-model="details.ItemId" />
+        <input type="hidden" ng-model="details.Index" />
+    </div>
+    <div class="modal-body">
+        <div class="c-overflow" ng-style="{'max-height': iframeHeight - 80 + 'px'}" resize>
+            <div class="modalbodymain">
+                <div class="row">
+                    <div class="col-xs-12 col-md-4">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Charge Code</label>
+                            <input type="text"
+                                   class="search-icon"
+                                   ng-model="details.ChargeDescription"
+                                   typeahead-min-length="3"
+                                   uib-typeahead="d.Text as d.Text for d in ChargeCodeResults($viewValue, 'freightForwarder')"
+                                   typeahead-on-select="OnChargeCodeSelect($item)"
+                                   typeahead-loading="details.showLoading"
+                                   typeahead-wait-ms="1000"
+                                   typeahead-editable="false" ng-required="true" />
+                        </md-input-container>
+                    </div>
+                    <div class="col-xs-12 col-md-4">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Module</label>
+                            <md-select ng-model="details.Module" ng-required="true">
+                                <md-option ng-repeat="item in lookupData.moduleList" ng-value="item.Value">
+                                    {{item.Text}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                    </div>
+                   
+                    <div class="col-xs-12 col-md-2">
+
+
+                        <div class="checkbox m-b-15">
+                            <label>
+                                <input type="checkbox" value="" ng-model="details.IsSlabRate" ng-change="SlabRateChecked()">
+                                <i class="input-helper"></i>
+                                Slab-Rate
+                            </label>
+                        </div>
+
+
+                        <!-- <div class="checkbox m-b-15"><md-checkbox class="md-primary" ng-model="details.IsSlabRate" ng-change="SlabRateChecked()">
+                            Slab-Rate
+                        </md-checkbox>-->
+                        <!--<label>
+                            <input type="checkbox"
+                                   aria-label="Telex Release"
+                                   ng-true-value="true"
+                                   ng-false-value="false"
+                                   ng-model="details.IsSlabRate"
+                                   ng-checked="SlabRateChecked(details.IsSlabRate)">
+                            <i class="input-helper"></i>
+                            Slab-Rate
+                        </label></div>-->
+
+                    </div>
+                    <!--<div class="col-xs-12 col-md-2">
+                        <div class="checkbox m-b-15">
+                            <label>
+                                <input type="checkbox" value="" ng-model="details.IsFlatRate"
+                                       aria-label="Priority">
+                                <i class="input-helper"></i>
+                                Flat Rate
+                            </label>
+                        </div>
+                    </div>-->
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-12 col-md-4">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Output GST code</label>
+                            <input type="text"
+                                   disabled
+                                   ng-model="details.OutPutGSTCodeDescription" />
+                        </md-input-container>
+                    </div>
+                    <div class="col-xs-12 col-md-4">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Charge Method</label>
+                            <md-select ng-model="details.ChargeMethod" ng-required="true">
+                                <md-option ng-repeat="item in lookupData.chargeMethodList" ng-value="item.Value">
+                                    {{item.Text}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                    </div>
+                    
+                    <div class="col-xs-12 col-md-2">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>From range</label>
+                            <input type="text"
+                                   ng-model="details.SlabFrom"
+                                   ng-required="details.IsSlabRate"
+                                   ng-disabled="!details.IsSlabRate"
+                                   logicon-decimal
+                                   logicon-format="2" />
+                        </md-input-container>
+                    </div>
+                    <div class="col-xs-12 col-md-2">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>To range</label>
+                            <input type="text"
+                                   ng-model="details.SlabTo"
+                                   ng-required="details.IsSlabRate"
+                                   ng-disabled="!details.IsSlabRate"
+                                   logicon-decimal
+                                   logicon-format="2" />
+                        </md-input-container>
+                    </div>
+                </div>
+
+                <div class="row">
+                    
+                    <div class="col-xs-12 col-md-4">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Input GST code</label>
+                            <input type="text"
+                                   ng-model="details.InputGSTCodeDescription"
+                                   disabled />
+                        </md-input-container>
+                    </div>
+                    <div class="col-xs-12 col-md-4">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Shipment Type</label>
+                            <md-select ng-model="details.ShipmentType"
+                                       ng-change="details.ShipmentTypeDescription = (lookupData.shipmentTypeList | filter: { Value: details.ShipmentType})[0].Text;jobTypeChagned(details.JobType);details.JobCategory = null;"
+                                       ng-required="true">
+                                <md-option ng-repeat="item in lookupData.shipmentTypeList"
+                                           ng-value="item.Value">
+                                    {{item.Text}}
+                                </md-option>
+                            </md-select>
+
+                        </md-input-container>
+                    </div>
+                    <div class="col-xs-12 col-md-2">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Base amount</label>
+                            <input type="text"
+                                   ng-model="details.BaseAmt"
+                                   ng-required="details.IsSlabRate"
+                                   ng-disabled="!details.IsSlabRate"
+                                   logicon-decimal
+                                   logicon-format="2" />
+                        </md-input-container>
+
+                    </div>
+                    <div class="col-xs-12 col-md-2">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Base Quantity</label>
+                            <input type="text"
+                                   ng-model="details.BaseQty"
+                                   ng-required="details.IsSlabRate"
+                                   ng-disabled="!details.IsSlabRate"
+                                   logicon-decimal
+                                   logicon-format="2" />
+                        </md-input-container>
+                    </div>
+
+                </div>
+
+                <div class="row">
+                   
+                    <div class="col-xs-12 col-md-4">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Transport Type</label>
+                            <md-select ng-model="details.TransportType"
+                                       ng-required="true">
+                                <md-option ng-repeat="item in lookupData.transportModeList" ng-value="item.Value">
+                                    {{item.Text}}
+                                </md-option>
+
+                        </md-input-container>
+                    </div>
+                    <div class="col-xs-12 col-md-4">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Job Type</label>
+                            <md-select ng-model="details.JobType" ng-change="details.JobTypeDescription = (lookupData.jobTypeList | filter: { Value: details.JobType})[0].Text;jobTypeChagned(details.JobType);details.JobCategory==null"
+                                       ng-required="true" ng-disabled="details.ShipmentType==null">
+                                <md-option ng-repeat="item in lookupData.jobTypeList" ng-value="item.Value">
+                                    {{item.Text}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                    </div>
+                    <div class="col-xs-12 col-md-2">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Min amount</label>
+                            <input type="text"
+                                   ng-model="details.MinAmt"
+                                   ng-required="details.IsSlabRate"
+                                   ng-disabled="!details.IsSlabRate"
+                                   logicon-decimal
+                                   logicon-format="2" />
+                        </md-input-container>
+                    </div>
+                    <div class="col-xs-12 col-md-2">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Max amount</label>
+                            <input type="text"
+                                   ng-model="details.MaxAmnt"
+                                   ng-required="details.IsSlabRate"
+                                   ng-disabled="!details.IsSlabRate"
+                                   logicon-decimal
+                                   logicon-format="2" />
+                        </md-input-container>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-12 col-md-4">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Order Category</label>
+                            <md-select ng-model="details.JobCategory"  ng-required="true" ng-disabled="details.JobType==null">
+                                <md-option ng-repeat="item in OrderCategoryList" ng-value="item.Value">
+                                    {{item.Text}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                    </div>
+                    <div class="col-xs-12 col-md-4">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Special Handling</label>
+                            <md-select ng-model="details.SpecialHandling">
+                                <md-option md-option-empty></md-option>
+                                <md-option ng-repeat="item in lookupData.splHandlingList" ng-value="item.Value">
+                                    {{item.Text}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                    </div>
+                   
+                    <div class="col-xs-12 col-md-2">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Est.Currency</label>
+                            <md-select ng-model="details.CurrencyCode" ng-required="true">
+                                <md-option ng-repeat="item in lookupData.defaultCurrency" ng-value="item.Value">
+                                    {{item.Text}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                    </div>
+                    <div class="col-xs-12 col-md-2">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Est Cost</label>
+                            <input type="text"
+                                   ng-model="details.EstCost"
+                                   ng-required="true"
+                                   logicon-decimal
+                                   logicon-format="2" />
+                        </md-input-container>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-12 col-md-4">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Cargo Type</label>
+                            <md-select ng-model="details.CargoType">
+                                <md-option md-option-empty></md-option>
+                                <md-option ng-repeat="item in lookupData.cargoTypeList" ng-value="item.Value">
+                                    {{item.Text}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                    </div>
+
+                    <div class="col-xs-12 col-md-4">
+                        <div ng-if="quotation!='standard'">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Depot</label>
+                                <input type="text"
+                                       ng-model="details.Deport"
+                                       logicon-decimal
+                                       ng-required="true"
+                                       logicon-format="2" />
+                            </md-input-container>
+                        </div>
+                      
+                    </div>
+                    <div class="col-xs-6 col-md-2">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Selling Currency Code</label>
+                            <md-select ng-model="details.SellingCurrencyCode" ng-required="true">
+                                <md-option ng-repeat="item in lookupData.defaultCurrency" ng-value="item.Value">
+                                    {{item.Text}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                    </div>
+                    <div class="col-xs-12 col-md-2">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Sell Rate</label>
+                            <input type="text"
+                                   ng-model="details.SellRate"
+                                   ng-required="true"
+                                   logicon-decimal
+                                   logicon-format="2" />
+                        </md-input-container>
+                    </div>
+                </div>
+
+                <div class="row" ng-if="quotation!='standard'"> <!--ng-if="quotation!='standard'"-->
+                    <div class="col-xs-12 col-md-4">
+                        <merchant-autocomplete filter="Shipper"
+                                               labeltext="Shipper"
+                                               iseditable="false"
+                                               ng-model="details.Shipper"
+                                               merchant-name="details.ShipperDescription">
+                        </merchant-autocomplete>
+
+                    </div>
+                    <div class="col-xs-12 col-md-4">
+                        <merchant-autocomplete filter="consignee"
+                                               labeltext="Consignee"
+                                               iseditable="false"
+                                               ng-model="details.Consignee"
+                                               merchant-name="details.ConsigneeDescription">
+                        </merchant-autocomplete>
+
+                    </div>
+                   
+                   
+                    
+                </div>
+
+                <div class="row" ng-if="quotation!='standard'"><!--ng-if="quotation!='standard'"-->
+                  
+                    <div class="col-xs-12 col-md-4">
+                        <div >
+                            <merchant-autocomplete filter="Liner"
+                                                   labeltext="Shipping Agent"
+                                                   iseditable="false"
+                                                   ng-model="details.ShippingAgent"
+                                                   merchant-name="details.ShippingAgentDescription">
+                            </merchant-autocomplete>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-md-4">
+                        <div >
+                            <merchant-autocomplete filter="freightForwarder"
+                                                   labeltext="FORWARDER"
+                                                   iseditable="false"
+                                                   ng-model="details.FwdAgent"
+                                                   merchant-name="details.FwdAgentDescription">
+                            </merchant-autocomplete>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" ng-if="quotation!='standard'">
+                    <div class="col-xs-12 col-md-4">
+                        <port-autocomplete labeltext="loading port"
+                                           iseditable="false"
+                                           ng-model="details.LoadingPort"
+                                           port-name="details.LoadingPortDescription">
+                        </port-autocomplete>
+                    </div>
+                    <div class="col-xs-12 col-md-4">
+                        <port-autocomplete labeltext="Discharge Port"
+                                           iseditable="false"
+                                           ng-model="details.DischargePort"
+                                           port-name="details.DischargePortDescription">
+                        </port-autocomplete>
+                    </div>
+
+                </div>
+
+
+                <div class="row" ng-if="IsHaulage" ><!--ng-if="IsHaulage"-->
+                    <div class="col-xs-12 col-md-4">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Area From</label>
+                            <input type="text"
+                                   ng-model="details.PickupCode" />
+                        </md-input-container>
+                    </div>
+                    <div class="col-xs-12 col-md-4">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Area To</label>
+                            <input type="text"
+                                   ng-model="details.DeliveryCode" />
+                        </md-input-container>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-12 col-md-4">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Billing Unit</label>
+                            <md-select ng-model="details.BillingUnit">
+                                <md-option md-option-empty></md-option>
+                                <md-option ng-repeat="item in lookupData.billingUnitList" ng-value="item.Value">
+                                    {{item.Text}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                    </div>
+                    <div class="col-xs-6 col-md-2">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Size </label>
+                            <md-select ng-model="details.Size" ng-change="sizeChanged();">
+                                <md-option md-option-empty></md-option>
+                                <md-option ng-repeat="item in lookupData.sizeList" ng-value="item.Value">
+                                    {{item.Text}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                    </div>
+                    <div class="col-xs-6 col-md-2">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Type</label>
+                            <md-select ng-model="details.Type"
+                                       ng-disabled="details.Size == null">
+                                <md-option md-option-empty></md-option>
+                                <md-option ng-repeat="item in lookupData.TypeList" ng-value="item.Value">
+                                    {{item.Text}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                    </div>
+                   
+                   
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-12 col-md-4">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Trailer Type</label>
+                            <md-select ng-model="details.TrailerType">
+                                <md-option md-option-empty></md-option>
+                                <md-option ng-repeat="item in lookupData.trailerType" ng-value="item.Value">
+                                    {{item.Text}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                    </div>
+                    <div class="col-xs-12 col-md-4">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Cargo Handling</label>
+                            <md-select ng-model="details.CargoHandling">
+                                <md-option md-option-empty></md-option>
+                                <md-option ng-repeat="item in lookupData.cargoHandlingList" ng-value="item.Value">
+                                    {{item.Text}}
+                                </md-option>
+                            </md-select>
+
+                        </md-input-container>
+                    </div>
+                 
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-12 col-md-4">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Remarks</label>
+                            <textarea class="form-control" ng-model="details.Remarks"></textarea>
+                        </md-input-container>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <div class="row">
+            <div class="col-xs-12 col-md-9"></div>
+            <div class="col-md-3 pull-right">
+                <button class="btn btn-primary" type="submit" ng-click="submitted = true;"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Save</button>
+                <button type="button" class="btn btn-default" ng-click="cancel();"><i class="fa fa-times" aria-hidden="true"></i>&nbsp;Close</button>
+            </div>
+        </div>
+    </div>
+</form>

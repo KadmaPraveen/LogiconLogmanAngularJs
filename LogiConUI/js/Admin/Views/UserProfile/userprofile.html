@@ -1,0 +1,139 @@
+﻿<div class="container " data-ng-controller="UserProfileController">
+    <form id="frmUserProfile" name="frmUserProfile" ng-class="{'submitted': submitted}" ng-submit="SaveUser(user)" novalidate>
+
+        <div class="card">
+            <div class="lv-header-alt clearfix m-b-5">
+                <h2 class="lvh-label">User Profile</h2>
+            </div>
+            <div class="card-body card-padding p-t-25 p-b-25">
+                <div class="row">
+
+                    <div class="col-xs-12 ">
+                        <div class="row">
+                            <div class="col-xs-12 col-md-6">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Full Name</label>
+                                    <input type="text"
+                                           ng-model="user.UserName" ng-required="true" />
+                                </md-input-container>
+                            </div>
+                            <div class="col-xs-12 col-md-6">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>User ID</label>
+                                    <input type="text"
+                                           ng-model="user.EmailID" ng-blur="checkUser()" ng-required="true" />
+                                </md-input-container>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 col-md-6">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>IC No.</label>
+                                    <input type="text"
+                                           ng-model="user.ICNo" />
+                                </md-input-container>
+                            </div>
+                            <div class="col-xs-12 col-md-6">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>User Password</label>
+                                    <input type="password"
+                                           ng-model="user.Password" ng-required="true" />
+                                </md-input-container>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 col-md-6">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Email</label>
+                                    <input type="email"
+                                           ng-disabled="true" ng-model="user.EmailID" ng-required="true" />
+                                </md-input-container>
+                            </div>
+                            <div class="col-xs-12 col-md-6">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Mobile No.</label>
+                                    <input type="text"
+                                           ng-model="user.ContactNo" />
+                                </md-input-container>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 col-md-6">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Designation</label>
+                                    <md-select ng-model="user.UserDesignation"
+                                               ng-required="true">
+                                        <md-option ng-repeat="item in lookUpData.userDesignationTypeList" ng-value="item.Value">
+                                            {{item.Text}}
+                                        </md-option>
+                                    </md-select>
+                                </md-input-container>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 col-md-6">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>User Type</label>
+                                    <md-select ng-model="user.UserGroup"
+                                               ng-required="true">
+                                        <md-option ng-repeat="item in lookUpData.userGroupTypeList" ng-value="item.Value">
+                                            {{item.Text}}
+                                        </md-option>
+                                    </md-select>
+                                </md-input-container>
+                            </div>
+
+                            <div class="col-xs-12 col-md-4">
+                                <md-switch ng-model="user.IsActive" class="md-primary" aria-label="Active">Active</md-switch>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 col-md-6">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Branch</label>
+                                    <md-select ng-model="user.BranchID"
+                                               ng-required="true">
+                                        <md-option ng-repeat="item in lookUpData.branchList" ng-value="item.Value">
+                                            {{item.Text}}
+                                        </md-option>
+                                    </md-select>
+                                </md-input-container>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 col-md-6">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Roles</label>
+                                    <md-select ng-model="user.RoleCode"
+                                               ng-required="true">
+                                        <md-option ng-repeat="item in lookUpData.roleList" ng-value="item.Value">
+                                            {{item.Text}}
+                                        </md-option>
+                                    </md-select>
+                                </md-input-container>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div>
+            <div class="card">
+                <div class="card-body card-padding p-t-25 p-b-25">
+                    <div class="row">
+                        <div class="col-xs-12 ">
+                            <button class="btn btn-primary pull-left" type="submit" ng-click="submitted = true;">
+                                <i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Save
+                            </button>
+                            <button ng-click="back()" class="btn btn-default pull-right" type="button"><i class="fa fa-times" aria-hidden="true"></i>&nbsp;Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </form>
+</div>
+<!--https://plnkr.co/edit/kmFXkmlBxlOvHWeYqxOd?p=preview-->

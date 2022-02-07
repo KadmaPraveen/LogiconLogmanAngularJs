@@ -1,0 +1,549 @@
+﻿<div class="container" ng-controller="ContainerMasterCntrl">
+    <script type="text/ng-template" id="container-properties.html">
+        <div class="container" style="height:400px;overflow-y:scroll;">
+            <div class="row" style="margin-top:2px;">
+                <div class="col-xs-12">
+                    <span class="blackCss" style="width:280px;">&nbsp;&nbsp;Movement Infomartion</span>
+                    <table class="table table-striped table-vmiddle table-condensed table-hover" style="width:25%;">
+                        <tr><td style="font-weight:bold;">Agent Seal</td><td>OOLDDP7668</td></tr>
+                        <tr><td style="font-weight:bold;">Current Status</td><td>AV</td></tr>
+                        <tr><td style="font-weight:bold;">Customer Seal</td><td>xxxxx</td></tr>
+                        <tr><td style="font-weight:bold;">EIR No.</td><td>OOLDDP7668</td></tr>
+                        <tr><td style="font-weight:bold;">Empty Full</td><td>FULL</td></tr>
+                        <tr><td style="font-weight:bold;">Movement</td><td>OUT</td></tr>
+                        <tr><td style="font-weight:bold;">Movement Code</td><td>FULL OUT</td></tr>
+                        <tr><td style="font-weight:bold;">Movement Date</td><td>13-10-2016</td></tr>
+                        <tr><td style="font-weight:bold;">Stuff Un Stuff Date</td><td>13-10-2016</td></tr>
+                    </table>
+                </div>
+
+                <div class="col-xs-12">
+                    <span class="blackCss" style="width:280px;">&nbsp;&nbsp;Order Infomartion</span>
+                    <table class="table table-striped table-vmiddle table-condensed table-hover" style="width:25%;">
+                        <tr><td style="font-weight:bold;">Booking BLNO.</td><td></td></tr>
+                        <tr><td style="font-weight:bold;">Container Key</td><td>XXXXX</td></tr>
+                        <tr><td style="font-weight:bold;">Order No.</td><td>XXXXX</td></tr>
+                    </table>
+                </div>
+
+                <div class="col-xs-12">
+                    <span class="blackCss" style="width:280px;">&nbsp;&nbsp;Temp-Vent Infomartion</span>
+                    <table class="table table-striped table-vmiddle table-condensed table-hover" style="width:25%;">
+                        <tr><td style="font-weight:bold;">Temperature</td><td>0.00 CEL</td></tr>
+
+                        <tr><td style="font-weight:bold;">Vent</td><td>0.00</td></tr>
+                    </table>
+                </div>
+
+                <div class="col-xs-12">
+                    <span class="blackCss" style="width:280px;">&nbsp;&nbsp;Weight Infomartion</span>
+                    <table class="table table-striped table-vmiddle table-condensed table-hover" style="width:25%;">
+                        <tr><td style="font-weight:bold;">Max. Gross Weight</td><td>0.00</td></tr>
+                        <tr><td style="font-weight:bold;">Tare Weight</td><td>2200.00</td></tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </script>
+    <script type="text/ng-template" id="port-fix-details.html">
+
+        <div style="height: 200px; width: 600px; overflow-y: scroll;">
+            <div class="row" style="margin-top: 2px;">
+                <div class="col-xs-12">
+                    <div class="col-xs-12 col-md-2">
+                        <label>Port</label>
+                    </div>
+                    <div class="col-xs-12 col-md-10">
+
+                        <tags-input ng-model="ContainerFixPorts"
+                                    display-property="Text"
+                                    placeholder="Port Name"
+                                    replace-spaces-with-dashes="false"
+                                    add-from-autocomplete-only="true"
+                                    template="tag-template">
+                            <auto-complete source="PortResults($query)"
+                                           min-length="0"
+                                           load-on-focus="true"
+                                           load-on-empty="true"
+                                           max-results-to-show="32"
+                                           template="autocomplete-template"></auto-complete>
+                        </tags-input>
+                    </div>
+                </div>
+
+                <div class="row pull-right">
+                    <div class="col-xs-12 col-md-10">
+                        <button class="btn btn-primary btn-sm" ng-click="AddContainerFixPort();"><i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Add</button>
+
+                    </div>
+                    <div class="col-xs-12 col-md-2"></div>
+                </div>
+
+            </div>
+        </div>
+    </script>
+    <script type="text/ng-template" id="tag-template">
+        <div class="tag-template">
+            <div class="right-panel">
+                <span uib-tooltip="{{data.Value}}">{{$getDisplayText()}}</span>
+                <a class="remove-button" ng-click="$removeTag()">&#10006;</a>
+            </div>
+        </div>
+    </script>
+    <script type="text/ng-template" id="autocomplete-template">
+        <div class="autocomplete-template">
+            <div class="right-panel">
+                <span ng-bind-html="$highlight($getDisplayText())"></span>
+                <!--<span>({{data.Value}})</span>-->
+            </div>
+        </div>
+    </script>
+    <div class="row">
+        <form id="frmContainerMasterDetail" name="frmContainerMasterDetail" ng-class="{'submitted': submittedDetail}" ng-submit="AddContainerInfoDetails(containermaster)" autocomplete="off" novalidate>
+            <div class="col-xs-12">
+                <div class="card">
+                    <div class="lv-header-alt clearfix m-b-5">
+                        <h3 class="lvh-label">Container Master</h3>
+                    </div>
+                    <div class="card-body card-padding p-t-25 p-b-25">
+                        <div class="row">
+
+                            <div class="col-xs-12 col-md-7">
+                                <div class="row">
+                                    <div class="col-xs-12">
+
+                                        <div class="card">
+                                            <div class="lv-header-alt clearfix m-b-5">
+                                                <h3 class="lvh-label">Container Information</h3>
+                                            </div>
+                                            <div class="card-body card-padding p-t-25 p-b-25">
+                                                <div class="row">
+                                                    <div class="col-xs-12 col-md-2">
+                                                        <label>Container No.</label>
+                                                    </div>
+                                                    <div class="col-xs-6 col-md-3">
+                                                        <input type="text" class="form-control input-sm" ng-model="containermaster.ContainerNo" ng-change="TextBoxChanged()" />
+                                                    </div>
+                                                    <div class="col-xs-12 col-md-2">
+                                                        <label>Type-Size</label>
+                                                    </div>
+                                                    <div class="col-xs-12 col-md-2">
+                                                        <select class="form-control input-sm"
+                                                                ng-model="containermaster.Size"
+                                                                ng-required="true"
+                                                                ng-options="s.Value as s.Text for s in lookUpData.sizeList"
+                                                                ng-change="sizeChanged()"></select>
+                                                    </div>
+                                                    <div class="col-xs-12 col-md-2">
+                                                        <select class="form-control input-sm"
+                                                                ng-model="containermaster.Type"
+                                                                ng-required="true"
+                                                                ng-disabled="containermaster.Size == null"
+                                                                ng-options="s.Value as s.Text for s in lookUpData.TypeList"></select>
+                                                    </div>
+                                                    <div class="col-md-1 conProp">
+                                                        <md-button class="md-fab md-mini-1 md-primary" aria-label="button"
+                                                                   popover-placement="bottom-right" uib-popover-template="'container-properties.html'">
+                                                            <i class="fa fa-cogs" aria-hidden="true"></i>
+                                                        </md-button>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-xs-12 col-md-2">
+                                                        <label>Agent Code</label>
+                                                    </div>
+                                                    <div class="col-xs-12 col-md-9">
+                                                        <input type="text"
+                                                               class="search-icon"
+                                                               ng-class="{'loadinggif': containermaster.AgentNameLoading}"
+                                                               placeholder="Search Agent"
+                                                               ng-model="containermaster.AgentCode"
+                                                               typeahead-min-length="3"
+                                                               uib-typeahead="d.Text as d.Text for d in AgentResults($viewValue)"
+                                                               typeahead-loading="containermaster.AgentNameLoading"
+                                                               typeahead-wait-ms="1000"
+                                                               typeahead-editable="false"
+                                                               ng-required="true"
+                                                               typeahead-on-select="CustomerSelected2($item, 'AgentCode')" />
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-xs-12 col-md-2">
+                                                        <label>Owner Code</label>
+                                                    </div>
+                                                    <div class="col-xs-6 col-md-3">
+                                                        <input type="text" class="form-control input-sm" ng-model="containermaster.OwnerCode" />
+                                                    </div>
+                                                    <div class="col-xs-12 col-md-2">
+                                                        <label>Meterial/Height</label>
+                                                    </div>
+                                                    <div class="col-xs-12 col-md-2">
+                                                        <select class="form-control input-sm"
+                                                                ng-model="containermaster.Material"
+                                                                ng-required="checkValidation()"
+                                                                ng-options="s.Value as s.Text for s in lookUpData.containerMaterialList"></select>
+                                                    </div>
+                                                    <div class="col-xs-12 col-md-2">
+                                                        <select class="form-control input-sm"
+                                                                ng-model="containermaster.ContainerHeight"
+                                                                ng-required="checkValidation()"
+                                                                ng-options="s.Value as s.Text for s in lookUpData.containerHeightList"></select>
+                                                    </div>
+                                                    <div class="col-md-1">
+                                                        <md-button class="md-fab md-mini-1 md-primary" aria-label="button"
+                                                                   popover-placement="bottom-right" uib-popover-template="'port-fix-details.html'">
+                                                            <i class="fa fa-cogs" aria-hidden="true"></i>
+                                                        </md-button>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-xs-12 col-md-2">
+                                                        <label>Hire Mode</label>
+                                                    </div>
+                                                    <div class="col-xs-6 col-md-3">
+                                                        <select class="form-control input-sm"
+                                                                ng-model="containermaster.HireMode"
+                                                                ng-required="checkValidation()"
+                                                                ng-options="s.Value as s.Text for s in lookUpData.containerHireModeList"></select>
+                                                    </div>
+                                                    <div class="col-xs-12 col-md-2">
+                                                        <label>Container Class</label>
+                                                    </div>
+                                                    <div class="col-xs-12 col-md-4">
+                                                        <select class="form-control input-sm"
+                                                                ng-model="containermaster.ContainerGrade"
+                                                                ng-required="checkValidation()"
+                                                                ng-options="s.Value as s.Text for s in lookUpData.containerGradeList"></select>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-xs-12 col-md-2">
+                                                        <label>Tare Wgt.</label>
+                                                    </div>
+                                                    <div class="col-xs-6 col-md-3">
+                                                        <input type="text" class="form-control input-sm" ng-model="containermaster.TareWeight" />
+                                                    </div>
+                                                    <div class="col-xs-12 col-md-2">
+                                                        <label>Max. Gross Wgt.</label>
+                                                    </div>
+                                                    <div class="col-xs-12 col-md-4">
+                                                        <input type="text" class="form-control input-sm" ng-model="containermaster.MaxGrossWeight" />
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-xs-12 col-md-2">
+                                                        <label>Cur. Loc.</label>
+                                                    </div>
+                                                    <div class="col-xs-6 col-md-3">
+                                                        <input type="text" class="form-control input-sm" ng-model="containermaster.CurrentLocation" />
+                                                    </div>
+                                                    <div class="col-xs-12 col-md-2">
+                                                        <label>Temp.</label>
+                                                    </div>
+                                                    <div class="col-xs-12 col-md-2">
+                                                        <input type="text" class="form-control input-sm" ng-model="containermaster.Temperature" />
+                                                    </div>
+                                                    <div class="col-xs-12 col-md-2">
+                                                        <select class="form-control input-sm"
+                                                                ng-model="containermaster.TemperatureMode"
+                                                                ng-required="checkValidation()"
+                                                                ng-options="s.Value as s.Text for s in lookUpData.tempTypeList"></select>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-xs-12 col-md-2">
+                                                        <label>Year Built</label>
+                                                    </div>
+                                                    <div class="col-xs-6 col-md-3">
+                                                        <input type="text" class="form-control input-sm" ng-model="containermaster.YearBuilt" />
+                                                    </div>
+
+                                                    <div class="col-xs-12 col-md-2">
+                                                        <label>Vent.</label>
+                                                    </div>
+                                                    <div class="col-xs-12 col-md-2">
+                                                        <input type="text" class="form-control input-sm" ng-model="containermaster.Vent" />
+                                                    </div>
+                                                    <div class="col-xs-12 col-md-2">
+                                                        <select class="form-control input-sm"
+                                                                ng-model="containermaster.VentMode"
+                                                                ng-required="checkValidation()"
+                                                                ng-options="s.Value as s.Text for s in lookUpData.ventTypeList"></select>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-xs-12 col-md-2">
+                                                        <label>Remarks</label>
+                                                    </div>
+                                                    <div class="col-xs-12 col-md-9">
+                                                        <textarea class="form-control input-sm" ng-model="containermaster.Remarks1"></textarea>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-xs-12 col-md-2">
+                                                        <label>Repair Cost</label>
+                                                    </div>
+                                                    <div class="col-xs-6 col-md-3">
+                                                        <input type="text" class="form-control input-sm" ng-model="containermaster.RepairCost" />
+                                                    </div>
+                                                    <div class="col-xs-12 col-md-2">
+                                                        <label>Insure</label>
+                                                    </div>
+                                                    <div class="col-xs-12 col-md-4">
+                                                        <input type="text" class="form-control input-sm" ng-model="containermaster.Insurer" />
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-xs-12 col-md-2">
+                                                        <label>Lessee</label>
+                                                    </div>
+                                                    <div class="col-xs-6 col-md-3">
+                                                        <input type="text" class="form-control input-sm" ng-model="containermaster.Lesse" />
+                                                    </div>
+                                                    <div class="col-xs-12 col-md-2">
+                                                        <label>Amount</label>
+                                                    </div>
+                                                    <div class="col-xs-12 col-md-4">
+                                                        <input type="text" class="form-control input-sm" ng-model="containermaster.Amount" />
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-xs-12 col-md-2">
+                                                        <label>Lessor</label>
+                                                    </div>
+                                                    <div class="col-xs-6 col-md-3">
+                                                        <input type="text" class="form-control input-sm" ng-model="containermaster.Lessor" />
+                                                    </div>
+                                                    <div class="col-xs-12 col-md-2">
+                                                        <label>Autherization</label>
+                                                    </div>
+                                                    <div class="col-xs-12 col-md-4">
+                                                        <input type="text" class="form-control input-sm" ng-model="containermaster.Authorize" />
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-xs-12 col-md-2">
+                                                        <label>Pre Clear</label>
+                                                    </div>
+                                                    <div class="col-xs-6 col-md-3">
+                                                        <input type="text" class="form-control input-sm" ng-model="containermaster.PreClear" />
+                                                    </div>
+                                                    <div class="col-xs-12 col-md-2">
+                                                        <label>Used By</label>
+                                                    </div>
+                                                    <div class="col-xs-12 col-md-4">
+                                                        <input type="text" class="form-control input-sm" ng-model="containermaster.UsedBy" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-xs-12 col-md-5">
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <div class="card">
+                                            <div class="lv-header-alt clearfix m-b-5">
+                                                <h3 class="lvh-label">Container Status</h3>
+                                            </div>
+                                            <div class="card-body card-padding p-t-25 p-b-25">
+                                                <div class="row">
+                                                    <div class="col-xs-12 col-md-4">
+                                                        <label>Status#1</label>
+                                                    </div>
+                                                    <div class="col-md-8">
+                                                        <select class="form-control input-sm"
+                                                                ng-model="containermaster.ContainerStatus1"
+                                                                ng-required="checkValidation()"
+                                                                ng-options="s.Value as s.Text for s in lookUpData.containerStatusList"
+                                                                ng-change="Status1OnChange()"></select>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-xs-12 col-md-4">
+                                                        <label>LOCK</label>
+                                                    </div>
+                                                    <div class="col-md-8">
+
+                                                        <select class="form-control input-sm"
+                                                                ng-model="containermaster.ContainerLockStatus"
+                                                                ng-required="checkValidation()"
+                                                                ng-options="s.Value as s.Text for s in lookUpData.containerStatusList"></select>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-xs-12 col-md-4">
+                                                        <label>Status#2</label>
+                                                    </div>
+                                                    <div class="col-md-8">
+                                                        <select class="form-control input-sm"
+                                                                ng-model="containermaster.ContainerStatus2"
+                                                                ng-required="checkValidation()"
+                                                                ng-options="s.Value as s.Text for s in lookUpData.containerStatusList"></select>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-xs-12 col-md-4">
+                                                        <label>Approve Date</label>
+                                                    </div>
+                                                    <div class="col-md-8">
+                                                        <div class="dropdown">
+                                                            <a class="dropdown-toggle" id="ApprovalDateTime" role="button" data-toggle="dropdown">
+                                                                <div class="input-group">
+                                                                    <input type="text"
+                                                                           class="form-control input-sm datepicker"
+                                                                           ng-model="containerstatus.ApprovalDateTime"
+                                                                           ng-required="true"
+                                                                           date-time-input="MM/DD/YYYY">
+                                                                    <span class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true"></i></span>
+                                                                </div>
+                                                            </a>
+                                                            <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                                                <datetimepicker ng-model="containerstatus.ApprovalDateTime"
+                                                                                data-datetimepicker-config="{ dropdownSelector: '#ApprovalDateTime', startView:'day', minView:'day' }" />
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-xs-12 col-md-4">
+                                                        <label>Repair-Start Date-Time</label>
+                                                    </div>
+                                                    <div class="col-md-8">
+                                                        <div class="dropdown">
+                                                            <a class="dropdown-toggle" id="StartDateTime" role="button" data-toggle="dropdown">
+                                                                <div class="input-group">
+                                                                    <input type="text"
+                                                                           class="form-control input-sm datepicker"
+                                                                           ng-model="containerstatus.StartDateTime"
+                                                                           ng-required="true"
+                                                                           date-time-input="MM/DD/YYYY">
+                                                                    <span class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true"></i></span>
+                                                                </div>
+                                                            </a>
+                                                            <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                                                <datetimepicker ng-model="containerstatus.StartDateTime"
+                                                                                data-datetimepicker-config="{ dropdownSelector: '#StartDateTime', startView:'day', minView:'day' }" />
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-xs-12 col-md-4">
+                                                        <label>Repair-End Date-Time</label>
+                                                    </div>
+                                                    <div class="col-md-8">
+                                                        <div class="dropdown">
+                                                            <a class="dropdown-toggle" id="EndDateTime" role="button" data-toggle="dropdown">
+                                                                <div class="input-group">
+                                                                    <input type="text"
+                                                                           class="form-control input-sm datepicker"
+                                                                           ng-model="containerstatus.EndDateTime"
+                                                                           ng-required="true"
+                                                                           date-time-input="MM/DD/YYYY">
+                                                                    <span class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true"></i></span>
+                                                                </div>
+                                                            </a>
+                                                            <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                                                <datetimepicker ng-model="containerstatus.EndDateTime"
+                                                                                data-datetimepicker-config="{ dropdownSelector: '#EndDateTime', startView:'day', minView:'day' }" />
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-xs-12 col-md-4">
+                                                        <label>Status Remark</label>
+                                                    </div>
+                                                    <div class="col-md-8">
+                                                        <input type="text" class="form-control input-sm" ng-model="containerstatus.ContainerStatus" />
+                                                    </div>
+                                                </div>
+                                                <div class="row pull-right">
+                                                    <div class="col-xs-12 ">
+                                                        <button class="btn btn-primary btn-sm" ng-click="AddContainerStatusDetails(containerstatus);"><i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Add</button>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-xs-12">
+                                                        <div class="card">
+                                                            <div class="lv-header-alt clearfix m-b-5">
+                                                                <h3 class="lvh-label">Container Status Details</h3>
+                                                                <div class="box-tools pull-right">
+                                                                    <!-- <button type="button" class="btn btn-box-tool" ng-click="AddContainerStatusDetails(containerstatus);">
+                                                                         <i class="fa fa-plus"></i>
+                                                                     </button>-->
+                                                                </div>
+                                                            </div>
+                                                            <div class="card-body card-padding p-t-25 p-b-25">
+                                                                <div class="row">
+                                                                    <div class="col-xs-12">
+                                                                        <table class="table table-striped table-vmiddle">
+                                                                            <thead style="color: #fff; background-color: steelblue;">
+                                                                                <tr>
+                                                                                    <th>#Action</th>
+                                                                                    <th>Status</th>
+                                                                                    <th>Start Date</th>
+                                                                                    <th>End Date</th>
+                                                                                    <th>Approve Date</th>
+
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody>
+                                                                                <tr ng-repeat="csu in containermaster.ContainerStatusUpdates">
+                                                                                    <td></td>
+                                                                                    <td>{{csu.ContainerStatus}}</td>
+                                                                                    <td>{{csu.StartDateTime}}</td>
+                                                                                    <td>{{csu.EndDateTime}}</td>
+                                                                                    <td>{{csu.ApprovalDateTime}}</td>
+
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                        <div class="row">
+                                                                            <div class="col-xs-12 text-right">
+                                                                                <button class="btn btn-primary btn-sm" ng-click="UpdateContainerStatus();"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Update Status</button>
+                                                                                <button class="btn btn-default btn-sm" ng-click="cancel();"><i class="fa fa-times" aria-hidden="true"></i>&nbsp;Clear</button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-2 col-md-1">
+                                <button class="btn btn-primary btn-sm" ng-click="submitted = true;"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Save</button>
+                            </div>
+                            <div class="col-xs-2  col-md-1">
+                                <md-button class="md-raised md-clear"><i class="fa fa-print" aria-hidden="true"></i>&nbsp;Print</md-button>
+                            </div>
+                            <div class="col-xs-2  col-md-1">
+                                <md-button class="md-raised md-clear"><i class="fa fa-eraser" aria-hidden="true"></i>&nbsp;Clear</md-button>
+                            </div>
+                            <div class="col-xs-2  col-md-1">
+                                <button class="btn btn-default btn-sm" ng-click="DeleteContainerMaster();"><i class="fa fa-trash" aria-hidden="true"></i>&nbsp;Delete</button>
+
+                            </div>
+                            <div class="col-xs-2  col-md-1">
+                                <md-button class="md-raised md-clear"><i class="fa fa-times" aria-hidden="true"></i>&nbsp;Close</md-button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

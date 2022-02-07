@@ -1,0 +1,20 @@
+﻿<div class="row ">
+    <div class="col-xs-12">
+        <table class="table table-striped table-vmiddle">
+            <thead >
+                <tr>
+                    <th>Activity Date</th>
+                    <th>Activity</th>
+                    <th>Activity Party</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="activity in oe.orderActivityList">
+                    <td>{{activity.ActivityDate | date : 'dd/MM/yyyy HH:MM:ss a'}}</td>
+                    <td>{{activity.Activity}}</td>
+                    <td>{{activity.ActivityPartyDescription}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

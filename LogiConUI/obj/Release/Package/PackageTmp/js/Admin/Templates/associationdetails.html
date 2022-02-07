@@ -1,0 +1,79 @@
+﻿<div>
+    <form id="frmAssociationDetails" name="frmAssociationDetails" ng-class="{'submitted':submitted}" ng-submit="SaveAssociationDetails(asDetail)" autocomplete="off" novalidate>
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" ng-click="cancel();">&times;</button>
+            <h4 class="modal-title">Affiliation Detail</h4>
+        </div>
+        <div class="modal-body">
+            <div class="c-overflow" ng-style="{'max-height': iframeHeight - 80 + 'px'}" resize style="overflow-x:hidden" >
+                <div class="modalbodymain" >
+
+                    <div class="row" style="max-height:calc(100% - 200px);">
+                        <div class="col-xs-12 col-md-6">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Company Name</label>
+                                <input type="text"
+                                       class="search-icon"
+                                       ng-class="{'loadinggif': asDetail.CompanyNameLoading}"
+                                       ng-model="asDetail.CompanyName"
+                                       typeahead-min-length="3"
+                                       uib-typeahead="d.Text as d.Text for d in CompanyNameResults($viewValue)"
+                                       typeahead-loading="asDetail.CompanyNameLoading"
+                                       typeahead-wait-ms="100"
+                                       typeahead-append-to-body="true"
+                                       typeahead-editable="true"
+                                       typeahead-on-select="CompanySelected($item)"
+                                       ng-required="true" />
+                            </md-input-container>
+                        </div>
+
+                        <div class="col-xs-12 col-md-6">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>ROC</label>
+                                <input type="text"
+                                       class="search-icon"
+                                       ng-class="{'loadinggif': asDetail.ROCNumberLoading}"
+                                       ng-model="asDetail.ROCNumber"
+                                       typeahead-min-length="3"
+                                       uib-typeahead="d.RegNo as d.RegNo for d in RocResults($viewValue)"
+                                       typeahead-loading="asDetail.ROCNumberLoading"
+                                       typeahead-wait-ms="100"
+                                       typeahead-append-to-body="true"
+                                       typeahead-editable="true"
+                                       typeahead-on-select="RocSelected($item)"
+                                       ng-required="true" />
+                            </md-input-container>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-md-6">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Email</label>
+                                <input type="text"
+                                       ng-model="asDetail.Email" ng-required="true" />
+                            </md-input-container>
+                        </div>
+
+                        <div class="col-xs-12 col-md-6">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Join Date</label>
+                                <input mdc-datetime-picker="" date="true" class="date-icon" time="false" type="text" id="JoinDate" format="{{dateFormat}}"
+                                       min-date="date" ng-model="asDetail.JoinDate"
+                                       ng-required="true">
+                            </md-input-container>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+            <div class="modal-footer">
+                <div class="row">
+                    <div class="col-md-8"></div>
+                    <div class="col-md-4 pull-right">
+                        <button type="submit" class="btn btn-primary btn-sm" ng-click="submitted = true"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Save</button>
+                        <button type="button" class="btn btn-default btn-sm" ng-click="cancel();"><i class="fa fa-times" aria-hidden="true"></i>&nbsp;Close</button>
+                    </div>
+                </div>
+            </div>
+</form>
+</div>

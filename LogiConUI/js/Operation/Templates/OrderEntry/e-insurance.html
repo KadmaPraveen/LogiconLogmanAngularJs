@@ -1,0 +1,29 @@
+﻿<div class="card">
+    <div class="lv-header-alt clearfix m-b-5">
+        <h2 class="lvh-label">Insurance Response</h2>
+        <span class="pull-right m-r-30">
+            <a class="btn bgm-green waves-effect pull-right m-r-5" style="text-transform:none; font-weight:bold" ng-if="isDownloadToken" target="_blank" ng-href="{{downloadUrl}}">eMI Certificate</a>
+            <button class="btn btn-default m-l-5" type="button" ng-if="!isDownloadToken" ng-click="refreshInsuranceStatus()">Refresh</button>
+        </span>
+    </div>
+    <div class="card-body card-padding p-t-5 p-b-5">
+        <div class="row">
+            <div class="col-xs-12">
+                <table class="table table-vmiddle">
+                    <thead>
+                        <tr>
+                            <th>Status Date</th>
+                            <th>Status Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="item in insuranceStatusList">
+                            <td>{{item.StatusDate | date :  'dd/MM/yyyy hh:mm a'}}</td>
+                            <td>{{item.StatusDescription}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,30 @@
+﻿<div class="container" ng-controller="UnBilledOrdersListCntrl">
+    <div class="card">
+        <div class="lv-header-alt clearfix m-b-5">
+            <h2 class="lvh-label">UnBilled Orders List</h2>
+            <ul class="lv-actions actions">
+                <li>
+                    <button type="button" class="btn btn-info btn-icon m-r-10" ng-click="refresh();" tooltip-placement="bottom" uib-tooltip="Refresh"><i class="fa fa-refresh"></i></button>
+                </li>
+            </ul>
+
+        </div>
+       <table class="table table-responsive" ng-table="ngTblData">
+         <tbody>
+             <tr ng-repeat="list in $data">
+                 <td data-title="'OrderNo.'" ><a style="cursor:pointer;" ng-click="BroadCastUnBilledOrdersList({orderno:list.OrderNo})">{{list.OrderNo}}</a></td>
+                 <td>
+                     <button class="btn btn-default ng-scope waves-effect"
+                             type="button"
+                             ng-click="BroadCastUnBilledOrdersList({orderno:list.OrderNo})"
+                             aria-label="button" uib-tooltip="Edit" tooltip-placement="top">
+                         <i class="zmdi zmdi-edit"></i>
+                     </button>
+                 </td>
+             </tr>
+         </tbody>
+
+       </table>
+
+    </div>
+</div>

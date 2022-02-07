@@ -1,0 +1,203 @@
+﻿<div class="container" ng-controller="UnBilledOrdersCntrl">
+    <div class="card">
+        <div  class="lv-header-alt clearfix m-b-5">
+            <h3  class="lvh-label">Unbilled Orders</h3>
+        </div>
+        <div  class="card-body card-padding p-t-25 p-b-25">
+                    <div class="row" >
+                        <div class="col-xs-12 col-md-4">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Customer</label>
+                               <input type="text" id="customer" name="customer" ng-model="customer" />
+                            </md-input-container>
+                        </div>
+                        <div class="col-xs-12 col-md-4">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Job Type</label>
+                                <md-select ng-model="jobTypeList" name="jobTypeList">
+                                    <md-option ng-repeat="item in lookupdata.jobTypeList" ng-value="item.Value">
+                                        {{item.Text}}
+                                    </md-option>
+                                </md-select>
+                                </md-input-container>
+                        </div>
+                        <div class="col-xs-12 col-md-4">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Filter Date By</label>
+                                <input mdc-datetime-picker="" date="true" time="false" type="text" id="OpenDate" format="{{dateFormat}}" class="date-icon"
+                                       min-date="date" ng-model="OpenDate"
+                                       name="OpenDate" />
+                            </md-input-container>
+                        </div>
+                        </div>
+                    <div class="row" >
+                        <div class="col-xs-12 col-md-4">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Vessel ID</label>
+                                <input type="text" id="vesselid" name="vesselid" ng-model="vesselid" />
+                            </md-input-container>
+                        </div>
+                        <div class="col-xs-12 col-md-4">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Job Category</label>
+                                <md-select ng-model="jobCategoryList" name="jobCategoryList">
+                                    <md-option ng-repeat="item in lookupdata.jobCategoryList" ng-value="item.Value">
+                                        {{item.Text}}
+                                    </md-option>
+                                </md-select>
+                            </md-input-container>
+                        </div>
+                        <div class="col-xs-12 col-md-4">
+                            <md-input-container  class="md-block" flex-gt-sm>
+                                <label>From</label>
+                                <input mdc-datetime-picker="" date="true" time="false" type="text" id="FromDate" format="{{dateFormat}}" class="date-icon"
+                                       min-date="date" ng-model="FromDate"
+                                       name="FromDate" />
+                            </md-input-container>
+                        </div>
+                    </div>
+                    <div class="row" >
+                        <div class="col-xs-12 col-md-4">
+                            <md-input-container  class="md-block" flex-gt-sm>
+                                <label>Charge Code</label>
+                                <md-select ng-model="chargeMethodList" name="chargeMethodList">
+                                    <md-option ng-repeat="item in lookupdata.chargeMethodList" ng-value="item.Value">
+                                      {{item.Text}}
+                                    </md-option>
+                                </md-select>
+                            </md-input-container>
+                        </div>
+                        <div class="col-xs-12 col-md-4">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Module</label>
+                                <md-select ng-model="moduleList" name="moduleList">
+                                    <md-option ng-repeat="item in lookupdata.moduleList" ng-value="item.Value">
+                                       {{item.Text}}
+                                    </md-option>
+                                </md-select>
+                            </md-input-container>
+                    </div>
+                        <div class="col-xs-12 col-md-4">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>To</label>
+                                <input mdc-datetime-picker="" date="true" time="false" type="text" id="ToDate" format="{{dateFormat}}" class="date-icon"
+                                       min-date="date" ng-model="ToDate"
+                                       name="ToDate" />
+                            </md-input-container>
+                        </div>
+                    
+                </div>
+            <div class="row">
+                <div class="col-xs-12 col-md-4" >
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Container No.</label>
+                        <input type="text" name="containerno" id="containerno"
+                               ng-model="Containernumber" />
+                    </md-input-container>
+                </div>
+                <div class="col-xs-12 col-md-4">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Customer ref</label>
+                        <input type="text" name="customerref" id="customerref"
+                               ng-model="Customerref" />
+                    </md-input-container>
+                </div>
+                <div class="col-xs-12 col-md-4">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Movement</label>
+                            <md-select ng-model="movement">
+                                <md-option>
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-md-4">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Credit Term</label>
+                        <md-select ng-model="creditterm">
+                            <md-option>
+                            </md-option>
+                        </md-select>
+                    </md-input-container>
+                </div>
+                <div class="col-xs-12 col-md-4">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Zone</label>
+                        <md-select ng-model="zone">
+                            <md-option>
+                            </md-option>
+                        </md-select>
+                    </md-input-container>
+                </div>
+            </div>
+            
+            <div class="row" >
+                <div class="col-xs-12">
+                    <div class="table-responsive">
+                        <table class="table table-vmiddle">
+                            <thead >
+                                <tr>
+                                    <th>Alert</th>
+                                    <th>Order No.</th>
+                                    <th>Order Date</th>
+                                    <th>Job</th>
+                                    <th>Shp</th>
+                                    <th>Job Category</th>
+                                    <th>Transport Type</th>
+                                    <th>Customer Name</th>
+                                    <th>Pickup From</th>
+                                    <th>Deliver To</th>
+                                    <th>Zone</th>
+                                    <th>Area Name</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        </table></div>
+                    </div>
+                </div>
+        
+            <div class="row" >
+                <div class="col-xs-12">
+                         <div class="table-responsive"> 
+                        <table class="table table-vmiddle">
+                            <thead >
+                                <tr>
+                                    <th>Container No.</th>
+                                    <th>Size</th>
+                                    <th>Package</th>
+                                    <th>  Code</th>
+                                    <th>Description</th>
+                                    <th>Unit</th>
+                                    <th>Quantity</th>
+                                    <th>Price</th>
+                                    <th>Est Sell</th>
+                                    <th>Act Sell</th>
+                                    <th>Balance</th>
+                                    <th>Int</th>
+                                    <th>Zone</th>
+                                    <th>Area Name</th>
+                                    <th>Container ref</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        </table></div>
+                    </div>
+                </div>
+            </div>
+        
+        <div class="box-footer">
+            <div class="row">
+            </div>
+        </div>
+  </div>
+    </div>

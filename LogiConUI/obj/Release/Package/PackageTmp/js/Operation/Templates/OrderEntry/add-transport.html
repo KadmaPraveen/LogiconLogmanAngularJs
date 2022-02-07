@@ -1,0 +1,156 @@
+﻿<form id="frmTransport" name="frmTransport" ng-class="{'submitted': submitted}" ng-submit="SaveTransport(tra)" novalidate>
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" ng-click="cancel();">&times;</button>
+        <h4 class="modal-title">Transport</h4>
+    </div>
+    <div class="modal-body">
+        <div class="c-overflow" ng-style="{'max-height': iframeHeight - 80 + 'px'}" resize>
+            <div class="modalbodymain">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="row">
+                            <div class="col-xs-12 col-md-4">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Truck No.</label>
+                                    <input type="text" ng-model="tra.ContainerNo"
+                                           ng-maxlength="11" logicon-limit />
+                                </md-input-container>
+                            </div>
+                            <div class="col-xs-12 col-md-4">
+                                <!--<input type="hidden" ng-model="tra.DehireDate" ng-init="tra.DehireDate == null" />-->
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Size</label>
+                                    <md-select ng-required="true" ng-model="tra.Size">
+                                        <md-option ng-repeat="item in lookupData.sizeList" ng-value="item.Value">
+                                            {{item.Text}}
+                                        </md-option>
+                                    </md-select>
+                                </md-input-container>
+                            </div>
+                            <div class="col-xs-12 col-md-4">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Req Date</label>
+                                    <input mdc-datetime-picker="" class="date-icon" date="true" time="false" type="text" id="RequiredDate" format="{{dateFormat}}"
+                                           min-date="date" ng-model="tra.RequiredDate" />
+                                </md-input-container>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 col-md-4">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Temperature</label>
+                                    <input type="text" ng-model="tra.Temprature"
+                                           ng-maxlength="10"
+                                           logicon-limit
+                                           string-to-number />
+                                </md-input-container>
+                            </div>
+                            <div class="col-xs-12 col-md-4">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Temperature Units</label>
+                                    <md-select ng-model="tra.TemperatureMode">
+                                        <md-option md-option-empty></md-option>
+                                        <md-option ng-repeat="item in lookupData.tempratureTypeList" ng-value="item.Value">
+                                            {{item.Text}}
+                                        </md-option>
+                                    </md-select>
+                                </md-input-container>
+                            </div>
+                            <div class="col-xs-12 col-md-4">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Cargo Type</label>
+                                    <md-select ng-model="tra.CargoType">
+                                        <md-option md-option-empty></md-option>
+                                        <md-option ng-repeat="item in lookupData.cargoTypeList" ng-value="item.Value">
+                                            {{item.Text}}
+                                        </md-option>
+                                    </md-select>
+                                </md-input-container>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 col-md-4">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Gross Weight (KG)</label>
+                                    <input type="text" ng-model="tra.GrossWeight" logicon-decimal />
+                                </md-input-container>
+                            </div>
+                            <div class="col-xs-12 col-md-4">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Container Ref.</label>
+                                    <input type="text" ng-model="tra.ContainerRef" />
+                                </md-input-container>
+                            </div>
+                            <div class="col-xs-12 col-md-4">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Special Handling</label>
+                                    <md-select ng-model="tra.SpecialHandling">
+                                        <md-option md-option-empty></md-option>
+                                        <md-option ng-repeat="item in lookupData.splHandlingList" ng-value="item.Value">
+                                            {{item.Text}}
+                                        </md-option>
+                                    </md-select>
+                                </md-input-container>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 col-md-4">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>IMO Code</label>
+                                    <md-select ng-model="tra.IMOCode">
+                                        <md-option md-option-empty></md-option>
+                                        <md-option ng-repeat="item in lookupData.imoList" ng-value="item.Value">
+                                            {{item.Text}}
+                                        </md-option>
+                                    </md-select>
+                                </md-input-container>
+                            </div>
+                            <div class="col-xs-12 col-md-4">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>UN No.</label>
+                                    <input type="text" ng-model="tra.UNNo" />
+                                </md-input-container>
+                            </div>
+                            <div class="col-xs-12 col-md-4">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Volume (M3)</label>
+                                    <input type="text" ng-model="tra.Volume" logicon-decimal />
+                                </md-input-container>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 col-md-4">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Cargo Handling</label>
+                                    <input type="text" ng-model="tra.CargoHandling" />
+                                </md-input-container>
+                            </div>
+                            <div class="col-xs-12 col-md-4">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Dimension</label>
+                                    <textarea ng-model="tra.Dimension1"></textarea>
+                                </md-input-container>
+                            </div>
+                            <div class="col-xs-12 col-md-4">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Remarks</label>
+                                    <textarea ng-model="tra.Remarks"></textarea>
+                                </md-input-container>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+            <div class="modal-footer">
+                <div class="row">
+                    <div class="col-xs-12  text-right">
+                        <button class="btn btn-primary btn-sm" ng-click="submitted = true;" ng-show="!IsWebOrder"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Save</button>
+                        <button type="button" class="btn btn-default btn-sm" ng-click="cancel();"><i class="fa fa-times" aria-hidden="true"></i>&nbsp;Close</button>
+                    </div>
+                </div>
+            </div>
+</form>
+
+

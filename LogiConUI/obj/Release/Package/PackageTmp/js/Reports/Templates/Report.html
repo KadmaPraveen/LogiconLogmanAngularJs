@@ -1,0 +1,31 @@
+﻿<style type="text/css">
+    iframe {
+        border-width: 0px;
+        border-style: inset;
+        border-color: initial;
+        border-image: initial;
+    }
+</style>
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" ng-click="cancel();">&times;</button>
+    <h4 class="modal-title">{{reportName}}</h4>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div class="col-xs-12">
+            <iframe ng-src="{{reportPath | trustAsResourceUrl}}" style="width:100%; height:450px; overflow:hidden;"></iframe>
+        </div>
+    </div>
+</div>
+<div class="overlay" style="opacity:0.8;" ng-show="showLoading">
+    <i class="fa fa-refresh fa-spin"></i>
+</div>
+<!--<div class="modal-footer">
+    <div class="row" >
+        <div class="col-xs-12 col-md-9"></div>
+        <div class="col-md-3 pull-right">
+            <button class="btn btn-primary btn-sm" ng-click="cancel();"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Save</button>
+            <button class="btn btn-default btn-sm" ng-click="cancel();"><i class="fa fa-times" aria-hidden="true"></i>&nbsp;Close</button>
+        </div>
+    </div>
+</div>-->

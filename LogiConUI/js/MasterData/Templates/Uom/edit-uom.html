@@ -1,0 +1,51 @@
+﻿<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" ng-click="cancel();">&times;</button>
+    <h4 class="modal-title">UOM Info</h4>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div class="col-xs-12 col-md-6">
+            <md-input-container class="md-block" flex-gt-sm>
+                <label>UOM Code</label>
+
+                <input type="text" ng-model="uom.UOMCode" ng-required="true" />
+            </md-input-container>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12 col-md-6">
+            <md-input-container class="md-block" flex-gt-sm>
+                <label>UOM Description</label>
+
+                <input type="text" ng-model="uom.UOMDescription" ng-required="true" />
+            </md-input-container>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12 col-md-6">
+            <md-input-container class="md-block" flex-gt-sm>
+                <label>Mapping Code</label>
+
+                <input type="text" ng-model="uom.MappingCode" ng-required="true" />
+            </md-input-container>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12 col-md-6">
+            <md-input-container class="md-block" flex-gt-sm>
+                <label>ISO Code</label>
+
+                <input type="text" ng-model="uom.ISOCode" ng-required="true" />
+            </md-input-container>
+        </div>
+    </div>    
+</div>
+<div class="modal-footer">
+    <div class="row">
+       
+        <div class="col-xs-12 text-right">
+            <button class="btn btn-primary btn-sm" ng-click="SaveUom(uom);"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Save</button>
+            <button class="btn btn-default btn-sm" ng-click="cancel();"><i class="fa fa-times" aria-hidden="true"></i>&nbsp;Close</button>
+        </div>
+    </div>
+</div>

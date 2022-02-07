@@ -1,0 +1,142 @@
+﻿<form name="frmAddEquipmentSizeType" id="frmAddEquipmentSizeType" ng-submit="AddEquipmentSizeType(equipmentsizetype)" ng-class="{'submitted':submitted}" novalidate>
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" ng-click="cancel();">&times;</button>
+        <h4 class="modal-title">Add/Edit Equipment Type/Size </h4>
+    </div>
+    <div class="modal-body">
+        <div class="c-overflow" ng-style="{'max-height': iframeHeight - 80 + 'px'}" resize>
+            <div class="modalbodymain">
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="row">
+                            <div class="col-xs-12 col-md-4">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Size</label>
+
+                                    <input type="text" ng-model="equipmentsizetype.Size" ng-required="true" ng-readonly="truefalse" />
+                                </md-input-container>
+                            </div>
+                            <div class="col-xs-12 col-md-4">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Size Type</label>  <input type="text" ng-model="equipmentsizetype.Type" ng-required="true" />
+                                </md-input-container>
+                            </div>
+                            <div class="col-xs-12 col-md-4">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Code</label>
+
+                                    <input type="text" ng-model="equipmentsizetype.Code" ng-required="true" />
+                                </md-input-container>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 ">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Description</label>
+
+                                    <input type="text" ng-model="equipmentsizetype.Description" ng-required="true" />
+                                </md-input-container>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 col-md-6">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Tare Weight</label>
+
+                                    <input type="text" ng-model="equipmentsizetype.Weight" ng-required="true" logicon-decimal />
+                                </md-input-container>
+                            </div>
+                            <div class="col-xs-12 col-md-6">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Max Gross Weight</label>
+
+                                    <input type="text" ng-model="equipmentsizetype.MGW" ng-required="true" logicon-decimal />
+                                </md-input-container>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 col-md-6">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Max. Pallet</label>
+
+                                    <input type="text" ng-model="equipmentsizetype.MaxPallet" ng-required="true" />
+                                </md-input-container>
+                            </div>
+                            <div class="col-xs-12 col-md-6">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Height</label>
+
+                                    <input type="text" ng-model="equipmentsizetype.Height" ng-required="true" logicon-decimal />
+                                </md-input-container>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 col-md-6">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Length</label>
+
+                                    <input type="text" ng-model="equipmentsizetype.Length" ng-required="true" logicon-decimal />
+                                </md-input-container>
+                            </div>
+                            <div class="col-xs-12 col-md-6">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>TEU</label>
+
+                                    <input type="text" ng-model="equipmentsizetype.TEU" ng-required="true" />
+                                </md-input-container>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 col-md-6">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Mapping Code</label>
+
+                                    <input type="text" ng-model="equipmentsizetype.MappingCode" ng-required="true" />
+                                </md-input-container>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-xs-12 col-md-6">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>ISO Code</label>
+
+                                    <input type="text" ng-model="equipmentsizetype.ISOCode" ng-required="true" />
+                                </md-input-container>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-md-4">
+                        <div class="row">
+                            <div class="col-xs-12 ">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Equipment Type</label>
+                                    <md-select ng-model="equipmentsizetype.EquipmentType" ng-required="true">
+                                        <md-option ng-repeat="item in equipmenttypeList" ng-value="item.Value">
+                                            {{item.Text}}
+                                        </md-option>
+                                    </md-select>
+                                    <!--<select ng-model="equipmentsizetype.EquipmentType" ng-options="c.Value as c.Text for c in equipmenttypeList" ng-required="true"></select>-->
+                                </md-input-container>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-xs-12 col-md-6">
+                                <md-switch class="md-primary" aria-label="Terminal" ng-model="equipmentsizetype.IsReefer" ng-init="equipmentsizetype.IsReefer = false">Reefer</md-switch>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+            <div class="modal-footer">
+                <div class="row">
+                    <div class="col-xs-12  text-right">
+                        <button class="btn btn-primary btn-sm" ng-click="submitted = true;"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Save</button>
+                        <button class="btn btn-default btn-sm" ng-click="cancel();"><i class="fa fa-times" aria-hidden="true"></i>&nbsp;Close</button>
+                    </div>
+                </div>
+            </div>
+</form>

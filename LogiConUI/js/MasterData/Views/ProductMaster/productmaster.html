@@ -1,0 +1,85 @@
+﻿<div class="container" ng-controller="ProductMasterCntrl">
+    <form id="frmProductMaster" name="frmProductMaster" ng-class="{'submitted': submittedDetail}" ng-submit="AddProductMaster(productmaster)" autocomplete="off" novalidate>
+        <div class="card">
+            <div class="lv-header-alt clearfix m-b-5">
+                <h3 class="lvh-label">Product Master</h3>
+            </div>
+            <div class="card-body card-padding p-t-25 p-b-25">
+                <div class="row">
+                    <div class="col-xs-12 col-md-4">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Principal</label>
+                            <input type="text"
+                                   ng-model="productmaster.PrincipalCode" typeahead-min-length="3" ng-required="true" />
+                        </md-input-container>
+                                            
+                        <!--<input type="text"
+                            
+                            ng-class="{'loadinggif': PrincipalNamePrincipalName.PrincipalLoading}"
+                            placeholder="Search Pricipal"
+                            ng-model="productmaster.PrincipalCode"
+                            typeahead-min-length="3"
+                            uib-typeahead="d.Text as d.Text for d in PrincipalCodeResults($viewValue)"
+                            typeahead-loading="productmaster.PrincipalLoading"
+                            typeahead-wait-ms="1000"
+                            typeahead-editable="false"
+                            ng-required="true"
+                            typeahead-on-select="PrinicipalSelected($item, 'PrincipalCode')" />-->
+
+                    </div>
+                    <div class="col-xs-12 col-md-4">
+                       <!-- <input type="text"  ng-model="productmaster.PrincipalName" ng-required="true"/>-->
+                    </div>
+                    <div class="col-xs-12 col-md-4">
+                        <md-switch class="md-primary" aria-label="Inventory Item" ng-model="productmaster.IsInventoryItem">Inventory Item</md-switch>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-md-4">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Product Code</label>
+                            <input type="text"
+                                   ng-model="productmaster.ProductCode" ng-change="GetProductMasterDetails()" ng-required="true" />
+                        </md-input-container>                    
+                        <!--<input type="text"  ng-model="productmaster.ProductCode" ng-change="GetProductMasterDetails()" ng-required="true"/>-->
+                    </div>
+                    <div class="col-xs-12 col-md-4">
+                        <md-input-container class="md-block" flex-gt-sm>                           
+                            <input type="text"
+                                   ng-model="productmaster.Description" ng-required="true" />
+                        </md-input-container>
+                        <!--<input type="text"  ng-model="productmaster.Description" ng-required="true"/>-->
+                    </div>
+                    <div class="col-xs-12 col-md-4">
+                        <md-switch class="md-primary" aria-label="Kitting Item">Kitting Item</md-switch>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <md-tabs md-dynamic-height md-border-bottom>
+                        <md-tab ng-repeat="tab in tabs" label="{{tab.title}}" class="md-primary">
+                            <md-content class="md-padding">
+                                <div class="card">
+                                    <div class="card-body card-padding p-t-25 p-b-25">
+                                        <div ng-include="tab.content"></div>
+                                    </div>
+                                </div>
+</md-content>
+                        </md-tab>
+                    </md-tabs>
+                    </div>
+                </div>
+            </div>
+            <div class="box-footer">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <button type="submit" class="btn btn-primary m-l-15 m-b-15" ng-click="submitted = true"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Save</button>
+                        <button type="button"class="btn btn-danger" ng-click="DeleteProductMasterDetails()" ng-hide="enableDelete"><i class="zmdi zmdi-delete" aria-hidden="true"></i>&nbsp;Delete</button>
+                        <!--<button type="button" class="btn btn-default pull-right m-r-15 m-b-15" onclick="location.href = '#/home/'"><i class="fa fa-undo ng-scope" aria-hidden="true"></i>&nbsp;Back</button>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+

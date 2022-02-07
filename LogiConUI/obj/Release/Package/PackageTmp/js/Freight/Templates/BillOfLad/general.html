@@ -1,0 +1,271 @@
+﻿<div class="card">
+    <div class="card-body card-padding p-t-25 p-b-25">
+        <div class="row">
+            <div class="col-xs-12 col-md-6">
+                <div class="card">
+                    <div class="card-body card-padding p-t-25 p-b-25">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <md-tabs md-dynamic-height md-border-bottom>
+                                    <md-tab label="Shipper" active="true" disable="false">
+                                        <md-content class="md-padding">
+                                            <div ng-include="'Js/Freight/Templates/BillOfLad/shipper-consignee.html'"></div>
+                                        </md-content>
+                                    </md-tab>
+                                    <md-tab label="Consignee" active="true" disable="false">
+                                        <md-content class="md-padding">
+                                            <div ng-include="'Js/Freight/Templates/BillOfLad/shipper-consignee.html'"></div>
+                                        </md-content>
+                                    </md-tab>
+                                    <md-tab label="POD Agent" active="true" disable="false">
+                                        <md-content class="md-padding">
+                                            <div ng-include="'Js/Freight/Templates/BillOfLad/shipper-consignee.html'"></div>
+                                        </md-content>
+                                    </md-tab>
+                                    <md-tab label="Notify Party" active="true" disable="false">
+                                        <md-content class="md-padding">
+                                            <div ng-include="'Js/Freight/Templates/BillOfLad/shipper-consignee.html'"></div>
+                                        </md-content>
+                                    </md-tab>
+                                </md-tabs>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-md-6">
+                <div class="row">
+                    <div class="col-xs-12 col-md-6">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Order No.</label>
+                            <md-select ng-model="" ng-required="">
+                                <md-option ng-repeat="" ng-value="item.Value">
+                                    {{item.Text}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-md-6">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Date Issued</label>
+                            <input mdc-datetime-picker="" class="date-icon" date="true" time="false" ng-model="dt"
+                                   ng-required="true" type="text" id="TransactionDate" format="{{DateFormat}}"
+                                   min-date="date">
+                            <!--<div class="input-group my-datepicker">
+                                <input type="text" class="form-control input-sm datepicker" uib-datepicker-popup="{{format}}" ng-model="dt" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn btn-default input-sm" ng-click="open1()"><i class="fa fa-calendar" aria-hidden="true"></i></button>
+                                </span>
+                            </div>-->
+                        </md-input-container>
+                    </div>
+                    <div class="col-xs-12 col-md-6">
+                        <md-radio-group ng-model="data.group1">
+                            <md-radio-button value="Final" class="md-primary">Final</md-radio-button>
+                            <md-radio-button value="Draft" class="md-primary">Draft</md-radio-button>
+                        </md-radio-group>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-md-6">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>POL Etd.</label>
+                            <input mdc-datetime-picker="" class="date-icon" date="true" time="false" ng-model="dt"
+                                   ng-required="true" type="text" id="TransactionDate" format="{{DateFormat}}"
+                                   min-date="date">
+                            <!--<div class="input-group my-datepicker">
+                                <input type="text" class="form-control input-sm datepicker" uib-datepicker-popup="{{format}}" ng-model="dt" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn btn-default input-sm" ng-click="open1()"><i class="fa fa-calendar" aria-hidden="true"></i></button>
+                                </span>
+                            </div>-->
+                        </md-input-container>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-md-6">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Place Issued</label>
+
+                            <input type="text" />
+                        </md-input-container>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-md-6">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Freight Term</label>
+
+                            <input type="text" />
+                        </md-input-container>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-md-6">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Payable At</label>
+
+                            <input type="text" />
+                        </md-input-container>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-md-6">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>No. Of B/L</label>
+
+                            <input type="text" />
+                        </md-input-container>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-md-6">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>No. Of Packages</label>
+
+                            <input type="text" />
+                        </md-input-container>
+                    </div>
+                    <div class="col-xs-12 col-md-6">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <input type="text" />
+                        </md-input-container>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-md-6">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Volume (M3)</label>
+
+                            <input type="text" />
+                        </md-input-container>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-md-6">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Weight (KG)</label>
+
+                            <input type="text" />
+                        </md-input-container>
+                    </div>
+                    <div class="col-xs-6 col-md-6">
+
+                        <div class="checkbox m-b-15">
+                            <label>
+                                <input type="checkbox" value="" aria-label="Telex Release">
+                                <i class="input-helper"></i>
+                                Telex Release
+                            </label>
+                        </div>
+                        <!--<md-checkbox class="md-primary" aria-label="Telex Release">Telex Release</md-checkbox>-->
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-md-6">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Weight (MT)</label>
+
+                            <input type="text" />
+                        </md-input-container>
+                    </div>
+                    <div class="col-xs-6 col-md-6">
+
+                        <div class="checkbox m-b-15">
+                            <label>
+                                <input type="checkbox" value="" aria-label="Replacement">
+                                <i class="input-helper"></i>
+                                Replacement
+                            </label>
+                        </div>
+                        <!--<md-checkbox class="md-primary" aria-label="Replacement">Replacement</md-checkbox>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-md-6">
+                <md-input-container class="md-block" flex-gt-sm>
+                    <label>Pickup Place</label>
+
+                    <input type="text" />
+                </md-input-container>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-md-6">
+                <md-input-container class="md-block" flex-gt-sm>
+                    <label>Loading Port</label>
+
+                    <input type="text" />
+                </md-input-container>
+            </div>
+            <div class="col-xs-12 col-md-6">
+                <md-input-container class="md-block" flex-gt-sm>
+                    <label>Feeder Vessel</label>
+
+                    <input type="text" />
+                </md-input-container>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-md-6">
+                <md-input-container class="md-block" flex-gt-sm>
+                    <label>Discharge Port</label>
+
+                    <input type="text" />
+                </md-input-container>
+            </div>
+            <div class="col-xs-12 col-md-6">
+                <md-input-container class="md-block" flex-gt-sm>
+                    <label>Voyage No.</label>
+
+                    <input type="text" />
+                </md-input-container>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-md-6">
+                <md-input-container class="md-block" flex-gt-sm>
+                    <label>Final Dest</label>
+
+                    <input type="text" />
+                </md-input-container>
+            </div>
+            <div class="col-xs-12 col-md-6">
+                <md-input-container class="md-block" flex-gt-sm>
+                    <label>Mother Vessel</label>
+
+                    <input type="text" />
+                </md-input-container>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-md-6">
+                <md-input-container class="md-block" flex-gt-sm>
+                    <label>Final Dest (Inland)</label>
+
+                    <input type="text" />
+                </md-input-container>
+            </div>
+            <div class="col-xs-12 col-md-6">
+                <md-input-container class="md-block" flex-gt-sm>
+                    <label>Voyage No.</label>
+
+                    <input type="text" />
+                </md-input-container>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 ">
+                <md-input-container class="md-block" flex-gt-sm>
+                    <label>Remarks</label>
+
+                    <textarea></textarea>
+                </md-input-container>
+            </div>
+        </div>
+</div>
+</div>

@@ -1,0 +1,344 @@
+﻿
+<div class="row">
+    <div class="col-xs-12 col-md-9">
+        <div class="row">
+            <div class="col-xs-12 col-md-6">
+                <md-input-container class="md-block" flex-gt-sm>
+                    <label>Charge Code</label>
+                    <input type="text"
+                           ng-model="cc.ChargeCode" ng-required="true"  ng-blur="isChargeCodeExists(cc.ChargeCode)"  maxlength="20"   ng-disabled="!isNew"/>
+                </md-input-container>
+            </div>
+            <div class="col-xs-12 col-md-6">
+                <md-input-container class="md-block">
+                    <label>Charge Description</label>
+                    <textarea ng-required="true"
+                              ng-model="cc.ChargeDescription" maxlength="100" ng-disabled="!isNew"></textarea>
+                </md-input-container>
+            </div>
+        </div>
+        <!--<div class="row">
+            <div class="col-xs-12 col-md-6">
+                <!--<md-input-container class="md-block" flex-gt-sm>
+                    <label>Module</label>
+                    <md-select ng-model="cc.Module" ng-required="true">
+                        <md-option ng-repeat="item in lookupData.moduleList" ng-value="item.Value">
+                            {{item.Text}}
+                        </md-option>
+                    </md-select>
+                </md-input-container>-->
+                <!--<select ng-model="cc.Module"
+                        ng-options="s.Value as s.Text for s in lookupData.moduleList" ng-required="true"></select>-->
+            <!--</div>
+            <div class="col-xs-12 col-md-6">
+                <md-input-container class="md-block" flex-gt-sm>
+                    <label>Charge Type</label>
+                    <md-select ng-model="cc.ChargeType" ng-required="true">
+                        <md-option ng-repeat="item in lookupData.chargeTypeList" ng-value="item.Value">
+                            {{item.Text}}
+                        </md-option>
+                    </md-select>
+                </md-input-container>
+
+                <select  ng-model="cc.ChargeType" ng-options="s.Value as s.Text for s in lookupData.chargeTypeList" ng-required="true"></select>
+            </div>
+        </div>-->
+        <!--<div class="row">
+            <div class="col-xs-12 col-md-6">
+                <!--<md-input-container class="md-block" flex-gt-sm>
+                    <label>Charge Method</label>
+                    <md-select ng-model="cc.ChargeMethod" ng-required="true">
+                        <md-option ng-repeat="item in lookupData.chargeMethodList" ng-value="item.Value">
+                            {{item.Text}}
+                        </md-option>
+                    </md-select>
+                </md-input-container>-->
+                <!--<select  ng-model="cc.ChargeMethod" ng-options="s.Value as s.Text for s in lookupData.chargeMethodList" ng-required="true"></select>-->
+            <!--</div>
+            <div class="col-xs-12 col-md-6">
+                <md-input-container class="md-block" flex-gt-sm>
+                    <label>Billing Unit</label>
+                    <md-select ng-model="cc.BillingUnit" ng-required="true">
+                        <md-option ng-repeat="item in lookupData.billingUnitList" ng-value="item.Value">
+                            {{item.Text}}
+                        </md-option>
+                    </md-select>
+                </md-input-container>
+                <select  ng-model="cc.BillingUnit" ng-options="s.Value as s.Text for s in lookupData.billingUnitList" ng-required="true"></select>
+            </div>
+        </div>-->
+        <div class="row">
+            <div class="col-xs-12 col-md-6">
+                <div class="checkbox m-b-25">
+                    <label>
+                        <input type="checkbox"  ng-model="cc.IsSurCharge"
+                                                aria-label="IsSurCharge"
+                                                ng-change="IsSurChangeChange(cc.IsSurCharge);">
+                        <i class="input-helper"></i>
+                        IsSurCharge
+                    </label>
+                </div>
+             <!--<div class="checkbox">
+                    <label>
+                        <md-checkbox class="md-primary"
+                                     ng-model="cc.IsSurCharge"
+                                     aria-label="IsSurCharge"
+                                     ng-change="IsSurChangeChange(cc.IsSurCharge);">
+                                     Is SurCharge</md-checkbox>
+                    </label>
+                </div>-->
+            </div>
+               
+            
+                <div class="col-xs-12 col-md-6" ng-if="cc.IsSurCharge">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Charge Code</label>
+                        <input type="text"
+                               class="search-icon"
+                               ng-model="cc.SurChargeCode"
+                               typeahead-min-length="3"
+                               uib-typeahead="d.Text as d.Text for d in ChargeCodeResults($viewValue)"
+                               typeahead-wait-ms="100"
+                               typeahead-editable="false"
+                               typeahead-on-select="ChargeCodeSelected($item)" />
+                    </md-input-container>
+                    </div>
+                    <!--<select  ng-model="cc.SurChargeCode" ng-options="s.Value as s.Text for s in lookupData.chargeCodeList" ng-required="true"></select>-->
+                
+            </div>
+
+        <div class="row" ng-if="cc.IsSurCharge">
+            <div class="col-xs-12 col-md-6" ng-if="cc.IsSurCharge">
+                <md-input-container class="md-block" flex-gt-sm>
+                    <label>Charge Code Description</label>
+                    <input type="text" ng-model="cc.SurChargeDesc" disabled="disabled" />
+                </md-input-container>
+            </div>
+            <div class="col-xs-12 col-md-6">
+
+                <md-input-container class="md-block" flex-gt-sm>
+                    <label>Percentage</label>
+                    <!--<input type="text"
+                       ng-model="cc.Percentage" ng-disabled="cc.SurChargeCode == null" logicon-decimal logicon-format="2"/>-->
+                    <input type="text"
+                           ng-model="cc.Percentage" logicon-decimal logicon-format="2"  />
+                </md-input-container>
+                <!--<input type="text"  placeholder="%" ng-model="cc.Percentage" ng-disabled="cc.SurChargeCode == null" logicon-decimal ng-required="true"/>-->
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-md-6">
+                <md-input-container class="md-block" flex-gt-sm>
+                    <label>Abbrevation</label>
+                    <input type="text"
+                           ng-model="cc.ShortName"   maxlength="10"/>
+                </md-input-container>
+                <!--<input type="text"  ng-model="cc.ShortName"  ng-required="true"/>-->
+            </div>
+            <div class="col-xs-12 col-md-6">
+                <md-input-container class="md-block" flex-gt-sm>
+                    <label>Credit Term</label>
+                    <input type="text"
+                           ng-model="cc.CreditTerm" logicon-number   maxlength="3"/>
+                </md-input-container>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-md-6">
+                <md-input-container class="md-block" flex-gt-sm>
+                    <label>Revenue Code</label>
+                    <input type="text"
+                           ng-model="cc.RevenueCode"   maxlength="20"/>
+                </md-input-container>
+            </div>
+            <div class="col-xs-12 col-md-6">
+                <md-input-container class="md-block" flex-gt-sm>
+                    <label>Expense Code</label>
+                    <input type="text"
+                           ng-model="cc.ExpensesCode"   maxlength="20"/>
+                </md-input-container>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-md-6">
+                <md-input-container class="md-block" flex-gt-sm>
+                    <label>G / L Department</label>
+                    <input type="text"
+                           ng-model="cc.GLCode"   maxlength="20"/>
+                </md-input-container>
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="col-xs-12 col-md-6">
+                <div class="card">
+                    <div class="lv-header-alt clearfix m-b-5">
+                        <h3 class="lvh-label">Output Tax</h3>
+                    </div>
+                    <div class="card-body card-padding p-t-5 p-b-5">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>GST Code</label>
+                                    <md-select ng-model="cc.OutPutGSTCode" ng-required="true" ng-change="gstChange('OutPutGSTRate', 'OutPutGSTCode')">
+                                        <md-option ng-repeat="item in lookupData.gstCodeList" ng-value="item.Value">
+                                            {{item.Text}}
+                                        </md-option>
+                                    </md-select>
+                                </md-input-container>
+                                <!--<select ng-model="cc.OutPutGSTCode"
+                                    ng-options="s.Value as s.Text for s in lookupData.gstCodeList"
+                                    ng-change="gstChange('OutPutGSTRate', 'OutPutGSTCode')"
+                                    ng-required="true"></select>-->
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Tax Rate</label>
+                                    <input type="text"
+                                           ng-model="cc.OutPutGSTRate" ng-disabled="true" logicon-decimal />
+                                </md-input-container>
+                                <!--<input type="text"  placeholder="%" ng-model="cc.OutPutGSTRate" ng-disabled="true" logicon-decimal ng-required="true"/>-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-md-6">
+                <div class="card">
+                    <div class="lv-header-alt clearfix m-b-5">
+                        <h3 class="lvh-label">Input Tax</h3>
+                    </div>
+                    <div class="card-body card-padding p-t-5 p-b-5">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>GST Code</label>
+                                    <md-select ng-model="cc.InputGSTCode" ng-required="true" ng-change="gstChange('InputGSTRate', 'InputGSTCode')">
+                                        <md-option ng-repeat="item in lookupData.gstCodeList" ng-value="item.Value">
+                                            {{item.Text}}
+                                        </md-option>
+                                    </md-select>
+                                </md-input-container>
+                                <!--<select  ng-model="cc.InputGSTCode"
+                                     ng-options="s.Value as s.Text for s in lookupData.gstCodeList"
+                                     ng-change="gstChange('InputGSTRate', 'InputGSTCode')"
+                                     ng-required="true"></select>-->
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Tax Rate</label>
+                                    <input type="text"
+                                           ng-model="cc.InputGSTRate" logicon-decimal ng-disabled="true" />
+                                </md-input-container>
+
+                                <!--<input type="text"  placeholder="%" ng-model="cc.InputGSTRate" ng-disabled="true" logicon-decimal />-->
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--<div class="row">
+            <div class="col-xs-12 col-md-6">
+                <div class="card">
+                    <div class="lv-header-alt clearfix m-b-5">
+                        <h3 class="lvh-label">Surcharge</h3>
+                    </div>
+                    <div class="card-body card-padding p-t-5 p-b-5">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Charge Code</label>
+                                    <md-select ng-model="cc.SurChargeCode" >
+                                        <md-option ng-repeat="item in lookupData.chargeCodeList" ng-value="item.Value">
+                                            {{item.Text}}
+                                        </md-option>
+                                    </md-select>
+                                </md-input-container>
+
+                                <!--<select  ng-model="cc.SurChargeCode" ng-options="s.Value as s.Text for s in lookupData.chargeCodeList" ng-required="true"></select>-->
+                            <!--</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">-->
+
+                                <!--<md-input-container class="md-block" flex-gt-sm>
+                                    <label>Percentage</label>
+                                    <input type="text"
+                                           ng-model="cc.Percentage" ng-disabled="cc.SurChargeCode == null" logicon-decimal logicon-format="2"/>
+                                    <input type="text"
+                                           ng-model="cc.Percentage"  logicon-decimal logicon-format="2" />
+                                </md-input-container>-->
+                                <!--<input type="text"  placeholder="%" ng-model="cc.Percentage" ng-disabled="cc.SurChargeCode == null" logicon-decimal ng-required="true"/>-->
+                            <!--</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>-->
+    </div>
+    <div class="col-xs-12 col-md-3">
+      
+            <h2 class="lvh-label  full-width">
+                <span class="pull-left">
+                    Charge Rules
+                </span>
+            </h2>
+      
+            <div class="row">
+                <div class="col-xs-12">
+                    <md-switch class="md-primary" ng-model="cc.IsPreLoadExport">Pre-Load for Export</md-switch>
+                </div>
+                <div class="col-xs-12">
+                    <md-switch class="md-primary" ng-model="cc.IsPreLoadImport">Pre-Load for Import</md-switch>
+                </div>
+                <div class="col-xs-12">
+                    <md-switch class="md-primary" ng-model="cc.IsPreLoadLocal">Pre-Load for Local</md-switch>
+                </div>
+                <div class="col-xs-12">
+                    <md-switch class="md-primary" ng-model="cc.IsJobCategory">Job-Category Driven</md-switch>
+                </div>
+                <div class="col-xs-12">
+                    <md-switch class="md-primary" ng-model="cc.IsProduct">Product-Category Driven</md-switch>
+                </div>
+                <div class="col-xs-12">
+                    <md-switch class="md-primary" ng-model="cc.IsInternal">Internal Cost</md-switch>
+                </div>
+                <div class="col-xs-12">
+                    <md-switch class="md-primary" ng-model="cc.IsRevenue">Revenue</md-switch>
+                </div>
+                <div class="col-xs-12">
+                    <md-switch class="md-primary" ng-model="cc.IsVAS">Value Added Service</md-switch>
+                </div>
+                <div class="col-xs-12">
+                    <md-switch class="md-primary" ng-model="cc.IsPreLoadInward">Pre-Load for Inward</md-switch>
+                </div>
+                <div class="col-xs-12">
+                    <md-switch class="md-primary" ng-model="cc.IsPreLoadOutward">Pre-Load for Outward</md-switch>
+                </div>
+                <div class="col-xs-12">
+                    <md-switch class="md-primary" ng-model="cc.IsWorkOrder">Requires Work Order</md-switch>
+                </div>
+                <div class="col-xs-12">
+                    <md-switch class="md-primary" ng-model="cc.IsRequireApproval">Requires Approval</md-switch>
+                </div>
+                <div class="col-xs-12">
+                    <md-switch class="md-primary" ng-model="cc.IsCrossDock">Charge for Cross-Dock</md-switch>
+                </div>
+                <div class="col-xs-12">
+                    <md-switch class="md-primary" ng-model="cc.IsLoadFullPallet">Charge for Full Pallet</md-switch>
+                </div>
+                <div class="col-xs-12">
+                    <md-switch class="md-primary" ng-model="cc.IsLoadToTruckIn">Load to Truck-IN</md-switch>
+                </div>
+            </div>
+        
+        </div>
+</div>

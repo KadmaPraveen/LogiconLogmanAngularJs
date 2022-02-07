@@ -1,0 +1,244 @@
+﻿
+<form id="frmContainerInfo" name="frmContainerInfo" ng-class="{'submitted':submitted}" ng-submit="SaveContainer(con)" novalidate>
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" ng-click="cancel();">&times;</button>
+        <h4 class="modal-title">Add Container Request</h4>
+    </div>
+    <div class="modal-body">
+        <div class="c-overflow" ng-style="{'max-height': iframeHeight - 80 + 'px'}" resize>
+            <div class="modalbodymain">
+                <div class="row">
+                    <div class="col-xs-12 col-md-6">
+                        <div class="row">
+
+                            <div class="col-xs-12 col-md-3">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Size</label>
+                                    <md-select ng-model="con.Size" ng-required="true"
+                                               ng-change="sizeChanged()" ng-disabled="true">
+                                        <md-option ng-repeat="item in lookUpData.sizeList" ng-value="item.Value">
+                                            {{item.Text}}
+                                        </md-option>
+                                    </md-select>
+
+                                </md-input-container>
+                            </div>
+                            <div class="col-xs-12 col-md-3">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Type</label>
+                                    <md-select ng-model="con.Type" ng-required="true" ng-disabled="true">
+                                        <md-option empty-option></md-option>
+                                        <md-option ng-repeat="item in lookUpData.TypeList" ng-value="item.Value">
+                                            {{item.Text}}
+                                        </md-option>
+                                    </md-select>
+                                </md-input-container>
+                            </div>
+                            <div class="col-xs-12 col-md-6">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Delivery Add.</label>
+
+                                    <input type="text" ng-model="con.DeliveryAddress" />
+                                </md-input-container>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 col-md-6">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Container No.</label>
+
+                                    <input type="text" ng-model="con.ContainerNo" ng-required="true" ng-disabled="true" />
+                                </md-input-container>
+                            </div>
+
+                            <div class="col-xs-12 col-md-6">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Pickup Address</label>
+
+                                    <textarea style="max-height:60px;overflow-y:auto" ng-model="con.PickupAddress"></textarea>
+                                </md-input-container>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-xs-12 col-md-6">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Order No.</label>
+
+                                    <input type="text" ng-model="con.MasterOrderNo" ng-disabled="true" />
+                                </md-input-container>
+                            </div>
+                            <div class="col-xs-12 col-md-6">
+
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Empty Dehire</label>
+                                    <md-select ng-model="con.EmptyDehire">
+                                        <md-option ng-repeat="item in lookUpData.emptyDehireList" ng-value="item.Value">
+                                            {{item.Text}}
+                                        </md-option>
+                                    </md-select>
+                                </md-input-container>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 col-md-6">
+
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Trailer Type</label>
+                                    <md-select ng-model="con.TrailerType">
+                                        <md-option ng-repeat="item in lookUpData.trailerTypeList" ng-value="item.Value">
+                                            {{item.Text}}
+                                        </md-option>
+                                    </md-select>
+                                    <!--<select></select>-->
+                                </md-input-container>
+                            </div>
+                            <div class="col-xs-12 col-md-6">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Job No.</label>
+
+                                    <input type="text" ng-model="con.JobNo" />
+                                </md-input-container>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 col-md-6">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Container Status</label>
+                                    <md-select ng-model="con.ShipmentType">
+                                        <md-option empty-option></md-option>
+                                        <md-option ng-repeat="item in lookUpData.shipmentTypeList" ng-value="item.Value">
+                                            {{item.Text}}
+                                        </md-option>
+                                    </md-select>
+                                </md-input-container>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Remarks</label>
+
+                                    <textarea style="max-height:60px;overflow-y:auto" ng-model="con.Remarks"></textarea>
+                                </md-input-container>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-md-6">
+                        <div class="row">
+
+                            <div class="col-md-6">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Delivery Dt</label>
+                                    <input mdc-datetime-picker="" class="date-icon" date="true" time="true" ng-model="con.ETA"
+                                           type="text" id="TransactionDate" format="{{DateTimeFormat}}"
+                                           min-date="date">
+                                </md-input-container>
+                            </div>
+                            <div class="col-xs-12 col-md-6">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Req. Dt</label>
+                                    <input mdc-datetime-picker="" class="date-icon" date="true" time="true" ng-model="con.RequiredDate"
+                                           ng-required="true" type="text" id="RequiredDate" format="{{DateTimeFormat}}"
+                                           min-date="date">
+
+                                </md-input-container>
+                            </div>
+
+                        </div>
+                        <div class="row">
+
+                            <div class="col-xs-12 col-md-6">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Collection Dt</label>
+                                    <input mdc-datetime-picker="" class="date-icon" date="true" time="true" ng-model="con.ETD"
+                                           type="text" id="TransactionDate" format="{{DateTimeFormat}}"
+                                           min-date="date">
+                                </md-input-container>
+                            </div>
+                            <div class="col-xs-12 col-md-6">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Container Operator</label>
+
+                                    <input type="text" ng-model="con.ContainerOperator" />
+                                </md-input-container>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+
+                                <div class="card">
+                                    <div class="lv-header-alt clearfix m-b-5">
+                                        <h3 class="lvh-label">Port</h3>
+
+                                    </div>
+                                    <div class="card-body card-padding p-t-5 p-b-5">
+                                        <div class="row">
+                                            <div class="col-xs-12 col-md-6">
+
+                                                <md-input-container class="md-block" flex-gt-sm>
+                                                    <label title="Gate in date or time">Gate In Dt</label>
+                                                    <input mdc-datetime-picker="" class="date-icon" date="true" time="true" ng-model="con.GateInDate"
+                                                           type="text" id="TransactionDate" format="{{DateTimeFormat}}"
+                                                           min-date="date">
+                                                </md-input-container>
+
+                                            </div>
+                                            <div class="col-xs-12 col-md-6">
+
+                                                <md-input-container class="md-block" flex-gt-sm>
+                                                    <label title="Gate Out date or time">Gate In Dt</label>
+                                                    <input mdc-datetime-picker="" class="date-icon" date="true" time="true" ng-model="con.GateOutDate"
+                                                           type="text" id="TransactionDate" format="{{DateTimeFormat}}"
+                                                           min-date="date">
+                                                </md-input-container>
+
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-12 col-md-6">
+
+                                                <md-input-container class="md-block" flex-gt-sm>
+                                                    <label title="Load date or time">Load Dt</label>
+                                                    <input mdc-datetime-picker="" class="date-icon" date="true" time="true" ng-model="con.LoadDate"
+                                                           type="text" id="TransactionDate" format="{{DateTimeFormat}}"
+                                                           min-date="date">
+                                                </md-input-container>
+
+                                            </div>
+                                            <div class="col-xs-12 col-md-6">
+
+                                                <md-input-container class="md-block" flex-gt-sm>
+                                                    <label title="Discharge date or time">Discharge Dt</label>
+                                                    <input mdc-datetime-picker="" class="date-icon" date="true" time="true" ng-model="con.DischargeDate"
+                                                           type="text" id="TransactionDate" format="{{DateTimeFormat}}"
+                                                           min-date="date">
+                                                </md-input-container>
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal-footer">
+        <div class="row">
+            <div class="col-xs-12  text-right">
+                <button class="btn btn-primary btn-sm" ng-click="submitted = true;" type="submit"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Save</button>
+                <button type="button" class="btn btn-default btn-sm" ng-click="cancel();"><i class="fa fa-times" aria-hidden="true"></i>&nbsp;Close</button>
+            </div>
+        </div>
+    </div>
+</form>
+
+

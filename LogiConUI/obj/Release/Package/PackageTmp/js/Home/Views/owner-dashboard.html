@@ -1,0 +1,202 @@
+﻿<div class="container" ng-controller="ownerDashboardCntrl">
+    <div class="card">
+        <div class="lv-header-alt clearfix m-b-5">
+            <h3 class="lvh-label">DNeX Admin Dashboard</h3>
+            <!--<div class="box-tools pull-right">
+                <select class="form-control input-sm"
+                        ng-model="filter"
+                        ng-options="s.Value as s.Text for s in lookUpData.registrationStatusList"
+                        ng-change="filterChanged()">
+                </select>
+            </div>-->
+        </div>
+        <div class="card-body card-padding p-t-25 p-b-25">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="row chart-width">
+                        <div class="col-xs-1"> </div>
+                        <div class="col-xs-2">
+                            <div class="mini-charts-item bgm-cyan">
+                                <div class="clearfix">
+                                    <div class="count" style="text-align:center">
+                                        <small> # Of Subscribers</small>
+                                        <h2>{{widgetData.Subscribercount}}</h2>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-2">
+                            <div class="mini-charts-item bgm-lightgreen">
+                                <div class="clearfix">
+                                    <div class="count" style="text-align:center">
+                                        <small> Total Invoice Amount</small>
+                                        <h2>{{widgetData.InvoiceAmount | number:2}}</h2>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-2">
+                            <div class="mini-charts-item bgm-orange">
+                                <div class="clearfix">
+                                    <div class="count" style="text-align:center">
+                                        <small># Of Order entries</small>
+                                        <h2>{{widgetData.OrderHeadercount}}</h2>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-2">
+                            <div class="mini-charts-item bgm-blue">
+                                <div class="clearfix">
+                                    <div class="count" style="text-align:center">
+                                        <small> # Of K1 Declarations</small>
+                                        <h2>{{widgetData.K1Declarationcount}}</h2>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-2">
+                            <div class="mini-charts-item bgm-pink">
+                                <div class="clearfix">
+                                    <div class="count" style="text-align:center">
+                                        <small> # Of K2 Declarations</small>
+                                        <h2>{{widgetData.K2Declarationcount}}</h2>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-1"> </div>
+                    </div>
+                </div>
+                <!--<div class="col-xs-12 col-md-4">
+                    <div class="row">
+                        <div class="col-xs-12 bgm-orange" style="color: #fff;  font-size: 13px;   font-weight: bold;     min-height: 100px; ">
+                            <div class="col-xs-5 percent  p-20 text-center " style="color: rgb(255, 255, 255); font-weight: bold; min-height: 60px; font-size: 35px; line-height: 60px;">95%</div>
+                            <div class="col-xs-7 pie-title  p-20 text-center " style="color: #fff;  font-size: 18px;   font-weight: bold;   line-height: 60px;  min-height: 60px;">User Traffic </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-md-4">
+                    <div class="row">
+                        <div class="col-xs-12 ">
+                            <div class="pie-title col-xs-12 bgm-lightgreen p-20 text-center" style="color: #fff;  font-size: 13px;   font-weight: bold;    min-height: 100px; ">
+                                Account Suspended on<br />
+                                <b>NEVER</b><br />
+                                Current Outstanding amount 5,000.00
+                            </div>
+                        </div>
+                    </div>
+                </div>-->
+            </div>
+        
+        <div class="row">
+            <div class="col-xs-12 col-md-6">
+                <div id="container1"></div>
+            </div>
+            <div class="col-xs-12 col-md-6">
+                <div id="container2"></div>
+            </div>
+            <div class="col-xs-12 col-md-6">
+                <div id="container3"></div>
+            </div>
+            <!--<div class="col-xs-12 col-md-6">
+                <div class="col-xs-12">
+                    <div class="col-xs-12 col-md-6">
+                        <table class="table table-striped table-vmiddle">
+                            <thead>
+                                <tr>
+                                    <td>Date</td>
+                                    <td>Amount</td>
+                                    <td>Outstanding</td>
+                                    <td>Days Enjoying</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-xs-12 col-md-6">
+                        <table class="table table-striped table-vmiddle">
+                            <thead>
+                                <tr>
+                                    <td>Date</td>
+                                    <td>No Of Registration</td>
+                                    <td>No Of Pending Approval</td>
+                                    <td>No Approved</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>-->
+        </div>
+        <!--<div class="row" ng-if="companies.length > 0">
+            <div class="col-xs-12">
+                <table class="table table-striped table-vmiddle">
+                    <thead >
+                        <tr>
+                            <th>Company Name</th>
+                            <th>Reg No</th>
+                            <th>Reg Type</th>
+                            <th>Org Type</th>
+                            <th>CPAM A/C No</th>
+                            <th>#Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="com in companies">
+                            <td>
+                                {{com.CompanyName}}
+                            </td>
+                            <td>{{com.RegistrationNo}}</td>
+                            <td>{{ (lookUpData.registrationTypeList | filter: {Value: com.RegistrationType})[0].Text }}</td>
+                            <td>{{ (lookUpData.organizationTypeList | filter: {Value: com.OrganisationType})[0].Text }}</td>
+                            <td>{{com.CPAMAccountNo}}</td>
+                            <td>
+                                <button class="md-fab md-mini-1 md-primary btn-box-tool md-button md-ink-ripple" type="button" ng-click="viewInfo(com.CompanyID);" aria-label="button">
+                                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+
+                                </button>
+                                <button class="md-fab md-mini-1 md-primary btn-box-tool md-button md-ink-ripple" type="button" ng-click="viewInfo2(com.CompanyID);" aria-label="button">
+                                    <i class="fa fa-eye" aria-hidden="true"></i>
+
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>-->
+        <!--<div class="row" ng-if="companies.length > 0">
+            <div class="col-xs-12">
+                <uib-pagination ng-model="currentPage"
+                                total-items="totalItems"
+                                ng-change="pageChanged()"
+                                class="pagination-sm pull-right"
+                                max-size="10"
+                                items-per-page="limit">
+                </uib-pagination>
+            </div>
+        </div>-->
+        <!--<div class="row" ng-if="companies.length == 0">
+            <div class="col-xs-12">
+                <label class="control-label pull-left">No items of type {{(lookUpData.registrationStatusList | filter: { Value: filter })[0].Text}} found.</label>
+            </div>
+        </div>-->
+    </div>
+    <div class="overlay" style="opacity:0.8;" ng-show="showLoading">
+        <i class="fa fa-refresh fa-spin"></i>
+    </div>
+</div>
+</div>

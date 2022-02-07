@@ -1,0 +1,131 @@
+﻿<div class="container" ng-controller="PortTimeSlot">
+    <div class="card">
+        <div  class="lv-header-alt clearfix m-b-5">
+            <h3  class="lvh-label">Port Time Slot Maintenance</h3>
+        </div>
+        <div  class="card-body card-padding p-t-25 p-b-25">
+            <div class="row" >
+                <div class="col-md-6">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Port</label>
+                        <md-select ng-model="" ng-required="">
+                            <md-option ng-repeat="" ng-value="item.Value">
+                                {{item.Text}}
+                            </md-option>
+                        </md-select>
+
+                    </md-input-container>
+                   
+               
+                  
+                </div>
+                <div class="col-xs-12 col-md-6">
+                    <md-input-container class="md-block" flex-gt-sm>  <input type="text" class="form-control input-sm" /></md-input-container>
+</div>
+            </div>
+            <div class="row" >
+                <div class="col-md-6">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Vessel</label>
+                        <md-select ng-model="" ng-required="">
+                            <md-option ng-repeat="" ng-value="item.Value">
+                                {{item.Text}}
+                            </md-option>
+                        </md-select>
+
+                    </md-input-container>
+               
+                  
+                </div>
+                <div class="col-xs-12 col-md-6">
+                    <md-input-container class="md-block" flex-gt-sm> <input type="text" class="form-control input-sm" /></md-input-container>
+</div>
+            </div>
+            <div class="row" >
+                <div class="col-md-6">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Voyage No.</label>
+                        <md-select ng-model="" ng-required="">
+                            <md-option ng-repeat="" ng-value="item.Value">
+                                {{item.Text}}
+                            </md-option>
+                        </md-select>
+
+                    </md-input-container>
+               
+                   
+                </div>
+               
+                <div class="col-xs-12 col-md-6">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Job Type</label>
+                        <md-select ng-model="" ng-required="">
+                            <md-option ng-repeat="" ng-value="item.Value">
+                                {{item.Text}}
+                            </md-option>
+                        </md-select>
+
+                    </md-input-container>
+
+
+               
+                   
+                </div>
+            </div>
+            <div class="row" >
+                <div class="col-md-6">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Vessel Avl Date</label>
+                        <md-select ng-model="" ng-required="">
+                            <md-option ng-repeat="" ng-value="item.Value">
+                                {{item.Text}}
+                            </md-option>
+                        </md-select>
+
+                    </md-input-container>
+               
+                 
+                </div>
+                <div class="col-xs-12 col-md-6">
+                    <md-input-container class="md-block" flex-gt-sm>
+                      
+                        <input mdc-datetime-picker="" date="true" time="false" type="text" id="dateFrom" format="{{dateFormat}}" class="date-icon"
+                               min-date="date" name="k1.declarationInvoice.InvoiceDate"
+                               ng-required="true"
+                               ng-model="k1.declarationInvoice.InvoiceDate">
+                    </md-input-container>
+                </div>
+            </div>
+            <div class="row m-t-25" >
+                <div class="col-xs-12">
+                    <div class="table-responsive">
+                        <table class="table  table-vmiddle">
+                            <thead>
+                                <tr>
+                                    <th>Job</th>
+                                    <th>Shp</th>
+                                    <th>Movement</th>
+                                    <th>Status</th>
+                                    <th>Customer Name</th>
+                                    <th>Container No.</th>
+                                    <th>Size</th>
+                                    <th>Cargo Type</th>
+                                    <th>Slot Date</th>
+                                    <th>Slot Time</th>
+                                    <th>Port Ref</th>
+                                    <th>Dehire Code</th>
+                                    <th>Order Remarks</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>        
+    </div>
+</div>

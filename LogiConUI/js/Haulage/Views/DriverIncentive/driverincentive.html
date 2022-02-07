@@ -1,0 +1,135 @@
+﻿<section class="content container" ng-controller="DriverIncentiveCntrl">
+    <script type="text/ng-template" id="timeline-template.html">
+        <div class="conPropContainer">
+            <div class="row">
+                <div class="col-md-12">
+                    <timeline>
+                        <!-- can also hard-code to side="left" or side="right" -->
+                        <timeline-event ng-repeat="event in events" side="{{side}}">
+                            <!-- uses angular-scroll-animate to give it some pop -->
+                            <timeline-badge class="{{event.badgeClass}} timeline-hidden"
+                                            when-visible="animateElementIn" when-not-visible="animateElementOut">
+                                <i class="glyphicon {{event.badgeIconClass}}"></i>
+                            </timeline-badge>
+
+                            <!-- uses angular-scroll-animate to give it some pop -->
+                            <timeline-panel class="{{event.badgeClass}} timeline-hidden"
+                                            when-visible="animateElementIn" when-not-visible="animateElementOut">
+                                <timeline-heading>
+                                    <h4>{{event.title}}</h4>
+
+                                    <p ng-if="event.when">
+                                        <small class="text-muted"><i class="glyphicon glyphicon-time"></i>{{event.when}}</small>
+                                    </p>
+                                    <p ng-if="event.titleContentHtml" ng-bind-html="event.titleContentHtml">
+                                    </p>
+                                </timeline-heading>
+                                <p ng-bind-html="event.contentHtml"></p>
+                                <timeline-footer ng-if="event.footerContentHtml">
+                                    <span ng-bind-html="event.footerContentHtml"></span>
+                                </timeline-footer>
+                            </timeline-panel>
+                        </timeline-event>
+                    </timeline>
+                </div>
+            </div>
+        </div>
+
+
+    </script>
+    <div class="card">
+        <div class="lv-header-alt clearfix m-b-5">
+            <h3 class="lvh-label">Driver Incentive</h3>
+
+
+
+            <div class="box-tools pull-right">
+                <select class="btn-box-tool m-r-5" style="background:#fff"
+                        ng-model="SelectedQuotation"
+                        ng-options="s.Value as s.Text for s in QuotationList"
+                        ng-change="SelectedQuotationChange()"></select>&nbsp;&nbsp;
+                <button type="button" class="btn btn-box-tool m-r-5" ng-click="AddDriverIncentive(-1);">
+                    <i class="fa fa-plus"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool m-r-10"
+                        uib-popover-template="'Js/Haulage/Templates/DriverIncentive/popover-template.html'"
+                        popover-title="Status"
+                        popover-placement="bottom-right"
+                        popover-trigger="mouseenter">
+                    <i class="fa fa-bars" aria-hidden="true"></i>
+                </button>
+                <!--Js/Inquiry/Views/OrderInquiry/popover-orderinquiry.html  -->
+            </div>
+        </div>
+        <div class="card-body card-padding p-t-25 p-b-25">
+            <div class="row">
+                <div class="col-md-2">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Driver Rate ID</label>
+
+                        <input ng-model="di.QuotationNo" type="text" class="form-control input-sm" />
+                        <input type="hidden" ng-model="di.FreightMode" ng-init="di.FreightMode == 1000" />
+                    </md-input-container>
+                </div>
+            </div>
+            <div class="row" style="margin-top:10px;">
+                <div class="col-md-12">
+                    <div class="table-responsive">
+                        <table class="table  table-vmiddle">
+                            <thead>
+                                <tr>
+                                    <th>Job</th>
+                                    <th>Shp</th>
+                                    <!--<th>Job Category</th>
+                                    <th>Charge Code</th>
+                                    <th>Description</th>
+                                    <th>Pickup From</th>
+                                    <th>Deliver To</th>
+                                    <th>Type Size</th>
+                                    <th>Rate</th>
+                                    <th>Customer</th>
+                                    <th>Billing Unit</th>
+                                    <th>Movement Code</th>
+                                    <th>Movement Truck</th>-->
+                                    <th>#Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="detail in di.DriverIncentiveDetails">
+                                    <td>{{detail.JobCategory}}</td>
+                                    <td>{{detail.ShipmentType}}</td>
+                                    <td>
+                                        <button class="btn btn-primary" type="button" ng-click="AddDriverIncentive(detail.index);">Edit</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div>
+        <div class="card">
+            <div class="card-body card-padding p-t-5 p-b-5">
+                <div class="row">
+                    <div class="col-xs-12 m-t-15 m-b-10">
+                        <button type="button" class="btn btn-primary waves-effect" ng-click="cancel();"><i class="fa fa-floppy-o" aria-hidden="true"></i> &nbsp;Save</button>
+
+                        <div class="pull-right">
+                          
+                            <button class="btn btn-primary btn btn-primary waves-effect" type="button" data-ui-sref="k1Inquiry" data-ng-click="mactrl.sidebarStat($event)">
+                                <i class="fa fa-backward" aria-hidden="true"></i>&nbsp;Back
+                            </button>
+                            <button class="btn btn-default  waves-effect" type="button" ng-click="clear();">
+                                <i class="fa fa-eraser" aria-hidden="true"></i>&nbsp;Clear
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

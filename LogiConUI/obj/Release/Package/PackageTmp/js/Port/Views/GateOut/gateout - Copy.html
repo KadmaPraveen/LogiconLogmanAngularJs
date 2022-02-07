@@ -1,0 +1,381 @@
+﻿<div class="container" ng-controller="GateOutCntrl">
+    <div class="card">
+        <div  class="lv-header-alt clearfix m-b-5">
+            <h3  class="lvh-label">Gate Out</h3>
+        </div>
+        <div  class="card-body card-padding p-t-25 p-b-25">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="card">
+                        <div  class="card-body card-padding p-t-25 p-b-25">
+                            <div class="col-xs-12">
+                                <div class="row" >
+                                    <div class="col-md-8">
+                                        <div class="col-xs-12 col-md-2">
+                                            <label>Registration No.</label>
+                                        </div>
+                                        <div class="col-xs-12 col-md-2">
+                                            <input type="text" class="form-control input-sm" />
+                                        </div>
+                                        <div class="col-xs-12 col-md-2">
+                                            <label>Truck Category</label>
+                                        </div>
+                                        <div class="col-xs-12 col-md-2">
+                                            <select class="form-control input-sm"
+                                                    ng-model="go.TruckCategory"
+                                                    ng-options="s.Value as s.Text for s in lookUpData.truckCategoryList"></select>
+                                        </div>
+                                        <div class="col-xs-12 col-md-2">
+                                            <label>Gate Out Date</label>
+                                        </div>
+                                        <div class="col-xs-12 col-md-2">
+                                            <div class="dropdown">
+                                                <a class="dropdown-toggle" id="GateIn" role="button" data-toggle="dropdown">
+                                                    <div class="input-group">
+                                                        <input type="text"
+                                                               class="form-control input-sm datepicker"
+                                                               ng-model="gi.GateIn"
+                                                               ng-required="true"
+                                                               date-time-input="MM/DD/YYYY">
+                                                        <span class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true"></i></span>
+                                                    </div>
+                                                </a>
+                                                <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                                    <datetimepicker ng-model="gi.GateIn"
+                                                                    data-datetimepicker-config="{
+                                                                        dropdownSelector: '#GateIn',
+                                                                        startView: 'day',
+                                                                        minView: 'day' }" />
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-md-4">
+                                        <div class="col-xs-12 col-md-4">
+                                            <label>Current EIR No.</label>
+                                        </div>
+                                        <div class="col-xs-12 col-md-4">
+                                            <input type="text" class="form-control input-sm" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row" >
+                                    <div class="col-md-8">
+                                        <div class="col-xs-12 col-md-2">
+                                            <label>Haulier Code</label>
+                                        </div>
+                                        <div class="col-xs-12 col-md-6">
+                                            <input type="text"
+                                                   
+                                                   ng-class="{'loadinggif': go.HaulierCodeNameLoading}"
+                                                   placeholder="Search Haulier"
+                                                   ng-model="go.HaulierName"
+                                                   typeahead-min-length="3"
+                                                   uib-typeahead="d.Text as d.Text for d in HaulierResults($viewValue)"
+                                                   typeahead-loading="go.HaulierCodeNameLoading"
+                                                   typeahead-wait-ms="1000"
+                                                   typeahead-editable="false"
+                                                   ng-required="true"
+                                                   typeahead-on-select="CustomerSelected($item, 'HaulierCode')" />
+                                        </div>  
+                                        <div class="col-xs-12 col-md-2">
+                                            <md-button class="md-raised md-primary"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Update haulier</md-button>
+                                        </div>                                    
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="card">
+                        <div  class="card-body card-padding p-t-25 p-b-25">
+                            <div class="col-xs-12">
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-2">
+                                        <label>Trip Type</label>
+                                    </div>
+                                    <div class="col-xs-12 col-md-2">
+                                        <select class="form-control input-sm"
+                                                ng-model="go.Trip"
+                                                ng-options="s.Value as s.Text for s in lookUpData.tripList"></select>
+                                    </div>
+                                    <div class="col-xs-12 col-md-2">
+                                        <label>Empty/Loaded</label>
+                                    </div>
+                                    <div class="col-xs-12 col-md-2">
+                                        <select class="form-control input-sm"
+                                                ng-model="go.EmptyLoaded"
+                                                ng-options="s.Value as s.Text for s in lookUpData.emptyLoadedList"></select>
+                                    </div>
+                                    <div class="col-xs-12 col-md-2">
+                                        <label>Booking Type</label>
+                                    </div>
+                                    <div class="col-xs-12 col-md-2">
+                                        <select class="form-control input-sm"
+                                                ng-model="go.BookingType"
+                                                ng-options="s.Value as s.Text for s in lookUpData.bookingTypeList"></select>
+                                    </div>
+                                </div>
+                                <div class="row" >
+                                    <div class="col-xs-12 col-md-2">
+                                        <label>Booking-B/L No.</label>
+                                    </div>
+                                    <div class="col-xs-12 col-md-2">
+                                        <input type="text" class="form-control input-sm" />
+                                    </div>
+                                    <div class="col-xs-12 col-md-2">
+                                        <label>Agent Code</label>
+                                    </div>
+                                    <div class="col-xs-12 col-md-2">
+                                        <input type="text"
+                                               
+                                               ng-class="{'loadinggif': go.AgentCodeNameLoading}"
+                                               placeholder="Search Agent"
+                                               ng-model="go.AgentName"
+                                               typeahead-min-length="3"
+                                               uib-typeahead="d.Text as d.Text for d in AgentResults($viewValue)"
+                                               typeahead-loading="go.AgentCodeNameLoading"
+                                               typeahead-wait-ms="1000"
+                                               typeahead-editable="false"
+                                               ng-required="true"
+                                               typeahead-on-select="CustomerSelected($item, 'AgentCode')" />
+                                    </div>
+                                    <div class="col-xs-12 col-md-2">
+                                        <label>Order Type</label>
+                                    </div>
+                                    <div class="col-xs-12 col-md-2">
+                                        <select class="form-control input-sm"
+                                                ng-model="go.OrderType"
+                                                ng-options="s.Value as s.Text for s in lookUpData.orderTypeList"></select>
+                                    </div>
+                                </div>
+                                <div class="row" >
+                                    <div class="col-xs-12 col-md-2">
+                                        <label>Customer Code</label>
+                                    </div>
+                                    <div class="col-xs-12 col-md-10">
+                                        <input type="text" class="form-control input-sm" />
+                                    </div>
+                                </div>
+                                <div class="row" >
+                                    <div class="col-xs-12 col-md-2">
+                                        <label>Container No.</label>
+                                    </div>
+                                    <div class="col-xs-12 col-md-2">
+                                        <input type="text" class="form-control input-sm" />
+                                    </div>
+                                    <div class="col-xs-12 col-md-2">
+                                        <label>Size-Type</label>
+                                    </div>
+                                    <div class="col-md-1">
+                                        <select class="form-control input-sm"
+                                                ng-model="go.Size"
+                                                ng-options="s.Value as s.Text for s in lookUpData.sizeList"
+                                                ng-change="sizeChanged()"></select>
+                                    </div>
+                                    <div class="col-md-1">
+                                        <select class="form-control input-sm"
+                                                ng-model="go.Type"
+                                                ng-disabled="go.Size == null"
+                                                ng-options="s.Value as s.Text for s in lookUpData.TypeList"></select>
+                                    </div>
+                                    <div class="col-xs-12 col-md-2">
+                                        <label>Vessel Name</label>
+                                    </div>
+                                    <div class="col-xs-12 col-md-2">
+                                        <input type="text" class="form-control input-sm" />
+                                    </div>
+                                </div>
+                                <div class="row" >
+                                    <div class="col-xs-12 col-md-2">
+                                        <label>Container Class</label>
+                                    </div>
+                                    <div class="col-xs-12 col-md-2">
+                                        <select class="form-control input-sm"
+                                                ng-model="go.Class"
+                                                ng-options="s.Value as s.Text for s in lookUpData.containerGradeList"></select>
+                                    </div>
+                                    <div class="col-xs-12 col-md-2">
+                                        <label>Status#1</label>
+                                    </div>
+                                    <div class="col-xs-12 col-md-2">
+                                        <select class="form-control input-sm"
+                                                ng-model="go.Status1"
+                                                ng-options="s.Value as s.Text for s in lookUpData.containerStatusList"></select>
+                                    </div>
+                                    <div class="col-xs-12 col-md-2">
+                                        <label>Voyage No.</label>
+                                    </div>
+                                    <div class="col-xs-12 col-md-2">
+                                        <input type="text" class="form-control input-sm" />
+                                    </div>
+                                </div>
+                                <div class="row" >
+                                    <div class="col-xs-12 col-md-2">
+                                        <label>Temperature</label>
+                                    </div>
+                                    <div class="col-md-1">
+                                        <input type="text" class="form-control input-sm" />
+                                    </div>
+                                    <div class="col-md-1">
+                                        <select class="form-control input-sm"
+                                                ng-model="go.Temperature"
+                                                ng-options="s.Value as s.Text for s in lookUpData.tempTypeList"></select>
+                                    </div>
+                                    <div class="col-xs-12 col-md-2">
+                                        <label>Status#2</label>
+                                    </div>
+                                    <div class="col-xs-12 col-md-2">
+                                        <select class="form-control input-sm"
+                                                ng-model="go.Status2"
+                                                ng-options="s.Value as s.Text for s in lookUpData.containerStatusList"></select>
+                                    </div>
+                                    <div class="col-xs-12 col-md-2">
+                                        <label>Tare Weight</label>
+                                    </div>
+                                    <div class="col-xs-12 col-md-2">
+                                        <input type="text" class="form-control input-sm" />
+                                    </div>
+                                </div>
+                                <div class="row" >
+                                    <div class="col-xs-12 col-md-2">
+                                        <label>Vent</label>
+                                    </div>
+                                    <div class="col-md-1">
+                                        <input type="text" class="form-control input-sm" />
+                                    </div>
+                                    <div class="col-md-1">
+                                        <select class="form-control input-sm"
+                                                ng-model="go.Vent"
+                                                ng-options="s.Value as s.Text for s in lookUpData.ventTypeList"></select>
+                                    </div>
+                                    <div class="col-xs-12 col-md-2">
+                                        <label>LOCK</label>
+                                    </div>
+                                    <div class="col-xs-12 col-md-2">
+                                        <select class="form-control input-sm"
+                                                ng-model="go.Lock"
+                                                ng-options="s.Value as s.Text for s in lookUpData.containerStatusList"></select>
+                                    </div>
+                                    <div class="col-xs-12 col-md-2">
+                                        <label>Year Built</label>
+                                    </div>
+                                    <div class="col-xs-12 col-md-2">
+                                        <input type="text" class="form-control input-sm" />
+                                    </div>
+                                </div>
+                                <div class="row" >
+                                    <div class="col-xs-12 col-md-2">
+                                        <label>Seal#1</label>
+                                    </div>
+                                    <div class="col-xs-12 col-md-2">
+                                        <input type="text" class="form-control input-sm" />
+                                    </div>
+                                    <div class="col-xs-12 col-md-2">
+                                        <label>Meterial/Height</label>
+                                    </div>
+                                    <div class="col-xs-12 col-md-2">
+                                        <select class="form-control input-sm"
+                                                ng-model="go.Material"
+                                                ng-options="s.Value as s.Text for s in lookUpData.containerMaterialList"></select>
+                                    </div>
+                                    <!--<div class="col-md-1">
+                                        <select class="form-control input-sm"></select>
+                                    </div>-->
+                                    <div class="col-xs-12 col-md-2">
+                                        <label>Next Loc.</label>
+                                    </div>
+                                    <div class="col-xs-12 col-md-2">
+                                        <input type="text" class="form-control input-sm" />
+                                    </div>
+                                </div>
+                                <div class="row" >
+                                    <div class="col-xs-12 col-md-2">
+                                        <label>Seal#2</label>
+                                    </div>
+                                    <div class="col-xs-12 col-md-2">
+                                        <input type="text" class="form-control input-sm" />
+                                    </div>
+                                    <div class="col-xs-12 col-md-2">
+                                        <label>Surveyor</label>
+                                    </div>
+                                    <div class="col-xs-12 col-md-2">
+                                        <input type="text" class="form-control input-sm" />
+                                    </div>
+                                    <div class="col-xs-12 col-md-2">
+                                        <label>Genset No.</label>
+                                    </div>
+                                    <div class="col-xs-12 col-md-2">
+                                        <select class="form-control input-sm">
+                                            <option></option>
+                                            <option value="1">Yes</option>
+                                            <option value="0">No</option>
+                                        </select>
+                                    </div>
+                                    <!--<div class="col-md-1">
+                                        <input type="text" class="form-control input-sm" />
+                                    </div>-->
+                                </div>
+                                <div class="row" >
+                                    <div class="col-xs-12 col-md-2">
+                                        <label>Remarks</label>
+                                    </div>
+                                    <div class="col-xs-12 col-md-6">
+                                        <textarea class="form-control input-sm"></textarea>
+                                    </div>
+                                    <div class="col-xs-12 col-md-2">
+                                        <label>PaperLess Code</label>
+                                    </div>
+                                    <div class="col-xs-12 col-md-2">
+                                        <input type="text" class="form-control input-sm" />
+                                    </div>
+                                </div>
+
+                                <div class="row" >
+                                   
+                                    <div class="col-xs-12 col-md-2">
+                                        <label>Vessel ID</label>
+                                    </div>
+                                    <div class="col-xs-12 col-md-2">
+                                        <input type="text" ng-model="tmdl.containermovementItem.NextLocation" ng-required="checkValidation()" class="form-control input-sm" />
+                                    </div>
+
+                                    <div class="col-xs-12 col-md-2">
+                                        <label>Ship Call  No.</label>
+                                    </div>
+                                    <div class="col-xs-12 col-md-2">
+                                        <input type="text" ng-model="tmdl.containermovementItem.NextLocation" ng-required="checkValidation()" class="form-control input-sm" />
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>                
+            </div>
+        </div>        
+    </div>
+    <div class="box-footer">
+        <div class="row">
+            <div class="col-md-1">
+                <md-button class="md-raised md-warning"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Save</md-button>
+            </div>
+            <div class="col-md-1">
+                <md-button class="md-raised md-clear"><i class="fa fa-print" aria-hidden="true"></i>&nbsp;Print</md-button>
+            </div>
+            <div class="col-md-1">
+                <md-button class="md-raised md-clear"><i class="fa fa-eraser" aria-hidden="true"></i>&nbsp;Clear</md-button>
+            </div>
+            <div class="col-md-1">
+                <md-button class="md-raised md-clear"><i class="fa fa-trash" aria-hidden="true"></i>&nbsp;Delete</md-button>
+            </div>
+            <div class="col-md-1">
+                <md-button class="md-raised md-clear"><i class="fa fa-times" aria-hidden="true"></i>&nbsp;Close</md-button>
+            </div>
+        </div>
+    </div>
+</div>

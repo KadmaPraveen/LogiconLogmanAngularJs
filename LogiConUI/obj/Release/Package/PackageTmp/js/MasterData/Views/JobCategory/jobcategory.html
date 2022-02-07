@@ -1,0 +1,97 @@
+﻿<style>
+    .deleted {
+        color: red;
+        text-decoration: line-through;
+    }
+
+    .radio, .checkbox {
+        position: relative;
+        display: block;
+        margin-top: 1px !important;
+        margin-bottom: 1px !important;
+    }
+</style>
+
+<div class="container" ng-controller="JobCategoryCntrl">
+    <div class="card">
+        <div class="lv-header-alt clearfix m-b-5">
+            <h3 class="lvh-label">Job Category</h3>
+            <ul class="lv-actions actions">
+                <li>
+                    <button class="btn bgm-lightgreen btn-icon m-r-10" data-ui-sref="addjobcategory({code:NEW})" data-ng-click="mactrl.sidebarStat($event)"><i class="zmdi zmdi-plus btn-small"></i></button>
+                </li>
+            </ul>
+        </div>
+
+        <div class="card-body card-padding p-t-5 p-b-5">
+            <div class="row">
+                <div style="min-height: 250px;">
+                    <div class="col-xs-12">
+                        <div class="table-responsive">
+                            <table class="table table-vmiddle" ng-table="ngTblData">
+                                <tr ng-repeat="w in $data">
+                                    <td data-title="'#Action'">
+                                        <button class="btn btn-default ng-scope waves-effect" type="button" data-ui-sref="addjobcategory({code:w.Code})" aria-label="button">
+                                            <i class="zmdi zmdi-edit" aria-hidden="true"></i>
+                                        </button>
+                                        <button class="btn btn-danger ng-scope waves-effect" type="button" ng-click="DeleteJobCategory(w.Code)" aria-label="button">
+                                            <i class="zmdi zmdi-delete" aria-hidden="true"></i>
+                                        </button>
+                                    </td>
+                                    <td data-title="'Code'" sortable="'Code'">{{w.Code}}</td>
+                                    <td data-title="'Description'" sortable="'Description'">{{w.Description}}</td>
+                                    <td data-title="'Job Type'" sortable="'JobTypeDescription'">{{w.JobTypeDescription}}</td>
+                                    <td data-title="'Shipment Type'" sortable="'ShipmentTypeDescription'">{{w.ShipmentTypeDescription}}</td>
+                                    <td data-title="'Freight Mode'" sortable="'FreightModeDescription'">{{w.FreightModeDescription}}</td>
+                                    <td data-title="'CY'">
+                                        <div class="checkbox m-b-1">
+                                            <label>
+                                                <input type="checkbox" value="" ng-disabled="true" aria-label="IsDepot" ng-model="jc.IsDepot">
+                                                <i class="input-helper"></i>
+
+                                            </label>
+                                        </div>
+                                    </td>
+                                    <td data-title="'WH'">
+                                        <div class="checkbox m-b-1">
+                                            <label>
+                                                <input type="checkbox" value="" ng-disabled="true" aria-label="IsWarehouse" ng-model="jc.IsWarehouse">
+                                                <i class="input-helper"></i>
+
+                                            </label>
+                                        </div>
+                                    </td>
+                                    <td data-title="'CFS'">
+                                        <div class="checkbox m-b-1">
+                                            <label>
+                                                <input type="checkbox" value="" ng-disabled="true" aria-label="IsCFS" ng-model="jc.IsCFS">
+                                                <i class="input-helper"></i>
+
+                                            </label>
+                                        </div>
+                                    </td>
+                                    <td data-title="'Rail'">
+                                        <div class="checkbox m-b-1">
+                                            <label>
+                                                <input type="checkbox" value="" ng-disabled="true" aria-label="IsRail" ng-model="jc.IsRail">
+                                                <i class="input-helper"></i>
+
+                                            </label>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <!--<span class="pull-right">
+                        <button class="btn btn-primary" type="button" onclick="location.href = '#/owner'"><i class="fa fa-undo" aria-hidden="true"></i>&nbsp;Back</button>
+                    </span>-->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

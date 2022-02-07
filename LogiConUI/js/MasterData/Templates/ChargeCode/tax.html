@@ -1,0 +1,110 @@
+﻿<div class="row" >
+    <div class="col-xs-12 col-md-6">
+        <div class="card">
+            <div class="lv-header-alt clearfix m-b-5">
+                <h3 class="lvh-label">Output Tax</h3>
+            </div>
+            <div class="card-body card-padding p-t-25 p-b-25">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>GST Code</label>
+                            <md-select ng-model="cc.OutPutGSTCode" ng-required="true" ng-change="gstChange('OutPutGSTRate', 'OutPutGSTCode')">
+                                <md-option ng-repeat="item in lookupData.gstCodeList" ng-value="item.Value">
+                                    {{item.Text}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                        <!--<select ng-model="cc.OutPutGSTCode"
+                                ng-options="s.Value as s.Text for s in lookupData.gstCodeList"
+                                ng-change="gstChange('OutPutGSTRate', 'OutPutGSTCode')"
+                                ng-required="true"></select>-->
+                    </div>
+                </div>                
+                <div class="row" >
+                    <div class="col-xs-12">                        
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Tax Rate</label>
+                            <input type="text"
+                                   ng-model="cc.OutPutGSTRate" ng-disabled="true" logicon-decimal ng-required="true"/>
+                        </md-input-container>                                            
+                        <!--<input type="text"  placeholder="%" ng-model="cc.OutPutGSTRate" ng-disabled="true" logicon-decimal ng-required="true"/>-->
+                    </div>                    
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-12 col-md-6">
+        <div class="card">
+            <div class="lv-header-alt clearfix m-b-5">
+                <h3 class="lvh-label">Surcharge</h3>
+            </div>
+            <div class="card-body card-padding p-t-25 p-b-25">
+                <div class="row">
+                    <div class="col-xs-12">                        
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Charge Code</label>
+                            <md-select ng-model="cc.SurChargeCode" ng-required="true">
+                                <md-option ng-repeat="item in lookupData.chargeCodeList" ng-value="item.Value">
+                                    {{item.Text}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                                            
+                        <!--<select  ng-model="cc.SurChargeCode" ng-options="s.Value as s.Text for s in lookupData.chargeCodeList" ng-required="true"></select>-->
+                    </div>
+                </div>                
+                <div class="row" >
+                    <div class="col-xs-12">
+                        
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Percentage</label>
+                            <input type="text"
+                                   ng-model="cc.Percentage" ng-disabled="cc.SurChargeCode == null"  logicon-decimal ng-required="true" />
+                        </md-input-container>                    
+                        <!--<input type="text"  placeholder="%" ng-model="cc.Percentage" ng-disabled="cc.SurChargeCode == null" logicon-decimal ng-required="true"/>-->
+                    </div> 
+                </div>                
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row" >   
+    <div class="col-xs-12 col-md-6">
+        <div class="card">
+            <div class="lv-header-alt clearfix m-b-5">
+                <h3 class="lvh-label">Input Tax</h3>
+            </div>
+            <div class="card-body card-padding p-t-25 p-b-25">
+                <div class="row">
+                    <div class="col-xs-12">                        
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>GST Code</label>
+                            <md-select ng-model="association.CountryCode" ng-required="true" ng-change="gstChange('InputGSTRate', 'InputGSTCode')">
+                                <md-option ng-repeat="item in lookupData.gstCodeList" ng-value="item.Value">
+                                    {{item.Text}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>                    
+                        <!--<select  ng-model="cc.InputGSTCode"
+                                 ng-options="s.Value as s.Text for s in lookupData.gstCodeList"
+                                 ng-change="gstChange('InputGSTRate', 'InputGSTCode')"
+                                 ng-required="true"></select>-->
+                    </div>
+                </div>                
+                <div class="row" >
+                    <div class="col-xs-12">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Tax Rate</label>
+                            <input type="text"
+                                   ng-model="cc.InputGSTRate" logicon-decimal ng-disabled="true" />
+                        </md-input-container>
+
+                        <!--<input type="text"  placeholder="%" ng-model="cc.InputGSTRate" ng-disabled="true" logicon-decimal />-->
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

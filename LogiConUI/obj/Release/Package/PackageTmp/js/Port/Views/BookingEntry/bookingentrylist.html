@@ -1,0 +1,198 @@
+﻿<div class="container" ng-controller="BookingEntryListCntrl">
+    <div class="card">
+        <div class="lv-header-alt clearfix m-b-5">
+            <h2 class="lvh-label">
+                Booking Entry List
+            </h2>
+            <ul class="lv-actions actions">
+                <li>
+                    <button type="button" class="btn btn-info btn-icon m-r-10" tooltip-placement="bottom" uib-tooltip="Refresh" ng-click="refresh()"><i class="fa fa-refresh "></i></button>
+                </li>
+                <li>
+                    <button class="btn bgm-lightgreen btn-icon m-r-10"  tooltip-placement="bottom" uib-tooltip="Add" ng-click="BroadCastDeclaration({orderNo:NEW})" has-Right data-rightValue="Booking.Booking" data-accessRight="1"><i class="zmdi zmdi-plus btn-small"></i></button>
+
+
+                </li>
+            </ul>
+        </div>
+
+        <div class="card-body card-padding p-t-25 p-b-25">
+            <div class="row">
+                <div class="col-xs-12">
+
+                    <uib-accordion close-others="oneAtATime">
+                        <div uib-accordion-group class="panel-default" heading="Advanced Search" is-open="status.isFirstOpen" is-disabled="status.isFirstDisabled">
+                            <uib-accordion-heading>
+                                <i class="pull-left fa" ng-class="{'fa-minus': status.isFirstOpen, 'fa-plus': !status.isFirstOpen}"></i>&nbsp;Advanced Search
+                            </uib-accordion-heading>
+                            <form id="oelCntrl.frmSearch" name="oelCntrl.frmSearch" ng-class="{'submitted': SearchSubmitted}"
+                                  ng-submit="SearchBookingEntries(true)" autocomplete="off" novalidate>
+                                <div>
+                                    <div class="card-body card-padding p-t-25 p-b-25">
+                                        <div class="row">
+                                            <div class="col-xs-12 col-md-4">
+                                                <md-input-container class="md-block" flex-gt-sm>
+                                                    <label>Voyage No.</label>
+
+                                                    <input type="text"
+                                                           ng-model="i.VoyageNo" />
+                                                </md-input-container>
+                                            </div>
+                                            <div class="col-xs-12 col-md-4">
+                                                <md-input-container class="md-block" flex-gt-sm>
+                                                    <label>PORT BOOKING NO.</label>
+
+                                                    <input type="text"
+                                                           ng-model="i.OrderNo" />
+                                                </md-input-container>
+                                            </div>
+                                            <div class="col-xs-12 col-md-4">
+                                                <md-input-container class="md-block" flex-gt-sm>
+                                                    <label>ORDER NO.</label>
+
+                                                    <input type="text"
+                                                           ng-model="i.MasterOrderNo" />
+                                                </md-input-container>
+                                            </div>
+                                            <div class="col-xs-12 col-md-4">
+                                                <md-input-container class="md-block" flex-gt-sm>
+                                                    <label>LINER BOOKING NO.</label>
+
+                                                    <input type="text"
+                                                           ng-model="i.BookingNo" />
+                                                </md-input-container>
+                                            </div>
+                                            <div class="col-xs-12 col-md-4">
+                                                <md-input-container class="md-block" flex-gt-sm>
+                                                    <label>BL NO.</label>
+
+                                                    <input type="text"
+                                                           ng-model="i.BLNo" />
+                                                </md-input-container>
+                                            </div>
+
+                                            <!-- <div class="col-xs-12 col-md-2"><div class="dropdown">
+                                                <a class="dropdown-toggle" id="FromDate" role="button" data-toggle="dropdown">
+                                                    <div class="input-group">
+                                                        <input type="text" class="form-control input-sm datepicker"
+                                                               ng-model="Search.DateFrom"
+                                                               date-time-input="{{dateFormat}}">
+                                                        <span class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true"></i></span>
+                                                    </div>
+                                                </a>
+                                                <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                                    <datetimepicker ng-model="Search.DateFrom"
+                                                                    data-datetimepicker-config="{ dropdownSelector: '#FromDate', startView:'day', minView:'day' }" />
+                                                </ul>
+                                            </div></div>-->
+                                        </div>
+                                        <div class="row">
+
+                                            <div class="col-xs-12 col-md-4">
+                                                <md-input-container class="md-block" flex-gt-sm>
+                                                    <label>Customer</label>
+
+                                                    <input type="text"
+                                                           ng-model="i.CustomerName" />
+                                                </md-input-container>
+                                            </div>
+
+                                            <div class="col-xs-12 col-md-4">
+                                                <md-input-container class="md-block" flex-gt-sm>
+                                                    <label>Vessel Name</label>
+
+                                                    <input type="text"
+                                                           ng-model="i.VesselName" />
+                                                </md-input-container>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-12 col-md-4">
+                                                <md-input-container class="md-block" flex-gt-sm>
+                                                    <label>Date From</label>
+                                                    <input mdc-datetime-picker="" class="date-icon" date="true" time="false" type="text" id="DateFrom" format="{{dateFormat}}"
+                                                           min-date="date" ng-model="i.dateFrom">
+                                                </md-input-container>
+                                            </div>
+
+                                            <div class="col-xs-12 col-md-4">
+                                                <md-input-container class="md-block" flex-gt-sm>
+                                                    <label>Date To</label>
+                                                    <input mdc-datetime-picker="" class="date-icon" date="true" time="false" type="text" id="DateFrom" format="{{dateFormat}}"
+                                                           min-date="date" ng-model="i.dateTo">
+                                                </md-input-container>
+                                            </div>
+                                            <div class="col-xs-12 col-md-4">
+
+
+                                                <button ng-click="SearchSubmitted = true;" type="submit" class="btn btn-primary"><i class="fa fa-search" aria-hidden="true"></i>&nbsp;Search</button>
+
+                                            </div>
+                                            <!--<div class="col-xs-12 col-md-2">
+                                                <div class="dropdown">
+                                                    <a class="dropdown-toggle" id="ToDate" role="button" data-toggle="dropdown">
+                                                        <div class="input-group">
+                                                            <input type="text" class="form-control input-sm datepicker"
+                                                                   ng-model="Search.DateTo"
+                                                                   date-time-input="{{dateFormat}}">
+                                                            <span class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true"></i></span>
+                                                        </div>
+                                                    </a>
+                                                    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                                        <datetimepicker ng-model="Search.DateTo"
+                                                                        data-datetimepicker-config="{ dropdownSelector: '#ToDate', startView:'day', minView:'day' }" />
+                                                    </ul>
+                                                </div>
+                                            </div>-->
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </uib-accordion>
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-vmiddle" ng-table="ngTblData">
+                        
+                            <tr ng-repeat="bh in $data">
+                                <td data-title="'#Action'">
+                                    <button class="btn btn-default ng-scope waves-effect"
+                                            type="button"
+                                            ng-click="BroadCastDeclaration({orderNo:bh.OrderNo})"
+                                            aria-label="button" uib-tooltip="Edit" tooltip-placement="top">
+                                        <i class="zmdi zmdi-edit"></i>
+                                    </button>
+                                </td>
+                                <td data-title="'PORT BOOKING NO.'" sortable="'OrderNo'"> <a style="cursor:pointer;" ng-click="BroadCastDeclaration({orderNo:bh.OrderNo})">{{bh.OrderNo}}</a></td>
+                                <td data-title="'ORDER No.'" sortable="'MasterOrderNo'">{{bh.MasterOrderNo}}</td>
+                                <td data-title="'LINER BOOKING NO.'" sortable="'BookingNo'">{{bh.BookingNo}}</td>
+                                <td data-title="'BL No.'" sortable="'BLNo'">{{bh.BLNo}}</td>
+                                <td data-title="'Customer'" sortable="'CustomerName'">{{bh.CustomerName}}</td>
+                                <td data-title="'Vessel Name'" sortable="'VesselName'">{{bh.VesselName}}</td>
+                                <td data-title="'Voyage No.'" sortable="'Voyageno'">{{bh.Voyageno}}</td>
+
+                            </tr>
+                          
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+
+                    <div class="text-center col-md-6 col-md-offset-3">
+                        <div class="lv-header-alt clearfix m-b-10">
+                            <label style="color:green;">Please use "Advance Search for  listing more bookingentry Entries"</label>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

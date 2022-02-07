@@ -1,0 +1,155 @@
+﻿<div >
+    <form id="frmActivity" name="frmActivity" ng-class="{'submitted':submitted}" ng-submit="SaveActivity(a)" autocomplete="off" novalidate>
+        <style type="text/css">
+            .box.box-solid.box-default {
+                border: 0px solid #d2d6de;
+            }
+        </style>
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" ng-click="cancel();">&times;</button>
+            <h4 class="modal-title">Activity Master</h4>
+        </div>
+        <div class="modal-body">
+            <div class="c-overflow" ng-style="{'max-height': iframeHeight - 80 + 'px'}" resize>
+                <div class="modalbodymain">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="row">
+                                <div class="col-xs-12 col-md-4">
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>Activity Code</label>
+                                        <input type="text"
+                                               ng-model="a.ActivityCode"
+                                               name="a.ActCode" disabled="disabled" />
+                                    </md-input-container>
+                                </div>
+
+                                <div class="col-xs-12 col-md-8">
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label> Description</label>
+                                        <textarea ng-model="a.Description"
+                                                  md-maxlength="50"
+                                                  logicon-limit rows="1"
+                                                  ng-required="true"
+                                                  md-select-on-focus style="overflow-y:auto"></textarea>
+                                    </md-input-container>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12 col-md-8">
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>Tracking Type</label>
+                                        <md-select name="a.TrackingType"
+                                                   ng-model="a.TrackingType" ng-required="true">
+                                            <md-option md-option-empty></md-option>
+                                            <md-option ng-repeat="item in lookUpData.activityTrackingTypeList" ng-value="item.Value">
+                                                {{item.Text}}
+                                            </md-option>
+                                        </md-select>
+                                    </md-input-container>
+                                </div>
+                                <div class="col-xs-12 col-md-4">
+                                    <div class="checkbox m-b-25">
+                                        <label>
+                                            <input type="checkbox" class="md-primary"
+                                                         aria-label="System Activity"
+                                                         ng-model="a.IsSystemActivity">
+                                            <i class="input-helper"></i>System Activity
+                                        </label>
+                                    </div>
+                                    <div class="checkbox m-b-25">
+                                        <label>
+                                            <input type="checkbox" class="md-primary"
+                                                         aria-label="Is EDI"
+                                                         ng-model="a.IsEDI">
+                                            <i class="input-helper"></i>Is EDI
+                                        </label>
+
+                                    </div>
+                                </div>
+                            </div>                            
+                            <div class="row">
+                                <div class="col-xs-12 col-md-8">
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>Tracking Mode</label>
+                                        <md-select name="a.TrackingMode"
+                                                   ng-model="a.TrackingMode" ng-required="true">
+                                            <md-option ng-repeat="item in lookUpData.activityTrackingModeList" ng-value="item.Value">
+                                                {{item.Text}}
+                                            </md-option>
+                                        </md-select>
+                                    </md-input-container>
+                                </div>
+                            </div>
+                            <!--<div class="row">
+                                <div class="col-xs-12 col-md-8">
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>ActivityLog Type</label>
+                                        <md-select name="a.LogType"
+                                                   ng-model="a.LogType" ng-required="true">
+                                            <md-option ng-repeat="item in lookUpData.activityLogType" ng-value="item.Value">
+                                                {{item.Text}}
+                                            </md-option>
+                                        </md-select>
+                                    </md-input-container>
+                                </div>
+                            </div>-->
+                        </div>
+                        <div class="col-xs-12 ">
+                            <label>Lead Time(Hour)</label>
+                            <div class="row">
+                                <div class="col-xs-12 col-md-4 ">
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>Export</label>
+                                        <input type="text"
+                                               ng-model="a.ExpLeadTime"
+                                               name="a.ExpLeadTime"
+                                               ng-required="true" logicon-limit logicon-decimal />
+                                    </md-input-container>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12 col-md-4">
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>Import</label>
+                                        <input type="text"
+                                               ng-model="a.ImpLeadTime"
+                                               name="a.ImpLeadTime"
+                                               ng-required="true" logicon-limit logicon-decimal />
+                                    </md-input-container>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12 col-md-4 ">
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>Local</label>
+                                        <input type="text"
+                                               ng-model="a.LocalLeadTime"
+                                               name="a.LocalLeadTime" ng-required="true" logicon-limit logicon-decimal />
+                                    </md-input-container>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+        </div>
+        <div class="modal-footer">
+            <div class="row m-r-15">
+                <div class="col-xs-12  m-b-10 ">
+                    <div class="pull-right">
+                        <button class="btn btn-primary btn-sm" ng-click="submitted = true;" type="submit"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Save</button>
+                        <button type="button" class="btn btn-default btn-sm" ng-click="cancel();"><i class="fa fa-times" aria-hidden="true"></i>&nbsp;Close</button>
+                    </div>
+                </div>
+            </div>
+            </div>
+</form>
+</div>
+
+
+
+
+
+
+

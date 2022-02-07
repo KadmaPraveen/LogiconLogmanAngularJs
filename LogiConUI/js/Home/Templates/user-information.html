@@ -1,0 +1,88 @@
+﻿<script type="text/ng-template" id="change-password.html">
+    <style type="text/css">
+        .ChangePasswordcontainer {
+            width: 400px;
+            margin:10px;
+        }
+    </style>
+    <div class="ChangePasswordcontainer">
+        <div class="row">
+            <div class="col-xs-12 col-md-5">
+                <label>Current Password</label>
+            </div>
+            <div class="col-xs-12 col-md-7">
+                <input type="text" class="form-control input-sm" />
+            </div>
+        </div>
+        <div class="row" >
+            <div class="col-xs-12 col-md-5">
+                <label>New Password</label>
+            </div>
+            <div class="col-xs-12 col-md-7">
+                <input type="text" class="form-control input-sm" />
+            </div>
+        </div>
+        <div class="row" >
+            <div class="col-xs-12 col-md-5">
+                <label>Re-Confirm Password</label>
+            </div>
+            <div class="col-xs-12 col-md-7">
+                <input type="text" class="form-control input-sm" />
+            </div>
+        </div>
+        <div class="row" >
+            <div class="col-xs-12 col-md-6">     
+                <button class="btn btn-block btn-default">Cancel</button>           
+            </div>
+            <div class="col-xs-12 col-md-6">
+               <button class="btn btn-block btn-primary">Save</button>
+            </div>
+        </div>
+    </div>    
+</script>
+<form id="Cntrl.frmUserInfo" name="Cntrl.frmUserInfo" ng-class="{'submitted':submittedUserInfo}" ng-submit="SaveUserInfo(registration)" novalidate>
+    <div class="row">
+        <div class="col-xs-12 col-md-2">
+            <label>User ID</label>
+        </div>
+        <div class="col-xs-6 col-md-3">
+            <input ng-disabled="true" type="email" ng-model="registration.Email" ng-required="true" class="form-control input-sm" />
+        </div>
+    </div>
+    <div class="row  division">
+        <div class="col-xs-12 col-md-2">
+            <label>Name</label>
+        </div>
+        <div class="col-xs-12 col-md-5">
+            <input type="text" class="form-control input-sm" ng-model="registration.FullName" ng-required="true" />
+        </div>
+        <div class="col-md-1">
+            <button uib-popover-template="'change-password.html'" type="button" class="btn btn-default">Change Password</button>
+        </div>
+    </div>
+    <div class="row  division">
+        <div class="col-xs-12 col-md-2">
+            <label>Security Question</label>
+        </div>
+        <div class="col-xs-12 col-md-5">
+            <select class="form-control input-sm" ng-model="registration.SecurityQuestion"                    
+                    ng-options="s.Value as s.Text for s in lookUpData.securityQuestionsList" ng-required="true"></select>
+        </div>
+    </div>
+    <div class="row  division">
+        <div class="col-xs-12 col-md-2">
+            <label>Answer</label>
+        </div>
+        <div class="col-xs-12 col-md-5">
+            <input type="text" class="form-control input-sm" ng-model="registration.Answer" ng-required="true" />
+        </div>
+    </div>
+    <div class="row  division">
+        <div class="col-xs-12 col-md-2">
+        </div>
+        <div class="col-xs-12 col-md-5">
+            <button type="submit" class="btn btn-primary" ng-click="submittedUserInfo = true">Next</button>
+        </div>
+    </div>
+</form>
+

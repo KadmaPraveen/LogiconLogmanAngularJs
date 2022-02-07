@@ -1,0 +1,132 @@
+﻿<div class="container" ng-controller="VisualReportsCntrl">
+    <style type="text/css">
+        iframe {
+            border-width: 0px;
+            border-style: inset;
+            border-color: initial;
+            border-image: initial;
+        }
+    </style>
+    <div class="card">
+        <div  class="lv-header-alt clearfix m-b-5">
+            <h3  class="lvh-label">Report</h3>
+        </div>
+        <div  class="card-body card-padding p-t-25 p-b-25">
+            <div class="row">
+                <div class="col-md-1">
+                    <label>From Date</label>
+                </div>
+                <div class="col-xs-12 col-md-2">
+                    <div class="dropdown">
+                        <a class="dropdown-toggle" id="fromDate" role="button" data-toggle="dropdown">
+                            <div class="input-group">
+                                <input type="text" class="form-control input-sm datepicker"
+                                       ng-model="report.fromDate"
+                                       ng-required="true"
+                                       date-time-input="MM/DD/YYYY">
+                                <span class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true"></i></span>
+                            </div>
+                        </a>
+                        <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                            <datetimepicker ng-model="report.fromDate"
+                                            data-datetimepicker-config="{ dropdownSelector: '#fromDate', startView:'day', minView:'day' }" />
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-1">
+                    <label>To Date</label>
+                </div>
+                <div class="col-xs-12 col-md-2">
+                    <div class="dropdown">
+                        <a class="dropdown-toggle" id="toDate" role="button" data-toggle="dropdown">
+                            <div class="input-group">
+                                <input type="text" class="form-control input-sm datepicker"
+                                       ng-model="report.toDate"
+                                       ng-required="true"
+                                       date-time-input="MM/DD/YYYY">
+                                <span class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true"></i></span>
+                            </div>
+                        </a>
+                        <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                            <datetimepicker ng-model="report.toDate"
+                                            data-datetimepicker-config="{ dropdownSelector: '#toDate', startView:'day', minView:'day' }" />
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-1">
+                    <button class="btn btn-primary" ng-click="GenerateReport()"><i class="fa fa-cogs"></i>&nbsp;Generate Report</button>
+                </div>
+            </div>
+            <div class="row">
+                <!--<div class="col-xs-12">
+                    <iframe width="1300" height="900"
+                            ng-src="{{reportPath | trustAsResourceUrl}}"></iframe>
+                </div>-->
+                <div class="col-xs-12 col-md-6">
+                    <div id="HSCodePortOfLoading"></div>
+                </div>
+                <div class="col-xs-12 col-md-6">
+                    <div id="JobTypeByDate"></div>
+                </div>
+                <div class="col-xs-12 col-md-6">
+                    <div id="Declaration" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+                    <div>                        
+                        <table id="datatable" style="display:none;">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>Declaration Type</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tableID">
+                                
+                            </tbody>
+                        </table>
+                    </div>
+                    <!--<div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+
+                    <table id="datatable">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Jane</th>
+                                <th>John</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th>Apples</th>
+                                <td>3</td>
+                                <td>4</td>
+                            </tr>
+                            <tr>
+                                <th>Pears</th>
+                                <td>2</td>
+                                <td>0</td>
+                            </tr>
+                            <tr>
+                                <th>Plums</th>
+                                <td>5</td>
+                                <td>11</td>
+                            </tr>
+                            <tr>
+                                <th>Bananas</th>
+                                <td>1</td>
+                                <td>1</td>
+                            </tr>
+                            <tr>
+                                <th>Oranges</th>
+                                <td>2</td>
+                                <td>4</td>
+                            </tr>
+                        </tbody>
+                    </table>-->
+                </div>
+            </div>
+
+        </div>
+        <div class="overlay" style="opacity:0.8;" ng-show="showLoading">
+            <i class="fa fa-refresh fa-spin"></i>
+        </div>
+    </div>
+</div>

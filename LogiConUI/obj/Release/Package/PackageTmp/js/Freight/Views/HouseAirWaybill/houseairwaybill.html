@@ -1,0 +1,795 @@
+﻿<div class="container" ng-controller="HouseAirWaybillCntrl">
+    <div class="card">
+        <div class="lv-header-alt clearfix m-b-5">
+            <h3 class="lvh-label">House Air Waybill</h3>
+        </div>
+        <div class="card-body card-padding p-t-25 p-b-25">
+
+
+
+            <div class="row border-row-bottom">
+                <div class="col-xs-12 ">
+                    <h2 class="lvh-label">Shipper</h2>
+                    <div class="row">
+                        <div class="col-xs-12 col-md-3">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Code</label>
+                                <md-select ng-model="" ng-required="">
+                                    <md-option ng-repeat="" ng-value="item.Value">
+                                        {{item.Text}}
+                                    </md-option>
+                                </md-select>
+                            </md-input-container>
+                        </div>
+
+                        <div class="col-xs-12 col-md-1">
+                            <button class="btn btn-primary"><i class="fa fa-address-book-o" aria-hidden="true"></i>&nbsp;Address</button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-md-4">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Name</label>
+
+                                <input type="text" />
+                            </md-input-container>
+                        </div>
+
+                        <div class="col-xs-12 col-md-4">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Address</label>
+
+                                <input type="text" />
+                            </md-input-container>
+                        </div>
+
+
+                        <div class="col-xs-12 col-md-4">
+                            <md-input-container class="md-block" flex-gt-sm> <input type="text" /></md-input-container>
+                        </div>
+                    </div>
+                    <div class="row">
+
+
+                        <div class="col-xs-12 col-md-4">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>City/Subrub</label>
+                                <md-select ng-model="" ng-required="">
+                                    <md-option ng-value="item.Value">
+                                        {{item.Text}}
+                                    </md-option>
+                                </md-select>
+                            </md-input-container>
+                        </div>
+
+                        <div class="col-xs-12 col-md-4">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>State</label>
+                                <md-select ng-model="" ng-required="">
+                                    <md-option ng-repeat="" ng-value="item.Value">
+                                        {{item.Text}}
+                                    </md-option>
+                                </md-select>
+                            </md-input-container>
+                        </div>
+
+                        <div class="col-xs-12 col-md-1">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Country</label>
+                                <md-select ng-model="" ng-required="">
+                                    <md-option ng-value="item.Value">
+                                        {{item.Text}}
+                                    </md-option>
+                                </md-select>
+                            </md-input-container>
+                        </div>
+
+                        <div class="col-xs-12 col-md-3">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label></label>
+                                <input type="text" />
+                            </md-input-container>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-md-4">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Post Code</label>
+
+                                <input type="text" />
+                            </md-input-container>
+                        </div>
+
+                        <div class="col-xs-12 col-md-4">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Tel No.</label>
+
+                                <input type="text" />
+                            </md-input-container>
+                        </div>
+                        <div class="col-xs-12  col-md-4">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Contact</label>
+
+                                <input type="text" />
+                            </md-input-container>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-md-4">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Fax No.</label>
+
+                                <input type="text" />
+                            </md-input-container>
+                        </div>
+                        <div class="col-xs-12 col-md-4">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Mobile No.</label>
+
+                                <input type="text" />
+                            </md-input-container>
+                        </div>
+
+                        <div class="col-xs-12 col-md-4">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Email</label>
+
+                                <input type="text" />
+                            </md-input-container>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-md-4">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Remarks</label>
+
+                                <textarea rows="3"></textarea>
+                            </md-input-container>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="row border-row-bottom">
+                <div class="col-xs-12 ">
+                    <h2 class="lvh-label">Consignee</h2>
+                    <div class="row">
+                        <div class="col-xs-12 col-md-3">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Code</label>
+                                <md-select ng-model="" ng-required="">
+                                    <md-option ng-repeat="" ng-value="item.Value">
+                                        {{item.Text}}
+                                    </md-option>
+                                </md-select>
+                            </md-input-container>
+                        </div>
+
+                        <div class="col-xs-12 col-md-1">
+                            <button class="btn btn-primary"><i class="fa fa-address-book-o" aria-hidden="true"></i>&nbsp;Address</button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-md-4">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Name</label>
+
+                                <input type="text" />
+                            </md-input-container>
+                        </div>
+
+                        <div class="col-xs-12 col-md-4">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Address</label>
+
+                                <input type="text" />
+                            </md-input-container>
+                        </div>
+
+
+                        <div class="col-xs-12 col-md-4">
+                            <md-input-container class="md-block" flex-gt-sm> <input type="text" /></md-input-container>
+                        </div>
+                    </div>
+                    <div class="row">
+
+
+                        <div class="col-xs-12 col-md-4">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>City/Subrub</label>
+                                <md-select ng-model="" ng-required="">
+                                    <md-option ng-value="item.Value">
+                                        {{item.Text}}
+                                    </md-option>
+                                </md-select>
+                            </md-input-container>
+                        </div>
+
+                        <div class="col-xs-12 col-md-4">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>State</label>
+                                <md-select ng-model="" ng-required="">
+                                    <md-option ng-repeat="" ng-value="item.Value">
+                                        {{item.Text}}
+                                    </md-option>
+                                </md-select>
+                            </md-input-container>
+                        </div>
+
+                        <div class="col-xs-12 col-md-1">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Country</label>
+                                <md-select ng-model="" ng-required="">
+                                    <md-option ng-value="item.Value">
+                                        {{item.Text}}
+                                    </md-option>
+                                </md-select>
+                            </md-input-container>
+                        </div>
+
+                        <div class="col-xs-12 col-md-3">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label></label>
+                                <input type="text" />
+                            </md-input-container>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-md-4">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Post Code</label>
+
+                                <input type="text" />
+                            </md-input-container>
+                        </div>
+
+                        <div class="col-xs-12 col-md-4">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Tel No.</label>
+
+                                <input type="text" />
+                            </md-input-container>
+                        </div>
+                        <div class="col-xs-12  col-md-4">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Contact</label>
+
+                                <input type="text" />
+                            </md-input-container>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-md-4">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Fax No.</label>
+
+                                <input type="text" />
+                            </md-input-container>
+                        </div>
+                        <div class="col-xs-12 col-md-4">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Mobile No.</label>
+
+                                <input type="text" />
+                            </md-input-container>
+                        </div>
+
+                        <div class="col-xs-12 col-md-4">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Email</label>
+
+                                <input type="text" />
+                            </md-input-container>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-md-4">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Remarks</label>
+
+                                <textarea rows="3"></textarea>
+                            </md-input-container>
+                        </div>
+                    </div>
+
+                </div>
+
+
+            </div>
+            <div class="row m-t-20 m-b-20">
+                <div class="col-xs-12 ">
+                    <div class="row">
+                        <div class="col-xs-12 col-md-4">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Job No.</label>
+
+                                <input type="text" />
+                            </md-input-container>
+                        </div>
+
+                        <div class="col-xs-12 col-md-4">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Date Issued.</label>
+
+                                <input type="text" />
+                            </md-input-container>
+                        </div>
+
+                        <div class="col-xs-12 col-md-4 ">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>MAWB No.</label>
+
+                                <input type="text" />
+                            </md-input-container>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-md-4">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Accounting Info/Also Notify</label>
+                                <textarea></textarea>
+                            </md-input-container>
+                        </div>
+
+                        <div class="col-xs-12 col-md-4">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Freight Term</label>
+                                <md-select ng-model="" ng-required="">
+                                    <md-option ng-repeat="" ng-value="item.Value">
+                                        {{item.Text}}
+                                    </md-option>
+                                </md-select>
+                                <!--<select></select>-->
+                            </md-input-container>
+                        </div>
+
+                        <div class="col-xs-12 col-md-4">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Declared Value for Carriage</label>
+                                <input type="text" />
+                            </md-input-container>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12  col-md-4">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Declared Value for Customs</label>
+                                <input type="text" />
+                            </md-input-container>
+                        </div>
+
+                        <div class="col-xs-12  col-md-4">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Insurance Amount</label>
+
+                                <input type="text" />
+                            </md-input-container>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-md-3">
+
+                    <div class="checkbox m-b-15">
+                        <label>
+                            <input type="checkbox" value="" aria-label="Update Consignee as Foreign Agent">
+                            <i class="input-helper"></i>
+                            Update Consignee as Foreign Agent
+                        </label>
+                    </div>
+                    <!--<md-checkbox class="md-primary" aria-label="Update Consignee as Foreign Agent">Update Consignee as Foreign Agent</md-checkbox>-->
+                </div>
+
+                <div class="col-xs-12 col-md-3 ">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Departure Port</label>
+                        <md-select ng-model="" ng-required="">
+                            <md-option ng-repeat="" ng-value="item.Value">
+                                {{item.Text}}
+                            </md-option>
+                        </md-select>
+                        <!--<select></select>-->
+                    </md-input-container>
+                </div>
+                <div class="col-xs-12 col-md-4">
+                    <md-input-container class="md-block" flex-gt-sm> <input type="text" /> </md-input-container>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="card">
+                        <div class="card-body card-padding p-t-25 p-b-25">
+                            <div class="row">
+                                <div class="col-xs-12 col-md-2">
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>To</label>
+                                        <md-select ng-model="" ng-required="">
+                                            <md-option ng-repeat="" ng-value="item.Value">
+                                                {{item.Text}}
+                                            </md-option>
+                                        </md-select>
+                                        <!--<select></select>-->
+                                    </md-input-container>
+                                </div>
+
+                                <div class="col-xs-12 col-md-2">
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>First Carrier</label>
+                                        <input type="text" />
+                                    </md-input-container>
+                                </div>
+                                <div class="col-xs-12 col-md-2">
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>ETD</label>
+                                        <md-select ng-model="" ng-required="">
+                                            <md-option ng-repeat="" ng-value="item.Value">
+                                                {{item.Text}}
+                                            </md-option>
+                                        </md-select>
+                                        <!--<select></select>-->
+                                    </md-input-container>
+                                </div>
+
+                                <div class="col-xs-12 col-md-2">
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>To (1st)</label>
+                                        <md-select ng-model="" ng-required="">
+                                            <md-option ng-repeat="" ng-value="item.Value">
+                                                {{item.Text}}
+                                            </md-option>
+                                        </md-select>
+                                        <!--<select></select>-->
+                                    </md-input-container>
+                                </div>
+                                <div class="col-xs-12 col-md-2">
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>By (1st)</label>
+                                        <input type="text" />
+                                    </md-input-container>
+                                </div>
+
+                                <div class="col-xs-12 col-md-2">
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>To (2nd)</label>
+                                        <md-select ng-model="" ng-required="">
+                                            <md-option ng-repeat="" ng-value="item.Value">
+                                                {{item.Text}}
+                                            </md-option>
+                                        </md-select>
+                                        <!--<select></select>-->
+                                    </md-input-container>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12 col-md-2">
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>By (2nd)</label>
+                                        <input type="text" />
+                                    </md-input-container>
+                                </div>
+
+                                <div class="col-xs-12 col-md-2">
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>Curr.</label>
+                                        <md-select ng-model="" ng-required="">
+                                            <md-option ng-repeat="" ng-value="item.Value">
+                                                {{item.Text}}
+                                            </md-option>
+                                        </md-select>
+                                        <!--<select></select>-->
+                                    </md-input-container>
+                                </div>
+                                <div class="col-xs-12 col-md-2">
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>Chgs. Code</label>
+                                        <md-select ng-model="" ng-required="">
+                                            <md-option ng-repeat="" ng-value="item.Value">
+                                                {{item.Text}}
+                                            </md-option>
+                                        </md-select>
+                                        <!--<select></select>-->
+                                    </md-input-container>
+                                </div>
+
+                                <div class="col-xs-12 col-md-2">
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>WT VAL.</label>
+                                        <md-select ng-model="" ng-required="">
+                                            <md-option ng-repeat="" ng-value="item.Value">
+                                                {{item.Text}}
+                                            </md-option>
+                                        </md-select>
+                                        <!--<select></select>-->
+                                    </md-input-container>
+                                </div>
+                                <div class="col-xs-12 col-md-2">
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>Other</label>
+                                        <md-select ng-model="" ng-required="">
+                                            <md-option ng-repeat="" ng-value="item.Value">
+                                                {{item.Text}}
+                                            </md-option>
+                                        </md-select>
+                                        <!--<select></select>-->
+                                    </md-input-container>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row m-t-25">
+                <div class="col-xs-12 col-md-4 ">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Destination Port</label>
+                        <md-select ng-model="" ng-required="">
+                            <md-option ng-repeat="" ng-value="item.Value">
+                                {{item.Text}}
+                            </md-option>
+                        </md-select>
+                        <!--<select></select>-->
+                    </md-input-container>
+                </div>
+
+                <div class="col-xs-12 col-md-4 ">
+                    <md-input-container class="md-block" flex-gt-sm> <input type="text" /> </md-input-container>
+                </div>
+
+                <div class="col-xs-12 col-md-4 text-left">
+                    <button class="btn btn-primary"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Handling Info.</button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-md-6 ">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Requested Flight/Date(1st)</label>
+
+                        <input type="text" />
+                    </md-input-container>
+                </div>
+
+                <div class="col-xs-12 col-md-6 ">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Requested Flight/Date(2nd)</label>
+
+                        <input type="text" />
+                    </md-input-container>
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+    <div class="card">
+        <div class="lv-header-alt clearfix m-b-5">
+            <h3 class="lvh-label">Details</h3>
+        </div>
+        <div class="card-body card-padding p-t-25 p-b-25">
+            <div class="row">
+                <div class="col-xs-12 col-md-6">
+                    <label class="pull-left m-r-15" style="line-height:35px;">Cargo Dimensions</label>
+
+                    <button class="btn btn-primary pull-left m-r-15"><i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Add</button>
+
+                    <div class="checkbox m-b-15  pull-left">
+                        <label>
+                            <input type="checkbox" value="" aria-label="Show Rate">
+                            <i class="input-helper"></i>
+                            Show Rate
+                        </label>
+                    </div>
+                    <!--<md-checkbox class="md-primary" aria-label="Show Rate">Show Rate</md-checkbox>-->
+                </div>
+                <div class="col-xs-12 col-md-6">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Chargeable Weight</label>
+
+                        <input type="text" />
+                    </md-input-container>
+                </div>
+            </div>
+            <div class="row m-t-25 m-b-25">
+                <div class="col-xs-12">
+                    <div class="table-responsive">
+                        <table class="table  table-vmiddle">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>No. Of Pieces RCP</th>
+                                    <th>Gross Weight</th>
+                                    <th>Kg/lb</th>
+                                    <th>Rate Class</th>
+                                    <th>Commodity Item No.</th>
+                                    <th>Chargeable Weight</th>
+                                    <th>Rate/Charge</th>
+                                    <th>Total</th>
+                                    <th>Nature & Quantity Of Goods</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-md-6">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Remarks</label>
+                        <textarea rows="3"></textarea>
+                    </md-input-container>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="lv-header-alt clearfix m-b-5">
+            <h3 class="lvh-label">Footer</h3>
+        </div>
+        <div class="card-body card-padding p-t-25 p-b-25">
+            <div class="row m-b-20">
+                <div class="col-xs-12 col-md-5">
+                    <div class="card">
+                        <div class="card-body card-padding p-t-25 p-b-25">
+                            <div class="row m-t-25 m-b-25">
+                                <div class="col-md-6 text-center"><span class="lvh-label">Prepaid</span></div>
+                                <div class="col-md-6 text-center"><span class="lvh-label">Collect</span></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12 text-center"><span class="blackCss">Weight Charge</span></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12 col-md-6">
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <input type="text" />
+                                    </md-input-container>
+                                </div>
+                                <div class="col-xs-12 col-md-6">
+                                    <md-input-container class="md-block" flex-gt-sm>   <input type="text" /> </md-input-container>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12 text-center"><span class="blackCss">Valuation Charge</span></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12 col-md-6">
+                                    <md-input-container class="md-block" flex-gt-sm>    <input type="text" /> </md-input-container>
+                                </div>
+                                <div class="col-xs-12 col-md-6">
+                                    <md-input-container class="md-block" flex-gt-sm>   <input type="text" /> </md-input-container>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12 text-center"><span class="blackCss">Tax</span></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12 col-md-6">
+                                    <md-input-container class="md-block" flex-gt-sm>   <input type="text" /> </md-input-container>
+                                </div>
+                                <div class="col-xs-12 col-md-6">
+                                    <md-input-container class="md-block" flex-gt-sm>  <input type="text" /> </md-input-container>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12 text-center"><span class="blackCss">Total Other Charges Due Agent</span></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12 col-md-6">
+                                    <md-input-container class="md-block" flex-gt-sm>  <input type="text" /> </md-input-container>
+                                </div>
+                                <div class="col-xs-12 col-md-6">
+                                    <md-input-container class="md-block" flex-gt-sm> <input type="text" /> </md-input-container>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12 text-center"><span class="blackCss">Total Other Charges Due Carrier</span></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12 col-md-6">
+                                    <md-input-container class="md-block" flex-gt-sm> <input type="text" /> </md-input-container>
+                                </div>
+                                <div class="col-xs-12 col-md-6">
+                                    <md-input-container class="md-block" flex-gt-sm>  <input type="text" /> </md-input-container>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 text-center"><span class="blackCss">Total Prepaid</span></div>
+                                <div class="col-md-6 text-center"><span class="blackCss">Total Collect</span></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12 col-md-6">
+                                    <md-input-container class="md-block" flex-gt-sm>  <input type="text" /> </md-input-container>
+                                </div>
+                                <div class="col-xs-12 col-md-6">
+                                    <md-input-container class="md-block" flex-gt-sm> <input type="text" /> </md-input-container>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-7">
+                    <h3 class="lvh-label">
+                        Other Charges
+                    </h3>
+                    <div class="row">
+                        <div class="col-xs-12">
+
+                            <div class="table-responsive">
+                                <table class="table  table-vmiddle">
+                                    <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th>Chg. Code</th>
+                                            <th>Weight</th>
+                                            <th>Rate</th>
+                                            <th>Amount</th>
+                                            <th>Min Amt</th>
+                                            <th>PP/CC</th>
+                                            <th>Due To</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 ">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Executed at</label>
+
+                            <input type="text" />
+                        </md-input-container>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 ">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Issuing Carrier or Agent</label>
+
+                            <input type="text" />
+                        </md-input-container>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 ">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Signatory Remarks</label>
+
+                            <textarea></textarea>
+                        </md-input-container>
+                    </div>
+                </div>
+            </div>
+        </div>
+   
+    <div>
+        <div class="card">
+            <div class="card-body card-padding p-t-5 p-b-15">
+                <div class="row">
+                    <div class="col-xs-12 m-t-15 text-right">
+                        <button class="btn btn-primary"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Save</button>
+
+                        <button class="btn btn-warning"><i class="fa fa-search" aria-hidden="true"></i>&nbsp;Browse</button>
+
+                        <button class="btn btn-default waves-effect"><i class="fa fa-eraser" aria-hidden="true"></i>&nbsp;Clear</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

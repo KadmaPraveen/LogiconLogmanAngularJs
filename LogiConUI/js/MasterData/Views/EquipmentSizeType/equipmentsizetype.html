@@ -1,0 +1,97 @@
+﻿<div class="container" ng-controller="EquipmentSizeTypeCntrl">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="card">
+                <div class="lv-header-alt clearfix m-b-5">
+                    <h3 class="lvh-label">Equipment Size/Type</h3>
+                    <div class="box-tools pull-right">
+                        <!-- <button type="button" class="btn btn-box-tool" ng-click="AddEquipmentSizeType(-1);">
+                            <i class="fa fa-plus"></i>
+                        </button>-->
+                        <button class="btn bgm-lightgreen btn-icon waves-effect waves-circle m-r-10" type="button" aria-label="button" ng-click="AddEquipmentSizeType(-1);">
+                            <i class="zmdi zmdi-plus btn-small"></i>
+
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body card-padding p-t-25 p-b-25">
+                    <!--  <div class="row">
+                        <div class="col-xs-12 col-md-4">
+                            <select ></select>
+                        </div>
+                    </div>-->
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="table-responsive">
+                                <table class="table table-striped table-vmiddle">
+                                    <thead>
+                                        <tr>
+                                            <th>#Action</th>
+                                            <th>Size</th>
+                                            <th>Type</th>
+                                            <th>Description</th>
+                                            <th>Type-Size</th>
+                                            <th>Gross Wgt.</th>
+                                            <th>Height</th>
+                                            <th>Container</th>
+                                            <th>Reefer</th>
+                                            <th>Tare Wgt.</th>
+                                            <th>TEU</th>
+                                            <th>ISO Code</th>
+                                            <th>Mapping Code</th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="equip in equipmentSizeTypeList" class="if">
+                                            <td >
+                                                <button class="btn btn-default ng-scope waves-effect" type="button" ng-click="AddEquipmentSizeType(equip.Code);" aria-label="button">
+                                                    <i class="zmdi zmdi-edit" aria-hidden="true"></i>
+
+                                                </button>
+                                                <button class="btn btn-danger ng-scope waves-effect" type="button" ng-click="DeleteEquipmentSizeType(equip.Code);" aria-label="button">
+                                                    <i class="zmdi zmdi-delete" aria-hidden="true"></i>
+
+                                                </button>
+                                            </td>
+                                            <td>{{equip.Size}}</td>
+                                            <td>{{equip.Type}}</td>
+                                            <td>{{equip.Description}}</td>
+                                            <td>{{equip.Code}}</td>
+                                            <td>{{equip.Weight}}</td>
+                                            <td>{{equip.Height}}</td>
+                                            <td>{{equip.IsActive}}</td>
+                                            <td>{{equip.IsReefer}}</td>
+                                            <td>{{equip.Volume}}</td>
+                                            <td>{{equip.TEU}}</td>
+                                            <td>{{equip.ISOCode}}</td>
+                                            <td>{{equip.MappingCode}}</td>
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <uib-pagination ng-model="currentPage"
+                                            total-items="totalItems"
+                                            ng-change="pageChanged()"
+                                            class="pagination-sm pull-right"
+                                            max-size="10"
+                                            items-per-page="limit">
+                            </uib-pagination>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <!--<div class="col-xs-12" >
+                            <button class="btn btn-default pull-right" onclick="location.href = '#/home/'"><i class="fa fa-undo" aria-hidden="true"></i>&nbsp;Back</button>
+                        </div>-->
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

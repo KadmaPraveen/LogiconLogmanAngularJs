@@ -1,0 +1,43 @@
+﻿<div id="content" ng-controller="TabsCtrl" class="TabsCtrlCss">
+    <style type="text/css">
+        iframe {
+            border-width: 0px;
+            border-style: inset;
+            border-color: initial;
+            border-image: initial;
+            height: 100%;
+            width: 100%;
+        }
+
+        html {
+            overflow-y: hidden;
+        }
+
+    </style>
+    
+        <uib-tabset class="tab-container  " active="active">
+            <uib-tab index="tab.tabIndex" ng-repeat="tab in tabs">
+                <uib-tab-heading>
+                    <span><b>{{tab.title}}</b></span> <i ng-if="$index != 0" class="glyphicon glyphicon-remove" ng-click="removeTab($event, $index)"></i>
+                </uib-tab-heading>
+                <div class="content">
+
+                    <iframe ng-style="{height: iframeHeight  + 'px'}"  ng-src="{{tab.content | trustAsResourceUrl}}" resize></iframe>
+                  
+                </div>
+            </uib-tab>
+            <!--<button class="btn btn-default" type="button" ng-click="addTab({ Title: 'Charge Master', State: 'chargecodelist' })"></button>-->
+        </uib-tabset>
+        
+   
+   
+</div>
+<script>
+    !(function (e) {
+        var basehref = "https://dnexport.eu.teamwork.com",
+            token = "fcafe11d-eeb9-4c1b-8c3b-b36329e2a309";
+
+        window.deskcontactwidget = {};
+        var r = e.getElementsByTagName("script")[0], c = e.createElement("script"); c.type = "text/javascript", c.async = !0, c.src = basehref + "/support/v1/contact/main.js?token=" + token, r.parentNode.insertBefore(c, r), window.addEventListener("message", function (e) { var t = e.data[0], a = e.data[1]; switch (t) { case "setContactFormHeight": document.getElementById("deskcontactwidgetframe").height = Math.min(a, window.window.innerHeight - 75) } }, !1);
+    })(document);
+</script>

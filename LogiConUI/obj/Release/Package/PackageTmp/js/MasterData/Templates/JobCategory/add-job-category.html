@@ -1,0 +1,123 @@
+﻿<form name="frmAddJobCategory" id="frmAddJobCategory" ng-submit="AddJobCategory(jc)" ng-class="{'submitted':submitted}" novalidate>
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" ng-click="cancel();">&times;</button>
+        <h4 class="modal-title">Job Category</h4>
+    </div>
+    <div class="modal-body">
+        <div class="c-overflow" ng-style="{'max-height': iframeHeight - 80 + 'px'}" resize>
+            <div class="modalbodymain">
+                <div class="row">
+                    <div class="col-xs-12 col-md-6">
+                        <div class="row">
+                            <div class="col-xs-6 col-md-3">
+                                <label>Code</label>
+                            </div>
+                            <div class="col-xs-12 col-md-5">
+                                <input type="text" ng-model="jc.Code" ng-required="true" ng-readonly="truefalse" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-6 col-md-3">
+                                <label>Description</label>
+                            </div>
+                            <div class="col-xs-12 col-md-9">
+                                <textarea ng-model="jc.Description" ng-required="true"></textarea>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-6 col-md-3">
+                                <label>Job Type</label>
+                            </div>
+                            <div class="col-xs-6 col-md-3">
+                                <select ng-model="jc.JobType" ng-options="s.Value as s.Text for s in lookupData.jobTypeList" ng-required="true"></select>
+                            </div>
+                            <div class="col-xs-6 col-md-3">
+                                <label>Lead Time</label>
+                            </div>
+                            <div class="col-xs-6 col-md-3">
+                                <input type="text" placeholder="(Hour)" ng-model="jc.MinLeadTime" ng-required="true" logicon-decimal />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-6 col-md-3">
+                                <label>Shipment Type</label>
+                            </div>
+                            <div class="col-xs-6 col-md-3">
+                                <select ng-model="jc.ShipmentType" ng-options="s.Value as s.Text for s in lookupData.shipmentTypeList" ng-required="true"></select>
+                            </div>
+                            <div class="col-xs-6 col-md-3">
+                                <label>Freight Mode</label>
+                            </div>
+                            <div class="col-xs-6 col-md-3">
+                                <select ng-model="jc.FreightMode" ng-options="s.Value as s.Text for s in lookupData.freightModeList" required></select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-6 col-md-3">
+                                <label>Billing Rule</label>
+                            </div>
+                            <div class="col-xs-6 col-md-3">
+                                <select ng-model="jc.BillingRule" ng-options="s.Value as s.Text for s in lookupData.billingRuleList" ng-required="true"></select>
+                            </div>
+                            <div class="col-xs-6 col-md-3">
+                                <label>Haulage Charge Code (%)</label>
+                            </div>
+                            <div class="col-xs-6 col-md-3">
+                                <input type="text" ng-model="jc.ChargePercent" ng-required="true" logicon-decimal />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="card">
+                                    <div class="card-body card-padding p-t-25 p-b-25">
+                                        <div class="row">
+                                            <div class="col-xs-12">
+                                                <h5>&nbsp;&nbsp;&nbsp;Modules Required</h5>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-12 col-md-6">
+                                                <md-switch class="md-primary" aria-label="Freight/Fwd" ng-model="jc.IsFreight" ng-init="jc.IsFreight = false" ng-click="module('1001','IsFreight')">Freight/Fwd</md-switch>
+                                            </div>
+                                            <div class="col-xs-12 col-md-6">
+                                                <md-switch class="md-primary" aria-label="Haulage/Transport" ng-model="jc.IsHualage" ng-init="jc.IsHualage = false" ng-click="module('1000','IsHualage')">Haulage/Transport</md-switch>
+                                            </div>
+                                            <div class="col-xs-12 col-md-6">
+                                                <md-switch class="md-primary" aria-label="CY" ng-model="jc.IsDepot" ng-init="jc.IsDepot = false" ng-click="module('1004','IsDepot')">CY</md-switch>
+                                            </div>
+                                            <div class="col-xs-12 col-md-6">
+                                                <md-switch class="md-primary" aria-label="Warehouse" ng-model="jc.IsWarehouse" ng-init="jc.IsWarehouse = false" ng-click="module('1002','IsWarehouse')">Warehouse</md-switch>
+                                            </div>
+                                            <div class="col-xs-12 col-md-6">
+                                                <md-switch class="md-primary" aria-label="CFS" ng-model="jc.IsCFS" ng-init="jc.IsCFS = false" ng-click="module('1003','IsCFS')">CFS</md-switch>
+                                            </div>
+                                            <div class="col-xs-12 col-md-6">
+                                                <md-switch class="md-primary" aria-label="Rail" ng-model="jc.IsRail" ng-init="jc.IsRail = false" ng-click="module('','IsRail')">Rail</md-switch>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-md-6">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <select ng-model="selectedProcessMaster" ng-options="s.Module as s.Code group by s.ModuleTypeDescription for s in moduleList"></select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+</div>
+            <div class="modal-footer">
+                <div class="row">
+                    <div class="col-xs-12 col-md-9"></div>
+                    <div class="col-md-3 pull-right">
+                        <button class="btn btn-primary btn-sm" type="submit" ng-click="submitted = true;"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Save</button>
+                        <button class="btn btn-default btn-sm" ng-click="cancel();"><i class="fa fa-times" aria-hidden="true"></i>&nbsp;Close</button>
+                    </div>
+                </div>
+            </div>
+</form>

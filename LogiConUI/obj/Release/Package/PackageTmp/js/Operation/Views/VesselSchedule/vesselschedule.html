@@ -1,0 +1,196 @@
+﻿<div class="container" ng-controller="VesselScheduleController as vm">
+    <div class="card">
+        <div class="lv-header-alt clearfix m-b-5">
+            <h2 class="lvh-label">
+                Vessel Schedule
+            </h2><ul class="lv-actions actions">
+                <li>
+                    <!--<md-select ng-model="gi.TruckCategory"
+                               ng-required="true">
+                        <md-option ng-repeat="item in lookUpData.truckCategoryList" ng-value="item.Value">
+                            {{item.Text}}
+                        </md-option>
+                    </md-select>-->
+                    <!--<md-input-container class="md-block m-0" flex-gt-sm>
+                        <md-select>
+                            <md-option value="Active">Active</md-option>
+                            <md-option value="In-Active">In Active</md-option>
+                        </md-select>
+                    </md-input-container>-->
+                    <!--<select  ng-model="vessel.CountryCode" ng-options="c.CountryCode as c.CountryName for c in countryList" ng-required="true"></select>-->
+
+                </li>
+            </ul>
+        </div>
+        
+
+     
+        <div class="card-body card-padding p-t-5 p-b-5">
+
+            <div class="row">
+                <div class="col-xs-12">
+                    <uib-accordion close-others="oneAtATime">
+                        <div uib-accordion-group class="panel-default" heading="Advanced Search" is-open="status.isFirstOpen" is-disabled="status.isFirstDisabled">
+                            <uib-accordion-heading>
+                                <i class="pull-left zmdi zmdi-hc-fw" ng-class="{'zmdi-minus': status.isFirstOpen, 'zmdi-plus': !status.isFirstOpen}"></i>&nbsp;Advanced Search
+                            </uib-accordion-heading>
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <div>
+                                        <div class="card-body card-padding p-t-5 p-b-5">
+                                            <form id="VesselScheduleController.frmSearch" name="VesselScheduleController.frmSearch" ng-class="{'submitted': SearchSubmitted}"
+                                                  ng-submit="getVesselScheduleAdvanceSearch(Search)" autocomplete="off" novalidate>
+                                                <div class="row">
+                                                    <div class="col-xs-12  col-md-4">
+                                                        <md-input-container class="md-block" flex-gt-sm>
+                                                            <label>VesselID</label>
+                                                            <input type="text"
+                                                                   ng-model="Search.VesselID" />
+                                                        </md-input-container>
+                                                    </div>
+                                                    <div class="col-xs-12  col-md-4">
+                                                        <md-input-container class="md-block" flex-gt-sm>
+                                                            <label> Vessel Name</label>
+                                                            <input type="text" ng-model="Search.VesselName" />
+                                                        </md-input-container>
+                                                    </div>
+                                                    <div class="col-xs-12  col-md-4">
+                                                        <md-input-container class="md-block" flex-gt-sm>
+                                                            <label>Voyage No</label>
+                                                            <input type="text"
+                                                                   ng-model="Search.VoyageNo" />
+                                                        </md-input-container>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-sm-12 col-md-4">
+                                                        <md-input-container class="md-block" flex-gt-sm>
+                                                            <label>ETA</label>
+                                                            <input mdc-datetime-picker="" class="date-icon" date="true" time="false" type="text" id="DateFrom" format="{{dateFormat}}"
+                                                                   min-date="date" ng-model="Search.ETA">
+                                                        </md-input-container>
+                                                    </div>
+                                                    <div class="col-sm-12 col-md-4">
+                                                        <md-input-container class="md-block" flex-gt-sm>
+                                                            <label>ETD</label>
+                                                            <input mdc-datetime-picker="" class="date-icon" date="true" time="false" type="text" id="DateTo" format="{{dateFormat}}"
+                                                                   min-date="date" ng-model="Search.ETD">
+                                                        </md-input-container>
+                                                    </div>
+                                                    <div class="col-xs-12  col-md-4">
+                                                        <md-input-container class="md-block" flex-gt-sm>
+                                                            <label>Loading Port</label>
+                                                            <input type="text"
+                                                                   ng-model="Search.LoadingPort" />
+                                                        </md-input-container>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-sm-12 text-right">
+                                                        <button ng-click="vm.getVesselScheduleAdvanceSearch(Search)" type="submit" class="btn btn-primary "><i class="fa fa-search" aria-hidden="true"></i>&nbsp;Search</button>
+                                                        <!--<button ng-click="SearchSubmitted = true;" type="submit" class="btn btn-primary "><i class="fa fa-search" aria-hidden="true"></i>&nbsp;Search</button>-->
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </uib-accordion>
+                </div>
+                <!--<div class="col-md-3">
+            <md-select ng-model="vm.CountryCode" ng-init="vm.CountryCode='MY'" ng-change="getPortList(vm.CountryCode)">
+                <md-option ng-repeat="item in countryList" ng-value="item.CompanyCode">{{item.CompanyName}}</md-option>
+
+            </md-select>
+        </div>
+        <div class="col-md-3">
+            <md-select ng-model="vm.PortCode">
+                <md-option ng-repeat="item in portList" ng-value="item.PortCode">{{item.PortName}}</md-option>
+            </md-select>
+        </div>-->
+                <!--<div class="col-md-1">
+           <img src="../../../../images/icons/ship.png" style="width:20px"/>
+        </div>-->
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-md-10">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Country</label>
+                                <md-select ng-model="vm.CountryCode" ng-init="vm.CountryCode='MY'" ng-change="getPortList(vm.CountryCode)">
+                                    <md-option md-option-empty></md-option>
+                                    <md-option ng-repeat="item in countryList" ng-value="item.CompanyCode">{{item.CompanyName}}</md-option>
+
+                                </md-select>
+                            </md-input-container>
+                        </div>
+                        <div class="col-md-3">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Port</label>
+                                <md-select ng-model="vm.PortCode" ng-change="getVesselSchedules(vm.PortCode)">
+                                    <md-option md-option-empty></md-option>
+                                    <md-option ng-repeat="item in portList" ng-value="item.PortCode">{{item.PortCode + " - " + item.PortName}}</md-option>
+                                </md-select>
+                            </md-input-container>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2 text-right">
+                    <button class="btn btn-primary" ng-click="addSchedule(-1);"><img class="iconCss" src="../../../../images/icons/ship.png" style="width:20px" />&nbsp;Add</button>
+                </div>
+            </div>
+            <div class="row">
+                <h2 class="text-center">{{ vm.calendarTitle }}</h2>
+                <div class="col-xs-12 col-md-6">
+                    <div class="btn-group">
+                        <button class="btn btn-primary"
+                                mwl-date-modifier
+                                date="vm.viewDate"
+                                decrement="vm.calendarView"
+                                ng-click="vm.MonthChanged()">
+                            Previous
+                        </button>
+                        <button class="btn btn-default"
+                                mwl-date-modifier
+                                date="vm.viewDate"
+                                ng-click="vm.MonthChanged()"
+                                set-to-today>
+                            Today
+                        </button>
+                        <button class="btn btn-primary"
+                                mwl-date-modifier
+                                date="vm.viewDate"
+                                increment="vm.calendarView"
+                                ng-click="vm.MonthChanged()">
+                            Next
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="margin-top:10px;">
+                <div class="col-xs-12"> 
+                    <mwl-calendar events="vm.events" ng-dblclick="vm.DoubleClick(calendarEvent)"
+                                  view="vm.calendarView"
+                                  view-title="vm.calendarTitle"
+                                  view-date="vm.viewDate"
+                                  on-event-click="vm.eventClicked(calendarEvent)"
+                                  on-event-times-changed="vm.eventTimesChanged(calendarEvent); calendarEvent.startsAt = calendarNewEventStart; calendarEvent.endsAt = calendarNewEventEnd"
+                                  edit-event-html="'<i class=\'zmdi zmdi-edit\'></i>'"
+                                  on-edit-event-click="vm.eventEdited(calendarEvent)"
+                                  cell-is-open="vm.isCellOpen"
+                                  cell-modifier="vm.modifyCell(calendarCell)"
+                                  on-view-change-click="vm.viewChangeClicked(calendarNextView)">
+                        <!--day-view-start="06:00"
+                        day-view-end="22:00"
+                        day-view-split="30"-->
+                        <!--delete-event-html="'<i class=\'zmdi zmdi-delete\'></i>'"
+                            on-delete-event-click="vm.eventDeleted(calendarEvent)"-->
+                    </mwl-calendar>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

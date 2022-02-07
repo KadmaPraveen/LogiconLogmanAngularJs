@@ -1,0 +1,60 @@
+﻿<form id="frmIMOCode" name="frmIMOCode" ng-class="{'submitted': submitted}" ng-submit="SaveIMOCode(imo);" novalidate>
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" ng-click="cancel();">&times;</button>
+        <h4 class="modal-title">Add IMOCode</h4>
+    </div>
+    <div class="modal-body">
+        <div class="c-overflow" ng-style="{'max-height': iframeHeight - 80 + 'px'}" resize>
+            <div class="modalbodymain">
+                <div class="row">
+                    <div class="col-xs-12 ">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Code</label>
+
+                            <input type="text" ng-model="imo.Code" ng-required="true" ng-readonly="truefalse" />
+                        </md-input-container>
+                    </div>
+
+                    <div class="col-xs-12">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Description</label>
+
+                            <textarea type="text" ng-model="imo.Description" ng-required="true"></textarea>
+                        </md-input-container>
+                    </div>
+                </div>
+                <div class="row">
+
+                    <div class="col-xs-12 m-b-10">
+                        <md-switch class="md-primary" aria-label="Is Dangerous" ng-model="imo.IsDangerous">Is Dangerous</md-switch>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-md-6">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>ISO Code</label>
+
+                            <input type="text" ng-model="imo.ISOCode" ng-required="true" />
+                        </md-input-container>
+                    </div>
+                    <div class="col-xs-12 col-md-6">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Mapping Code</label>
+
+                            <input type="text" ng-model="imo.MappingCode" ng-required="true" />
+                        </md-input-container>
+                    </div>
+                </div>
+            </div>
+            </div>
+</div>
+            <div class="modal-footer">
+                <div class="row">
+
+                    <div class="col-xs-12 text-right">
+                        <button class="btn btn-primary" type="submit" ng-click="submitted = true"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Save</button>
+                        <button class="btn btn-default" ng-click="cancel();"><i class="fa fa-times" aria-hidden="true"></i>&nbsp;Close</button>
+                    </div>
+                </div>
+            </div>
+</form>

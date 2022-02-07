@@ -1,0 +1,68 @@
+﻿<div class="container" ng-controller="StandardQuotationListCntrl">
+    <div class="card">
+        <div class="lv-header-alt clearfix m-b-5">
+            <h3 class="lvh-label">
+                Standard Quotation List
+            </h3>
+            <ul class="lv-actions actions">
+                <li>
+                    <button class="btn bgm-lightgreen btn-icon" ng-click="BroadCastDeclaration({quotation:NEW})" ><i class="zmdi zmdi-plus btn-small"></i></button>&nbsp;&nbsp;&nbsp;
+                </li>
+            </ul>
+        </div>
+        <div class="card-body card-padding p-t-25 p-b-25">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="table-responsive">
+                        <table class="table table-vmiddle" ng-table="ngTblData">
+                                <tr ng-repeat="q in $data">
+                                    <td data-title="'#Action'">
+                                        <button class="btn btn-default ng-scope waves-effect"
+                                                type="button"
+                                                ng-click="BroadCastDeclaration({quotation:q.QuotationNo})"
+                                                aria-label="button" uib-tooltip="Edit" tooltip-placement="top">
+                                            <i class="zmdi zmdi-edit"></i>
+                                        </button>
+                                    </td>
+                                    <td data-title="'Quotation No.'" sortable="'QuotationNo'">
+                                        <a style="cursor:pointer;" ng-click="BroadCastDeclaration({quotation:q.QuotationNo})">{{q.QuotationNo}}</a>
+                                    </td>
+                                    <td data-title="'Quoted Date'">{{q.QuotedDate}}</td>
+                                    <td data-title="'Effective'">{{q.Effective}}</td>
+                                    <td data-title="'Expiry'">{{q.Expiry}}</td>
+                                    <td data-title="'Prepared By'">{{q.CreatedBy}}</td>
+                                    <!--<td>
+
+                                        <div class="all-status" ng-switch="w.OrderStatus | lowercase">
+                                            <h5 ng-switch-when="partially saved"><span class="label label-warning">Draft</span></h5>
+                                            <h5 ng-switch-when="submitted"><span class="label label-info">Sent to Customs</span></h5>
+                                            <h5 ng-switch-when="awaiting approval"><span class="label label-primary">Awaiting Approval</span></h5>
+                                            <h5 ng-switch-when="declaration generated"> <span class="label label-info">Sent to Agent</span></h5>
+                                            <h5 ng-switch-when="approved"><span class="label label-success">Approved</span></h5>
+                                            <h5 ng-switch-when="active"><span class="label label-success">ACTIVE</span></h5>
+                                            <h5 ng-switch-when="Rejected"><span class="label label-danger">Rejected</span></h5>
+                                            <h5 ng-switch-when="submit to Customs"><span class="label label-info">Sent to Customs</span></h5>
+                                            <h5 ng-switch-when="validated"><span class="label label-success">Validated</span></h5>
+                                            <h5 ng-switch-when="declined"><span class="label label-danger">Declined</span></h5>
+                                            <h5 ng-switch-default><span class="label label-default">{{w.OrderStatus}}</span></h5>
+                                        </div>
+
+
+                                    </td>-->
+                                    <td data-title="'Approved By'" >{{q.ApprovedBy}}</td>
+                                    <td data-title="'Canceled By'">{{q.CanceledBy}}</td>
+                                </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!--<div class="row m-t-10">
+                <div class="col-xs-12">
+                    <div class="pull-right">
+                        <button class="btn btn-primary" onclick="location.href = '#/home/'"><i class="fa fa-backward" aria-hidden="true"></i>&nbsp;Back</button>
+                    </div>
+                </div>
+            </div>-->
+        </div>
+    </div>
+</div>

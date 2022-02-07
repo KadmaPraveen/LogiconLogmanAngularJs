@@ -1,0 +1,64 @@
+﻿<div class="container" ng-controller="DocumentationCntrl">
+    <div class="card">
+        <div  class="lv-header-alt clearfix m-b-5">
+            <h3  class="lvh-label">Documentation</h3>
+        </div>
+        <div  class="card-body card-padding p-t-25 p-b-25">
+            <div class="row" >
+                <div class="col-xs-12 col-md-4">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Job No.</label>
+                        <md-select ng-model="" ng-required="">
+                            <md-option ng-repeat="" ng-value="item.Value">
+                                {{item.Text}}
+                            </md-option>
+                        </md-select>
+                        <!--<select ></select>-->
+                    </md-input-container>
+</div>
+            </div>
+            <div class="row" >
+                <div class="col-xs-12 col-md-4">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Document Code</label>
+                        <md-select ng-model="" ng-required="">
+                            <md-option ng-repeat="" ng-value="item.Value">
+                                {{item.Text}}
+                            </md-option>
+                        </md-select>
+                        <!--<select ></select>-->
+                    </md-input-container>
+                </div>
+                <div class="col-xs-12 col-md-4">
+                    <md-input-container class="md-block" flex-gt-sm> <input type="text" /></md-input-container>
+                </div>
+            </div>
+            <div class="row" >
+                <div class="col-xs-12 col-md-3">
+                    <div class="card" style="min-height:500px;">                        
+                        <div  class="card-body card-padding p-t-25 p-b-25">
+                            <div class="row" >
+                            </div>
+                        </div>                        
+                    </div>
+                </div>
+                <div class="col-xs-12 col-md-9">
+                    <md-tabs md-dynamic-height md-border-bottom>
+                        <md-tab ng-repeat="tab in tabs" label="{{tab.title}}" class="md-primary">
+                            <md-content class="md-padding">
+                                <div ng-include="tab.content"></div>
+                            </md-content>                            
+                        </md-tab>
+                    </md-tabs>
+                </div>
+            </div><div class="row">
+    <div class="col-xs-12 text-right m-t-15">
+        <button class="btn btn-primary"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Save</button>
+
+        <button class="btn btn-primary"><i class="fa fa-eraser" aria-hidden="true"></i>&nbsp;Clear</button>
+    </div>
+</div>
+        </div>
+        
+    </div>
+</div>

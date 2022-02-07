@@ -1,0 +1,918 @@
+﻿<!--<style>
+    .custom-popup-wrapper {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        z-index: 1000;
+        display: none;
+        background-color: #f9f9f9;
+    }
+
+        .custom-popup-wrapper > .message {
+            padding: 10px 20px;
+            border-bottom: 1px solid #ddd;
+            color: #868686;
+        }
+
+        .custom-popup-wrapper > .dropdown-menu {
+            position: static;
+            float: none;
+            display: block;
+            min-width: 160px;
+            background-color: transparent;
+            border: none;
+            border-radius: 0;
+            box-shadow: none;
+        }
+
+    tr.dropdown-menu {
+        display: block;
+    }
+
+    .mytable {
+        background-color: #fff;
+        -webkit-background-clip: padding-box;
+        background-clip: padding-box;
+        border: 1px solid #ccc;
+        border: 1px solid rgba(0,0,0,.15);
+        border-radius: 4px;
+        -webkit-box-shadow: 0 6px 12px rgba(0,0,0,.175);
+        box-shadow: 0 6px 12px rgba(0,0,0,.5);
+        position: absolute;
+        width: 550px;
+        z-index: 99999;
+    }
+
+        .mytable thead tr {
+            background-color: #367fa9;
+            color: #fff;
+        }
+
+            .mytable thead tr td {
+                background-color: #367fa9;
+                color: #fff;
+                font-weight: bold;
+            }
+
+        .mytable > tbody > tr > td, .mytable > tbody > tr > th, .mytable > tfoot > tr > td, .mytable > tfoot > tr > th,
+        .mytable > thead > tr > td, .mytable > thead > tr > th {
+            padding: 3px;
+        }
+</style>-->
+<script type="text/ng-template" id="add-merchant.html">
+    <!--<style type="text/css">
+        .Rejectcontainer {
+            width: 800px;
+            margin: 10px;
+        }
+    </style>-->
+    <div class="Rejectcontainer">
+        <form id="Cntrl.frmMerchant" name="Cntrl.frmMerchant" ng-class="{'submitted':submitted}" ng-submit="SaveMerchant(mp)" autocomplete="off" novalidate>
+            <input type="hidden" ng-model="mp.IsHaulier" ng-init="mp.IsHaulier = true" />
+            <h4 class="modal-title"><b>{{Cntrl.modaltitle}}</b></h4>
+            <div class="modal-body">
+
+                <div class="row ">
+                    <div class="col-xs-12  col-md-6">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Merchant Name</label>
+
+                            <input type="text" ng-model="mp.MerchantName" ng-required="true" />
+                        </md-input-container>
+                    </div>
+                </div>
+                <div class="row ">
+                    <div class="col-xs-12  col-md-6">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Registration No.</label>
+
+                            <input type="text" ng-model="mp.RegNo" />
+                        </md-input-container>
+                    </div>
+                    <div class="col-xs-12  col-md-6">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>GST No.</label>
+
+                            <input type="text" ng-model="mp.TaxID" />
+                        </md-input-container>
+                    </div>
+                </div>
+                <div class="row ">
+                    <div class="col-xs-12  col-md-6">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Address</label>
+
+                            <input type="text" ng-model="mp.address.Address1" />
+                        </md-input-container>
+                    </div>
+                    <div class="col-xs-12  col-md-6">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Address2</label>
+
+                            <input type="text" ng-model="mp.address.Address2" />
+                    </div>
+                </div>
+                <div class="row ">
+                    <div class="col-xs-12  col-md-6">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>City / Suburb</label>
+
+                            <input type="text" ng-model="mp.address.City" />
+                        </md-input-container>
+                    </div>
+                    <div class="col-xs-12  col-md-6">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Country</label>
+
+                            <input type="text"
+                                   class="search-icon"
+                                   autocomplete="off"
+                                   ng-class="{'loadinggif': address.CountryNameLoading}"
+                                   ng-model="mp.address.CountryName"
+                                   typeahead-min-length="3"
+                                   uib-typeahead="s.Text as s.Text for s in countryResults($viewValue)"
+                                   typeahead-loading="mp.address.CountryNameLoading"
+                                   typeahead-wait-ms="100"
+                                   typeahead-editable="false"
+                                   typeahead-on-select="countrySelect($item)" />
+                        </md-input-container>
+                    </div>
+                </div><div class="row ">
+                    <div class="col-xs-12 col-md-6">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>State</label>
+
+                            <input type="text" ng-model="mp.address.State" />
+                        </md-input-container>
+                    </div>
+                </div>
+                <div class="row ">
+
+
+                    <div class="col-xs-12  col-md-6">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Post Code</label>
+
+                            <input type="text" ng-model="mp.address.ZipCode" logicon-number />
+                        </md-input-container>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="row">
+
+                    <div class="col-xs-6  col-md-3 col-md-offset-9 ">
+                        <button class="btn btn-primary btn-sm" ng-click="submitted = true"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Save</button>
+                        <button type="button" class="btn btn-default btn-sm" ng-click="gi.isHaulier = false"><i class="fa fa-times" aria-hidden="true"></i>&nbsp;Close</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</script>
+
+
+<div class="container" ng-controller="GateInCntrl as Cntrl">
+    <script type="text/ng-template" id="tag-template">
+        <div class="tag-template">
+            <div class="right-panel">
+                <span uib-tooltip="{{data.Value}}">{{$getDisplayText()}}</span>
+                <a class="remove-button" ng-click="$removeTag()">&#10006;</a>
+            </div>
+        </div>
+    </script>
+    <script type="text/ng-template" id="autocomplete-template">
+        <div class="autocomplete-template">
+            <div class="right-panel">
+                <span ng-bind-html="$highlight($getDisplayText())"></span>
+                <!--<span>({{data.Value}})</span>-->
+                <
+            </div>
+            di
+        </div>
+    </script>
+    <script type="text/ng-template" id="customTemplate.html">
+        <table ng-show="isOpen() && !moveInProgress"
+               aria-hidden="{{!isOpen()}}"
+               class="table table-striped table-vmiddle table-hover table-bordered mytable"
+               style="top: 28px;left: -300px;">
+            <thead>
+                <tr>
+                    <th>Transaction No.</th>
+                    <th>Truck No.</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="match in matches track by $index" ng-click="selectMatch($index)">
+                    <td>{{match.model.TransactionNo}}</td>
+                    <td>{{match.model.TruckNo}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </script>
+    <div class="card">
+        <div class="lv-header-alt clearfix m-b-5">
+            <h2 class="lvh-label">
+                Gate In
+            </h2><ul class="lv-actions actions header-input m-r-15">
+                <li>
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Transaction No.</label>
+                        <input type="text"
+                               class="search-icon"
+                               style="width:250px;"
+                               ng-class="{'loadinggif': searchLoading}"
+                               ng-model="search"
+                               typeahead-min-length="3"
+                               uib-typeahead="d for d in GateInTransLoadingResults($viewValue)"
+                               typeahead-loading="searchLoading"
+                               typeahead-popup-template-url="customTemplate.html"
+                               typeahead-wait-ms="100"
+                               typeahead-editable="false"
+                               typeahead-on-select="GateInTransSelected($item)" />
+                    </md-input-container>
+
+                </li>
+            </ul>
+        </div>
+
+        <div class="card-body card-padding p-t-25 p-b-25">
+            <div class="row">
+                <div class="col-xs-12  col-md-6">
+                    <div class="row">
+                        <form id="frmGateIn" name="frmGateIn" ng-class="{'submitted': submitted}" ng-submit="SaveGateIn()" autocomplete="off" novalidate>
+                            <div class="col-xs-12">
+                                <div class="card">
+                                    <div class="card-body card-padding p-t-25 p-b-25">
+                                        <div class="row">
+                                            <div class="col-xs-12  col-md-6">
+                                                <md-input-container class="md-block" flex-gt-sm>
+                                                    <label>Registration No.</label>
+
+                                                    <input type="text" ng-model="gi.TruckNo" ng-required="true" />
+                                                </md-input-container>
+                                            </div>
+                                            <div class="col-xs-12  col-md-6">
+                                                <md-input-container class="md-block" flex-gt-sm>
+                                                    <label>Truck Category</label>
+                                                    <md-select ng-model="gi.TruckCategory"
+                                                               ng-required="true">
+                                                        <md-option ng-repeat="item in lookUpData.truckCategoryList" ng-value="item.Value">
+                                                            {{item.Text}}
+                                                        </md-option>
+                                                    </md-select>
+                                                    <!--<select
+                                                            ng-model="gi.TruckCategory"
+                                                            ng-required="true"
+                                                            ng-options="s.Value as s.Text for s in lookUpData.truckCategoryList"></select>-->
+
+                                                </md-input-container>
+                                            </div>
+
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-12  col-md-6">
+                                                <md-input-container class="md-block" flex-gt-sm>
+                                                    <label>Gate-In Date</label>
+                                                    <input mdc-datetime-picker="" class="date-icon" date="true" time="true" ng-model="gi.TransactionDate"
+                                                           ng-required="true" type="text" id="TransactionDate" format="{{dateTimeFormat12}}"
+                                                           max-date="maxdate">
+                                                    <!--<input mdc-datetime-picker="" class="date-icon" date="true" time="true" ng-model="bookingHeader.ETA"
+                                                           ng-required="bookingHeader.TransportType == 1021 || bookingHeader.TransportType == 1020" type="text" id="DateFrom" format="{{dateTimeFormat12}}"
+                                                           min-date="date">-->
+
+                                                </md-input-container>
+                                                <!--<div class="dropdown">
+                                                    <a class="dropdown-toggle" id="TransactionDate" role="button" data-toggle="dropdown">
+                                                        <div class="input-group">
+                                                            <input type="text"
+                                                                   class="form-control input-sm datepicker"
+                                                                   ng-model="gi.TransactionDate"
+                                                                   ng-required="true"
+                                                                   date-time-input="{{DateFormat}}">
+                                                            <span class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true"></i></span>
+                                                        </div>
+                                                    </a>
+                                                    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                                        <datetimepicker ng-model="gi.TransactionDate"
+                                                                        data-on-set-time="onTimeSet(newDate, oldDate)"
+                                                                        data-datetimepicker-config="{
+                                                                        dropdownSelector: '#TransactionDate',
+                                                                        startView: 'day',
+                                                                        minView: 'day' }" />
+                                                    </ul>
+                                                </div>-->
+                                            </div>
+                                        </div>
+                                        <div class="row">
+
+                                            <div class="col-xs-12  col-md-6">
+                                                <md-input-container class="md-block" flex-gt-sm>
+                                                    <label>Haulier Name</label>
+
+                                                    <input type="text"
+                                                           class="search-icon"
+                                                           ng-required="true"
+                                                           ng-class="{'loadinggif': gi.HaulierNameLoading}"
+                                                           ng-model="gi.HaulierName"
+                                                           typeahead-min-length="3"
+                                                           uib-typeahead="d.Text as d.Text for d in GenericMerchantResults($viewValue, 'haulier')"
+                                                           typeahead-loading="gi.HaulierNameLoading"
+                                                           typeahead-wait-ms="300"
+                                                           typeahead-editable="false"
+                                                           typeahead-on-select="CustomerSelected($item, 'HaulierCode')" />
+                                                </md-input-container>
+                                            </div>
+                                            <div class="col-xs-12  col-md-6">
+                                                <button class="btn btn-primary " type="button"
+                                                        popover-is-open="gi.isHaulier" 
+                                                        popover-append-to-body="false"
+                                                        uib-popover-template="'add-merchant.html'"
+                                                        popover-placement="bottom-middel">
+                                                    <i class="fa fa-plus"></i>
+                                                    &nbsp;Add New Haulier
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+
+
+                </div>
+                <div class="col-xs-12  col-md-6">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="card">
+                                <div class="card-body card-padding p-t-25 p-b-25">
+                                    <div class="row">
+                                        <div class="col-xs-12">
+                                            <div class="table-responsive">
+                                                <table class="table table-striped table-vmiddle">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>#Action</th>
+                                                            <th>#</th>
+                                                            <th>Booking BL No.</th>
+                                                            <th>Container No.</th>
+                                                            <th>Customer</th>
+
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr ng-repeat="item in gi.ContainerMovementDetails">
+                                                            <td>
+                                                                <button type="button" ng-click="EditGateInDetail($index)" class="btn btn-primary"><i class="zmdi zmdi-edit"></i></button>
+                                                                <button type="button" ng-click="DeleteGateInDetail($index)" class="btn btn-danger"><i class="zmdi zmdi-delete"></i></button>
+                                                            </td>
+                                                            <td>{{$index + 1}}</td>
+                                                            <td>{{item.BookingBLNo}}</td>
+                                                            <td>{{item.ContainerNo}}</td>
+                                                            <td>{{item.CustomerName}}</td>
+
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row" ng-show="gi.Status1 == 'DMG'">
+                        <div class="col-xs-12">
+                            <div class="card">
+                                <div class="card-body card-padding p-t-25 p-b-25">
+                                    <div class="row">
+                                        <div class="col-xs-12">
+                                            <label>Damage Indicator</label><br />
+                                            <tags-input ng-model="tResults"
+                                                        display-property="Text"
+                                                        placeholder="Damage Indicator"
+                                                        replace-spaces-with-dashes="false"
+                                                        add-from-autocomplete-only="true"
+                                                        template="tag-template">
+                                                <auto-complete source="DamageResults($query)"
+                                                               min-length="3"
+                                                               max-results-to-show="10"
+                                                               template="autocomplete-template"></auto-complete>
+                                            </tags-input>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <form id="frmGateInDetail" name="frmGateInDetail" ng-class="{'submitted': submittedDetail}" ng-submit="SaveGateInDetail()" autocomplete="off" novalidate>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="card">
+                                    <div class="lv-header-alt clearfix m-b-5">
+                                        <h3 class="lvh-label">Detail</h3>
+                                    </div>
+
+                                    <div class="card-body card-padding p-t-25 p-b-25">
+
+                                        <input type="hidden" ng-model="tmdl.OrderNo" />
+                                        <input type="hidden" ng-model="tmdl.ContainerKey" />
+                                        <input type="hidden" ng-model="tmdl.MovementCode" />
+                                        <input type="hidden" ng-model="tmdl.DateIn" />
+                                        <input type="hidden" ng-model="tmdl.DateOut" />
+                                        <input type="hidden" ng-model="tmdl.Status" ng-init="tmdl.Status = true" />
+                                        <input type="hidden" ng-model="tmdl.MovementCode" ng-init="tmdl.MovementCode = 1501" />
+                                        <input type="hidden" ng-model="cmdl.MovementType" ng-init="cmdl.MovementType = 1501" />
+                                        <div class="row">
+                                            <div class="col-xs-12  col-md-4">
+                                                <md-input-container class="md-block" flex-gt-sm>
+                                                    <label>Trip</label>
+                                                    <md-select ng-model="tmdl.TripType"
+                                                               ng-change="TripChanged()">
+                                                        <md-option ng-repeat="item in lookUpData.tripList" ng-value="item.Value">
+                                                            {{item.Text}}
+                                                        </md-option>
+                                                    </md-select>
+                                                    <!--<select
+                                                    ng-model="tmdl.TripType"
+                                                    ng-required="true"
+                                                    ng-disabled="true"
+                                                    ng-change="TripChanged()"
+                                                    ng-options="s.Value as s.Text for s in lookUpData.tripList"></select>-->
+                                                </md-input-container>
+                                            </div>
+                                            <div class="col-xs-12  col-md-4">
+                                                <md-input-container class="md-block" flex-gt-sm>
+                                                    <label>Empty/Loaded</label>
+                                                    <md-select ng-model="cmdl.EFIndicator">
+                                                        <md-option ng-repeat="item in lookUpData.emptyLoadedList" ng-value="item.Value">
+                                                            {{item.Text}}
+                                                        </md-option>
+                                                    </md-select>
+                                                    <!--<select
+                                                    ng-model="cmdl.EFIndicator"
+                                                    ng-required="true"
+                                                    ng-disabled="true"
+                                                    ng-options="s.Value as s.Text for s in lookUpData.emptyLoadedList"></select>-->
+                                                </md-input-container>
+                                            </div>
+                                            <div class="col-xs-12  col-md-4">
+                                                <md-input-container class="md-block" flex-gt-sm>
+                                                    <label>Gate Pass No</label>
+                                                    <input type="text" ng-model="cmdl.ContainerGatePassNo" />
+                                                </md-input-container>
+                                            </div>
+
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-12  col-md-4 ">
+                                                <md-input-container class="md-block" flex-gt-sm>
+                                                    <label>BK-B/L No.</label>
+                                                    <input type="text"
+                                                           class="search-icon"
+                                                           ng-required="true"
+                                                           ng-class="{'loadinggif': cmdl.BookingBLNoLoading}"
+                                                           ng-model="cmdl.BookingBLNo"
+                                                           typeahead-min-length="3"
+                                                           uib-typeahead="d.BLNo as d.BLNo for d in BookingBLNoResults($viewValue)"
+                                                           typeahead-loading="cmdl.BookingBLNoLoading"
+                                                           typeahead-wait-ms="300"
+                                                           typeahead-editable="false"
+                                                           typeahead-on-select="BookingBLNoSelected($item)" />
+                                                </md-input-container>
+                                            </div>
+                                            <div class="col-xs-12  col-md-4">
+                                                <md-input-container class="md-block" flex-gt-sm>
+                                                    <label>Order Type</label>
+                                                    <md-select ng-model="cmdl.OrderType"
+                                                               ng-required="true">
+                                                        <md-option ng-repeat="item in lookUpData.orderTypeList" ng-value="item.Value">
+                                                            {{item.Text}}
+                                                        </md-option>
+                                                    </md-select>
+                                                    <!--<select
+                                                    ng-model="cmdl.OrderType"
+                                                    ng-required="true"
+                                                    ng-options="s.Value as s.Text for s in lookUpData.orderTypeList"></select>-->
+                                                </md-input-container>
+                                            </div>
+                                            <div class="col-xs-12  col-md-4">
+                                                <md-input-container class="md-block" flex-gt-sm>
+                                                    <label>Booking Type</label>
+                                                    <md-select ng-model="cmdl.BookingType"
+                                                               ng-required="true">
+                                                        <md-option ng-repeat="item in lookUpData.bookingTypeList" ng-value="item.Value">
+                                                            {{item.Text}}
+                                                        </md-option>
+                                                    </md-select>
+                                                </md-input-container>
+                                            </div>
+                                        </div>
+                                        <!--<div class="row">
+                                            <div class="col-xs-12  col-md-6">
+                                                <md-input-container class="md-block" flex-gt-sm>
+                                                    <label>Booking Type</label>
+                                                    <md-select ng-model="cmdl.BookingType"
+                                                               ng-required="true">
+                                                        <md-option ng-repeat="item in lookUpData.bookingTypeList" ng-value="item.Value">
+                                                            {{item.Text}}
+                                                        </md-option>
+                                                    </md-select>
+                                                    </md-input-container>
+                                            </div>
+                                        </div>-->
+
+
+                                        <div class="card">
+                                            <div class="lv-header-alt clearfix m-b-5">
+                                                <h3 class="lvh-label">Container Details</h3>
+                                            </div>
+                                            <div class="card-body card-padding p-t-25 p-b-25">
+                                                <div class="row">
+                                                    <div class="col-xs-12  col-md-6">
+                                                        <md-input-container class="md-block" flex-gt-sm>
+                                                            <label>Container No.</label><!--Container No-->
+
+                                                            <input type="text"
+                                                                   class="search-icon"
+                                                                   ng-required="true"
+                                                                   ng-disabled="cmdl.BookingBLNo == null"
+                                                                   ng-class="{'loadinggif': cmdl.ContainerNoLoading}"
+                                                                   ng-model="cmdl.ContainerNo"
+                                                                   typeahead-min-length="3"
+                                                                   uib-typeahead="d.ContainerNo as d.ContainerNo for d in ContainerNoResults($viewValue)"
+                                                                   typeahead-loading="cmdl.ContainerNoLoading"
+                                                                   typeahead-wait-ms="300"
+                                                                   typeahead-editable="true"
+                                                                   typeahead-on-select="ContainerSelected($item)" />
+                                                        </md-input-container>
+                                                    </div>
+                                                    <div class="col-xs-12  col-md-6">
+                                                        <md-input-container class="md-block" flex-gt-sm>
+                                                            <label>Class</label>
+                                                            <md-select ng-model="cmdl.ContainerGrade"
+                                                                       ng-required="checkValidation()">
+                                                                <md-option ng-repeat="item in lookUpData.containerGradeList" ng-value="item.Value">
+                                                                    {{item.Text}}
+                                                                </md-option>
+                                                            </md-select>
+                                                            <!--<select
+                                                            ng-model="cmdl.ContainerGrade"
+                                                            ng-required="checkValidation()"
+                                                            ng-options="s.Value as s.Text for s in lookUpData.containerGradeList"></select>-->
+                                                        </md-input-container>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-xs-6  col-md-3 ">
+                                                        <md-input-container class="md-block" flex-gt-sm>
+                                                            <label>Size</label>
+                                                            <md-select ng-model="cmdl.Size"
+                                                                       ng-required="true"
+                                                                       ng-disabled="IsSizeDisabled" ng-change="sizeChanged(cmdl.Size)">
+                                                                <md-option ng-repeat="item in lookUpData.sizeList" ng-value="item.Value">
+                                                                    {{item.Text}}
+                                                                </md-option>
+                                                            </md-select>
+                                                            <!--<select
+                                                            ng-model="cmdl.Size"
+                                                            ng-required="true"
+                                                            ng-disabled="IsSizeDisabled"
+                                                            ng-options="s.Value as s.Text for s in lookUpData.sizeList"
+                                                            ng-change="sizeChanged(cmdl.Size)"></select>-->
+                                                        </md-input-container>
+                                                    </div>
+                                                    <div class="col-xs-6  col-md-3">
+                                                        <md-input-container class="md-block" flex-gt-sm>
+                                                            <label>Size Type</label>
+                                                            <md-select ng-model="cmdl.Type"
+                                                                       ng-required="true"
+                                                                       ng-change="TypeChange(cmdl.Type)"
+                                                                       ng-disabled="cmdl.Size == null">
+                                                                <md-option ng-repeat="item in lookUpData.TypeList" ng-value="item.Value">
+                                                                    {{item.Text}}
+                                                                </md-option>
+                                                            </md-select>
+                                                            <!--<select
+                                                            ng-model="cmdl.Type"
+                                                            ng-required="true"
+                                                            ng-change="TypeChange(cmdl.Type)"
+                                                            ng-disabled="cmdl.Size == null"
+                                                            ng-options="s.Value as s.Text for s in lookUpData.TypeList"></select>-->
+                                                        </md-input-container>
+                                                    </div>
+
+                                                    <div class="col-xs-12  col-md-6">
+                                                        <md-input-container class="md-block" flex-gt-sm>
+                                                            <label>Status#1</label>
+                                                            <md-select ng-model="cmdl.ContainerStatus"
+                                                                       ng-required="true">
+                                                                <md-option ng-repeat="item in lookUpData.containerStatusList" ng-value="item.Value">
+                                                                    {{item.Text}}
+                                                                </md-option>
+                                                            </md-select>
+                                                            <!--<select
+                                                            ng-model="cmdl.ContainerStatus"
+                                                            ng-required="true"
+                                                            ng-options="s.Value as s.Text for s in lookUpData.containerStatusList"></select>-->
+                                                        </md-input-container>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-xs-6  col-md-3">
+                                                        <md-input-container class="md-block" flex-gt-sm>
+                                                            <label>Temperature</label>
+                                                            <input type="text"
+                                                                   ng-model="cmdl.Temperature"
+                                                                   logicon-decimal />
+                                                        </md-input-container>
+                                                    </div>
+                                                    <div class="col-xs-6  col-md-3">
+                                                        <md-input-container class="md-block" flex-gt-sm>
+                                                            <label>Temperature Units</label>
+                                                            <md-select ng-model="cmdl.TemperatureType">
+                                                                <md-option ng-repeat="item in lookUpData.tempTypeList" ng-value="item.Value">
+                                                                    {{item.Text}}
+                                                                </md-option>
+                                                            </md-select>
+                                                            <!--<select
+                                                            ng-model="cmdl.TemperatureType"
+                                                            ng-options="s.Value as s.Text for s in lookUpData.tempTypeList"></select>-->
+                                                        </md-input-container>
+                                                    </div>
+
+                                                    <div class="col-xs-12  col-md-6">
+                                                        <md-input-container class="md-block" flex-gt-sm>
+                                                            <label>Tare Weight</label>
+                                                            <input type="text"
+                                                                   ng-model="cmdl.TareWeight"
+                                                                   ng-required="true"
+                                                                   logicon-decimal />
+                                                        </md-input-container>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-xs-6  col-md-3">
+                                                        <md-input-container class="md-block" flex-gt-sm>
+                                                            <label>Vent</label>
+                                                            <input type="text"
+                                                                   ng-model="cmdl.Vent"
+                                                                   logicon-decimal />
+                                                        </md-input-container>
+                                                    </div>
+                                                    <div class="col-xs-6  col-md-3">
+                                                        <md-input-container class="md-block" flex-gt-sm>
+                                                            <label>Vent Type</label>
+                                                            <md-select ng-model="cmdl.VentType">
+                                                                <md-option ng-repeat="item in lookUpData.ventTypeList" ng-value="item.Value">
+                                                                    {{item.Text}}
+                                                                </md-option>
+                                                            </md-select>
+                                                            <!--<select
+                                                            ng-model="cmdl.VentMode"
+                                                            ng-options="s.Value as s.Text for s in lookUpData.ventTypeList"></select>-->
+                                                        </md-input-container>
+                                                    </div>
+                                                    <div class="col-xs-12  col-md-6">
+                                                        <md-input-container class="md-block" flex-gt-sm>
+                                                            <label>MGW</label><!--MaxGrossWeight-->
+
+                                                            <input type="text"
+                                                                   ng-model="cmdl.MGW"
+                                                                   ng-required="checkValidation()"
+                                                                   logicon-decimal />
+                                                        </md-input-container>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-xs-6  col-md-3">
+                                                        <md-input-container class="md-block" flex-gt-sm>
+                                                            <label>Material</label>
+                                                            <md-select ng-model="cmdl.Material">
+                                                                <md-option ng-repeat="item in lookUpData.containerMaterialList" ng-value="item.Value">
+                                                                    {{item.Text}}
+                                                                </md-option>
+                                                            </md-select>
+                                                            <!--<select
+                                                            ng-model="cmdl.Material"
+                                                            ng-required="true"
+                                                            ng-options="s.Value as s.Text for s in lookUpData.containerMaterialList"></select>-->
+                                                        </md-input-container>
+                                                    </div>
+                                                    <div class="col-xs-6  col-md-3">
+                                                        <md-input-container class="md-block" flex-gt-sm>
+                                                            <label>Height</label>
+                                                            <md-select ng-model="cmdl.Height"
+                                                                       ng-required="checkValidation()">
+                                                                <md-option ng-repeat="item in lookUpData.containerHeightList" ng-value="item.Value">
+                                                                    {{item.Text}}
+                                                                </md-option>
+                                                            </md-select>
+                                                            <!--<select
+                                                            ng-model="cmdl.Height"
+                                                            ng-required="checkValidation()"
+                                                            ng-options="s.Value as s.Text for s in lookUpData.containerHeightList"></select>-->
+                                                        </md-input-container>
+                                                    </div>
+                                                    <div class="col-xs-12  col-md-6">
+                                                        <md-input-container class="md-block" flex-gt-sm>
+                                                            <label>Year Built</label>
+
+                                                            <input type="number"
+                                                                   ng-model="cmdl.YearBuilt"
+                                                                   min="1950"
+                                                                   max="{{CurrentYear}}" />
+                                                        </md-input-container>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-xs-12 text-right">
+                                                        <button class="btn btn-primary"
+                                                                type="submit"
+                                                                ng-click="submittedDetail = true;"
+                                                                ng-disabled="IsAddBtnDetailDisabled">
+                                                            <i class="fa fa-plus"></i>&nbsp;{{btnText}}
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="card">
+                                            <div class="lv-header-alt clearfix m-b-5">
+                                                <h3 class="lvh-label">Vessel Details</h3>
+                                            </div>
+                                            <div class="card-body card-padding p-t-25 p-b-25">
+                                                <div class="row">
+                                                    <div class="col-xs-12  col-md-6">
+                                                        <md-input-container class="md-block" flex-gt-sm>
+                                                            <label>Vessel ID</label>
+
+                                                            <input type="text" ng-model="cmdl.VesselID" ng-required="true" />
+                                                        </md-input-container>
+                                                    </div>
+                                                    <div class="col-xs-12  col-md-6">
+                                                        <md-input-container class="md-block" flex-gt-sm>
+                                                            <label>Vessel Name</label>
+
+                                                            <input type="text"
+                                                                   ng-model="cmdl.VesselName"
+                                                                   ng-required="true" />
+                                                        </md-input-container>
+                                                    </div>
+
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-xs-12  col-md-6">
+                                                        <md-input-container class="md-block" flex-gt-sm>
+                                                            <label>Ship Call No.</label>
+
+                                                            <input type="text"
+                                                                   ng-model="cmdl.ShipCallNo"
+                                                                   ng-required="true" />
+                                                        </md-input-container>
+                                                    </div>
+                                                    <div class="col-xs-12  col-md-6">
+                                                        <md-input-container class="md-block" flex-gt-sm>
+                                                            <label>Vessel Call Sign </label>
+
+                                                            <input type="text"
+                                                                   ng-model="cmdl.CallSignNo" />
+                                                        </md-input-container>
+                                                    </div>
+
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-xs-12  col-md-6">
+                                                        <md-input-container class="md-block" flex-gt-sm>
+                                                            <label>Voyage No.</label>
+
+                                                            <input type="text"
+                                                                   ng-model="cmdl.VoyageNo"
+                                                                   ng-required="true" />
+                                                        </md-input-container>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="card">
+                                            <div class="lv-header-alt clearfix m-b-5">
+                                                <h3 class="lvh-label">Billing Details</h3>
+                                            </div>
+                                            <div class="card-body card-padding p-t-25 p-b-25">
+                                                <div class="row">
+                                                    <div class="col-xs-12  col-md-6">
+                                                        <md-input-container class="md-block" flex-gt-sm>
+                                                            <label>Billing Customer</label>
+
+                                                            <input type="text"
+                                                                   class="search-icon"
+                                                                   ng-required="true"
+                                                                   ng-class="{'loadinggif': cmdl.CustomerNameLoading}"
+                                                                   ng-model="cmdl.CustomerName"
+                                                                   typeahead-min-length="3"
+                                                                   uib-typeahead="d.Text as d.Text for d in GenericMerchantResults($viewValue, 'billingCustomer')"
+                                                                   typeahead-loading="cmdl.CustomerNameLoading"
+                                                                   typeahead-wait-ms="300"
+                                                                   typeahead-editable="false"
+                                                                   typeahead-on-select="CustomerSelected($item, 'CustomerCode')" />
+                                                        </md-input-container>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-xs-12  col-md-6">
+                                                        <md-input-container class="md-block" flex-gt-sm>
+                                                            <label>Agent</label>
+
+                                                            <input type="text"
+                                                                   class="search-icon"
+                                                                   ng-required="true"
+                                                                   ng-class="{'loadinggif': cmdl.AgentNameLoading}"
+                                                                   ng-model="cmdl.AgentName"
+                                                                   typeahead-min-length="3"
+                                                                   uib-typeahead="d.Text as d.Text for d in GenericMerchantResults($viewValue, 'billingCustomer')"
+                                                                   typeahead-loading="cmdl.AgentNameLoading"
+                                                                   typeahead-wait-ms="300"
+                                                                   typeahead-editable="false"
+                                                                   typeahead-on-select="CustomerSelected($item, 'AgentCode')" />
+                                                        </md-input-container>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-xs-12  col-md-6">
+                                                        <md-input-container class="md-block" flex-gt-sm>
+                                                            <label>Agent Seal</label>
+
+                                                            <input type="text"
+                                                                   ng-model="cmdl.SealNo1"
+                                                                   ng-required="true" />
+                                                        </md-input-container>
+                                                    </div>
+                                                    <div class="col-xs-12  col-md-6">
+                                                        <md-input-container class="md-block" flex-gt-sm>
+                                                            <label>Seal#2</label>
+
+                                                            <input type="text"
+                                                                   ng-model="cmdl.SealNo2" />
+                                                        </md-input-container>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-xs-12">
+                                                        <md-input-container class="md-block" flex-gt-sm>
+                                                            <label>Remarks</label>
+
+                                                            <textarea ng-model="cmdl.Remarks" md-maxlength="100" logicon-limit rows="3" md-select-on-focus style="overflow-y:auto"></textarea>
+                                                        </md-input-container>
+                                                    </div>
+                                                </div>
+                                                <div class="row"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-1">
+                    <button class="btn btn-primary" type="button" ng-click="submitted = true;SaveGateIn();"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Save</button>
+
+                </div>
+                <!--<div class="col-md-1">
+                    <md-button class="md-raised md-clear"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Print</md-button>
+                </div>
+                <div class="col-md-1">
+                    <md-button class="md-raised md-clear"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Clear</md-button>
+                </div>
+                <div class="col-md-1">
+                    <md-button class="md-raised md-clear"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Delete</md-button>
+                </div>
+                <div class="col-md-1">
+                    <md-button class="md-raised md-clear"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Close</md-button>
+                </div>
+                <div class="col-xs-6  col-md-3">
+                    <md-checkbox class="md-primary" aria-label="Telex Release">Split Coupon Invoice</md-checkbox>
+                </div>-->
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+

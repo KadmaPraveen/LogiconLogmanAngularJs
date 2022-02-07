@@ -1,0 +1,136 @@
+<style type="text/css">
+    .sidebar-inner ul li a {
+        cursor: pointer;
+    }
+</style>
+<div class="sidebar-inner c-overflow">
+    <ul class="main-menu">
+        <li class="sub-menu">
+            <a href="" toggle-submenu><i class="zmdi zmdi-collection-text"></i> Master Data</a>
+            <ul>
+                <li><a ng-click="mactrl.sidebarStat($event, 'chargecodelist', 'Charge Code Master')">Charge Code Master</a></li>
+                <li class="sub-menu">
+                    <a href="" toggle-submenu>Work Flow</a>
+                    <ul>
+                        <li><a ng-click="mactrl.sidebarStat($event, 'processmaster', 'Process Master')">Process Master</a></li>
+                        <li><a ng-click="mactrl.sidebarStat($event, 'jobcategory', 'Job Category')">Job Category</a></li>
+                        <li><a ng-click="mactrl.sidebarStat($event, 'gstrate', 'GST Rate')">GST Rate</a></li>
+                        <li><a ng-click="mactrl.sidebarStat($event, 'vesselprofilelist', 'Vessel Master')">Vessel Master</a></li>
+                    </ul>
+                </li>
+                <!--<li class="sub-menu">
+                    <a href="" toggle-submenu>Product</a>
+                    <ul>
+                        <li><a ng-click="mactrl.sidebarStat($event, 'productmaster', 'Product Master')">Product Master</a></li>
+                        <li><a ng-click="mactrl.sidebarStat($event, 'productlocation', 'Product Location')">Product Location</a></li>
+                    </ul>
+                </li>-->
+                <li class="sub-menu">
+                    <a href="" toggle-submenu>CFS / WMS</a>
+                    <ul>
+                        <li><a ng-click="mactrl.sidebarStat($event, 'warehouse', 'Warehouse')">Warehouse</a></li>
+                        <li><a ng-click="mactrl.sidebarStat($event, 'cfs', 'CFS Work Order Type')">CFS Work Order Type</a></li>
+                        <li><a ng-click="mactrl.sidebarStat($event, 'zonemaster', 'Zone Master')">Zone Master</a></li>
+                    </ul>
+                </li>
+
+                <!--<li class="sub-menu">
+                    <a href="" toggle-submenu>Transport</a>
+                    <ul>
+                        <li><a ng-click="mactrl.sidebarStat($event, 'drivermasterlist', 'Driver Master')">Driver Master</a></li>
+                        <li><a ng-click="mactrl.sidebarStat($event, 'truckmaster', 'Truck Master')">Truck Master</a></li>
+                        <li><a ng-click="mactrl.sidebarStat($event, 'trailermaster', 'Trailer Master')">Trailer Master</a></li>
+                        <li><a ng-click="mactrl.sidebarStat($event, 'driverassignment', 'Driver Assignment')">Driver Assignment</a></li>
+                        <li><a ng-click="mactrl.sidebarStat($event, 'driverallocation', 'Driver Allocation')">Driver Allocation</a></li>
+                    </ul>
+                </li>-->
+                <li class="sub-menu">
+                    <a href="" toggle-submenu>Others</a>
+                    <ul>
+                        <li><a ng-click="mactrl.sidebarStat($event, 'portareacode', 'Port / Area Master')">Port / Area Master</a></li>
+                        <li><a ng-click="mactrl.sidebarStat($event, 'currencyrate', 'Currency Rate')">Currency Rate</a></li>
+                        <li><a ng-click="mactrl.sidebarStat($event, 'railterminal', 'Rail Terminal')">Rail Terminal</a></li>
+                        <li><a ng-click="mactrl.sidebarStat($event, 'holiday', 'Holiday')">Holiday</a></li>
+                        <li><a ng-click="mactrl.sidebarStat($event, 'pudomaster', 'PUDO Master')">PUDO Master</a></li>
+                        <li><a ng-click="mactrl.sidebarStat($event, 'equipmentsizetype', 'Equipment Size/Type')">Equipment Size/Type</a></li>
+                        <li><a ng-click="mactrl.sidebarStat($event, 'containerstatus', 'Container Status')">Container Status</a></li>
+                        <li><a ng-click="mactrl.sidebarStat($event, 'countries', 'Countries')">Countries</a></li>
+                        <li><a ng-click="mactrl.sidebarStat($event, 'currencylist', 'Currency')">Currency</a></li>
+                        <li><a ng-click="mactrl.sidebarStat($event, 'portlist', 'Port')">Port</a></li>
+                        <li><a ng-click="mactrl.sidebarStat($event, 'uom', 'UOM')">UOM</a></li>
+                        <li><a ng-click="mactrl.sidebarStat($event, 'commoditycode', 'Commodity Code')">Commodity Code</a></li>
+                        <li><a ng-click="mactrl.sidebarStat($event, 'holdstatus', 'Hold Status')">Hold Status</a></li>
+                        <li><a ng-click="mactrl.sidebarStat($event, 'imocode', 'IMOCode')">IMOCode</a></li>
+                        <li><a ng-click="mactrl.sidebarStat($event, 'lookupconfig', 'Lookup Configuration')">Lookup Configuration</a></li>
+                        <li><a ng-click="mactrl.sidebarStat($event, 'hscodelist', 'HS Code')">HS Code</a></li>
+                    </ul>
+                </li>
+
+            </ul>
+        </li>
+        <li class="sub-menu">
+            <!--<a href="" toggle-submenu><i class="zmdi zmdi-collection-text"></i> Operation</a>-->
+            <ul>
+                <li><a ng-click="mactrl.sidebarStat($event, 'registrationlist', 'Registration List')">Registration List</a></li>
+                <li><a ng-click="mactrl.sidebarStat($event, 'subscriberslist', 'Subscribers')">Subscribers</a></li>
+            </ul>
+        </li>
+        <!--<li uib-dropdown on-toggle="toggled('BillingCostingMenu')">
+            <a uib-dropdown-toggle>Billing <span class="caret"></span></a>
+            <ul class="dropdown-menu" role="menu" uib-dropdown-menu>
+                <li><a href="#/billing/pendingbilling">Pending Billing</a></li>
+                <li><a href="#/billing/generateinvoice">Generate Invoice</a></li>
+                <li><a href="#/billing/paymenthistory">Subscriber Payment History</a></li>
+                <li><a href="#/billing/generatereceipt">Generate Receipt</a></li>
+            </ul>
+        </li>-->
+
+        <li class="sub-menu">
+            <!--<a href="" toggle-submenu><i class="zmdi zmdi-collection-text"></i>Inquiries</a>-->
+            <ul>
+                <li><a ng-click="mactrl.sidebarStat($event, 'subscriber', 'Subscriber Inquiry')">Subscriber Inquiry</a></li>
+                <li><a ng-click="mactrl.sidebarStat($event, 'payment', 'Statement Inquiry')">Statement Inquiry</a></li>
+                <!--<li><a href="#/inquiry/invoice">Invoice Inquiry</a></li>
+                <li><a href="#/inquiry/receipt">Receipt Inquiry</a></li>-->
+            </ul>
+        </li>
+        <li class="sub-menu">
+        <!--    <a href="" toggle-submenu><i class="zmdi zmdi-collection-text"></i>Reports</a>-->
+            <ul>
+                <li><a ng-click="mactrl.sidebarStat($event,'statutory','Statutory Reports')">Statutory Reports</a></li>
+                <li><a ng-click="mactrl.sidebarStat($event, 'operational', 'Operational Reports')">Operational Reports</a></li>
+                <li><a ng-click="mactrl.sidebarStat($event, 'management', 'Management Reports')">Management Reports</a></li>
+            </ul>
+        </li>
+        <li class="sub-menu">
+            <a href="" toggle-submenu><i class="zmdi zmdi-collection-text"></i>Administration</a>
+            <ul>
+                <li><a ng-click="mactrl.sidebarStat($event, 'userlist', 'Users')">Users</a></li>
+                <li><a ng-click="mactrl.sidebarStat($event, 'standardtariff', 'Standard Tariff')">Standard Tariff</a></li>
+                <li><a ng-click="mactrl.sidebarStat($event, 'Associationdiscountlist', 'Affiliation Tariff')">Affiliation Tariff</a></li>
+                <li><a ng-click="mactrl.sidebarStat($event, 'AssociationList', 'Affiliation')"> Affiliation</a></li>
+                <li><a ng-click="mactrl.sidebarStat($event, 'EmailSetting', 'Email Setting')"> Email Setting</a></li>
+                <li><a ng-click="mactrl.sidebarStat($event, 'MerchantProfileList', 'Merchant Profile')">Merchant Profile</a></li>
+                <li ng-if="IsDefaultBranch"><a ng-click="mactrl.sidebarStat($event,'ActivityMaster',' Activity Master')">Activity Master</a></li>
+                <li class="sub-menu">
+                    <a href="" toggle-submenu>Roles & Rights</a>
+                    <ul>
+                        <li><a ng-click="mactrl.sidebarStat($event,'roles','Roles')">Roles</a></li>
+                        <li><a ng-click="mactrl.sidebarStat($event,'rolerights','Role Rights')">Role Rights</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+        <!--<li class="sub-menu">
+            <a href="" toggle-submenu>
+                <i class="zmdi zmdi-collection-text"></i> SNN
+            </a>
+                <ul>
+                    <li><a ng-click="mactrl.sidebarStat($event, 'DashboardSNN','Dashboard')">Dashboard</a></li>
+                    <li><a ng-click="mactrl.sidebarStat($event, 'Category', 'Category')">Category</a></li>
+                    <li><a ng-click="mactrl.sidebarStat($event, 'News','News' )">News</a></li>
+                </ul>
+            
+        </li>-->
+    </ul>
+</div>

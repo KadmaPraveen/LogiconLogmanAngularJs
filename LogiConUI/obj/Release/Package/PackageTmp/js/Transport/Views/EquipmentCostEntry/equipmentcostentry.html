@@ -1,0 +1,123 @@
+﻿<div class="container" ng-controller="EquipmentCostEntryCntrl">
+    <div class="card">
+        <div  class="lv-header-alt clearfix m-b-5">
+            <h3  class="lvh-label">Equipment Cost Entry (Transport)</h3>
+            <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" ng-click="AddEquipCostEntry();">
+                    <i class="fa fa-plus"></i>
+                </button>
+            </div>
+        </div>
+        <div  class="card-body card-padding p-t-25 p-b-25">
+            <div class="row" >
+                <div class="col-md-1">
+                    <label>Vendor Ref.</label>
+                </div>
+                <div class="col-xs-12 col-md-2">
+                    <input type="text" class="form-control input-sm" />
+                </div>
+                <div class="col-xs-6 col-md-3"></div>
+                <div class="col-md-1">
+                    <label>Invoice Date</label>
+                </div>
+                <div class="col-xs-12 col-md-2">
+                    <div class="input-group my-datepicker">
+                        <input type="text" class="form-control input-sm datepicker" uib-datepicker-popup="{{format}}" ng-model="dt" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-default input-sm" ng-click="open1()"><i class="fa fa-calendar" aria-hidden="true"></i></button>
+                        </span>
+                    </div>
+                </div>
+                <div class="col-md-1">
+                    <label>Total Tax Amt.</label>
+                </div>
+                <div class="col-xs-12 col-md-2">
+                    <input type="text" class="form-control input-sm" />
+                </div>
+            </div>
+            <div class="row" >
+                <div class="col-md-1">
+                    <label>Vendor Code</label>
+                </div>
+                <div class="col-xs-12 col-md-2">
+                    <select class="form-control input-sm"></select>
+                </div>
+                <div class="col-xs-6 col-md-3">
+                    <input type="text" class="form-control input-sm" />
+                </div>
+                <div class="col-md-1">
+                    <label>Account Date</label>
+                </div>
+                <div class="col-xs-12 col-md-2">
+                    <div class="input-group my-datepicker">
+                        <input type="text" class="form-control input-sm datepicker" uib-datepicker-popup="{{format}}" ng-model="dt" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-default input-sm" ng-click="open1()"><i class="fa fa-calendar" aria-hidden="true"></i></button>
+                        </span>
+                    </div>
+                </div>
+                <div class="col-md-1">
+                    <label>Total Local Amt.</label>
+                </div>
+                <div class="col-xs-12 col-md-2">
+                    <input type="text" class="form-control input-sm" />
+                </div>
+            </div>
+            <div class="row" >
+                <div class="col-md-1">
+                    <label>Remarks</label>
+                </div>
+                <div class="col-xs-12 col-md-5">
+                    <textarea class="form-control input-sm"></textarea>
+                </div>
+                <div class="col-md-1">
+                    <label>Currency</label>
+                </div>
+                <div class="col-xs-12 col-md-2">
+                    <select class="form-control input-sm"></select>
+                </div>
+                <div class="col-xs-12 col-md-2">
+                    <input type="text" class="form-control input-sm" />
+                </div>
+                <div class="col-md-1">
+                    <input type="text" class="form-control input-sm" value="TASK" />
+                </div>
+            </div>
+            <div class="row" >
+                <div class="col-xs-12">
+                    <div class="well well-sm" style="min-height: 250px;">
+                        <table class="table table-striped table-vmiddle">
+                            <thead >
+                                <tr>
+                                    <th>Truck ID</th>
+                                    <th>Trailer ID</th>
+                                    <th>Charge Code</th>
+                                    <th>Description</th>
+                                    <th>Curr.</th>
+                                    <th>Ex. Rate</th>
+                                    <th>Billing Unit</th>
+                                    <th>Qty.</th>
+                                    <th>Price</th>
+                                    <th>Base Amt.</th>
+                                    <th>Local Amt.</th>
+                                    <th>Tax Amt.</th>
+                                    <th>Remarks</th>                                
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+        <div class="box-footer">
+            <div class="row">
+            </div>
+        </div>
+    </div>
+</div>

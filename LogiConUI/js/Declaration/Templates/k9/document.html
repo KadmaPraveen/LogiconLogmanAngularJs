@@ -1,0 +1,178 @@
+﻿<form id="frmdocument" name="frmdocument" ng-class="{'submitted':submitted}" ng-submit="SaveDocument(document)" novalidate>
+    <style type="text/css">
+        .box.box-solid.box-default {
+            border: 0px solid #d2d6de;
+        }
+    </style>
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" ng-click="cancel();">&times;</button>
+        <h4 class="modal-title">Document</h4>
+    </div>
+    <div class="modal-body">
+        <div class="c-overflow" ng-style="{'max-height': iframeHeight - 80 + 'px'}" resize>
+            <div class="modalbodymain">
+                <div class="row">
+                    <div class="col-xs-12 col-md-6">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Code</label>
+                            <md-select ng-required="true"
+                                       ng-model="document.SupportingDocumentType" name="document.SupportingDocumentType" ng-change="ChangeSupportDocumnet();">
+                                <!--<md-option ng-repeat="item in lookUpData.OGACodeList" ng-value="item.Value">
+                                    {{item.Text}}
+                                </md-option>-->
+                                <md-option ng-repeat="item in lookUpData.supportingDocumentTypeList" ng-value="item.Value">
+                                    {{item.Text}}
+                                    
+
+                                      <!--</md-opti-->
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+
+                        <!--<div class="form-group fg-float">
+                            <div class="fg-line">
+                                <select class="form-control input-sm" ng-required="true"
+                                        ng-model="document.SupportingDocumentType" name="document.SupportingDocumentType"
+                                        ng-options="s.Value as s.Text for s in lookUpData.OGACodeList"></select>
+                                <label class="fg-label">Code</label>
+                            </div>
+                        </div>-->
+                    </div>
+                    <div class="col-xs-12 col-md-6">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Custom Station</label>
+                            <md-select ng-required="true"
+                                       ng-model="document.CustomStationCode" name="document.CustomStationCode">
+                                <md-option ng-repeat="item in lookUpData.customStationCodeList" ng-value="item.Value">
+                                    {{item.Text}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+
+                        <!--<div class="form-group fg-float">
+                            <div class="fg-line">
+                                <select class="form-control input-sm" ng-required="true"
+                                        ng-model="document.CustomStationCode" name="document.CustomStationCode"
+                                        ng-options="s.Value as s.Text for s in lookUpData.customStationCodeList"></select>
+                                <label class="fg-label">Custom Station</label>
+                            </div>
+                        </div>-->
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-md-6">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Ref. No,</label>
+                            <input type="text"
+                                   ng-model="document.ReferenceNo" name="document.ReferenceNo" ng-required="true" ng-maxlength="50" logicon-limit />
+                        </md-input-container>
+
+                        <!--<div class="form-group fg-float">
+                            <div class="fg-line">
+                                <input type="text" class="form-control input-sm" ng-model="document.ReferenceNo" name="document.ReferenceNo" />
+                                <label class="fg-label">Ref. No,</label>
+                            </div>
+                        </div>-->
+                    </div>
+                    <div class="col-xs-12 col-md-6">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Date Types</label>
+                            <md-select ng-model="document.DocDateType" name="document.DocDateType" ng-disabled="showDocDate">
+                                <md-option md-option-empty></md-option>
+                                <md-option ng-repeat="item in lookUpData.docDateTypeList" ng-value="item.Value">
+                                    {{item.Text}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+
+                        <!--<div class="form-group fg-float">
+                            <div class="fg-line">
+                                <select class="form-control input-sm"
+                                        ng-model="document.DocDateType" name="document.DocDateType"
+                                        ng-options="s.Value as s.Text for s in lookUpData.docDateTypeList"></select>
+                                <label class="fg-label">Date Type</label>
+                            </div>
+                        </div>-->
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-md-6">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Date</label>
+                            <input mdc-datetime-picker="" class="date-icon" date="true" time="false" type="text" id="dateFrom" format="{{dateFormat}}"
+                                   min-date="date" ng-model="document.DocDate" name="document.DocDate" ng-required="true">
+                        </md-input-container>
+                    </div>
+                    <div class="col-xs-12 col-md-6" ng-if="document.SupportingDocumentType==25837">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Country</label>
+                            <md-select name="document.Country"
+                                       ng-model="document.Country"
+                                       ng-required="document.SupportingDocumentType==25837">
+
+                                <md-option ng-repeat="item in lookUpData.countryList" ng-value="item.Value">
+                                    {{item.Text}}
+                                </md-option>
+                            </md-select>
+                            </<md-input-container>
+                    </div>
+                </div>
+                <div ng-if="document.SupportingDocumentType == 25813">
+                    <div class="row">
+
+                        <div class="col-xs-12 col-md-6">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>OGA Code</label>
+                                <md-select name="document.OGAID"
+                                           ng-model="document.OGAID"
+                                           ng-required="document.SupportingDocumentType == 25813"
+                                           ng-change="GetOGABranchCode(document.OGAID);">
+
+                                    <md-option ng-repeat="item in lookUpData.OGABranchlist" ng-value="item.Value">
+                                        {{item.Text}}
+                                    </md-option>
+                                </md-select>
+                                </<md-input-container>
+                        </div>
+                        <div class="col-xs-12 col-md-6">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>OGA Branch Code</label>
+                                <input type="text"
+                                       ng-model="document.OGABranchCode"
+                                       name="document.OGABranchCode"
+                                       ng-required="document.SupportingDocumentType == 25813"
+                                       ng-disabled="true" />
+                            </md-input-container>
+
+
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-md-6">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Permit No.</label>
+                                <input type="text"
+                                       ng-model="document.PermitNo"
+                                       name="document.PermitNo"
+                                       ng-required="document.SupportingDocumentType == 25813"
+                                       ng-maxlength="8" logicon-limit />
+                            </md-input-container>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <div class="row">
+            <div class="col-xs-12 col-md-6"></div>
+            <div class="col-xs-12  col-md-6 pull-right">
+                <button class="btn btn-primary btn-sm" ng-click="submitted = true;" type="submit"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Save</button>
+                <button type="button" class="btn btn-default btn-sm" ng-click="cancel();"><i class="fa fa-times" aria-hidden="true"></i>&nbsp;Close</button>
+            </div>
+        </div>
+    </div>
+
+</form>

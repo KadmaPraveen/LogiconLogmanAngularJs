@@ -1,0 +1,58 @@
+﻿<div class="row" >
+    <div class="col-xs-12">
+        <div class="pull-right"><button type="button" class="btn btn-primary" ng-click="AddCQDetails(-1);"><i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Add</button></div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12">
+          <div class="table-responsive"><table class="table table-striped table-vmiddle">
+            <thead >
+                <tr>
+                    <th>#Action</th> <th>Job</th>
+                    <th>Shipment Type</th>
+                    <th>Job Category</th>
+                    <th>Description</th>
+                    <th>Type Size </th>
+                    <th>Curr</th>
+                    <th>Sell Rate</th>
+                    <th>Est Cost</th>
+                    <th>Min. Amt.</th>
+                    <th>Max. Amt.</th>
+                    <th>Slab</th>
+                   
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="item in cq.QuotationItems">
+                    <td>
+                        <button ng-click="AddCQDetails($index)" class="btn btn-default ng-scope waves-effect">
+                            <i class="zmdi zmdi-edit"></i>
+                        </button>
+                        <button ng-click="deleteCQDetails($index)" class="btn btn-default ng-scope waves-effect">
+                            <i class="zmdi zmdi-delete"></i>
+                        </button>
+                        <input type="hidden" ng-model="item.Index" ng-init="item.Index = $index" />
+                    </td>
+                      <td>{{item.JobTypeDescription}}</td>
+                    <td>{{item.ShipmentTypeDescription}}</td>
+                    <!--<td>{{(lookupData.jobTypeList | filter: { Value: details.JobType})[0].Text}}</td>
+                    <td>{{(lookupData.shipmentTypeList | filter: { Value: details.ShipmentType})[0].Text}}</td>-->
+                    <td>{{item.JobCategory}}</td>
+                    <td>{{item.Remarks}}</td>
+                    <td>{{item.Size}} - {{item.Type}}</td>
+                    <td>{{item.CurrencyCode}}</td>
+                    <td>{{item.SellRate}}</td>
+                    <td>{{item.EstCost}}</td>
+                    <td>{{item.MinAmt}}</td>
+                    <td>{{item.MaxAmnt}}</td>
+                    <td>{{item.IsSlabRate}}</td>
+                    
+                </tr>
+            </tbody>
+        </table></div>
+    </div>
+</div>
+
+
+
+

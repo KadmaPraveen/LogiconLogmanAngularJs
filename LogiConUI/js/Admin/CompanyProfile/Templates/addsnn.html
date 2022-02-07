@@ -1,0 +1,92 @@
+﻿<form id="frmSnn" name="frmSnn" ng-class="{'submitted':submitted}" ng-submit="SaveSnn(snn)" novalidate>
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" ng-click="cancel();">&times;</button>
+        <h4 class="modal-title">Add Snn</h4>
+    </div>
+    <div class="modal-body">
+
+        <div class="row">
+            <div class="col-md-3">
+                <label class="control-label pull-right"> Name </label>
+            </div>
+            <div class="col-md-6">
+                <input type="text" class="form-control input-sm"
+                       ng-model="snn.Name"
+                       ng-required="true" />
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-3">
+                <label class="control-label pull-right">Date From</label>
+            </div>
+            <div class="col-md-6">
+                <div class="dropdown">
+                    <a class="dropdown-toggle" id="FromDate" role="button" data-toggle="dropdown">
+                        <div class="input-group">
+                            <input type="text" class="form-control input-sm datepicker"
+                                   ng-model="snn.FromDate"
+                                   ng-required="true"
+                                   date-time-input="{{DateFormat}}">
+                            <span class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true"></i></span>
+                        </div>
+                    </a>
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                        <datetimepicker ng-model="snn.FromDate"
+                                        data-datetimepicker-config="{ dropdownSelector: '#FromDate', startView:'day', minView:'day' }" />
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                <label class="control-label pull-right"> ExpiryDate </label>
+            </div><div class="col-md-6">
+                <div class="dropdown">
+                    <a class="dropdown-toggle" id="ExpiryDate" role="button" data-toggle="dropdown">
+                        <div class="input-group">
+                            <input type="text" class="form-control input-sm datepicker"
+                                   ng-model="snn.ExpiryDate"
+                                   ng-required="true"
+                                   date-time-input="{{DateFormat}}">
+                            <span class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true"></i></span>
+                        </div>
+                    </a>
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                        <datetimepicker ng-model="snn.ExpiryDate"
+                                        data-datetimepicker-config="{ dropdownSelector: '#ExpiryDate', startView:'day', minView:'day' }" />
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                <label class="control-label pull-right"> Image </label>
+            </div>
+            <div class="col-md-6">
+                <input type="file" class="form-control input-sm"
+                       ng-model="snn.Image" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                <label class="control-label pull-right"> Description </label>
+            </div>
+            <div class="col-md-6">
+                <textarea class="form-control input-sm"
+                          ng-model="snn.Description"
+                          ng-required="true"></textarea>
+            </div>
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <div class="row" style="margin-top:10px;">
+            <div class="col-md-9"></div>
+            <div class="col-md-3 pull-right">
+                <button class="btn btn-primary btn-sm" ng-click="submitted=true"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Save</button>
+                <button type="button" class="btn btn-default btn-sm" ng-click="cancel();"><i class="fa fa-times" aria-hidden="true"></i>&nbsp;Close</button>
+            </div>
+        </div>
+    </div>
+</form>

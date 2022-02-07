@@ -1,0 +1,202 @@
+﻿<style type="text/css">
+    .chartCss svg {
+        width: 955px;
+    }
+</style>
+<div class="container" ng-controller="CurrencyRateCntrl">
+    <div class="card">
+        <div class="lv-header-alt clearfix m-b-5">
+            <h3 class="lvh-label">Currency Rate</h3>
+        </div>
+        <div class="card-body card-padding p-t-5 p-b-5">
+            <div class="row pull-right">                
+                <div class="col-md-12">
+                    <div class="btn-group">
+                        <label class="btn btn-default" ng-model="viewType" uib-btn-radio="'Chart'"><i class="fa fa-line-chart" aria-hidden="true"></i></label>
+                        <label class="btn btn-default" ng-model="viewType" uib-btn-radio="'Table'"><i class="fa fa-table" aria-hidden="true"></i></label>
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="margin-top:10px;">
+                <div class="col-md-4">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <table class="table table-vmiddle">
+                                <thead style="color:#fff;background-color: #97c5ea;">
+                                    <tr>
+                                        <th>Description</th>
+                                        <th>#Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody style="height:100px;overflow: auto;">
+                                    <tr ng-repeat="item in currencyList">
+                                        <td ng-click="GetItemDetails(item.CurrencyCode)">{{item.Description}}</td>
+                                        <td><button class="btn btn-default btn-sm" ng-click="addItem(item.id)"><i class="fa fa-plus" aria-hidden="true"></i></button></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <uib-pagination ng-model="currentPage"
+                                            total-items="totalItems"
+                                            ng-change="pageChanged()"
+                                            class="pagination-sm pull-right"
+                                            max-size="10"
+                                            items-per-page="limit">
+                            </uib-pagination>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="row" style="margin-top:10px;">
+                                <div class="col-md-4">
+                                    <label class="control-label pull-right">Currency Code</label>
+                                </div>
+                                <div class="col-md-8">
+                                    <input type="text" class="form-control input-sm" ng-model="code" disabled="disabled" />
+                                </div>
+                            </div>
+                            <div class="row" style="margin-top:10px;">
+                                <div class="col-md-4">
+                                    <label class="control-label pull-right">Description</label>
+                                </div>
+                                <div class="col-md-8">
+                                    <textarea class="form-control input-sm" ng-model="description" disabled="disabled"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-9" ng-show="currencyRateList.length > 0">
+                    <div class="row chartCss" style="margin-top:10px;" ng-show="viewType == 'Chart'">
+                        <div class="col-md-12">
+                            <div line-chart
+                                 line-data="lineChartData"
+                                 line-xkey="yearMonth"
+                                 line-ykeys="['exchangeRate']"
+                                 line-labels="['AUD']"
+                                 line-colors="['#31C0BE']"
+                                 line-x-label-format="xLabelFormatFun"
+                                 line-date-format="dateFormatFun">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top:10px;" ng-show="viewType == 'Table'">
+                        <div class="col-md-12">
+                            <table class="table table-bordered table-hover">
+                                <thead style="color:#fff;background-color: #97c5ea;height:60%;overflow-y:scroll;">
+                                    <tr>
+                                        <th>Expiry Date</th>
+                                        <th>Exchange Rate</th>
+                                        <th>#Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="item in currencyRateList">
+                                        <td>{{item.ExpiryDate | date:'medium'}}</td>
+                                        <td>
+                                            <span ng-hide="item.show">{{item.ExchangeRate}}</span>
+                                            <input type="text" ng-show="item.show" ng-model="item.ExchangeRate" />
+                                        </td>
+                                        <td>
+                                            <span ng-hide="item.show"><button class="btn btn-primary btn-sm" ng-click="EditItem($index)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp;Edit</button></span>
+                                            <span ng-show="item.show">
+                                                <button class="btn btn-primary btn-sm" ng-click="SaveItem($index)"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Save</button>
+                                                <button class="btn btn-primary btn-sm" ng-click="CancelItem($index)"><i class="fa fa-times" aria-hidden="true"></i>&nbsp;Cancel</button>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <button class="btn btn-primary btn-sm" ng-click="SaveCurrencyList();"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Save</button>
+                            <button class="btn btn-danger btn-sm"><i class="fa fa-trash-o" aria-hidden="true"></i>&nbsp;Delete</button>
+                            <button class="btn btn-info btn-sm"><i class="fa fa-eraser" aria-hidden="true"></i>&nbsp;Clear</button>
+                            <button class="btn btn-warning btn-sm"><i class="fa fa-undo" aria-hidden="true"></i>&nbsp;Back</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        
+    </div>
+</div>
+
+<!--<div line-chart
+                         line-data='[
+                                { y: "2006", a: 74, b: 47 },
+                                { y: "2007", a: 83,  b: 70 },
+                                { y: "2008", a: 54,  b: 92 },
+                                { y: "2009", a: 31,  b: 53 },
+                                { y: "2010", a: 92,  b: 83 },
+                                { y: "2011", a: 30,  b: 42 },
+                                { y: "2012", a: 11, b: 6 }
+                            ]'
+                         line-xkey='y'
+                         line-ykeys='["a", "b"]'
+                         line-labels='["Serie A", "Serie B"]'
+                         line-colors='["#31C0BE", "#c7254e"]'>
+                    </div>
+<div line-chart
+     line-data='[{
+            m: "2015-01",
+            a: 0,
+            b: 270
+          }, {
+            m: "2015-02",
+            a: 54,
+            b: 256
+          }, {
+            m: "2015-03",
+            a: 243,
+            b: 334
+          }, {
+            m: "2015-04",
+            a: 206,
+            b: 282
+          }, {
+            m: "2015-05",
+            a: 161,
+            b: 58
+          }, {
+            m: "2015-06",
+            a: 187,
+            b: 0
+          }, {
+            m: "2015-07",
+            a: 210,
+            b: 0
+          }, {
+            m: "2015-08",
+            a: 204,
+            b: 0
+          }, {
+            m: "2015-09",
+            a: 224,
+            b: 0
+          }, {
+            m: "2015-10",
+            a: 301,
+            b: 0
+          }, {
+            m: "2015-11",
+            a: 262,
+            b: 0
+          }, {
+            m: "2015-12",
+            a: 199,
+            b: 0
+          }, ]'
+     line-xkey='m'
+     line-ykeys='["a", "b"]'
+     line-labels='["2014", "2015"]'
+     line-colors='["#31C0BE", "#c7254e"]'
+     line-x-label-format="xLabelFormatFun"
+     line-date-format="dateFormatFun">
+</div>-->

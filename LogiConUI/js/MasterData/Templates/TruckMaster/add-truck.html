@@ -1,0 +1,296 @@
+﻿<form id="frmTruck" name="frmTruck" ng-class="{'submitted': submitted}" ng-submit="SaveTruck(t)" novalidate>
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" ng-click="cancel();">&times;</button>
+        <h4 class="modal-title">Add Truck</h4>
+    </div>
+    <div class="modal-body">
+        <div class="c-overflow" ng-style="{'max-height': iframeHeight - 80 + 'px'}" resize>
+            <div class="modalbodymain">
+                <div class="row">
+                    <div class="col-xs-12 col-md-7">
+                        <div class="row">
+                            <div class="col-xs-12 col-md-6">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Truck ID</label>
+                                    <input type="text" ng-model="t.TruckID" ng-readonly="truefalse" />
+                                </md-input-container>
+                                <!--<input type="text" ng-model="t.TruckID"  ng-readonly="truefalse"/>-->
+                            </div>
+                            <div class="col-xs-12 col-md-6">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Freight Mode</label>
+                                    <md-select ng-model="t.FreightMode" ng-required="true">
+                                        <md-option ng-repeat="item in lookUpData.freightModeList" ng-value="item.Value">
+                                            {{item.Text}}
+                                        </md-option>
+                                    </md-select>
+                                </md-input-container>
+                                <!--<select ng-model="t.FreightMode"
+                                        ng-options="s.Value as s.Text for s in lookUpData.freightModeList"  ng-required="true"></select>-->
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 col-md-6">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Reg. No.</label>
+                                    <input type="text" ng-model="t.RegistrationNo" ng-required="true" />
+                                </md-input-container>
+                                <!--<input type="text" ng-model="t.RegistrationNo"  ng-required="true"/>-->
+                            </div>
+
+                            <div class="col-xs-12 col-md-6">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Truck Size</label>
+                                    <md-select ng-model="t.TruckSize" ng-required="true">
+                                        <md-option ng-repeat="item in lookUpData.sizeList" ng-value="item.Value">
+                                            {{item.Text}}
+                                        </md-option>
+                                    </md-select>
+                                </md-input-container>
+                                <!--<select ng-model=""
+                                        ng-options="s.Value as s.Text for s in lookUpData.sizeList"
+                                        ng-change="sizeChanged()"
+                                         ng-required="true"></select>-->
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 col-md-6">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Model</label>
+                                    <input type="text" ng-model="t.Model" ng-required="true" />
+                                </md-input-container>
+                                <!--<input type="text" ng-model="t.Model"  ng-required="true"/>-->
+                            </div>
+                            <div class="col-xs-12 col-md-6">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Truck Type</label>
+                                    <md-select ng-model="t.TruckType" ng-required="true">
+                                        <md-option ng-repeat="item in lookUpData.TypeList" ng-value="item.Value">
+                                            {{item.Text}}
+                                        </md-option>
+                                    </md-select>
+                                </md-input-container>
+                                <!--<select ng-model="t.TruckType" ng-disabled="t.TruckSize == null"
+                                        ng-options="s.Value as s.Text for s in lookUpData.TypeList"  ng-required="true"></select>-->
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 col-md-6">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Engine No.</label>
+                                    <input type="text" ng-model="k2t.EngineNo" ng-required="true" />
+                                </md-input-container>
+                                <!--<input type="text" ng-model="t.EngineNo"  ng-required="true"/>-->
+                            </div>
+                            <div class="col-xs-12 col-md-6">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Status</label>
+                                    <md-select ng-model="t.TruckStatus" ng-required="true">
+                                        <md-option ng-repeat="item in lookUpData.truckStatusTypeList" ng-value="item.Value">
+                                            {{item.Text}}
+                                        </md-option>
+                                    </md-select>
+                                </md-input-container>
+                                <!--<select ng-model="t.TruckStatus" ng-options="s.Value as s.Text for s in lookUpData.truckStatusTypeList"  ng-required="true"></select>-->
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Default Trailer</label>
+                                    <input type="text" ng-model="t.TrailerID1" ng-required="true" />
+                                </md-input-container>
+                                <!--<input type="text" ng-model="t.TrailerID1" class="form-control input-sm ac" ng-required="true"/>-->
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Default Driver</label>
+                                    <input type="text"
+                                           class="search-icon"
+                                           ng-model="t.DriverID1Name" typeahead-min-length="3"
+                                           uib-typeahead="d.Text as d.Text for d in DriverResults($viewValue)"
+                                           typeahead-loading="t.DriverID1NameLoading"
+                                           typeahead-wait-ms="100"
+                                           typeahead-editable="false"
+                                           ng-required="true"
+                                           typeahead-on-select="CustomerSelected2($item, 'DriverID1')" />
+                                </md-input-container>
+                                <!--<input type="text"
+                                       class="form-control input-sm ac"
+                                       ng-class="{'loadinggif': t.DriverID1NameLoading}"
+                                       placeholder="Search Driver"
+                                       ng-model="t.DriverID1Name"
+                                       typeahead-min-length="3"
+                                       uib-typeahead="d.Text as d.Text for d in DriverResults($viewValue)"
+                                       typeahead-loading="t.DriverID1NameLoading"
+                                       typeahead-wait-ms="100"
+                                       typeahead-editable="false"
+                                       ng-required="true"
+                                       typeahead-on-select="CustomerSelected2($item, 'DriverID1')" />-->
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Vendor</label>
+                                    <input type="text"
+                                           class="search-icon"
+                                           ng-model="t.VendorName"
+                                           typeahead-min-length="3"
+                                           uib-typeahead="d.Text as d.Text for d in VendorResults($viewValue)"
+                                           typeahead-loading="t.VendorNameLoading"
+                                           typeahead-wait-ms="100"
+                                           typeahead-editable="false"
+                                           ng-required="true"
+                                           typeahead-on-select="CustomerSelected2($item, 'VendorCode')" />
+                                </md-input-container>
+                                <!--<input type="text"
+                                       class="form-control input-sm ac"
+                                       ng-class="{'loadinggif': t.VendorNameLoading}"
+                                       placeholder="Search Agent"
+                                       ng-model="t.VendorName"
+                                       typeahead-min-length="3"
+                                       uib-typeahead="d.Text as d.Text for d in VendorResults($viewValue)"
+                                       typeahead-loading="t.VendorNameLoading"
+                                       typeahead-wait-ms="100"
+                                       typeahead-editable="false"
+                                       ng-required="true"
+                                       typeahead-on-select="CustomerSelected2($item, 'VendorCode')" />-->
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <md-input-container class="md-block">
+                                    <label>Remarks</label>
+                                    <textarea ng-model="" ng-required=""></textarea>
+                                </md-input-container>
+                                <!--<textarea  />-->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-md-5">
+                        <div class="row">
+                            <div class="col-xs-12 col-md-6">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Base Location</label>
+                                    <md-select ng-model="t.BaseLocation" ng-required="true">
+                                        <md-option value="1001">location 1</md-option>
+                                        <md-option value="1002">location 2</md-option>
+                                    </md-select>
+                                </md-input-container>
+                                <!--<select  ng-model="t.BaseLocation" ng-required="true">
+                                    <option value="1001">location 1</option>
+                                    <option value="1002">location 2</option>
+                                </select>-->
+                            </div>
+                            <div class="col-xs-12 col-md-6">
+                                <md-switch class="md-primary" ng-model="t.IsOwn" aria-label="Own Truck">Own Truck</md-switch>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 col-md-6">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Current Area</label>
+                                    <input type="text" ng-model="t.CurrentArea" ng-required="true" />
+                                </md-input-container>
+                                <!--<input type="text" ng-model="t.CurrentArea"  ng-required="true"/>-->
+                            </div>
+                            <div class="col-xs-12 col-md-6">
+                                <md-switch class="md-primary" ng-model="t.IsDGEquipped" aria-label="DG Equipped">DG Equipped</md-switch>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 col-md-6">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Last Odometer</label>
+                                    <input type="text" ng-model="t.LastOdoMeter" ng-required="true" />
+                                </md-input-container>
+                                <!--<input type="text" ng-model="t.LastOdoMeter"  ng-required="true"/>-->
+                            </div>
+                            <div class="col-xs-12 col-md-6">
+                                <md-switch class="md-primary" ng-model="t.IsRequireTrailer" aria-label="DG Equipped">Req. Trailer</md-switch>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Next Service</label>
+                                    <input type="text" ng-model="t.NextServiceKM" ng-required="true" />
+                                </md-input-container>
+                                <!--<input type="text" ng-model="t.NextServiceKM"  ng-required="true"/>-->
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Next Service Date</label>
+                                    <input mdc-datetime-picker="" date="true" class="date-icon" time="false" type="text" id="NextServiceDate" format="{{dateFormat}}"
+                                           min-date="date" ng-model="t.NextServiceDate"
+                                           ng-required="true"
+                                           ng-disabled="">
+                                </md-input-container>
+
+                                <!--<div class="dropdown">
+                                    <a class="dropdown-toggle" id="NextServiceDate" role="button" data-toggle="dropdown">
+                                        <div class="input-group">
+                                            <input type="text"
+                                                   class="form-control input-sm datepicker"
+                                                   ng-model="t.NextServiceDate"
+                                                   ng-required="true"
+                                                   date-time-input="MM/DD/YYYY">
+                                            <span class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true"></i></span>
+                                        </div>
+                                    </a>
+                                    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                        <datetimepicker ng-model="t.NextServiceDate"
+                                                        data-datetimepicker-config="{ dropdownSelector: '#NextServiceDate', startView:'day', minView:'day' }" />
+                                    </ul>
+                                </div>-->
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Manufactured Date</label>
+                                    <input mdc-datetime-picker="" date="true" class="date-icon" time="false" type="text" id="ManufactureDate" format="{{dateFormat}}"
+                                           min-date="date" ng-model="t.ManufactureDate"
+                                           ng-required="true"
+                                           ng-disabled="">
+                                </md-input-container>
+                                <!--<div class="dropdown">
+                                    <a class="dropdown-toggle" id="ManufactureDate" role="button" data-toggle="dropdown">
+                                        <div class="input-group">
+                                            <input type="text"
+                                                   class="form-control input-sm datepicker"
+                                                   ng-model="t.ManufactureDate"
+                                                   ng-required="true"
+                                                   date-time-input="MM/DD/YYYY">
+                                            <span class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true"></i></span>
+                                        </div>
+                                    </a>
+                                    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                        <datetimepicker ng-model="t.ManufactureDate"
+                                                        data-datetimepicker-config="{ dropdownSelector: '#ManufactureDate', startView:'day', minView:'day' }" />
+                                    </ul>
+                                </div>-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+            <div class="modal-footer">
+                <div class="row">
+                    <div class="col-xs-12 col-md-9"></div>
+                    <div class="col-md-3 pull-right">
+                        <button class="btn btn-primary btn-sm" ng-click="submitted = true;"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Save</button>
+                        <button class="btn btn-default btn-sm" ng-click="cancel();"><i class="fa fa-times" aria-hidden="true"></i>&nbsp;Close</button>
+                    </div>
+                </div>
+            </div>
+</form>
+
+

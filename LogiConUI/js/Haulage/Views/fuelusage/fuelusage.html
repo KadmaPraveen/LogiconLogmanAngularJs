@@ -1,0 +1,60 @@
+﻿<div class="container" ng-controller="fuelusage">
+    <div class="card">
+        <div  class="lv-header-alt clearfix m-b-5">
+            <h3  class="lvh-label">Fuel Usage</h3>
+            <ul class="lv-actions actions m-r-5">
+                <li>
+                    <button class="btn bgm-lightgreen btn-icon" data-ui-sref="addfuelusage()" data-ng-click="mactrl.sidebarStat($event)">
+                        <i class="zmdi zmdi-plus"></i>
+                    </button>
+                </li>
+            </ul>   
+        </div>
+        <div  class="card-body card-padding p-t-25 p-b-25">
+            <div class="row" >
+                <div class="col-xs-12 col-md-2">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Truck Id</label>
+
+                        <md-select ng-model="" ng-required="">
+                            <md-option ng-repeat="" ng-value="item.Value">
+                                {{item.Text}}
+                            </md-option>
+                        </md-select>
+                    </md-input-container>
+                
+                   
+                </div>
+            </div>
+            <div class="row" >
+                <div class="col-xs-12">
+                    <div class="table-responsive">
+                        <table class="table  table-vmiddle">
+                            <thead>
+                                <tr>
+                                    <th>Voucher No.</th>
+                                    <th>Vendor Code</th>
+                                    <th>Vendor Name</th>
+                                    <th>Driver ID</th>
+                                    <th>Driver Name</th>
+                                    <th>Odometer</th>
+                                    <th>Distance Travel</th>
+                                    <th>Usage Date</th>
+                                    <th>Quantity</th>
+                                    <th>Unit Price</th>
+                                    <th>Total Amt.</th>
+                                    <th>Remarks</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>        
+    </div>
+</div>

@@ -1,0 +1,185 @@
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" ng-click="cancel();">&times;</button>
+    <h4 class="modal-title">Add CFS</h4>
+</div>
+<div class="modal-body mCustomScrollbar">
+        <div class="c-overflow" ng-style="{'max-height': iframeHeight - 80 + 'px'}" resize style="overflow-x:hidden; min-height:250px;">
+            <div class="modalbodymain">
+        <div class="row">
+        	<div class="col-xs-12 col-md-6">
+        		<md-input-container class="md-block" flex-gt-sm>
+                    <label>Code</label>
+        
+        		<input type="text" ng-model="codeCFS"  />
+                </md-input-container>
+        	</div>
+        </div>
+        <div class="row" >
+        	<div class="col-xs-12 col-md-6">
+                <md-input-container class="md-block" flex-gt-sm>
+                    <label>Description</label>
+
+                    <textarea ng-model="Description"></textarea>
+                </md-input-container>
+        	</div>
+        </div>
+        <div class="row" >
+        	<div class="col-xs-12 col-md-6">
+                <md-input-container class="md-block" flex-gt-sm>
+                    <label>VAS Charge Code</label>
+                    <md-select ng-model="VASChargeCode">
+                        <!--<md-option >
+
+                        </md-option>-->
+                    </md-select>
+                </md-input-container>
+        	</div>
+            <div class="col-xs-12 col-md-6">
+            
+                <md-input-container class="md-block" flex-gt-sm>
+                    <label></label>
+
+                    <input type="text" ng-model="text" />
+                </md-input-container>
+            </div>
+        </div>
+        <div class="row">
+        	<div class="col-xs-12 col-md-6">
+        		<div class="row" >
+		        	<div class="col-xs-12 ">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Permit No.</label>
+                            <md-select ng-model="Permit">
+                                <!--<md-option >
+
+                                </md-option>-->
+                            </md-select>
+                        </md-input-container>
+		        	</div>
+		        </div>
+		        <div class="row" >
+		        	<div class="col-xs-12 ">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Location Code</label>
+                            <md-select ng-model="LocationCode">
+                                <md-option>
+
+                                </md-option>
+                            </md-select>
+                            <!--<select></select>-->
+                        </md-input-container>
+		        	</div>
+		        </div>
+		        <div class="row" >
+		        	<div class="col-xs-12 ">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Stock Room</label>
+                            <md-select ng-model="StockRoom">
+                                <md-option>
+
+                                </md-option>
+                            </md-select>
+                            <!--<select></select>-->
+                        </md-input-container>
+		        	</div>
+		        </div>
+		        <div class="row" >
+		        	<div class="col-xs-12 ">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Quantity</label>
+                            <md-select ng-model="Quantity">
+                                <md-option>
+
+                                </md-option>
+                            </md-select>
+                            <!--<select></select>-->
+                        </md-input-container>
+		        	</div>
+		        </div>
+		    </div>
+		    <div class="col-xs-12 col-md-6">
+		    	<div class="row" >
+		    		<div class="col-xs-12 ">
+		    			<div class="card">
+				    		<div class="card-body card-padding p-t-25 p-b-25">
+					            <div class="row">
+					            	<div class="col-xs-12">
+                                        <div class="checkbox m-b-15">
+                                            <label>
+                                                <input type="checkbox" value="" aria-label="Fumigation">
+                                                <i class="input-helper"></i>
+                                                Fumigation
+                                            </label>
+                                        </div>
+					            		<!--<md-checkbox class="md-primary" aria-label="Fumigation">Fumigation</md-checkbox>-->
+					            	</div>
+					            </div>
+					            <div class="row" >
+					            	<div class="col-xs-12 ">
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                            <label>Default Stock Room</label>
+                                            <md-select ng-model="StockRoom">
+                                                <md-option>
+
+                                                </md-option>
+                                            </md-select>
+                                            <!--<select></select>-->
+                                        </md-input-container>
+					            	</div>
+					            </div>
+					            <div class="row" >
+					            	<div class="col-xs-12 ">
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                            <label>Default Location Code</label>
+                                            <md-select ng-model="LocationCode">
+                                                <md-option >
+                                                   
+                                                </md-option>
+                                            </md-select>
+                                            <!--<select></select>-->
+                                        </md-input-container>
+					            	</div>
+					            </div>
+					        </div>
+				    	</div>
+		    		</div>		    		
+		    	</div>		    	
+		    </div>
+        </div>   
+        <div class="row" >
+        	
+        	<div class="col-xs-12 col-md-6 ">
+                <div class="checkbox m-b-15">
+                   <label>
+                        <input type="checkbox" value="" aria-label="Stop Storage Calculation">
+                        <i class="input-helper"></i>
+                        Stop Storage Calculation
+                    </label>
+                </div>
+        		<!--<md-checkbox class="md-primary" aria-label="Stop Storage Calculation">Stop Storage Calculation</md-checkbox>-->
+        	</div>        	
+        </div>
+        <div class="row" >
+        	
+        	<div class="col-xs-12 col-md-6">
+                <div class="checkbox m-b-15">
+                  <label>
+                        <input type="checkbox" value="" aria-label="Required Work Flow">
+                        <i class="input-helper"></i>
+                        Required Work Flow
+                    </label>
+                </div>
+        		<!--<md-checkbox class="md-primary" aria-label="Required Work Flow">Required Work Flow</md-checkbox>-->
+        	</div>        	
+        </div>     
+  </div>
+            </div>
+</div>
+<div class="modal-footer">
+    <div class="row" >
+        <div class="col-xs-12  text-right">
+            <button class="btn btn-primary btn-sm" ng-click="cancel();"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Save</button>
+            <button class="btn btn-default btn-sm" ng-click="cancel();"><i class="fa fa-times" aria-hidden="true"></i>&nbsp;Close</button>
+        </div>
+    </div>
+</div>

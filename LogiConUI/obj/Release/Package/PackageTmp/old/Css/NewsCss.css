@@ -1,0 +1,100 @@
+﻿body {
+    background:rgb(235,235,235);
+    padding:20px 0;
+}
+.news.excerpt {
+    background-color: #fff;
+    border: 1px solid #cdcdcd;
+    clear: both;
+    margin-bottom: 20px;
+    padding: 20px;
+}
+.news {
+    float: left;
+    width: 100%;
+    margin-top:20px;
+}
+.nav-previous a:hover, .nav-next a:hover, #commentform input#submit, #searchform input[type="submit"], .home_menu_item, .primary-navigation a:hover, .news-date-ribbon, .currenttext, .pagination a:hover, .readMorebtn button{
+    background-color: #ea141f;
+}
+.news-date-ribbon {
+    color: #fff;
+    float: left;
+    font-size: 12px;
+    line-height: 25px;
+    margin-top: -30px;
+    padding: 0 7px;
+    position: relative;
+    text-align: center;
+}
+.corner {
+    border-color: transparent transparent #ea141f;
+}
+.corner {
+    border-color: rgba(0, 0, 0, 0) rgba(0, 0, 0, 0) #ea141f;
+    border-style: solid;
+    border-width: 0 0 10px 10px;
+    height: 0;
+    left: -10px;
+    position: absolute;
+    width: 0;
+}
+.corner::before {
+    border-color: rgba(0, 0, 0, 0) rgba(0, 0, 0, 0) rgba(0, 0, 0, 0.15);
+    border-style: solid;
+    border-width: 0 0 10px 10px;
+    content: "";
+    height: 0;
+    left: -10px;
+    position: absolute;
+    width: 0;
+}
+.title {
+    clear: both;
+    font-size: 24px;
+    line-height: 28px;
+    margin-bottom: 5px;
+    margin-top: 15px;
+}
+.news-header {
+margin-bottom:15px;
+}
+.readMorebtn button {
+    color: #fff;
+    font-family: "Monda",sans-serif;
+    padding: 5px 12px;
+    transition: all 0.25s linear 0s;
+    border:0px;
+}
+.primary-navigation, footer, .readMorebtn button:hover, #commentform input#submit:hover, .featured-thumbnail .latestPost-review-wrapper {
+    background-color: #364956;
+}
+.readMorebtn button:hover {
+    background: #222222 none repeat scroll 0 0;
+    color: #fff;
+}
+#news-thumbnail {
+    float: left;
+    margin-right: 20px;
+    max-width: 150px;
+    width: 22.2%;
+}
+.news-thumbnail {
+    float: left;
+    margin-top: 5px;
+    max-width: 150px;
+    position: relative;
+    width: 100%;
+}
+.news-thumbnail img {
+    margin-bottom: 0;
+    width: 100%;
+}
+.news-image {
+    float: left;
+}
+img {
+    height: auto;
+    max-width: 100%;
+    border: 0 none;
+}

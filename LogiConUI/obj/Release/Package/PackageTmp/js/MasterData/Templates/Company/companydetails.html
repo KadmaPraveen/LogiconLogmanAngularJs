@@ -1,0 +1,297 @@
+﻿<script type="text/ng-template" id="modules.html">
+    <style type="text/css">
+        .Modulescontainer {
+            width: 550px;
+            margin: 10px;
+        }
+    </style>
+    <div class="Modulescontainer">
+        <form id="Cntrl.frmModules" name="Cntrl.frmModules" ng-class="{'submitted': ModulesSubmitted}" ng-submit="SaveModules(billingModules)" autocomplete="off" novalidate>
+            <div class="row">
+                <div class="col-xs-12 col-md-5">
+                    <label>Modules</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-md-6" ng-repeat="module in billingModules">
+                    <md-switch aria-label="module.ModuleText" ng-model="module.isSelected" class="md-primary">
+                        {{module.ModuleDescription}}<span style="color:red;font-weight:bolder;font-style:italic;" ng-if="module.isSelected">&nbsp;&nbsp;{{module.Rate}} RM MONTHLY</span>
+                    </md-switch>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 m-t-15 text-right">
+                    <button type="button" ng-click="closeModulesPopOver()" class="btn btn-default m-r-10">Cancel</button>
+                    <button ng-click="ModulesSubmitted = true;" type="submit" class="btn btn-primary ">Subscribe</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</script>
+
+<form id="Cntrl.frmCompanyDetails" name="Cntrl.frmCompanyDetails" enctype="multipart/form-data" ng-class="{'submitted':submitted}" ng-submit="SaveCompany(CompanyDetails);" novalidate>
+    <div class="card">
+        <div class="lv-header-alt clearfix m-b-5">
+            <h2 class="lvh-label">
+                Company Details
+            </h2><ul class="lv-actions actions">
+                <li class="small-popover">
+                    <button type="button" class="btn btn-primary waves-effect m-r-5"
+                            aria-label="button"
+                            ng-disabled="!isDisabledCompany"
+                            popover-placement="left-top"
+                            popover-is-open="Cntrl.ModulesPopOver"
+                            uib-popover-template="'modules.html'">
+                        <i class="zmdi zmdi-widgets"></i>
+                    </button>
+                </li>
+                <li>
+                    <button type="button" class="btn btn-primary waves-effect m-r-15"
+                            aria-label="button"
+                            ng-disabled="!isDisabledCompany"
+                            ng-click="AddBranch(CompanyDetails.CompanyCode, CompanyDetails.CompanyName)">
+                        <i class="zmdi zmdi-plus"></i>
+                    </button>
+                </li>
+
+
+            </ul>
+        </div>
+
+        <div class="card-body card-padding p-t-25 p-b-25">
+            <!--<div class="row" >
+                <div class="col-xs-12 col-md-2">
+                    <md-button class="md-raised md-warning" ng-disabled="!isDisabledCompany" ng-click="AddBranch(CompanyDetails.CompanyCode)"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;New Branch</md-button>
+                </div>
+                <div class="col-xs-12 col-md-2">
+                    <md-button class="md-raised md-warning"
+                            type="button"
+                               ng-disabled="!isDisabledCompany"
+                               popover-placement="right-top"
+                               popover-is-open="Cntrl.ModulesPopOver"
+                               uib-popover-template="'modules.html'">
+                    <i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Modules</md-button>
+                </div>
+            </div>-->
+            <div class="row">
+                <div class="col-xs-12 col-md-6">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Company Code</label>
+
+                        <input type="text" ng-disabled="isDisabledCompany" ng-model="CompanyDetails.CompanyCode" />
+                    </md-input-container>
+                </div>
+
+                <div class="col-xs-12 col-md-6 text-right">
+                    <md-switch class="md-primary" ng-model="CompanyDetails.IsActive" ng-required="true">Active Account</md-switch>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Company Name</label>
+
+                        <input type="text" ng-model="CompanyDetails.CompanyName" ng-required="true" />
+                    </md-input-container>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-md-6">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Registration No.</label>
+
+                        <input type="text" ng-model="CompanyDetails.RegNo" ng-required="CompanyDetails.address.CountryCode == 'MY'" />
+                    </md-input-container>
+                </div>
+                <div class="col-xs-12 col-md-6">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Customs Mail Box No.</label>
+                        <input type="text" ng-model="CompanyDetails.EDIMailBoxNo" ng-disabled="true" />
+                    </md-input-container>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-md-6">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Agent Code</label>
+                        <input type="text" ng-model="CompanyDetails.AgentCode" ng-disabled="IsAgentDisabled" />
+                    </md-input-container>
+                </div>
+                <div class="col-xs-12 col-md-6">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>DAGANG NET A/C NO</label>
+                        <input type="text" ng-model="regDetails.CPAMAccountNo" ng-disabled="true" />
+                    </md-input-container>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-md-6">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>GST No.</label>
+
+                        <input type="text" ng-model="CompanyDetails.GSTNo" ng-required="CompanyDetails.address.CountryCode == 'MY'" />
+                    </md-input-container>
+                </div>
+                <div class="col-xs-12 col-md-6">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>TAX ID</label>
+
+                        <input type="text" ng-model="CompanyDetails.TaxId" />
+                    </md-input-container>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Address</label>
+
+                        <input type="text" ng-model="CompanyDetails.address.Address1" ng-required="true" />
+                    </md-input-container>
+                </div>
+            </div>
+            <div class="row">
+
+                <div class="col-xs-12">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Address2</label>
+                        <input type="text" ng-model="CompanyDetails.address.Address2" ng-required="true" />
+                    </md-input-container>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-md-6">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Post Code</label>
+
+                        <input type="text" ng-model="CompanyDetails.address.ZipCode" ng-required="true" logicon-number />
+                    </md-input-container>
+                </div>
+                <div class="col-xs-12 col-md-6">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>City/Suburb</label>
+
+                        <input type="text" ng-model="CompanyDetails.address.City" ng-required="true" />
+                    </md-input-container>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>State</label>
+
+                        <input type="text" ng-model="CompanyDetails.address.State" ng-required="true" />
+                    </md-input-container>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-md-6">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Country</label>
+                        <md-select ng-model="CompanyDetails.address.CountryCode"
+                                   ng-required="true" ng-init="CompanyDetails.address.CountryCode = 'MY'">
+                            <md-option ng-repeat="item in CountriesList" ng-value="item.CompanyCode">
+                                {{item.CompanyName}}
+                            </md-option>
+                        </md-select>
+                        <!--<select ng-model="CompanyDetails.address.CountryCode" ng-options="s.CompanyCode as s.CompanyName for s in CountriesList" ng-required="true"></select>-->
+                    </md-input-container>
+                </div>
+                <!--<div class="col-xs-12 col-md-7">
+                    <input type="text"  />
+                </div>-->
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-md-6">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Tel No.</label>
+
+                        <input type="text" ng-model="CompanyDetails.address.TelNo" ng-required="true" logicon-alpha-number  ng-maxlength="15"/>
+                    </md-input-container>
+                </div>
+                <!--<div class="col-xs-12 col-md-2">
+                    <label>Contact</label>
+                </div>
+                <div class="col-xs-12 col-md-4">
+                    <input type="text"  />
+                </div>-->
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-md-6">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Fax No.</label>
+
+                        <input type="text" ng-model="CompanyDetails.address.FaxNo" ng-required="true"  logicon-alpha-number ng-maxlength="15"/>
+                    </md-input-container>
+                </div>
+                <div class="col-xs-12 col-md-6">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Mobile No.</label>
+
+                        <input type="text" ng-model="CompanyDetails.address.MobileNo" ng-required="true" logicon-alpha-number ng-maxlength="15"/>
+                    </md-input-container>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Email</label>
+                        <input type="email" ng-pattern="/^[a-z]+[a-z0-9._]+@[a-z]+\.[a-z.]{2,5}$/" ng-model="CompanyDetails.address.Email" ng-required="true" />
+                    </md-input-container>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xs-12">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Website</label>
+
+                        <input type="text" ng-model="CompanyDetails.address.WebSite" />
+                    </md-input-container>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-6">
+
+                    <label class="pull-left">Company Logo</label>
+                    <span class="fileinput fileinput-new pull-left m-l-10" data-provides="fileinput">
+                        <span class="btn btn-primary btn-file m-r-10">
+                            <span class="fileinput-new">Upload Company Logo</span>
+                            <span class="fileinput-exists">Change</span>
+                            <input type="file"
+                                   id="companyLogo"
+                                   name="companyLogo"
+                                   ng-model="CompanyDetails.Logo"
+                                   onchange="angular.element(this).scope().fileChanged(this.files)">
+                        </span>
+                        <span class="fileinput-filename"></span>
+                        <a href="#" class="close fileinput-exists" data-dismiss="fileinput">&times;</a>
+                    </span>
+                    <!--<input type="file"
+                           id="companyLogo"
+                           name="companyLogo"
+                           ng-model="CompanyDetails.Logo"
+                           onchange="angular.element(this).scope().fileChanged(this.files)"
+                           ng-required="true" />-->
+
+                </div>
+                <div class="col-xs-12 col-md-4">
+                    <button class="btn btn-danger" type="button" ng-click="DeleteLogo()" ng-if="CompanyDetails.Logo != null && CompanyDetails.Logo != ''">
+                        <i class="zmdi zmdi-delete"></i>&nbsp;Delete Logo
+                    </button>
+                </div>
+            </div>
+
+            <div class="row m-t-25">
+                <div class="col-xs-12 text-right">
+                    <!--has-permission data-securable="Save" data-linkid="Company"-->
+                    <button class="btn btn-primary" type="submit" ng-click="submitted = true;"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Save</button>
+                    <button class="btn btn-clear" type="button" ng-click="Clear();"><i class="fa fa-eraser" aria-hidden="true"></i>&nbsp;Clear</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</form>
+
+
+

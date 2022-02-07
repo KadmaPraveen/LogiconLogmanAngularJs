@@ -1,0 +1,255 @@
+﻿<div class="container" ng-controller="HSCodeController">
+    <div class="card">
+        <div class="lv-header-alt clearfix m-b-5">
+            <h2 class="lvh-label">HSCode</h2>
+        </div>
+        <div class="card-body card-padding p-t-3 p-b-3">
+            <form id="frmHSCode" name="frmHSCode" ng-class="{'submitted':submitted}" ng-submit="SaveHSCode(hs);" autocomplete="off" novalidate>
+                <div class="row">
+                    <div class="col-md-3">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Tariff Code</label>
+                            <input type="text"
+                                   ng-model="hs.TariffCode"
+                                   ng-required="true"
+                                   maxlength="20"
+                                   ng-disabled="!IsNew" />
+                        </md-input-container>
+                    </div>
+                    <div class="col-md-3">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Indicator</label>
+                            <input type="text"
+                                   ng-model="hs.Indicator"
+                                   ng-required="true"
+                                   maxlength="5" />
+                        </md-input-container>
+                    </div>
+                    <div class="col-md-3">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>UOM Code</label>
+                            <input type="text"
+                                   ng-model="hs.UOMCode"
+                                   ng-required="true"
+                                   maxlength="20" />
+                        </md-input-container>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Description</label>
+                            <textarea rows="2"
+                                      ng-model="hs.Description"
+                                      ng-required="true"
+                                      maxlength="200" />
+                        </md-input-container>
+                    </div>
+                    <div class="col-md-6">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Header Code</label>
+                            <textarea rows="2"
+                                      class="search-icon"
+                                      ng-model="hs.HeaderCodeText"
+                                      typeahead-min-length="3"
+                                      uib-typeahead="s.Text as s.Text for s in HSCodeHeaderResults($viewValue)"
+                                      typeahead-wait-ms="100"
+                                      typeahead-editable="false"
+                                      typeahead-on-select="HSCodeHeaderSelect($item)"
+                                      autocomplete="off" />
+                        </md-input-container>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h4>Import Duty</h4>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Import Duty Method</label>
+                                    <md-select ng-model="hs.ImportDutyMethod" ng-required="true" ng-change="manipulateDutyRate(hs.ImportDutyMethod,true)">
+                                        <md-option ng-repeat="item in lookUpData.dutyMethodList" ng-value="item.Value">
+                                            {{item.Text}}
+                                        </md-option>
+                                    </md-select>
+                                </md-input-container>
+                            </div>
+                            <div class="col-md-6">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Import Duty Rate</label>
+                                    <input type="text"
+                                           ng-model="hs.ImportDutyRate"
+                                           ng-maxlength="12"
+                                           logicon-decimal
+                                           ng-disabled="isDisable || isImpRate" />
+                                </md-input-container>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Import Duty Specific Rate</label>
+                                    <input type="text"
+                                           ng-model="hs.ImportDutySpecificRate"
+                                           ng-maxlength="12"
+                                           logicon-decimal
+                                           ng-disabled="isDisable || isImpSepRate" />
+                                </md-input-container>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Import Duty In Quota</label>
+                                    <input type="text"
+                                           ng-model="hs.ImportDutyInQuota"
+                                           ng-maxlength="12"
+                                           logicon-decimal />
+                                </md-input-container>
+                            </div>
+                            <div class="col-md-6">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Import Duty Out Quota</label>
+                                    <input type="text"
+                                           ng-model="hs.ImportDutyOutQuota"
+                                           ng-maxlength="12"
+                                           logicon-decimal
+                                           />
+                                </md-input-container>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Import Excise Duty Method</label>
+                                    <md-select ng-model="hs.ImportExciseDutyMethod" ng-required="true">
+                                        <md-option ng-repeat="item in lookUpData.dutyMethodList" ng-value="item.Value">
+                                            {{item.Text}}
+                                        </md-option>
+                                    </md-select>
+                                </md-input-container>
+                            </div>
+                            <div class="col-md-6">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Import Excise Duty Rate</label>
+                                    <input type="text"
+                                           ng-model="hs.ImportExciseDutyRate"
+                                           ng-maxlength="12"
+                                           logicon-decimal />
+                                </md-input-container>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Import Excise Specific Rate</label>
+                                    <input type="text"
+                                           ng-model="hs.ImportExciseSpecificRate"
+                                           ng-maxlength="12"
+                                           logicon-decimal />
+                                </md-input-container>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h4>Export Duty</h4>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Export Duty Method</label>
+                                    <md-select ng-model="hs.ExportDutyMethod" ng-required="true" ng-change="manipulateExDutyRate(hs.ExportDutyMethod,true)">
+                                        <md-option ng-repeat="item in lookUpData.dutyMethodList" ng-value="item.Value">
+                                            {{item.Text}}
+                                        </md-option>
+                                    </md-select>
+                                </md-input-container>
+                            </div>
+                            <div class="col-md-6">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Export Duty Rate</label>
+                                    <input type="text"
+                                           ng-model="hs.ExportDutyRate"
+                                           ng-maxlength="12"
+                                           logicon-decimal
+                                           ng-disabled="isExDisable || isExRate" />
+                                </md-input-container>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Export Duty Specific Rate</label>
+                                    <input type="text"
+                                           ng-model="hs.ExportDutySpecificRate"
+                                           ng-maxlength="12"
+                                           logicon-decimal 
+                                           ng-disabled="isExDisable || isExSepRate"/>
+                                </md-input-container>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>ATIGA</label>
+                                    <input type="text"
+                                           ng-model="hs.ATIGA"
+                                           ng-maxlength="12"
+                                           logicon-decimal />
+                                </md-input-container>
+                            </div>
+                            <div class="col-md-6">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>GST</label>
+                                    <input type="text"
+                                           ng-model="hs.GST"
+                                           ng-maxlength="12"
+                                           logicon-decimal />
+                                </md-input-container>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Old PDK</label>
+                                    <input type="text" ng-model="hs.OldPDK" ng-maxlength="20" />
+                                </md-input-container>
+                            </div>
+                            <div class="col-md-3">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Old AHTN</label>
+                                    <input type="text" ng-model="hs.OldAHTN" ng-maxlength="20" />
+                                </md-input-container>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" value="" ng-model="hs.IsVehicle">
+                                        <i class="input-helper"></i>
+                                        Is Vehicle
+                                    </label>
+                                </div>
+                                <!--<md-checkbox ng-model="hs.IsVehicle">Is Vehicle</md-checkbox>-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <button class="btn btn-primary" type="submit" ng-click="submitted = true;">Save</button>
+                        <span class="pull-right">
+                            <button class="btn btn-primary" type="button" data-ui-sref="hscodelist"><i class="fa fa-undo" aria-hidden="true"></i>&nbsp;Back</button>
+                        </span>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

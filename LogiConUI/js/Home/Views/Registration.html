@@ -1,0 +1,1007 @@
+﻿<div style="overflow-y:scroll;" class="scrollbar-main" ng-style="{height: iframeHeight + 80 + 'px'}" resize>
+    <div class="container" ng-controller="RegisterCntrl as Cntrl">
+        <style type="text/css">
+            .userIdPopOverCss .popover {
+                width: 300px;
+                height: 50px;
+                padding: 5px 5px 5px 5px;
+                font-weight: 600;
+            }
+
+            .passwordPopOverCss .popover {
+                width: 450px;
+                height: 80px;
+                padding: 5px 5px 5px 5px;
+                font-weight: 600;
+            }
+
+            .isNotMatched {
+                border-bottom: 2px solid rgb(221,44,0);
+            }
+
+            /*  html {
+                overflow: -moz-scrollbars-vertical !important;
+                overflow-y: scroll !important;
+            }::-webkit-scrollbar {
+              -webkit-appearance: none;
+              width: 7px;
+            }
+            ::-webkit-scrollbar-thumb {
+              border-radius: 4px;
+              background-color: rgba(0, 0, 0, .5);
+              -webkit-box-shadow: 0 0 1px rgba(255, 255, 255, .5);
+            }*/
+            .fileCss {
+                border: 0px solid #ccc;
+            }
+
+            .nav-tabs li.nav-item {
+                border: 0px solid #fff !important;
+            }
+
+            .nav-tabs li.active.nav-item {
+                border-bottom: 2px solid rgb(199, 56, 64) !important;
+                -webkit-transition-property: all; /* Safari */
+                -webkit-transition-duration: 0.5s; /* Safari */
+                transition-property: all;
+                transition-duration: 0.5s;
+            }
+
+
+
+            .nav-tabs li.nav-item {
+                border: 2px solid #fff !important;
+            }
+
+            .nav-tabs li a {
+                border: 0px !important;
+            }
+
+            .nav-tabs li .nav-link, .nav-tabs li a {
+                border-bottom: 1px solid #fff;
+                font-size: 14px;
+                text-align: center;
+                line-height: 24px;
+                padding: 10px 24px;
+                -webkit-transition: background-color .35s cubic-bezier(.35,0,.25,1);
+                transition: background-color .35s cubic-bezier(.35,0,.25,1);
+                cursor: pointer;
+                white-space: nowrap;
+                position: relative;
+                text-transform: uppercase;
+                float: left;
+                font-weight: 500;
+                box-sizing: border-box;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                color: #000;
+            }
+
+            .nav-tabs li.active a, .nav-tabs li.active a:hover, .nav-tabs li.active a:active, .nav-tabs li.active a:focus {
+                color: rgb(199,56,64);
+                -webkit-transition-property: all; /* Safari */
+                -webkit-transition-duration: 0.5s; /* Safari */
+                transition-property: all;
+                transition-duration: 0.5s;
+            }
+
+            .nav-tabs li a, .nav-tabs li a:hover, .nav-tabs li a:active, .nav-tabs li a:focus {
+                background-color: transparent !important;
+            }
+
+            .tab-content {
+                /*background-color: rgb(250,250,250);*/
+                padding: 16px;
+                border-top: 1px solid rgb(250,250,250);
+            }
+
+            table th.action, table td.action {
+                width: 50px;
+            }
+        </style>
+        <div class="row m-t-25 p-t-25" ng-show="isRegistration">
+
+            <div class="col-xs-12">
+                <div class="card  ng-scope toggled">
+                    <div class="lv-header-alt clearfix ">
+                        <h2 class="lvh-label"> Login Information</h2>
+                        <button class="btn btn-success waves-effect pull-right" style="margin-right:15px;" type="button" ng-click="navToLogin()" aria-label="button">
+                            <i class="zmdi zmdi-arrow-forward"></i>
+                        </button>
+                    </div>
+                    <div class="card-body card-padding p-t-10 p-b-25">
+                        <form id="frmSignUp" name="frmSignUp" ng-class="{'submitted': submitted}" autocomplete="off" novalidate>
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>Email ID</label>
+                                        <input type="email"
+                                               ng-model="reg.Email"
+                                               ng-maxlength="60"
+                                               logicon-limit
+                                               ng-required="true" />
+                                    </md-input-container>
+                                </div>
+                                <div class="col-xs-12 col-md-4">
+                                    <span class="userIdPopOverCss " style="position: relative;top: 10px;">
+                                        <a uib-popover="please enter valid Email id for Email ID"
+                                           popover-trigger="mouseenter">
+                                            <i class="zmdi zmdi-info f-20"></i>
+                                        </a>
+                                    </span>
+                                    <button class="btn btn-default waves-effect  m-t-10 m-l-15"
+                                            type="button"
+                                            ng-click="CheckAvailability()">
+                                        Check Availability
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>Password</label>
+                                        <input type="password"
+                                               name="regPassword"
+                                               ng-required="isUserExists"
+                                               ng-model="reg.Password"
+                                               ng-disabled="!isUserExists"
+                                               ng-class="{'isNotMatched': !isPasswordMatched}"
+                                               ng-pattern="/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,}/"
+                                               ng-minlength="8"
+                                               ng-maxlength="20" logicon-limit />
+                                        <div ng-if="frmSignUp.regPassword.$invalid">
+                                            <div style="color:red">Minimum 8 characters at least 1 Uppercase Alphabet, 1 Lowercase Alphabet, 1 Number and 1 Special Character</div>
+                                        </div>
+                                    </md-input-container>
+
+                                </div>
+                                <div class="col-xs-12 col-md-4">
+                                    <span class="passwordPopOverCss" style="position: relative;top: 10px;">
+                                        <a uib-popover="Password must have at least 8 characters and contain the following:
+uppercase letters, lowercase letters, numbers and symbols"
+                                           popover-trigger="mouseenter">
+                                            <i class="zmdi zmdi-info f-20" aria-hidden="true"></i>
+                                        </a>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-8">
+
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>Confirm Password</label>
+                                        <input type="password"
+                                               name="regConfirmPassword"
+                                               ng-model="reg.ConfirmPassword"
+                                               ng-disabled="!isUserExists"
+                                               ng-class="{'isNotMatched': !isPasswordMatched}"
+                                               ng-required="isUserExists"
+                                               ng-pattern="/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,}/"
+                                               compare-to="reg.Password"
+                                               ng-minlength="8"
+                                               ng-blur="ComparePassword()"
+                                               ng-maxlength="20" logicon-limit />
+                                        <div ng-if="frmSignUp.regConfirmPassword.$invalid">
+                                            <div style="color:red">Minimum 8 characters at least 1 Uppercase Alphabet, 1 Lowercase Alphabet, 1 Number and 1 Special Character</div>
+                                        </div>
+                                        <!--<input type="password"
+                                               ng-model="reg.ConfirmPassword"
+                                               ng-disabled="!isUserExists"
+                                               ng-class="{'isNotMatched': !isPasswordMatched}"
+                                               ng-required="isUserExists"
+                                               ng-pattern="/(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/"
+                                               compare-to="reg.Password"
+                                               ng-minlength="8"
+                                               ng-blur="ComparePassword(reg.ConfirmPassword);"
+                                               ng-maxlength="20" logicon-limit />-->
+                                    </md-input-container>
+
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>Full Name</label>
+                                        <input type="text"
+                                               ng-model="reg.FullName"
+                                               ng-required="isUserExists"
+                                               ng-disabled="!isUserExists"
+                                               ng-maxlength="50" logicon-limit />
+
+                                    </md-input-container>
+
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12 col-md-6">
+
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>Mobile Country Code</label>
+                                        <md-select ng-model="reg.CountryCode" ng-disabled="!isUserExists" ng-change="countryChanged()" ng-required="isUserExists">
+                                            <md-option ng-repeat="item in lookUpData.countryCodeList" ng-value="item.Value">
+                                                {{item.Text}}
+                                            </md-option>
+                                        </md-select>
+
+                                    </md-input-container>
+
+                                </div>
+                                <div class="col-xs-12 col-md-6">
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>Mobile Number</label>  <input type="text"
+                                                                             ng-model="reg.MobileNo"
+                                                                             ng-required="isUserExists"
+                                                                             ng-disabled="!isUserExists"
+                                                                             ng-maxlength="18"
+                                                                             logicon-limit
+                                                                             logicon-number />
+                                    </md-input-container>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>NRIC / Passport</label>
+                                        <input type="text"
+                                               ng-model="reg.NRIC"
+                                               ng-required="isUserExists"
+                                               ng-disabled="!isUserExists"
+                                               ng-maxlength="15"
+                                               logicon-limit
+                                               ng-pattern="/^[a-zA-Z0-9\.]*$/" />
+
+                                    </md-input-container>
+
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>Security Question</label>
+                                        <md-select ng-model="reg.SecurityQuestion" ng-required="isUserExists" ng-disabled="!isUserExists">
+                                            <md-option ng-repeat="item in lookUpData.securityQuestionsList" ng-value="item.Value">
+                                                {{item.Text}}
+                                            </md-option>
+                                        </md-select>
+                                    </md-input-container>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>Answer</label>
+                                        <input type="text"
+                                               ng-model="reg.Answer"
+                                               ng-required="isUserExists"
+                                               ng-disabled="!isUserExists"
+                                               ng-maxlength="200"
+                                               logicon-limit />
+
+                                    </md-input-container>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12 text-left">
+                                    <md-button type="submit"
+                                               class="btn btn-primary waves-effect" ng-click="SignUp(reg)">Sign Up</md-button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div ng-show="!isRegistration">
+            <div class="m-t-25 p-t-25">
+
+                <div class="card">
+                    <div class="lv-header-alt clearfix ">
+                        <h2 class="lvh-label">Registration Status</h2>
+                    </div>
+                    <div class="card-body card-padding p-t-10 p-b-25">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <uib-tabset active="active">
+                                    <uib-tab index="1" heading="User Information">
+                                        <form id="Cntrl.frmUserInfo" name="Cntrl.frmUserInfo" ng-class="{'submitted':submittedUserInfo}" ng-submit="SaveUserInfo(registration)" autocomplete="off" novalidate>
+                                            <div class="row">
+                                                <div class="col-xs-12">
+                                                    <md-input-container class="md-block" flex-gt-sm>
+                                                        <label>User ID</label>
+
+                                                        <input ng-disabled="true" type="email" ng-model="registration.Email" ng-required="true" />
+                                                    </md-input-container>
+                                                </div>
+                                            </div>
+                                            <div class="row ">
+                                                <div class="col-xs-12">
+                                                    <md-input-container class="md-block" flex-gt-sm>
+                                                        <label>Name</label>
+
+                                                        <input type="text"
+                                                               ng-model="registration.FullName"
+                                                               ng-required="true" ng-maxlength="50" logicon-limit />
+                                                    </md-input-container>
+
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-xs-12 col-md-6">
+
+                                                    <md-input-container class="md-block" flex-gt-sm>
+                                                        <label>Mobile Country Code</label>
+                                                        <md-select ng-model="registration.CountryCode" ng-change="countryChangedforUserInfo()" ng-required="true" ng-disabled="true">
+                                                            <md-option ng-repeat="item in lookUpData.countryCodeList" ng-value="item.Value">
+                                                                {{item.Text}}
+                                                            </md-option>
+                                                        </md-select>
+
+                                                    </md-input-container>
+
+                                                </div>
+                                                <div class="col-xs-12 col-md-6">
+                                                    <md-input-container class="md-block" flex-gt-sm>
+                                                        <label>Mobile Number</label>
+                                                        <input type="text" ng-required="true"
+                                                               ng-model="registrationMobileNo"
+                                                               ng-maxlength="18"
+                                                               logicon-limit
+                                                               logicon-number ng-disabled="true" />
+                                                    </md-input-container>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-xs-12">
+                                                    <md-input-container class="md-block" flex-gt-sm>
+                                                        <label>NRIC / Passport</label>
+                                                        <input type="text" ng-required="true"
+                                                               ng-model="registration.NRIC"
+                                                               ng-maxlength="50"
+                                                               logicon-limit ng-disabled="true" />
+                                                    </md-input-container>
+
+                                                </div>
+                                            </div>
+                                            <div class="row ">
+                                                <div class="col-xs-12">
+                                                    <md-input-container class="md-block" flex-gt-sm>
+                                                        <label>Security Question</label>
+                                                        <md-select ng-model="registration.SecurityQuestion" ng-required="true">
+                                                            <md-option ng-repeat="item in lookUpData.securityQuestionsList" ng-value="item.Value">
+                                                                {{item.Text}}
+                                                            </md-option>
+                                                        </md-select>
+                                                    </md-input-container>
+
+                                                </div>
+                                            </div>
+                                            <div class="row ">
+                                                <div class="col-xs-12">
+                                                    <md-input-container class="md-block" flex-gt-sm>
+                                                        <label>Answer</label>
+                                                        <input type="text" ng-model="registration.Answer" ng-required="true" />
+                                                        <input type="hidden" ng-model="registration.UserID" />
+                                                    </md-input-container>
+                                                </div>
+                                            </div>
+                                            <div class="row ">
+                                                <div class="col-md-12">
+                                                    <div ng-if="disableTabs">
+                                                        <div class="card">
+                                                            <div class="card-body card-padding p-t-25 p-b-25">
+                                                                <div class="row">
+                                                                    <div class="col-xs-12 col-md-6">
+                                                                        <md-input-container class="md-block" flex-gt-sm>
+                                                                            <label>OTP</label>
+
+                                                                            <input type="text" ng-model="OTP" />
+                                                                        </md-input-container>
+                                                                        {{countdown}}
+                                                                        {{message}}
+                                                                    </div>
+                                                                    <div class="col-xs-12 col-md-6">
+                                                                        <button class="btn btn-primary m-t-10" ng-disabled="OTP == null || OTP == ''" type="button" ng-click="VerifyOTP(OTP)">Verify OTP</button>
+                                                                        <button class="btn btn-primary m-t-10" type="button" ng-disabled="!buttonResendOTPEnabled" ng-click="ResendOTPForRegistration(registration.Email)">Resend OTP</button>
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row ">
+                                                <div class="col-xs-12 text-right">
+                                                    <button type="submit" ng-disabled="disableTabs" class="btn btn-primary" ng-click="submittedUserInfo = true"><i class="fa fa-forward" aria-hidden="true"></i>&nbsp;Next</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </uib-tab>
+                                    <uib-tab index="2" heading="Company Information" disable="disableTabs">
+                                        <form id="Cntrl.frmCompanyInfo" name="Cntrl.frmCompanyInfo" ng-class="{'submitted':submittedCompanyInfo}" ng-submit="SaveCompanyInfo(registeredCompany)" autocomplete="off" novalidate>
+                                            <div class="row">
+                                                <div class="col-xs-12 col-md-6">
+                                                    <div class="row">
+                                                        <div class="col-xs-12">
+                                                            <md-input-container class="md-block" flex-gt-sm>
+                                                                <label>Company Name</label>
+                                                                <input type="text"
+                                                                       ng-model="registeredCompany.CompanyName"
+                                                                       ng-disabled="registeredCompany.CompanyID"
+                                                                       ng-required="true"
+                                                                       ng-maxlength="100"
+                                                                       logicon-limit />
+                                                            </md-input-container>
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-xs-12">
+                                                            <md-input-container class="md-block" flex-gt-sm>
+                                                                <label>Organisation Type</label>
+                                                                <md-select ng-model="registeredCompany.OrganisationType" ng-change="OrganisationTypeChanged()" ng-required="true">
+                                                                    <md-option ng-repeat="item in lookUpData.organizationTypeList" ng-value="item.Value">
+                                                                        {{item.Text}}
+                                                                    </md-option>
+                                                                </md-select>
+                                                            </md-input-container>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row ">
+                                                        <div class="col-xs-12">
+                                                            <md-input-container class="md-block" flex-gt-sm>
+                                                                <label>Company Registration No.</label>
+                                                                <input type="text"
+                                                                       ng-model="registeredCompany.RegistrationNo"
+                                                                       ng-required="true"
+                                                                       ng-maxlength="50"
+                                                                       logicon-limit />
+                                                            </md-input-container>
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-xs-4">
+                                                            <md-input-container class="md-block" flex-gt-sm>
+                                                                <label>Agent Code</label>
+                                                                <input type="text"
+                                                                       ng-required="isDeclaration"
+                                                                       ng-model="registeredCompany.AgentName"
+                                                                       ng-maxlength="100"
+                                                                       logicon-limit />
+                                                            </md-input-container>
+                                                        </div>
+                                                        <div class="col-xs-8 text-right">
+                                                            <label>(Required for Declaration Module)</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row ">
+                                                        <div class="col-xs-12">
+                                                            <md-input-container class="md-block" flex-gt-sm>
+                                                                <label>GST Registration Date</label>
+                                                                <input mdc-datetime-picker="" date="true" time="false" type="text" format="{{dateFormat}}" class="date-icon"
+                                                                       max-date="maxdate" ng-model="registeredCompany.GSTRegistrationDate">
+                                                            </md-input-container>
+
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row ">
+                                                        <div class="col-xs-12">
+                                                            <md-input-container class="md-block" flex-gt-sm>
+                                                                <label>GST Registration No.</label>
+                                                                <input type="text"
+                                                                       ng-model="registeredCompany.GSTNo"
+                                                                       ng-required="true"
+                                                                       ng-maxlength="20"
+                                                                       logicon-limit />
+                                                            </md-input-container>
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="row ">
+                                                        <div class="col-xs-12 col-md-10">
+                                                            <md-input-container class="md-block" flex-gt-sm>
+                                                                <label>Dagang net Account No.</label>
+                                                                <input type="text"
+                                                                       ng-model="registeredCompany.CPAMAccountNo" />
+                                                            </md-input-container>
+                                                        </div>
+                                                        <div class="col-xs-12 col-md-2">
+                                                            <label>    </label>
+                                                            <label>(if any)</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xs-12 col-md-6">
+                                                    <div class="row ">
+                                                        <div class="col-xs-12 col-md-2">
+                                                            <label>Modules</label>
+                                                        </div>
+                                                        <div class="col-xs-12 col-md-10">
+                                                            <div class="row">
+                                                                <div class="col-xs-12 col-md-12" ng-repeat="item in registeredCompany.CompanyRegistrationTypeList">
+                                                                    <md-switch aria-label="{{item.ModuleDescription}}"
+                                                                               ng-model="item.isSelected"
+                                                                               class="md-primary"
+                                                                               ng-change="isDeclarationChecked()">
+                                                                        {{item.ModuleDescription}}&nbsp;&nbsp;
+                                                                        <span style="color:rgb(199,56,64); font-size:12px;font-weight:bolder;font-style:italic;"
+                                                                              ng-if="item.isSelected">RM{{item.Rate}}Monthly</span>
+                                                                    </md-switch>
+                                                                    <!--<div class="checkbox m-b-15">
+                                                                        <label>
+                                                                            <input value=""
+                                                                                   ng-click="isDeclarationChecked()"
+                                                                                   type="checkbox"
+                                                                                   ng-model="item.isSelected"
+                                                                                   aria-label="{{item.ModuleDescription}}">
+                                                                            <i class="input-helper"></i>
+                                                                            &nbsp;&nbsp;{{item.ModuleDescription}}&nbsp;&nbsp;
+                                                                            <span style="color:rgb(199,56,64); font-size:12px;font-weight:bolder;font-style:italic;"
+                                                                                  ng-if="item.isSelected">RM {{item.Rate}} Monthly</span>
+                                                                        </label>
+                                                                    </div>-->
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+
+                                                    </div>
+
+
+                                                </div>
+                                            </div>
+                                            <div class="row ">
+                                                <div class="col-xs-12 col-md-4">
+                                                    <md-input-container class="md-block" flex-gt-sm>
+                                                        <label>Address</label>
+                                                        <input type="text"
+                                                               ng-model="registeredCompany.companyAddress.Address1"
+                                                               ng-required="true"
+                                                               ng-maxlength="255"
+                                                               logicon-limit />
+                                                    </md-input-container>
+                                                </div>
+                                                <div class="col-xs-12 col-md-4">
+                                                    <md-input-container class="md-block" flex-gt-sm>
+                                                        <label>Address2</label>
+                                                        <input type="text"
+                                                               ng-model="registeredCompany.companyAddress.Address2"
+                                                               ng-required="true"
+                                                               ng-maxlength="255"
+                                                               logicon-limit />
+                                                    </md-input-container>
+                                                </div>
+                                                <div class="col-xs-12 col-md-4">
+                                                    <md-input-container class="md-block" flex-gt-sm>
+                                                        <label>Address3</label>
+                                                        <input type="text"
+                                                               ng-model="registeredCompany.companyAddress.Address3"
+                                                               ng-maxlength="255"
+                                                               logicon-limit />
+                                                    </md-input-container>
+
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-xs-12 col-md-4">
+                                                    <md-input-container class="md-block" flex-gt-sm>
+                                                        <label>City / District</label>
+                                                        <input type="text"
+                                                               ng-model="registeredCompany.companyAddress.City"
+                                                               ng-required="true"
+                                                               ng-maxlength="100"
+                                                               logicon-limit />
+                                                    </md-input-container>
+                                                </div>
+                                                <div class="col-xs-12 col-md-4">
+                                                    <md-input-container class="md-block" flex-gt-sm>
+                                                        <label>State</label>
+                                                        <input type="text"
+                                                               ng-model="registeredCompany.companyAddress.State"
+                                                               ng-required="true"
+                                                               ng-maxlength="100"
+                                                               logicon-limit />
+                                                    </md-input-container>
+                                                </div>
+                                                <div class="col-xs-12 col-md-4">
+                                                    <md-input-container class="md-block" flex-gt-sm>
+                                                        <label>Country</label>
+                                                        <md-select ng-model="registeredCompany.companyAddress.CountryCode" ng-required="true">
+                                                            <md-option ng-repeat="item in lookUpData.CountriesList" ng-value="item.CompanyCode">
+                                                                {{item.CompanyName}}
+                                                            </md-option>
+                                                        </md-select>
+                                                    </md-input-container>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-4 col-lg-2">
+                                                    <md-input-container class="md-block" flex-gt-sm>
+                                                        <label>Postcode</label>
+                                                        <input type="text"
+                                                               ng-model="registeredCompany.companyAddress.PostCode"
+                                                               ng-required="true"
+                                                               ng-maxlength="10"
+                                                               logicon-limit
+                                                               logicon-number />
+                                                    </md-input-container>
+                                                </div>
+                                            </div>
+                                            <div class="row ">
+                                                <div class="col-xs-12 col-md-6">
+                                                    <div class="card">
+                                                        <div class="lv-header-alt clearfix ">
+                                                            <h2 class="lvh-label">Billing Contact Person</h2>
+                                                        </div>
+
+                                                        <div class="card-body card-padding p-t-25 p-b-25">
+                                                            <div class="row">
+                                                                <div class="col-xs-12 col-md-8">
+
+                                                                    <md-input-container class="md-block" flex-gt-sm>
+                                                                        <label>Name</label>
+                                                                        <input type="text"
+                                                                               ng-model="registeredCompany.companyAddress.ContactPerson1"
+                                                                               ng-required="true"
+                                                                               ng-maxlength="50"
+                                                                               logicon-limit />
+                                                                    </md-input-container>
+                                                                </div>
+                                                                <div class="col-xs-6 col-md-4">
+                                                                    <div class="checkbox m-b-15">
+                                                                        <label>
+                                                                            <input value="" ng-click="toggleChksCargo()" type="checkbox" aria-label="Same as above"
+                                                                                   ng-model="Cntrl.sameasabove1"
+                                                                                   ng-init="sameasabove1 = false"
+                                                                                   ng-change="SameAbove1()">
+                                                                            <i class="input-helper"></i>
+                                                                            Same as above
+                                                                        </label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-xs-12">
+                                                                    <md-input-container class="md-block" flex-gt-sm>
+                                                                        <label>Designation</label>  <input type="text"
+                                                                                                           ng-model="registeredCompany.companyAddress.Designation1" />
+                                                                    </md-input-container>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-xs-12 col-md-4">
+                                                                    <md-input-container class="md-block" flex-gt-sm>
+                                                                        <label>Phone Country Code </label>
+                                                                        <md-select ng-model="registeredCompany.companyAddress.Phone1CountryCode" ng-required="true">
+                                                                            <md-option ng-repeat="item in lookUpData.countryCodeList" ng-value="item.Value">
+                                                                                {{item.Text}}
+                                                                            </md-option>
+                                                                        </md-select>
+                                                                    </md-input-container>
+                                                                </div>
+                                                                <div class="col-xs-12 col-md-5">
+                                                                    <md-input-container class="md-block" flex-gt-sm>
+                                                                        <label>Phone Number </label>
+                                                                        <input type="text"
+                                                                               ng-model="registeredCompany.companyAddress.Phone1"
+                                                                               ng-required="true"
+                                                                               ng-maxlength="18"
+                                                                               logicon-limit
+                                                                               logicon-number />
+                                                                    </md-input-container>
+                                                                </div>
+                                                                <div class="col-xs-12  col-md-3">
+                                                                    <md-input-container class="md-block" flex-gt-sm>
+                                                                        <label>Extension</label>
+                                                                        <input type="text"
+                                                                               ng-model="registeredCompany.companyAddress.Extension1"
+                                                                               logicon-number
+                                                                               logicon-limit
+                                                                               ng-maxlength="18" />
+                                                                    </md-input-container>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-xs-12 col-md-4">
+                                                                    <md-input-container class="md-block" flex-gt-sm>
+                                                                        <label>Mobile Country Code</label>
+                                                                        <md-select ng-model="registeredCompany.companyAddress.Mobile1CountryCode" ng-required="true">
+                                                                            <md-option ng-repeat="item in lookUpData.countryCodeList" ng-value="item.Value">
+                                                                                {{item.Text}}
+                                                                            </md-option>
+                                                                        </md-select>
+                                                                    </md-input-container>
+                                                                </div>
+                                                                <div class="col-xs-12 col-md-5">
+                                                                    <md-input-container class="md-block" flex-gt-sm>
+                                                                        <label>Mobile Number </label>
+                                                                        <input type="text"
+                                                                               ng-model="registeredCompany.companyAddress.Mobile1"
+                                                                               ng-required="true"
+                                                                               ng-maxlength="18"
+                                                                               logicon-limit
+                                                                               logicon-number />
+                                                                    </md-input-container>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-xs-12">
+                                                                    <md-input-container class="md-block" flex-gt-sm>
+                                                                        <label>Email ID</label>
+                                                                        <input type="email"
+                                                                               ng-model="registeredCompany.companyAddress.ContactEmailID1"
+                                                                               ng-required="true"
+                                                                               ng-maxlength="50"
+                                                                               logicon-limit />
+                                                                    </md-input-container>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xs-12 col-md-6">
+                                                    <div class="card">
+                                                        <div class="lv-header-alt clearfix ">
+                                                            <h2 class="lvh-label">Operations Contact Person</h2>
+                                                        </div>
+
+                                                        <div class="card-body card-padding p-t-25 p-b-25">
+                                                            <div class="row">
+                                                                <div class="col-xs-12 col-md-8">
+                                                                    <md-input-container class="md-block" flex-gt-sm>
+                                                                        <label>Name</label>
+                                                                        <input type="text" ng-model="registeredCompany.companyAddress.ContactPerson2" />
+                                                                    </md-input-container>
+                                                                </div>
+                                                                <div class="col-xs-6 col-md-4">
+                                                                    <div class="checkbox m-b-15">
+                                                                        <label>
+                                                                            <input value="" ng-click="toggleChksCargo()" type="checkbox" aria-label="Same as above"
+                                                                                   ng-model="Cntrl.sameasabove2"
+                                                                                   ng-init="sameasabove2 = false"
+                                                                                   ng-change="SameAbove2()">
+                                                                            <i class="input-helper"></i>
+                                                                            Same as above
+                                                                        </label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-xs-12">
+                                                                    <md-input-container class="md-block" flex-gt-sm>
+                                                                        <label>Designation</label>  <input type="text" ng-model="registeredCompany.companyAddress.Designation2" />
+                                                                    </md-input-container>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-xs-12 col-md-4">
+                                                                    <md-input-container class="md-block" flex-gt-sm>
+                                                                        <label>Phone Country Code</label>
+                                                                        <md-select ng-model="registeredCompany.companyAddress.Phone2CountryCode" ng-required="true">
+                                                                            <md-option ng-repeat="item in lookUpData.countryCodeList" ng-value="item.Value">
+                                                                                {{item.Text}}
+                                                                            </md-option>
+                                                                        </md-select>
+                                                                    </md-input-container>
+                                                                </div>
+                                                                <div class="col-xs-12 col-md-5">
+                                                                    <md-input-container class="md-block" flex-gt-sm>
+                                                                        <label>Phone Number</label>
+                                                                        <input type="text"
+                                                                               ng-model="registeredCompany.companyAddress.Phone2"
+                                                                               logicon-number
+                                                                               ng-maxlength="18"
+                                                                               logicon-limit />
+                                                                    </md-input-container>
+                                                                </div>
+                                                                <div class="col-xs-12 col-md-3">
+                                                                    <md-input-container class="md-block" flex-gt-sm>
+                                                                        <label>Extension</label>
+                                                                        <input type="text" ng-model="registeredCompany.companyAddress.Extension2" logicon-number
+                                                                               ng-maxlength="18"
+                                                                               logicon-limit />
+                                                                    </md-input-container>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-xs-12 col-md-4">
+                                                                    <md-input-container class="md-block" flex-gt-sm>
+                                                                        <label>Mobile Country code</label>
+                                                                        <md-select ng-model="registeredCompany.companyAddress.Mobile2CountryCode" ng-required="true">
+                                                                            <md-option ng-repeat="item in lookUpData.countryCodeList" ng-value="item.Value">
+                                                                                {{item.Text}}
+                                                                            </md-option>
+                                                                        </md-select>
+                                                                    </md-input-container>
+                                                                </div>
+                                                                <div class="col-xs-12 col-md-5">
+                                                                    <md-input-container class="md-block" flex-gt-sm>
+                                                                        <label>Mobile Number</label>
+                                                                        <input type="text" ng-model="registeredCompany.companyAddress.Mobile2"
+                                                                               logicon-number
+                                                                               ng-maxlength="18"
+                                                                               logicon-limit />
+                                                                    </md-input-container>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-xs-12">
+                                                                    <md-input-container class="md-block" flex-gt-sm>
+                                                                        <label>Email ID</label>  <input type="text" ng-model="registeredCompany.companyAddress.ContactEmailID2" />
+                                                                    </md-input-container>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row ">
+                                                <div class="col-xs-12 text-right">
+                                                    <button type="submit" class="btn btn-primary" ng-click="submittedCompanyInfo = true"><i class="fa fa-forward" aria-hidden="true"></i>&nbsp;Next</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </uib-tab>
+                                    <uib-tab index="3" heading="Documents" disable="disableTabs">
+                                        <form id="Cntrl.frmDocs" name="Cntrl.frmDocs" ng-class="{'submitted': submittedDocs}" ng-submit="SaveDocuments()" autocomplete="off" novalidate>
+                                            <div class="card">
+                                                <div class="lv-header-alt clearfix ">
+                                                    <h2 class="lvh-label">Required Supporting Document</h2>
+                                                </div>
+                                                <div class="card-body card-padding p-t-10 p-b-25">
+                                                    <div class="row">
+                                                        <div class="col-xs-12">
+                                                            <div class="table-responsive">
+                                                                <table class="table  table-vmiddle">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th class="action">#Action</th>
+                                                                            <th class="no">S No.</th>
+                                                                            <th>Document Type</th>
+                                                                            <th width="250">File Name</th>
+                                                                            <th width="300">Upload</th>
+
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <tr ng-repeat="item in docList" class="no-table-dots">
+                                                                            <td>
+                                                                                <button class="btn btn-danger waves-effect"
+                                                                                        type="button"
+                                                                                        ng-disabled="item.FileName == null || item.FileName == ''"
+                                                                                        ng-click="DeleteImage(item.Value, item.ItemNo, $index)"
+                                                                                        aria-label="button">
+                                                                                    <i class="zmdi zmdi-delete" aria-hidden="true"></i>
+                                                                                </button>
+                                                                            </td>
+                                                                            <td>{{$index + 1}}</td>
+                                                                            <td>{{item.Text}}</td>
+                                                                            <td>
+                                                                                <a target="_blank"
+                                                                                   style="text-decoration:underline;"
+                                                                                   ng-disabled="registeredCompany.CompanyID == 0"
+                                                                                   href="{{Url + '/' + item.FileName}}">{{item.FileName}}</a>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="hidden" ng-model="item.Value" />
+                                                                                <md-input-container class="md-block" flex-gt-sm>
+                                                                                    <input type="file"
+                                                                                           aria-label="file browser control"
+                                                                                           id="docs_{{$index}}"
+                                                                                           name="docs_{{$index}}"
+                                                                                           ng-model="item.FileName"
+                                                                                           class="form-control input-sm fileCss"
+                                                                                           onchange="angular.element(this).scope().fileChanged(this.files, this.id.split('_')[1])"
+                                                                                           ng-required="item.IsMandatory" />
+                                                                                </md-input-container>
+
+                                                                            </td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-xs-12" style="font-weight:400;position:absolute; bottom:5px; left:15px;">
+                                                            <em>  “Supported Format : pdf, jpg, jpeg, png, tif. Maximum size per file : 5 MB”</em>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-xs-12 text-right">
+                                                    <button type="submit" class="btn btn-primary" ng-click="submittedDocs = true;"><i class="fa fa-forward" aria-hidden="true"></i>&nbsp;Next</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </uib-tab>
+                                    <uib-tab index="4" heading="Declaration" ng-show="!showApplicationStatusTab" disable="disableTabs">
+                                        <div class="row scrollbar-main" ng-style="{height: iframeHeight - 260 + 'px'}" resize style="padding-right:10px;font-size:14px;color:black;font-weight:600;height:450px;overflow-y:scroll;">
+                                            <div class="col-xs-12">
+                                                <p style="text-align:justify">
+                                                    <h4 class="text-center" style="color:blue;font-weight:bold">Declaration</h4>
+                                                    I/We <span style="text-decoration:underline;">{{registeredCompany.CompanyName}}</span><span ng-show="registeredCompany.CompanyName == null">______________________________________</span> (name of company) having company registration number <span ng-show="registeredCompany.RegistrationNo == null">nu______________________________________</span><span style="text-decoration:underline">{{registeredCompany.RegistrationNo}}</span>, hereby confirm that I/We have read,  understood and accepted the Terms and Conditions as attached herewith.<br />
+
+                                                    <span style="font-weight:bold;text-decoration:underline;">Privacy Policy and Consent to Use Personal Data</span><br />
+                                                    At DNeXPORT, we are committed to protecting your privacy as our valued customers and pledge to comply with the Personal Data Protection Act (“PDPA”) 2010.<br />
+                                                    Please note that any personal information (“Personal Data”) in respect of commercial transactions that relates directly or indirectly to you as an individual, that had been collected, processed and retained by DNeXPORT is protected under our Privacy Policy, formulated in pursuant to the PDPA 2010.<br />
+                                                    Please refer to our Privacy Policy at <a target="_blank" style="color:blue;text-decoration:underline" href="http://www.dnex.com.my/privacy-policy">www.dnex.com.my/privacy-policy</a> to understand how we do this and feel free to reach us at pdpa@dnex.com.my should you have any additional enquiries.
+                                                    IMPORTANT: By submitting this form, you agree and consent to the use, processing and disclosure of your Personal Data by DNeXPORT for the purpose as described in this form.
+
+                                                </p>
+                                                <div ng-include="'Js/Default/Templates/declaration.html'"></div>
+                                            </div>
+                                            <div class="col-xs-12">
+                                                <div class="checkbox m-b-5">
+                                                    <label>
+                                                        <input value="" ng-click="toggleChksCargo()" type="checkbox"
+                                                               ng-model="registeredCompany.IsDeclared" />
+                                                        <i class="input-helper"></i>
+                                                        BY TICKING THIS BOX, YOU DECLARE THAT YOU HAVE READ, UNDERSTOOD AND ACCEPT THE TERMS AND CONDITIONS AS STATED.
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-12">
+                                                <div class="checkbox m-b-5">
+                                                    <label>
+                                                        <input value="" ng-click="toggleChksCargo()" type="checkbox"
+                                                               ng-model="registeredCompany.IsMailCopy" />
+                                                        <i class="input-helper"></i>
+                                                        PLEASE SEND A COPY OF THE DECLARATION TO MY EMAIL.
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-12 text-center">
+                                                <button class="btn btn-success m-t-10" ng-disabled="!registeredCompany.IsDeclared || disableRegister" type="button" ng-click="Save()">Register</button>
+                                            </div>
+                                        </div>
+                                    </uib-tab>
+                                    <uib-tab index="5" heading="Registration Status" ng-show="showApplicationStatusTab" disable="disableTabs">
+                                        <div class="row">
+                                            <div class="col-xs-12">
+                                                <table class="table  table-vmiddle">
+                                                    <thead>
+                                                        <tr>
+                                                            <th width="60">No.</th>
+                                                            <th>Status Description</th>
+                                                            <th>Date & Time</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr ng-repeat="item in registrationStatusList">
+                                                            <td>{{$index + 1}}</td>
+                                                            <td>{{item.RegistrationDocTypeDescription}}</td>
+                                                            <td>{{item.ActivityDate | date :  'dd/MM/yyyy hh:mm a'}}</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <div class="row p-t-10">
+                                            <div class="col-md-6 text-left">
+                                                <button class="btn btn-success" ng-disabled="!registeredCompany.IsDeclared" type="button" ng-click="Save()"><i class="fa fa-refresh" aria-hidden="true"></i> &nbsp;Update Information</button>
+                                            </div>
+
+                                            <div class="col-md-6 text-right">
+                                                <button class="btn btn-primary" ng-click="nextTab()"><i class="fa fa-forward" aria-hidden="true"></i>&nbsp;Next</button>
+                                            </div>
+                                        </div>
+                                    </uib-tab>
+                                </uib-tabset>
+                            </div>
+                        </div>
+                    </div>
+                    <!--<div class="overlay" style="opacity:0.8;" ng-show="showLoading">
+                        <i class="fa fa-refresh fa-spin"></i>
+                    </div>-->
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <footer id="footer" data-ng-include="'template/footer.html'"></footer>
+</div>

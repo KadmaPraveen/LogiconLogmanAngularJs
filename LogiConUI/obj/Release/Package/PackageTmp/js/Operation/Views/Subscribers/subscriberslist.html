@@ -1,0 +1,118 @@
+﻿<div class="container" ng-controller="SubscribersListCntrl as SubscribersCntrl">
+    <div class="card">
+        <div class="lv-header-alt clearfix m-b-5">
+            <h2 class="lvh-label">Subscribers List</h2>
+        </div>
+        <div class="card-body card-padding p-t-25 p-b-25">
+            <div class="row">
+                <div class="col-xs-12">
+                    <uib-accordion close-others="oneAtATime">
+                        <div uib-accordion-group class="panel-default" heading="Advanced Search" is-open="status.isFirstOpen" is-disabled="status.isFirstDisabled">
+                            <uib-accordion-heading>
+                                <i class="pull-left zmdi zmdi-hc-fw" ng-class="{'zmdi-minus': status.isFirstOpen, 'zmdi-plus': !status.isFirstOpen}"></i>&nbsp;Advanced Search
+                            </uib-accordion-heading>
+                            <div class="row">
+                                <div class="col-xs-12">
+                                  
+                                        <div class="card-body card-padding p-t-25 p-b-25">
+                                            <!--<form id="SubscribersCntrl.frmSearch" name="SubscribersCntrl.frmSearch" ng-class="{'submitted': SearchSubmitted}" ng-submit="SearchCompanies(Search.CompanyName,Search.RegistrationNo,Search.DateFrom,Search.DateTo, Search.Email)" novalidate>-->
+                                            <form id="SubscribersCntrl.frmSearch" name="SubscribersCntrl.frmSearch" ng-class="{'submitted': SearchSubmitted}"  ng-submit="GetTableData(true)" autocomplete="off" novalidate>
+                                                <div class="row">
+                                                    <div class="col-xs-12  col-md-4">
+                                                        <md-input-container class="md-block" flex-gt-sm>
+                                                            <label>Company Name</label>
+                                                            <input type="text"
+                                                                   ng-model="Search.CompanyName" />
+                                                        </md-input-container>
+                                                    </div>
+                                                    <div class="col-xs-12  col-md-4">
+                                                        <md-input-container class="md-block" flex-gt-sm>
+                                                            <label>Registration No.</label>
+                                                            <input type="text"
+                                                                   ng-model="Search.RegistrationNo" />
+                                                        </md-input-container>
+                                                    </div>
+                                                    <div class="col-xs-12  col-md-4">
+                                                        <md-input-container class="md-block" flex-gt-sm>
+                                                            <label>Email</label>
+                                                            <input type="text"
+                                                                   ng-model="Search.Email" />
+                                                        </md-input-container>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-sm-12 col-md-4">
+                                                        <md-input-container class="md-block" flex-gt-sm>
+                                                            <label>Date From</label>
+                                                            <input mdc-datetime-picker="" class="date-icon" date="true" time="false" type="text" id="DateFrom" format="{{dateFormat}}"
+                                                                   min-date="date" ng-model="Search.DateFrom">
+                                                        </md-input-container>
+                                                    </div>
+                                                    <div class="col-sm-12 col-md-4">
+                                                        <md-input-container class="md-block" flex-gt-sm>
+                                                            <label>Date To</label>
+                                                            <input mdc-datetime-picker="" class="date-icon" date="true" time="false" type="text" id="DateTo" format="{{dateFormat}}"
+                                                                   min-date="date" ng-model="Search.DateTo">
+                                                        </md-input-container>
+                                                    </div>
+                                                    <div class="col-sm-12 col-md-2">
+                                                        <button ng-click="SearchSubmitted = true;" type="submit" class="btn btn-primary"><i class="fa fa-search" aria-hidden="true"></i>&nbsp;Search</button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                  
+                                </div>
+                            </div>
+                        </div>
+                    </uib-accordion>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="table-responsive">
+                        <table class="table table-vmiddle" ng-table="ngTblData">
+                            <!--<thead>
+                                <tr>
+                                    <th>#Action</th>
+                                    <th>Company Name</th>
+                                    <th>Reg. No.</th>
+                                </tr>
+                            </thead>-->
+                            <tbody>
+                                <tr ng-repeat="com in $data">
+                                    <td data-title="'#Action.'">
+                                        <button class="btn btn-info waves-effect"
+                                                type="button"
+                                                data-ui-sref="subscribers({companycode:com.CompanyCode})"
+                                                aria-label="button" uib-tooltip="View" tooltip-placement="top">
+                                            <i class="zmdi zmdi-exposure"></i>
+                                        </button>
+                                        <!--<button class="md-fab md-mini-1 md-primary btn-box-tool md-button md-ink-ripple" type="button" ng-click="viewInfo(com.CompanyCode);" aria-label="button">
+                        <i class="fa fa-eye" aria-hidden="true"></i>
+
+                    </button>-->
+                                    </td>
+                                    <td data-title="'Company Name.'" sortable="'CompanyName'">{{com.CompanyName}}</td>
+                                    <td data-title="'Reg. No.'" sortable="'RegNo'">{{com.RegNo}}</td>
+                                    <td data-title="'GSTNo.'" sortable="'GSTNo'">{{com.GSTNo}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!--<div class="row">
+                <div class="col-xs-12">
+                    <div class="pull-right">
+                        <button class="btn btn-primary" onclick="location.href = '#/owner'" type="button">&nbsp;<i class="fa fa-backward"></i>&nbsp;Back</button>
+                    </div>
+                </div>
+            </div>-->
+        </div>
+        <!--<div class="overlay" style="opacity:0.8;" ng-show="showLoading">
+            <i class="fa fa-refresh fa-spin"></i>
+        </div>-->
+    </div>
+</div>

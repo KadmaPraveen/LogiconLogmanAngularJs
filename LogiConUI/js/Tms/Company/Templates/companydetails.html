@@ -1,0 +1,178 @@
+﻿<form id="Cntrl.frmCompanyDetails" name="Cntrl.frmCompanyDetails" ng-class="{'submitted':submitted}" ng-submit="Cntrl.SaveCompany(CompanyDetails);" novalidate>
+    <div class="card">
+        <div  class="lv-header-alt clearfix m-b-5">
+            <h3  class="lvh-label">Company Details</h3>
+        </div>
+        <div  class="card-body card-padding p-t-25 p-b-25">
+            <div class="row" >
+                <div class="col-xs-12 col-md-2">
+                    <md-button class="md-raised md-primary" ng-click="Cntrl.AddCompany(CompanyDetails.CompanyCode)"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;New Company</md-button>
+                </div>
+                <div class="col-xs-12 col-md-2">
+                    <md-button class="md-raised md-warning"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;New Branch</md-button>
+                </div>
+            </div>
+            <div class="row" >
+                <div class="col-xs-12 col-md-2">
+                    <label>Company Code</label>
+                </div>
+                <div class="col-xs-6 col-md-3">
+                    <input type="text" class="form-control input-sm" ng-model="CompanyDetails.CompanyCode" required />
+                </div>
+                <div class="col-xs-12 col-md-4"></div>
+                <div class="col-xs-6 col-md-3">
+                    <md-switch class="md-primary" aria-label="Active Account" ng-model="CompanyDetails.IsActive" required>Active Account</md-switch>
+                </div>
+            </div>
+            <div class="row" >
+                <div class="col-xs-12 col-md-2">
+                    <label>Company Name</label>
+                </div>
+                <div class="col-xs-12 col-md-10">
+                    <input type="text" class="form-control input-sm" ng-model="CompanyDetails.CompanyName" required />
+                </div>
+            </div>
+            <div class="row" >
+                <div class="col-xs-12 col-md-2">
+                    <label>Registration No.</label>
+                </div>
+                <div class="col-xs-12 col-md-5">
+                    <input type="text" class="form-control input-sm" ng-model="CompanyDetails.RegNo" required />
+                </div>
+            </div>
+            <div class="row" >
+                <div class="col-xs-12 col-md-2">
+                    <label>GST No.</label>
+                </div>
+                <div class="col-xs-12 col-md-4">
+                    <input type="text" class="form-control input-sm" />
+                </div>
+                <div class="col-xs-12 col-md-2">
+                    <label>TAX ID</label>
+                </div>
+                <div class="col-xs-12 col-md-4">
+                    <input type="text" class="form-control input-sm" ng-model="CompanyDetails.TaxId" />
+                </div>
+            </div>
+            <div class="row" >
+                <div class="col-xs-12 col-md-2">
+                    <label>Address</label>
+                </div>
+                <div class="col-xs-12 col-md-10">
+                    <input type="text" class="form-control input-sm" />
+                </div>
+            </div>
+            <div class="row" >
+                <div class="col-xs-12 col-md-2">
+                </div>
+                <div class="col-xs-12 col-md-10">
+                    <input type="text" class="form-control input-sm" />
+                </div>
+            </div>
+            <div class="row" >
+                <div class="col-xs-12 col-md-2">
+                    <label>Post Code</label>
+                </div>
+                <div class="col-xs-6 col-md-3">
+                    <input type="text" class="form-control input-sm" />
+                </div>
+                <div class="col-xs-12 col-md-2">
+                    <label>City/Suburb</label>
+                </div>
+                <div class="col-xs-12 col-md-5">
+                    <select class="form-control input-sm"></select>
+                </div>
+            </div>
+            <div class="row" >
+                <div class="col-xs-12 col-md-2">
+                    <label>State</label>
+                </div>
+                <div class="col-xs-12 col-md-10">
+                    <select class="form-control input-sm"></select>
+                </div>
+            </div>
+            <div class="row" >
+                <div class="col-xs-12 col-md-2">
+                    <label>Country</label>
+                </div>
+                <div class="col-xs-6 col-md-3">
+                    <select class="form-control input-sm"></select>
+                </div>
+                <div class="col-xs-12 col-md-7">
+                    <input type="text" class="form-control input-sm" />
+                </div>
+            </div>
+            <div class="row" >
+                <div class="col-xs-12 col-md-2">
+                    <label>Tel No.</label>
+                </div>
+                <div class="col-xs-12 col-md-4">
+                    <input type="text" class="form-control input-sm" />
+                </div>
+                <div class="col-xs-12 col-md-2">
+                    <label>Contact</label>
+                </div>
+                <div class="col-xs-12 col-md-4">
+                    <input type="text" class="form-control input-sm" />
+                </div>
+            </div>
+            <div class="row" >
+                <div class="col-xs-12 col-md-2">
+                    <label>Fax No.</label>
+                </div>
+                <div class="col-xs-12 col-md-4">
+                    <input type="text" class="form-control input-sm" />
+                </div>
+                <div class="col-xs-12 col-md-2">
+                    <label>Mobile No.</label>
+                </div>
+                <div class="col-xs-12 col-md-4">
+                    <input type="text" class="form-control input-sm" />
+                </div>
+            </div>
+            <div class="row" >
+                <div class="col-xs-12 col-md-2">
+                    <label>Email</label>
+                </div>
+                <div class="col-xs-12 col-md-10">
+                    <input type="text" class="form-control input-sm" />
+                </div>
+            </div>
+            <div class="row" >
+                <div class="col-xs-12 col-md-2">
+                    <label>Remarks</label>
+                </div>
+                <div class="col-xs-12 col-md-10">
+                    <textarea class="form-control input-sm"></textarea>
+                </div>
+            </div>
+            <div class="row" >
+                <div class="col-xs-12 col-md-2">
+                    <label>Website</label>
+                </div>
+                <div class="col-xs-12 col-md-10">
+                    <input type="text" class="form-control input-sm" />
+                </div>
+            </div>
+            <div class="row" >
+                <div class="col-xs-12 col-md-2">
+                    <label>Company Logo</label>
+                </div>
+                <div class="col-xs-12 col-md-10">
+                    <input type="file" class="form-control input-sm" />
+                </div>
+            </div>            
+        </div>
+        <div class="box-footer">
+            <div class="row">
+                <div class="col-xs-12">
+                    <md-button class="md-raised md-primary" type="submit" ng-click="submitted = true;"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Save</md-button>
+                    <md-button class="md-raised md-clear"><i class="fa fa-eraser" aria-hidden="true"></i>&nbsp;Clear</md-button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+

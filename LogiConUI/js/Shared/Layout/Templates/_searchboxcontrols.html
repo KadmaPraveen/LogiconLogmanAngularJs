@@ -1,0 +1,31 @@
+﻿<div class="row">
+    <div class="col-xs-12 col-md-2">
+        <label>Search By</label>
+    </div>
+    <div class="col-xs-12 col-md-2">
+        <select class="form-control input-sm">
+            <option></option>
+            <option value="LIKE">LIKE</option>
+            <option value="=">=</option>
+            <option value=">=">>=</option>
+            <option value="<="><=</option>
+        </select>
+    </div>
+    <div class="col-xs-12 col-md-2">
+        <label>Where Clause</label>
+    </div>
+    <div class="col-xs-12 col-md-2">
+        <!--<select class="form-control input-sm" ng-options="s.SearchColumnName as s.SearchColumnDisplay for s in modalData.searchWrapper.SearchByList">            
+        </select>-->
+        <select class="form-control input-sm">
+            <option></option>
+            <option ng-repeat="item in modalData.searchWrapper.SearchByList" value="{{item.SearchColumnName}}">{{item.SearchColumnDisplay}}</option>
+        </select>
+    </div>
+    <div class="col-xs-12 col-md-2">
+        <input type="text" class="form-control input-sm" />
+    </div>
+    <div class="col-xs-12 col-md-2">
+        <button type="button" class="btn btn-primary btn-sm"><i class="fa fa-search" aria-hidden="true"></i>&nbsp;Search</button>
+    </div>
+</div>

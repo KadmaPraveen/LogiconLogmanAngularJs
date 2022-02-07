@@ -1,0 +1,137 @@
+﻿<div class="container" ng-controller="driverpaymentbyvendor">
+    <div class="card">
+        <div  class="lv-header-alt clearfix m-b-5">
+            <h3  class="lvh-label">Driver Payment By Vendor</h3>
+        </div>
+        <div  class="card-body card-padding p-t-25 p-b-25">
+            <div class="row" >
+                <div class="col-xs-12 col-md-4">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Vendor Code</label>
+
+                        <md-select ng-model="" ng-required="">
+                            <md-option ng-repeat="" ng-value="item.Value">
+                                {{item.Text}}
+                            </md-option>
+                        </md-select>
+                        </md-input-container>
+</div>
+                <div class="col-xs-12 col-md-4">
+                    <md-input-container class="md-block" flex-gt-sm>  <input type="text" class="form-control input-sm" /></md-input-container>
+</div>
+                <div class="col-xs-12 col-md-4">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Prepare Date</label>
+
+                        <input mdc-datetime-picker="" date="true" time="false" type="text" id="dateFrom" format="{{dateFormat}}" class="date-icon"
+                               min-date="date" name="k1.declarationInvoice.InvoiceDate"
+                               ng-required="true"
+                               ng-model="k1.declarationInvoice.InvoiceDate">
+                    </md-input-container>
+                </div>
+            </div>
+            <div class="row" >
+                <div class="col-xs-12 col-md-4">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Remarks</label>
+
+                        <textarea class="form-control input-sm"></textarea>
+                        </md-input-container>
+</div>
+                <div class="col-xs-12 col-md-4">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Movement Date</label>
+                        <input mdc-datetime-picker="" date="true" time="false" type="text" id="dateFrom" format="{{dateFormat}}" class="date-icon"
+                               min-date="date" name="k1.declarationInvoice.InvoiceDate"
+                               ng-required="true"
+                               ng-model="k1.declarationInvoice.InvoiceDate">
+                    </md-input-container>
+</div>
+                <div class="col-xs-12 col-md-4">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <input mdc-datetime-picker="" date="true" time="false" type="text" id="dateFrom" format="{{dateFormat}}" class="date-icon"
+                               min-date="date" name="k1.declarationInvoice.InvoiceDate"
+                               ng-required="true"
+                               ng-model="k1.declarationInvoice.InvoiceDate">
+                    </md-input-container>
+                </div>
+            </div>
+            <div class="row">
+               
+                <div class="col-xs-12 col-md-4">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>To</label>
+                        <input mdc-datetime-picker="" date="true" time="false" type="text" id="dateFrom" format="{{dateFormat}}" class="date-icon"
+                               min-date="date" name="k1.declarationInvoice.InvoiceDate"
+                               ng-required="true"
+                               ng-model="k1.declarationInvoice.InvoiceDate">
+                    </md-input-container>
+</div>
+                <div class="col-xs-12 col-md-4">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <input mdc-datetime-picker="" date="true" time="false" type="text" id="dateFrom" format="{{dateFormat}}" class="date-icon"
+                               min-date="date" name="k1.declarationInvoice.InvoiceDate"
+                               ng-required="true"
+                               ng-model="k1.declarationInvoice.InvoiceDate">
+                    </md-input-container>
+                </div>
+            </div>
+            <div class="row m-b-20 m-t-20" >
+                <div class="col-xs-12">
+                    <div class="table-responsive">
+                        <table class="table  table-vmiddle">
+                            <thead>
+                                <tr>
+                                    <th>Vendor Code</th>
+                                    <th>Vendor Name</th>
+                                    <th>Total Driver</th>
+                                    <th>Total Generated</th>
+                                    <th>Total Amount</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+            <div class="row m-b-20 m-t-20" >
+                <div class="col-xs-12">
+                    <div class="table-responsive">
+                        <table class="table  table-vmiddle">
+                            <thead>
+                                <tr>
+                                    <th>Payment No.</th>
+                                    <th>Driver ID</th>
+                                    <th>Driver Name</th>
+                                    <th>Amount</th>
+                                    <th>Remarks</th>
+                                    <th>Time From</th>
+                                    <th>Time To</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+        </div>        
+    </div>
+</div>

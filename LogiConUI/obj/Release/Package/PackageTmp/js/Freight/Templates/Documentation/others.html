@@ -1,0 +1,229 @@
+﻿<div class="card">
+    <div class="card-body card-padding p-t-25 p-b-25">
+        <div class="row">
+            <div class="col-xs-12 col-md-6">
+                <md-input-container class="md-block" flex-gt-sm>
+                    <label>Origin Criterion</label>
+
+                    <input type="text" />
+                </md-input-container>
+            </div>
+            <div class="col-xs-12 col-md-6">
+                <md-input-container class="md-block" flex-gt-sm>
+                    <label>Demurrage Amt.</label>
+
+                    <input type="text" />
+                </md-input-container>
+</div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-md-6">
+                <md-input-container class="md-block" flex-gt-sm>
+                    <label>Cargo Value (RM)</label>
+
+                    <input type="text" />
+                </md-input-container>
+</div>
+            <div class="col-xs-12 col-md-6">
+                <md-input-container class="md-block" flex-gt-sm>
+                    <label>New Depot</label>
+
+                    <input type="text" />
+                </md-input-container>
+</div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-md-6">
+                <md-input-container class="md-block" flex-gt-sm>
+                    <label>Inland Origin</label>
+
+                    <input type="text" />
+                </md-input-container>
+</div>
+            <div class="col-xs-12 col-md-6">
+                <md-input-container class="md-block" flex-gt-sm>
+                    <label>Old Depot</label>
+
+                    <input type="text" />
+                </md-input-container>
+</div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-md-6">
+                <md-input-container class="md-block" flex-gt-sm>
+                    <label>FOB Value</label>
+
+                    <input type="text" />
+                </md-input-container>
+</div>
+            <div class="col-xs-12 col-md-6">
+                <md-input-container class="md-block" flex-gt-sm>
+                    <label>ID No.</label>
+
+                    <input type="text" />
+                </md-input-container>
+</div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-md-6">
+                <md-input-container class="md-block" flex-gt-sm>
+                    <label>Commodity Code</label>
+
+                    <input type="text" />
+                </md-input-container>
+</div>
+            <div class="col-xs-12 col-md-6">
+                <md-input-container class="md-block" flex-gt-sm>
+                    <label>Cntr Qty. Type</label>
+
+                    <input type="text" />
+                </md-input-container>
+</div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-md-6">
+                <md-input-container class="md-block" flex-gt-sm>
+                    <label>Lorry No.</label>
+
+                    <input type="text" />
+                </md-input-container>
+</div>
+            <div class="col-xs-12 col-md-6">
+                <md-input-container class="md-block" flex-gt-sm>
+                    <label>Container Collect Date</label>
+                    <input mdc-datetime-picker="" class="date-icon" date="true" time="false" ng-model="dt"
+                           ng-required="true" type="text" id="TransactionDate" format="{{DateFormat}}"
+                           min-date="date">
+                    <!--<div class="input-group my-datepicker">
+                        <input type="text" class="form-control input-sm datepicker" uib-datepicker-popup="{{format}}" ng-model="dt" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-default input-sm" ng-click="open1()"><i class="fa fa-calendar" aria-hidden="true"></i></button>
+                        </span>
+                    </div>-->
+                </md-input-container>
+</div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-md-6">
+                <md-input-container class="md-block" flex-gt-sm>
+                    <label>LA No.</label>
+
+                    <input type="text" />
+                </md-input-container>
+</div>
+            <div class="col-xs-12 col-md-6">
+                <md-input-container class="md-block" flex-gt-sm>
+                    <label>Invoice No.</label>
+
+                    <input type="text" />
+                </md-input-container>
+</div>
+        </div>
+        <div class="row">
+           
+            <div class="col-xs-12 col-md-6">
+                <md-input-container class="md-block" flex-gt-sm>
+                    <input mdc-datetime-picker="" class="date-icon" date="true" time="false" ng-model="dt"
+                           ng-required="true" type="text" id="TransactionDate" format="{{DateFormat}}"
+                           min-date="date">
+                </md-input-container>
+                    <!--<div class="input-group my-datepicker">
+            <input type="text" class="form-control input-sm datepicker" uib-datepicker-popup="{{format}}" ng-model="dt" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
+            <span class="input-group-btn">
+                <button type="button" class="btn btn-default input-sm" ng-click="open1()"><i class="fa fa-calendar" aria-hidden="true"></i></button>
+            </span>
+        </div>-->
+</div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-md-7">
+                <div class="card">
+                    <div class="lv-header-alt clearfix m-b-5">
+                        <h3 class="lvh-label">Previous Information</h3>
+                    </div>
+                    
+                    <div class="card-body card-padding p-t-25 p-b-25">
+                        <div class="row">
+                            
+                            <div class="col-xs-12">
+                                
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>Feeder Vessel</label>
+
+                                        <input type="text" />
+                                    </md-input-container>
+</div>
+                           
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                               
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>Feeder Voyage</label>
+
+                                        <input type="text" />
+                                    </md-input-container>
+</div>
+                            
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>SCN</label>
+
+                                        <input type="text" />
+                                    </md-input-container>
+</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                               
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>Port Of Loading</label>
+
+                                        <input type="text" />
+                                    </md-input-container>
+</div>
+                           
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                               
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>Place Of Delivery</label>
+
+                                        <input type="text" />
+                                    </md-input-container>
+</div>
+                           
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                               
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>ETA Date</label>
+                                        <input mdc-datetime-picker="" class="date-icon" date="true" time="false" ng-model="dt"
+                                               ng-required="true" type="text" id="TransactionDate" format="{{DateFormat}}"
+                                               min-date="date">
+                                        <!--<div class="input-group my-datepicker">
+                                            <input type="text" class="form-control input-sm datepicker" uib-datepicker-popup="{{format}}" ng-model="dt" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
+                                            <span class="input-group-btn">
+                                                <button type="button" class="btn btn-default input-sm" ng-click="open1()"><i class="fa fa-calendar" aria-hidden="true"></i></button>
+                                            </span>
+                                        </div>-->
+                                        </md-input-container>
+</div>
+                           
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+
+
+</div>
+    </div>

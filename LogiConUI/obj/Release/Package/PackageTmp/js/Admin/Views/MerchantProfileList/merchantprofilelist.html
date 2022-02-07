@@ -1,0 +1,143 @@
+﻿<div class="container" ng-controller="AdminMerchantProfile">
+    <style type="text/css">
+        .marginbottom {
+            margin: 10px 0 0px 0 !important;
+        }
+    </style>
+
+    <div class="card">
+        <div class="lv-header-alt clearfix m-b-5">
+
+            <div class="box-tools">
+                <div class="row">
+                    <div class="col-md-11">
+                        <h2 class="lvh-label">Merchant Profile List</h2>
+                    </div>
+
+                    <div class="col-md-1">
+                        <button type="button" class="btn btn-info btn-icon" ng-click="refresh();"><i class="fa fa-refresh"></i></button>
+                        <button class="btn bgm-lightgreen btn-icon pull-right m-r-10" data-ui-sref="adminmerchant({code:NEW, taxID:NEW, regNo:NEW})" data-ng-click="mactrl.sidebarStat($event)"><i class="zmdi zmdi-plus btn-small"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="card-body card-padding p-t-5 p-b-5">
+            <div class="row">
+                <div class="col-xs-12">
+                    <uib-accordion close-others="oneAtATime">
+                        <div uib-accordion-group class="panel-default" heading="Advanced Search" is-open="status.isFirstOpen" is-disabled="status.isFirstDisabled">
+                            <uib-accordion-heading>
+                                <i class="pull-left zmdi zmdi-hc-fw" ng-class="{'zmdi-minus': status.isFirstOpen, 'zmdi-plus': !status.isFirstOpen}"></i>&nbsp;Advanced Search
+                            </uib-accordion-heading>
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <div class="card-body card-padding p-t-5 p-b-5">
+                                        <form id="AdminMerchantProfile.frmSearch" name="AdminMerchantProfile.frmSearch"  ng-class="{'submitted': SearchSubmitted}"
+                                              ng-submit="GetTableData()" autocomplete="off" novalidate>
+                                            <div class="row">
+                                                <!--<div class="col-xs-12  col-md-4">
+                                                        <md-input-container class="md-block marginbottom" flex-gt-sm>
+                                                            <label>Merchant Type</label>
+                                                            <md-select ng-model="search.filter">
+                                                                <md-option value="forwardingAgent">
+                                                                    Forwarding Agent
+                                                                </md-option>
+                                                                <md-option value="shippingAgent">
+                                                                    Shipping Agent
+                                                                </md-option>
+                                                            </md-select>
+                                                        </md-input-container>
+                                                    </div>-->
+                                                <div class="col-xs-12  col-md-4">
+                                                    <md-input-container class="md-block" flex-gt-sm>
+                                                        <label>Name</label>
+                                                        <input type="text"
+                                                               ng-model="search.MerchantName" />
+                                                    </md-input-container>
+                                                </div>
+                                                <div class="col-xs-12  col-md-4">
+                                                    <md-input-container class="md-block" flex-gt-sm>
+                                                        <label>Reg No.</label>
+                                                        <input type="text"
+                                                               ng-model="search.RegNo" />
+                                                    </md-input-container>
+                                                </div>
+                                                <!--<div class="col-xs-12  col-md-4">
+                                                    <md-input-container class="md-block" flex-gt-sm>
+                                                        <label>GST No.</label>
+                                                        <input type="text"
+                                                               ng-model="search.GSTNo" />
+                                                    </md-input-container>
+                                                </div>-->
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-xs-12  col-md-4">
+                                                    <md-input-container class="md-block" flex-gt-sm>
+                                                        <label>GST No.</label>
+                                                        <input type="text"
+                                                               ng-model="search.GSTNo" />
+                                                    </md-input-container>
+                                                </div>
+                                                <div class="col-xs-12  col-md-4">
+                                                    <md-input-container class="md-block" flex-gt-sm>
+                                                        <label>Agent Code</label>
+                                                        <input type="text"
+                                                               ng-model="search.AgentCode" />
+                                                    </md-input-container>
+                                                </div>
+                                                <div class="col-xs-12 col-md-1  text-right">
+                                                    <button ng-click="SearchSubmitted = true;" type="submit" class="btn btn-primary"><i class="fa fa-search" aria-hidden="true"></i>&nbsp;Search</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </uib-accordion>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <div style="min-height: 250px;">
+                        <div class="table-responsive">
+                            <table class="table table-vmiddle" ng-table="ngTblData">
+                                <tr ng-repeat="w in $data">
+                                    <td data-title="'#Action'" class="action-m">
+                                        <button class="btn btn-default  waves-effect" ng-if="w.CompanyCode == CompanyID"
+                                                type="button" data-ui-sref="adminmerchant({code:w.MerchantCode, taxID:w.TaxID, regNo:w.RegNo, isOriginal: (w.CompanyCode != CompanyID) })" data-ng-click="mactrl.sidebarStat($event)"
+                                                aria-label="button" uib-tooltip="Edit" tooltip-placement="top">
+                                            <i class="zmdi zmdi-edit"></i>
+                                        </button>
+                                        <button class="btn btn-info  waves-effect" ng-if="w.CompanyCode != CompanyID"
+                                                type="button" data-ui-sref="merchant({code:w.MerchantCode, taxID:w.TaxID, regNo:w.RegNo, isOriginal: (w.CompanyCode != CompanyID) })" data-ng-click="mactrl.sidebarStat($event)"
+                                                aria-label="button" uib-tooltip="View" tooltip-placement="top">
+                                            <i class="zmdi zmdi-view-dashboard"></i>
+                                        </button>
+                                        <button class="btn btn-danger  waves-effect" ng-if="w.CompanyCode == CompanyID"
+                                                type="button"
+                                                ng-click="DeleteMerchant(w.MerchantCode,w.MerchantName)" aria-label="button" uib-tooltip="Delete" tooltip-placement="top">
+                                            <i class="zmdi zmdi-delete"></i>
+                                        </button>
+                                        <button class="btn btn-primary  waves-effect" ng-if="w.CompanyCode != CompanyID"
+                                                type="button"
+                                                ng-click="InsertMerchantProfile(w.MerchantCode,w.TaxID,w.RegNo)" aria-label="button" uib-tooltip="Copy and Create New Merchant" tooltip-placement="top">
+                                            <i class="zmdi zmdi-copy"></i>
+                                        </button>
+                                    </td>
+                                    <td data-title="'Merchant Code'" sortable="'MerchantCode'">{{w.MerchantCode}}</td>
+                                    <td data-title="'Merchant Name'" sortable="'MerchantName'">{{w.MerchantName}}</td>
+                                    <td data-title="'Reg No'" sortable="'RegNo'">{{w.RegNo}}</td>
+                                    <td data-title="'GST No'" sortable="'TaxID'">{{w.TaxID}}</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+           
+        </div>
+    </div>
+</div>

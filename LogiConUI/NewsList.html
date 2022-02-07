@@ -1,0 +1,101 @@
+﻿<!DOCTYPE html>
+<html ng-app="SNN">
+<head>
+    <title></title>
+    <meta charset="utf-8" />
+    <link href="old/Css/bootstrap.min.css" rel="stylesheet" />
+    <link href="old/Css/NewsCss.css" rel="stylesheet" />
+    <style type="text/css">
+        [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+            display: none !important;
+        }
+    </style>
+</head>
+<body ng-cloak>
+    <div class="container" ng-controller="NewsListCntrl" style="margin-left:10px;margin-right:10px;">
+        <div class="row" ng-repeat="news in NewsData">
+            <div class="col-xs-12">
+                <article class="news excerpt">
+                    <div class="news-date-ribbon">
+                        <div class="corner"></div>
+                        {{ news.CreatedOn | date }}
+                    </div>
+                    <div class="news-header">
+                        <h4 class="title">{{ news.Title }}</h4>
+                    </div>
+                    <a id="news-thumbnail" href="" title="A Post with Everything In It">
+                        <div class="news-thumbnail">
+                            <img class="attachment-ribbon-lite-featured size-ribbon-lite-featured news-image" src="img/news.jpeg" alt="" title="" sizes="(max-width: 150px) 100vw, 150px" width="150" height="150">
+                        </div>
+                    </a>
+                    <div class="post-content">
+                        {{ news.Message }}
+                    </div>
+                </article>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 col-xs-12">
+                <uib-pagination ng-model="currentPage"
+                                total-items="totalItems"
+                                ng-change="pageChanged()"
+                                class="pagination-sm pull-right"
+                                max-size="10"
+                                items-per-page="limit">
+                </uib-pagination>
+            </div>
+        </div>        
+    </div>
+    <script src="Scripts/jquery-3.2.0.min.js"></script>
+    <script src="Scripts/angular/angular.js"></script>
+    <script src="old/Scripts/ui-bootstrap-tpls-1.3.2.js"></script>
+    <script src="vendors/bower_components/ng-table/dist/ng-table.js"></script>
+    <script type="text/javascript">
+        var app = angular.module('SNN', ['ngTable', 'ui.bootstrap']);
+    </script>
+    <script type="text/javascript">
+        var version;
+        function WriteScripts() {
+            var d = new Date();
+            version = $.now();
+            document.write('<script src=\"Scripts/app.connection.js?v=' + version + '\"><\/script>');
+        }
+        WriteScripts();
+    </script>
+    <script type="text/javascript">
+        app.controller('NewsListCntrl', ['$scope', 'NewsService', 'Utility', 'NgTableParams', function ($scope, NewsService, Utility, NgTableParams) {
+            $scope.currentPage = 1;
+            $scope.limit = 10;           
+
+            $scope.GetNewsData = function (limit, offset) {
+                NewsService.GetList(limit, offset).then(function (d) {
+                    $scope.NewsData = d.data.SNNNewList;
+                    $scope.totalItems = d.data.TotalRecords;
+                }, function (err) { });
+            };
+
+            $scope.pageChanged = function () {
+                var offset = $scope.currentPage == 1 ? 0 : ($scope.limit * ($scope.currentPage - 1));
+                $scope.GetNewsData($scope.limit, offset);
+            };
+
+            $scope.init = function () {
+                $scope.GetNewsData($scope.limit, 0);
+            };
+
+            $scope.init();
+        }]);
+        app.service('NewsService', ['$http', '$q', 'Utility', function ($http, $q, Utility) {
+            this.GetList = function (limit, offset) {
+                var deferred = $q.defer();
+                $http.get(Utility.ServiceUrl + '/master/snn/list/' + limit + '/' + offset).then(function (res) {
+                    deferred.resolve(res);
+                }, function (err) {
+                    deferred.reject(err);
+                });
+                return deferred.promise;
+            };
+        }]);
+    </script>
+</body>
+</html>

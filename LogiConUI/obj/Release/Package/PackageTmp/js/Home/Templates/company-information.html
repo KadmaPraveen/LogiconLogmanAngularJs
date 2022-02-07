@@ -1,0 +1,207 @@
+﻿<form id="Cntrl.frmCompanyInfo" name="Cntrl.frmCompanyInfo" ng-class="{'submitted':submittedCompanyInfo}" ng-submit="SaveCompanyInfo(registeredCompany, companyAddress)" novalidate>
+    <div class="row">
+        <div class="col-xs-12 col-md-2">
+            <label class="control-label pull-right">Company Name</label>
+        </div>
+        <div class="col-xs-6 col-md-3">
+            <input type="text" class="form-control input-sm" ng-model="registeredCompany.CompanyName" ng-required="true" />
+        </div>
+    </div>
+    <div class="row  division">
+        <div class="col-xs-12 col-md-2">
+            <label class="control-label pull-right">Registration Type</label>
+        </div>
+        <div class="col-xs-12 col-md-9">
+            <md-radio-group ng-model="registeredCompany.RegistrationType" class="md-primary" ng-required="true">
+                <div class="col-xs-6 col-md-3" ng-repeat="item in lookUpData.registrationTypeList">
+                    <md-radio-button ng-value="item.Value"
+                                     aria-label="{{item.Text}}">
+                        {{item.Text}}
+                    </md-radio-button>
+                </div>
+            </md-radio-group>
+        </div>
+    </div>
+    <div class="row ">
+        <div class="col-xs-12 col-md-2">
+            <label class="control-label pull-right">Organisation Type</label>
+        </div>
+        <div class="col-xs-12 col-md-5">
+            <select class="form-control input-sm"
+                    ng-model="registeredCompany.OrganisationType"
+                    ng-options="s.Value as s.Text for s in lookUpData.organizationTypeList" ng-required="true"></select>
+        </div>
+    </div>
+    <div class="row  division">
+        <div class="col-xs-12 col-md-2">
+            <label class="control-label pull-right">Registration No.</label>
+        </div>
+        <div class="col-xs-6 col-md-3">
+            <input type="text" class="form-control input-sm" ng-model="registeredCompany.RegistrationNo" ng-required="true" />
+        </div>
+    </div>
+    <div class="row  division">
+        <div class="col-xs-12 col-md-2">
+            <label class="control-label pull-right">CPAM Account No.</label>
+        </div>
+        <div class="col-xs-6 col-md-3">
+            <input type="text" class="form-control input-sm" ng-model="registeredCompany.CPAMAccountNo" ng-required="true" />
+        </div>
+    </div>
+    <div class="row  division">
+        <div class="col-xs-12 col-md-2">
+            <label class="control-label pull-right">Address</label>
+        </div>
+        <div class="col-xs-12 col-md-5">
+            <input type="text" class="form-control input-sm" ng-model="companyAddress.Address1" ng-required="true" />
+        </div>
+    </div>
+    <div class="row ">
+        <div class="col-xs-12 col-md-2">
+        </div>
+        <div class="col-xs-12 col-md-5">
+            <input type="text" class="form-control input-sm" ng-model="companyAddress.Address2" ng-required="true" />
+        </div>
+    </div>
+    <div class="row ">
+        <div class="col-xs-12 col-md-2">
+        </div>
+        <div class="col-xs-12 col-md-5">
+            <input type="text" class="form-control input-sm" ng-model="companyAddress.Address3" />
+        </div>
+    </div>
+    <div class="row ">
+        <div class="col-xs-12 col-md-2">
+            <label class="control-label pull-right">Postcode</label>
+        </div>
+        <div class="col-xs-6 col-md-3">
+            <input type="text" class="form-control input-sm" ng-model="companyAddress.PostCode" ng-required="true" />
+        </div>
+    </div>
+    <div class="row  division">
+        <div class="col-xs-12 col-md-2">
+            <label class="control-label pull-right">State</label>
+        </div>
+        <div class="col-xs-6 col-md-3">
+            <input type="text" ng-model="companyAddress.State" class="form-control input-sm" ng-required="true" />
+        </div>
+    </div>
+    <div class="row  division">
+        <div class="col-xs-12 col-md-2">
+            <label class="control-label pull-right">City / District</label>
+        </div>
+        <div class="col-xs-6 col-md-3">
+            <input type="text" class="form-control input-sm" ng-model="companyAddress.City" ng-required="true" />
+        </div>
+    </div>
+
+
+    <div class="row  division">
+        <div class="col-xs-12 col-md-2">
+            <label>Contact Person 1</label>
+        </div>
+        <div class="col-xs-12 col-md-10"></div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12 col-md-2">
+            <label class="control-label pull-right">Name</label>
+        </div>
+        <div class="col-xs-6 col-md-3">
+            <input type="text" class="form-control input-sm" ng-model="companyAddress.ContactPerson1" ng-required="true" />
+        </div>
+        <div class="col-md-1">
+            <label class="control-label pull-right">Designation</label>
+        </div>
+        <div class="col-xs-6 col-md-3">
+            <input type="text" class="form-control input-sm" ng-model="companyAddress.Designation1" />
+        </div>
+    </div>
+    <div class="row ">
+        <div class="col-xs-12 col-md-2">
+            <label class="control-label pull-right">Phone No.</label>
+        </div>
+        <div class="col-xs-6 col-md-3">
+            <input type="text" class="form-control input-sm" ng-model="companyAddress.Phone1" ng-required="true" />
+        </div>
+        <div class="col-md-1">
+            <label class="control-label pull-right">Ext</label>
+        </div>
+        <div class="col-xs-6 col-md-3">
+            <input type="text" class="form-control input-sm" ng-model="companyAddress.Extension1" />
+        </div>
+    </div>
+    <div class="row ">
+        <div class="col-xs-12 col-md-2">
+            <label class="control-label pull-right">Mob. Ph. No</label>
+        </div>
+        <div class="col-xs-6 col-md-3">
+            <input type="text" class="form-control input-sm" ng-model="companyAddress.Mobile1" ng-required="true" />
+        </div>
+    </div>
+    <div class="row ">
+        <div class="col-xs-12 col-md-2">
+            <label class="control-label pull-right">Email</label>
+        </div>
+        <div class="col-xs-6 col-md-3">
+            <input type="email" class="form-control input-sm" ng-model="companyAddress.ContactEmailID1" ng-required="true" />
+        </div>
+    </div>
+
+    <div class="row  division">
+        <div class="col-xs-12 col-md-2">
+            <label>Contact Person 2</label>
+        </div>
+        <div class="col-xs-12 col-md-10"></div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12 col-md-2">
+            <label class="control-label pull-right">Name</label>
+        </div>
+        <div class="col-xs-6 col-md-3">
+            <input type="text" class="form-control input-sm" ng-model="companyAddress.ContactPerson2" />
+        </div>
+        <div class="col-md-1">
+            <label class="control-label pull-right">Designation</label>
+        </div>
+        <div class="col-xs-6 col-md-3">
+            <input type="text" class="form-control input-sm" ng-model="companyAddress.Designation2" />
+        </div>
+    </div>
+    <div class="row ">
+        <div class="col-xs-12 col-md-2">
+            <label class="control-label pull-right">Phone No.</label>
+        </div>
+        <div class="col-xs-6 col-md-3">
+            <input type="text" class="form-control input-sm" ng-model="companyAddress.Phone2" />
+        </div>
+        <div class="col-md-1">
+            <label class="control-label pull-right">Ext</label>
+        </div>
+        <div class="col-xs-6 col-md-3">
+            <input type="text" class="form-control input-sm" ng-model="companyAddress.Extension2" />
+        </div>
+    </div>
+    <div class="row ">
+        <div class="col-xs-12 col-md-2">
+            <label class="control-label pull-right">Mob. Ph. No</label>
+        </div>
+        <div class="col-xs-6 col-md-3">
+            <input type="text" class="form-control input-sm" ng-model="companyAddress.Mobile2" />
+        </div>
+    </div>
+    <div class="row ">
+        <div class="col-xs-12 col-md-2">
+            <label class="control-label pull-right">Email</label>
+        </div>
+        <div class="col-xs-6 col-md-3">
+            <input type="text" class="form-control input-sm" ng-model="companyAddress.ContactEmailID2" />
+        </div>
+    </div>
+    <div class="row  division">
+        <div class="col-xs-12 col-md-2">
+        </div>
+        <div class="col-xs-12 col-md-5">
+            <button type="submit" class="btn btn-primary" ng-click="submittedCompanyInfo = true">Next</button>
+        </div>
+    </div>
+</form>

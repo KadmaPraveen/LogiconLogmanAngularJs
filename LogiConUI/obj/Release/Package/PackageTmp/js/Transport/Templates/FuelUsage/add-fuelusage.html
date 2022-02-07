@@ -1,0 +1,137 @@
+﻿<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" ng-click="cancel();">&times;</button>
+    <h4 class="modal-title">Fuel Usage</h4>
+</div>
+<div class="modal-body">
+    <div class="row" >
+        <div class="col-xs-12 col-md-6">
+            <div class="row" >
+                <div class="col-xs-12 col-md-2">
+                    <label>Voucher No.</label>
+                </div>
+                <div class="col-xs-12 col-md-4">
+                    <input type="text" class="form-control input-sm" />
+                </div>
+                <div class="col-xs-12 col-md-2">
+                    <label>Odometer</label>
+                </div>
+                <div class="col-xs-12 col-md-4">
+                    <input type="text" class="form-control input-sm" />
+                </div>
+            </div>
+            <div class="row" >
+                <div class="col-xs-12 col-md-2">
+                    <label>Vendor Code</label>
+                </div>
+                <div class="col-xs-12 col-md-4">
+                    <select class="form-control input-sm"></select>
+                </div>
+                <div class="col-xs-12 col-md-6">
+                    <input type="text" class="form-control input-sm" />
+                </div>
+            </div>
+            <div class="row" >
+                <div class="col-xs-12 col-md-2">
+                    <label>Driver ID</label>
+                </div>
+                <div class="col-xs-12 col-md-4">
+                    <select class="form-control input-sm"></select>
+                </div>
+                <div class="col-xs-12 col-md-6">
+                    <input type="text" class="form-control input-sm" />
+                </div>
+            </div>
+            <div class="row" >
+                <div class="col-xs-12 col-md-2">
+                    <label>Remarks</label>
+                </div>
+                <div class="col-xs-12 col-md-10">
+                    <textarea class="form-control input-sm"></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12 col-md-6">
+            <div class="row" >
+                <div class="col-xs-12 col-md-2">
+                    <label>Distance Travel</label>
+                </div>
+                <div class="col-xs-12 col-md-4">
+                    <input type="text" class="form-control input-sm" />
+                </div>
+                <div class="col-xs-12 col-md-2">
+                    <label>Balance Fuel</label>
+                </div>
+                <div class="col-xs-12 col-md-4">
+                    <input type="text" class="form-control input-sm" />
+                </div>
+            </div>
+            <div class="row" >
+                <div class="col-xs-12 col-md-2">
+                    <label>Usage Date</label>
+                </div>
+                <div class="col-xs-12 col-md-4">
+                    <div class="input-group my-datepicker">
+                        <input type="text" class="form-control input-sm datepicker" uib-datepicker-popup="{{format}}" ng-model="dt" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-default input-sm" ng-click="open1()"><i class="fa fa-calendar" aria-hidden="true"></i></button>
+                        </span>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-md-4">
+                    <div class="input-group my-datepicker">
+                        <input type="text" class="form-control input-sm datepicker" uib-datepicker-popup="{{format}}" ng-model="dt" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-default input-sm" ng-click="open1()"><i class="fa fa-clock-o" aria-hidden="true"></i></button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="row" >
+                <div class="col-xs-12 col-md-6">
+                    <label>Odometer Installed Date</label>
+                </div>
+                <div class="col-xs-12 col-md-4">
+                    <div class="input-group my-datepicker">
+                        <input type="text" class="form-control input-sm datepicker" uib-datepicker-popup="{{format}}" ng-model="dt" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-default input-sm" ng-click="open1()"><i class="fa fa-calendar" aria-hidden="true"></i></button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="row" >
+                <div class="col-xs-6 col-md-3">
+                    <label>Quantity (Liter)</label>
+                </div>
+                <div class="col-xs-12 col-md-4">
+                    <input type="text" class="form-control input-sm" />
+                </div>
+            </div>
+            <div class="row" >
+                <div class="col-xs-6 col-md-3">
+                    <label>Unit Price</label>
+                </div>
+                <div class="col-xs-12 col-md-4">
+                    <input type="text" class="form-control input-sm" />
+                </div>
+            </div>
+            <div class="row" >
+                <div class="col-xs-6 col-md-3">
+                    <label>Total Amount</label>
+                </div>
+                <div class="col-xs-12 col-md-4">
+                    <input type="text" class="form-control input-sm" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <div class="row" >
+        <div class="col-xs-12 col-md-9"></div>
+        <div class="col-md-3 pull-right">
+            <button class="btn btn-primary btn-sm" ng-click="cancel();"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Save</button>
+            <button class="btn btn-default btn-sm" ng-click="cancel();"><i class="fa fa-times" aria-hidden="true"></i>&nbsp;Close</button>
+        </div>
+    </div>
+</div>

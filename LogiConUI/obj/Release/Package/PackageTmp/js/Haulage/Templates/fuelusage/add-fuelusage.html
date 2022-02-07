@@ -1,0 +1,176 @@
+﻿<div class="container" ng-controller="addfuelusage">
+    <div class="card">
+        <div class="lv-header-alt clearfix m-b-5">
+            <h2 class="lvh-label">Fuel Usage</h2>
+        </div>
+
+        <div class="card-body card-padding p-t-25 p-b-25">
+
+
+            <div class="row">
+                <div class="col-xs-12 col-md-6">
+                    <div class="row">
+                        <div class="col-xs-12 col-md-6">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Voucher No.</label>
+
+                                <input type="text" class="form-control input-sm" />
+                            </md-input-container>
+                        </div>
+                        <div class="col-xs-12 col-md-6">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Odometer</label>
+
+                                <input type="text" class="form-control input-sm" />
+                            </md-input-container>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-md-6">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Vendor Code</label>
+
+                                <md-select ng-model="" ng-required="">
+                                    <md-option ng-repeat="" ng-value="item.Value">
+                                        {{item.Text}}
+                                    </md-option>
+                                </md-select>
+                            </md-input-container>
+
+
+                        </div>
+                        <div class="col-xs-12 col-md-6">
+                            <md-input-container class="md-block" flex-gt-sm> <input type="text" class="form-control input-sm" /></md-input-container>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-md-6">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Driver ID</label>
+
+                                <md-select ng-model="" ng-required="">
+                                    <md-option ng-repeat="" ng-value="item.Value">
+                                        {{item.Text}}
+                                    </md-option>
+                                </md-select>
+                            </md-input-container>
+
+
+                        </div>
+                        <div class="col-xs-12 col-md-6">
+                            <md-input-container class="md-block" flex-gt-sm>  <input type="text" class="form-control input-sm" /></md-input-container>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Remarks</label>
+
+                                <textarea></textarea>
+                            </md-input-container>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-md-6">
+                    <div class="row">
+                        <div class="col-xs-6 col-md-6">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Distance Travel</label>
+
+                                <input type="text" class="form-control input-sm" />
+                            </md-input-container>
+                        </div>
+                        <div class="col-xs-12 col-md-6">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Bal. Fuel</label>
+
+                                <input type="text" class="form-control input-sm" />
+                            </md-input-container>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-6 col-md-6">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Usage Date</label>
+                                <input mdc-datetime-picker="" date="true" time="false" type="text" id="dateFrom" format="{{dateFormat}}" class="date-icon"
+                                       min-date="date" name="k1.declarationInvoice.InvoiceDate"
+                                       ng-required="true"
+                                       ng-model="k1.declarationInvoice.InvoiceDate">
+                            </md-input-container>
+                        </div>
+
+                        <div class="col-xs-12 col-md-6">
+                            <md-input-container class="md-block" flex-gt-sm>
+
+                                <input mdc-datetime-picker="" date="true" time="false" type="text" id="dateFrom" format="{{dateFormat}}" class="date-icon"
+                                       min-date="date" name="k1.declarationInvoice.InvoiceDate"
+                                       ng-required="true"
+                                       ng-model="k1.declarationInvoice.InvoiceDate">
+                            </md-input-container>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-6 col-md-6">
+
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Odometer Installed Date</label>
+                                <input mdc-datetime-picker="" date="true" time="false" type="text" id="dateFrom" format="{{dateFormat}}" class="date-icon"
+                                       min-date="date" name="k1.declarationInvoice.InvoiceDate"
+                                       ng-required="true"
+                                       ng-model="k1.declarationInvoice.InvoiceDate">
+                            </md-input-container>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 ">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Quantity</label>
+
+                                <input type="text" class="form-control input-sm" />
+                            </md-input-container>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Unit Price</label>
+
+                                <input type="text" class="form-control input-sm" />
+                            </md-input-container>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Total Amount</label>
+
+                                <input type="text" class="form-control input-sm" />
+                            </md-input-container>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div>
+        <div class="card">
+            <div class="card-body card-padding p-t-5 p-b-5">
+                <div class="row">
+                    <div class="col-xs-12 m-t-15 m-b-10">
+                        <button type="button" class="btn btn-primary waves-effect" ng-click="cancel();"><i class="fa fa-floppy-o" aria-hidden="true"></i> &nbsp;Save</button>
+
+                        <div class="pull-right">
+                            
+                            <button class="btn btn-primary btn btn-primary waves-effect" type="button" data-ui-sref="k1Inquiry" data-ng-click="mactrl.sidebarStat($event)">
+                                <i class="fa fa-backward" aria-hidden="true"></i>&nbsp;Back
+                            </button>
+                            <button class="btn btn-default  waves-effect" type="button" ng-click="clear();">
+                                <i class="fa fa-eraser" aria-hidden="true"></i>&nbsp;Clear
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

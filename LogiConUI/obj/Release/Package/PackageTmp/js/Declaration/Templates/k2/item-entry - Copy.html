@@ -1,0 +1,1133 @@
+﻿<form id="frmk2ItemEntry" name="frmk2ItemEntry" ng-class="{'submitted':submitted}" ng-submit="Savek2ItemEntry(ie)" novalidate>
+    <style type="text/css">
+        .box.box-solid.box-default {
+            border: 0px solid #d2d6de;
+        }
+    </style>
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" ng-click="cancel();">&times;</button>
+        <h4 class="modal-title">Item Entry</h4>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-xs-12 col-md-6">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <md-input-container class="md-block" flex-gt-sm>
+                             <md-input-container class="md-block" flex-gt-sm> <label>Product</label>
+                            <input type="text"
+                                   ng-required="true"
+                                       ng-model="ie.ProductCode" />
+                        </md-input-container>
+
+
+                        <!--<div class="form-group fg-float">
+                            <div class="fg-line">
+                                <input type="text"
+                                       ng-required="true"
+                                       ng-model="ie.ProductCode"
+                                       class="form-control input-sm" />
+                                <label class="fg-label">Product</label>
+                            </div>
+                        </div>-->
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <md-input-container class="md-block" flex-gt-sm>
+                             <md-input-container class="md-block" flex-gt-sm> <label>Country Of Origin</label>
+                            <md-select ng-required="true"
+                                        ng-model="ie.OriginCountryCode">
+                                <md-option ng-repeat="item in lookUpData.countryList" ng-value="item.Value">
+                                    {{item.Text}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+
+                        <!--<div class="form-group fg-float">
+                            <div class="fg-line">
+                                <select class="form-control input-sm"
+                                        ng-required="true"
+                                        ng-model="ie.OriginCountryCode"
+                                        ng-options="s.Value as s.Text for s in lookUpData.countryList" />
+                                <label class="fg-label">Country Of Origin</label>
+                            </div>
+                        </div>-->
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-md-6">
+                        <md-input-container class="md-block" flex-gt-sm>
+                             <md-input-container class="md-block" flex-gt-sm> <label>Item Amount</label>
+                            <input type="text"
+                                  ng-required="true"
+                                       ng-model="ie.ItemAmount"
+                                       logicon-decimal />
+                        </md-input-container>
+
+                        <!--<div class="form-group fg-float">
+                            <div class="fg-line">
+                                <input type="text"
+                                       ng-required="true"
+                                       ng-model="ie.ItemAmount"
+                                       logicon-decimal
+                                       class="form-control input-sm" />
+                                <label class="fg-label">Item Amount</label>
+                            </div>
+                        </div>-->
+                    </div>
+                    <div class="col-xs-12 col-md-6">
+                        <md-input-container class="md-block" flex-gt-sm>
+                             <md-input-container class="md-block" flex-gt-sm> <label>HS Code</label>
+                            <input type="text"
+                                  ng-required="true"
+                                       
+                                       ng-class="{'loadinggif': c.HSCodeNameLoading}"
+                                       
+                                       ng-model="c.HSCodeDescription"
+                                       typeahead-min-length="3"
+                                       uib-typeahead="d.Text as d.Text for d in HSCodeResults($viewValue)"
+                                       typeahead-loading="c.HSCodeNameLoading"
+                                       typeahead-wait-ms="100"
+                                       typeahead-editable="false"
+                                       typeahead-on-select="HSCodeChange($item)" />
+                        </md-input-container>
+
+                        <!--<div class="form-group fg-float">
+                            <div class="fg-line">
+                                <input type="text"
+                                       ng-required="true"
+                                       
+                                       ng-class="{'loadinggif': c.HSCodeNameLoading}"
+                                       
+                                       ng-model="c.HSCodeDescription"
+                                       typeahead-min-length="3"
+                                       uib-typeahead="d.Text as d.Text for d in HSCodeResults($viewValue)"
+                                       typeahead-loading="c.HSCodeNameLoading"
+                                       typeahead-wait-ms="100"
+                                       typeahead-editable="false"
+                                       typeahead-on-select="HSCodeChange($item)" />
+                                <label class="fg-label">HS Code</label>
+                            </div>
+                        </div>-->
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-md-6">
+                        <md-input-container class="md-block" flex-gt-sm>
+                             <md-input-container class="md-block" flex-gt-sm> <label>Statistical Qty.</label>
+                            <input type="text"
+                                   ng-required="true"
+                                       logicon-decimal
+                                       ng-model="ie.StatisticalQty" />
+                        </md-input-container>
+
+                        <!--<div class="form-group fg-float">
+                            <div class="fg-line">
+                                <input type="text"
+                                       ng-required="true"
+                                       logicon-decimal
+                                       ng-model="ie.StatisticalQty"
+                                       class="form-control input-sm" />
+                                <label class="fg-label">Statistical Qty.</label>
+                            </div>
+                        </div>-->
+                    </div>
+                    <div class="col-xs-12 col-md-6">
+                        <md-input-container class="md-block" flex-gt-sm>
+                             <md-input-container class="md-block" flex-gt-sm> <label>Statistical UOM</label>
+                            <md-select ng-required="true"
+                                        ng-model="ie.StatisticalUOM">
+                                <md-option ng-repeat="item in lookUpData.UOMList" ng-value="item.Value">
+                                    {{item.Text}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+
+                        <!--<div class="form-group fg-float">
+                            <div class="fg-line">
+                                <select class="form-control input-sm"
+                                        ng-required="true"
+                                        ng-model="ie.StatisticalUOM"
+                                        ng-options="s.Value as s.Text for s in lookUpData.UOMList"></select>
+                                <label class="fg-label">Statistical UOM</label>
+                            </div>
+                        </div>-->
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-md-6">
+                        <md-input-container class="md-block" flex-gt-sm>
+                             <md-input-container class="md-block" flex-gt-sm> <label>Declared Qty.</label>
+                            <input type="text"
+                                   ng-required="true"
+                                       logicon-decimal
+                                       ng-model="ie.DeclaredQty"
+                                       ng-blur="ExportDutyCalculation()"/>
+                        </md-input-container>
+
+
+                        <!--<div class="form-group fg-float">
+                            <div class="fg-line">
+                                <input type="text"
+                                       ng-required="true"
+                                       logicon-decimal
+                                       ng-model="ie.DeclaredQty"
+                                       ng-blur="ExportDutyCalculation()"
+                                       class="form-control input-sm" />
+                                <label class="fg-label">Declared Qty.</label>
+                            </div>
+                        </div>-->
+                    </div>
+                    <div class="col-xs-12 col-md-6">
+                        <md-input-container class="md-block" flex-gt-sm>
+                             <md-input-container class="md-block" flex-gt-sm> <label>Declared UOM</label>
+                            <md-select ng-required="true"
+                                        ng-model="ie.DeclaredUOM">
+                                <md-option ng-repeat="item in lookUpData.UOMList" ng-value="item.Value">
+                                    {{item.Text}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+
+                        <!--<div class="form-group fg-float">
+                            <div class="fg-line">
+                                <select class="form-control input-sm"
+                                        ng-required="true"
+                                        ng-model="ie.DeclaredUOM"
+                                        ng-options="s.Value as s.Text for s in lookUpData.UOMList"></select>
+                                <label class="fg-label">Declared UOM</label>
+                            </div>
+                        </div>-->
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-12">
+                        <md-input-container class="md-block" flex-gt-sm>
+                             <md-input-container class="md-block" flex-gt-sm> <label>Item Description</label>
+                            <input type="text"
+                                   ng-required="true"
+                                       ng-model="ie.ItemDescription1" />
+                        </md-input-container>
+
+
+                        <!--<div class="form-group fg-float">
+                            <div class="fg-line">
+                                <input type="text"
+                                       ng-required="true"
+                                       ng-model="ie.ItemDescription1" class="form-control input-sm" />
+                                <label class="fg-label">Item Description</label>
+                            </div>
+                        </div>-->
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <md-input-container class="md-block">
+                             <md-input-container class="md-block" flex-gt-sm> <label>Extra Item Description</label>
+                            <textarea ng-required="true"
+                                          ng-model="ie.ItemDescription2"></textarea>
+                        </md-input-container>
+
+
+                        <!--div class="form-group fg-float">
+                            <div class="fg-line">
+                                <textarea class="form-control input-sm"
+                                          ng-required="true"
+                                          ng-model="ie.ItemDescription2"></textarea>
+                                <label class="fg-label">Extra Item Description</label>
+                            </div>
+                        </div>-->
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <div class="col-xs-12 col-md-6">
+                <div class="row">
+                    <div class="col-xs-12 col-md-6">
+                        <div class="card collapsed-box">
+                            <div  class="lv-header-alt clearfix m-b-5">
+                                <h3  class="lvh-label">Export Duty</h3>
+                                <div class="box-tools pull-right">
+                                    <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                                        <i class="fa fa-plus"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div  class="card-body card-padding p-t-25 p-b-25" style="display: none;">
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-6">
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                             <md-input-container class="md-block" flex-gt-sm> <label>Method</label>
+                                            <md-select ng-model="ie.ExportDutyMethod" ng-change="ExportDutyMethodChange()">
+                                                <md-option ng-repeat="item in lookUpData.dutyMethodList" ng-value="item.Value">
+                                                    {{item.Text}}
+                                                </md-option>
+                                            </md-select>
+                                        </md-input-container>
+
+                                        <!--<div class="form-group fg-float">
+                                            <div class="fg-line">
+                                                <select ng-model="ie.ExportDutyMethod"
+                                                        class="form-control input-sm"
+                                                        ng-change="ExportDutyMethodChange()"
+                                                        ng-options="s.Value as s.Text for s in lookUpData.dutyMethodList"></select>
+                                                <label>Method</label>
+                                            </div>
+                                        </div>-->
+                                    </div>
+                                    <div class="col-xs-12 col-md-6">
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                             <md-input-container class="md-block" flex-gt-sm> <label>Tariff Code Type</label>
+                                            <md-select ng-model="ie.ExportDutyTariffCode"  ng-change="ExportDutyCalculation()">
+                                                <md-option ng-repeat="item in lookUpData.tariffCodeTypeList" ng-value="item.Value">
+                                                    {{item.Text}}
+                                                </md-option>
+                                            </md-select>
+                                        </md-input-container>
+
+                                        <!--<div class="form-group fg-float">
+                                            <div class="fg-line">
+                                                <select ng-model="ie.ExportDutyTariffCode"
+                                                        class="form-control input-sm"
+                                                        ng-change="ExportDutyCalculation()"
+                                                        ng-options="s.Value as s.Text for s in lookUpData.tariffCodeTypeList"></select>
+                                                <label>Tariff Code Type</label>
+                                            </div>
+                                        </div>-->
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-6">
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                             <md-input-container class="md-block" flex-gt-sm> <label>Percentage(%)</label>
+                                            <input type="text"
+                                                   ng-model="ie.ExportDutyPercentage"
+                                                       logicon-decimal />
+                                        </md-input-container>
+
+
+                                        <!--<div class="form-group fg-float">
+                                            <div class="fg-line">
+                                                <input type="text"
+                                                       ng-model="ie.ExportDutyPercentage"
+                                                       logicon-decimal
+                                                       class="form-control input-sm" placeholder="0.000" />
+                                                <label>Percentage(%)</label>
+                                            </div>
+                                        </div>-->
+                                    </div>
+                                    <div class="col-xs-12 col-md-6">
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                             <md-input-container class="md-block" flex-gt-sm> <label>Rate Exempted(%)</label>
+                                            <input type="text"
+                                                   logicon-decimal
+                                                       ng-model="ie.ExportDutyExcemption" placeholder="0.000" />
+                                        </md-input-container>
+
+
+                                        <!--<div class="form-group fg-float">
+                                            <div class="fg-line">
+                                                <input type="text"
+                                                       logicon-decimal
+                                                       ng-model="ie.ExportDutyExcemption"
+                                                       class="form-control input-sm" placeholder="0.000" />
+                                                <label>Rate Exempted(%)</label>
+                                            </div>
+                                        </div>-->
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-6">
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                             <md-input-container class="md-block" flex-gt-sm> <label>Specific</label>
+                                            <input type="text"
+                                                   logicon-decimal
+                                                       ng-model="ie.ExportDutySpecific" placeholder="0.0000000"/>
+                                        </md-input-container>
+
+
+                                        <!--<div class="form-group fg-float">
+                                            <div class="fg-line">
+                                                <input type="text"
+                                                       logicon-decimal
+                                                       ng-model="ie.ExportDutySpecific"
+                                                       class="form-control input-sm" placeholder="0.0000000" />
+                                                <label>Specific</label>
+                                            </div>
+                                        </div>-->
+                                    </div>
+                                    <div class="col-xs-12 col-md-6">
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                             <md-input-container class="md-block" flex-gt-sm> <label>Rate Exempted(%)</label>
+                                            <input type="text"
+                                                   logicon-decimal
+                                                       ng-model="ie.ExportDutySpecificExcemption" placeholder="0.0000000" />
+                                        </md-input-container>
+
+                                        <!--<div class="form-group fg-float">
+                                            <div class="fg-line">
+                                                <input type="text"
+                                                       logicon-decimal
+                                                       ng-model="ie.ExportDutySpecificExcemption"
+                                                       class="form-control input-sm" placeholder="0.0000000" />
+                                                <label>Rate Exempted(%)</label>
+                                            </div>
+                                        </div>-->
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-6">
+                                        Export Duty
+                                    </div>
+                                    <div class="col-xs-12 col-md-6">
+                                        {{ie.ExportDutyAmount}}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-6">
+                                        Export Duty Specific
+                                    </div>
+                                    <div class="col-xs-12 col-md-6">
+                                        {{ie.ExportDutySpecificAmount}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-md-6">
+                        <div class="card collapsed-box">
+                            <div  class="lv-header-alt clearfix m-b-5">
+                                <h3  class="lvh-label">GAZETTED</h3>
+                                <div class="box-tools pull-right">
+                                    <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                                        <i class="fa fa-plus"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div  class="card-body card-padding p-t-25 p-b-25" style="display: none;">
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-6">
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                             <md-input-container class="md-block" flex-gt-sm> <label>Method</label>
+                                            <md-select ng-model="ie.GazettedMethod">
+                                                <md-option ng-repeat="item in lookUpData.dutyMethodList" ng-value="item.Value">
+                                                    {{item.Text}}
+                                                </md-option>
+                                            </md-select>
+                                        </md-input-container>
+
+                                        <!--<div class="form-group fg-float">
+                                            <div class="fg-line">
+                                                <select ng-model="ie.GazettedMethod"
+                                                        class="form-control input-sm"
+                                                        ng-options="s.Value as s.Text for s in lookUpData.dutyMethodList"></select>
+                                                <label>Method</label>
+                                            </div>
+                                        </div>-->
+                                    </div>
+                                    <div class="col-xs-12 col-md-6">
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                             <md-input-container class="md-block" flex-gt-sm> <label>Tariff Code Type</label>
+                                            <md-select ng-model="ie.GazettedTariffCode">
+                                                <md-option ng-repeat="item in lookUpData.tariffCodeTypeList" ng-value="item.Value">
+                                                    {{item.Text}}
+                                                </md-option>
+                                            </md-select>
+                                        </md-input-container>
+
+                                        <!--<div class="form-group fg-float">
+                                            <div class="fg-line">
+                                                <select ng-model="ie.GazettedTariffCode"
+                                                        class="form-control input-sm"
+                                                        ng-options="s.Value as s.Text for s in lookUpData.tariffCodeTypeList"></select>
+                                                <label>Tariff Code Type</label>
+                                            </div>
+                                        </div>-->
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-6">
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                             <md-input-container class="md-block" flex-gt-sm> <label>Percentage(%)</label>
+                                            <input type="text"
+                                                   ng-model="ie.GazettedPercentage"
+                                                       logicon-decimal placeholder="0.000"/>
+                                        </md-input-container>
+
+
+                                        <!--<div class="form-group fg-float">
+                                            <div class="fg-line">
+                                                <input type="text"
+                                                       ng-model="ie.GazettedPercentage"
+                                                       logicon-decimal
+                                                       class="form-control input-sm" placeholder="0.000" />
+                                                <label>Percentage(%)</label>
+                                            </div>
+                                        </div>-->
+                                    </div>
+                                    <div class="col-xs-12 col-md-6">
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                             <md-input-container class="md-block" flex-gt-sm> <label>Rate Exempted(%)</label>
+                                            <input type="text"
+                                                   logicon-decimal
+                                                       ng-model="ie.GazettedExcemption"placeholder="0.000" />
+                                        </md-input-container>
+
+
+                                        <!--<div class="form-group fg-float">
+                                            <div class="fg-line">
+                                                <input type="text"
+                                                       logicon-decimal
+                                                       ng-model="ie.GazettedExcemption"
+                                                       class="form-control input-sm" placeholder="0.000" />
+                                                <label>Rate Exempted(%)</label>
+                                            </div>
+                                        </div>-->
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-6">
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                             <md-input-container class="md-block" flex-gt-sm> <label>Specific</label>
+                                            <input type="text"
+                                                   ng-model="ie.GazettedSpecific"
+                                                       logicon-decimal placeholder="0.000" />
+                                        </md-input-container>
+
+
+                                        <!--<div class="form-group fg-float">
+                                            <div class="fg-line">
+                                                <input type="text"
+                                                       ng-model="ie.GazettedSpecific"
+                                                       logicon-decimal
+                                                       class="form-control input-sm" placeholder="0.000" />
+                                                <label>Specific</label>
+                                            </div>
+                                        </div>-->
+                                    </div>
+                                    <div class="col-xs-12 col-md-6">
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                             <md-input-container class="md-block" flex-gt-sm> <label>Rate Exempted(%)</label>
+                                            <input type="text"
+                                                  logicon-decimal
+                                                       ng-model="ie.GazettedSpecificExcemption" placeholder="0.000" />
+                                        </md-input-container>
+
+
+                                        <!--<div class="form-group fg-float">
+                                            <div class="fg-line">
+                                                <input type="text"
+                                                       logicon-decimal
+                                                       ng-model="ie.GazettedSpecificExcemption"
+                                                       class="form-control input-sm" placeholder="0.000" />
+                                                <label>Rate Exempted(%)</label>
+                                            </div>
+                                        </div>-->
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-6">
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                             <md-input-container class="md-block" flex-gt-sm> <label>Unit Price</label>
+                                            <input type="text"
+                                                    ng-model="ie.GazettedUnitPrice"
+                                                       logicon-decimal placeholder="0.000" />
+                                        </md-input-container>
+
+
+                                        <!--<div class="form-group fg-float">
+                                            <div class="fg-line">
+                                                <input type="text"
+                                                       ng-model="ie.GazettedUnitPrice"
+                                                       logicon-decimal
+                                                       class="form-control input-sm" placeholder="0.000" />
+                                                <label>Unit Price</label>
+                                            </div>
+                                        </div>-->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-12 col-md-6">
+                        <div class="card collapsed-box">
+                            <div  class="lv-header-alt clearfix m-b-5">
+                                <h3  class="lvh-label">Replant (CESS 1)</h3>
+                                <div class="box-tools pull-right">
+                                    <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                                        <i class="fa fa-plus"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div  class="card-body card-padding p-t-25 p-b-25" style="display: none;">
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-6">
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                             <md-input-container class="md-block" flex-gt-sm> <label>Method</label>
+                                            <md-select ng-model="ie.ReplantMethod">
+                                                <md-option ng-repeat="item in lookUpData.dutyMethodList" ng-value="item.Value">
+                                                    {{item.Text}}
+                                                </md-option>
+                                            </md-select>
+                                        </md-input-container>
+
+                                        <!--<div class="form-group fg-float">
+                                            <div class="fg-line">
+                                                <select ng-model="ie.ReplantMethod"
+                                                        class="form-control input-sm"
+                                                        ng-options="s.Value as s.Text for s in lookUpData.dutyMethodList"></select>
+                                                <label>Method</label>
+                                            </div>
+                                        </div>-->
+                                    </div>
+                                    <div class="col-xs-12 col-md-6">
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                             <md-input-container class="md-block" flex-gt-sm> <label>Tariff Code Type</label>
+                                            <md-select ng-model="ie.ReplantTariffCode">
+                                                <md-option ng-repeat="item in lookUpData.tariffCodeTypeList" ng-value="item.Value">
+                                                    {{item.Text}}
+                                                </md-option>
+                                            </md-select>
+                                        </md-input-container>
+
+                                        <!--<div class="form-group fg-float">
+                                            <div class="fg-line">
+                                                <select ng-model="ie.ReplantTariffCode"
+                                                        class="form-control input-sm"
+                                                        ng-options="s.Value as s.Text for s in lookUpData.tariffCodeTypeList"></select>
+                                                <label>Tariff Code Type</label>
+                                            </div>
+                                        </div>-->
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-6">
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                             <md-input-container class="md-block" flex-gt-sm> <label>Percentage(%)</label>
+                                            <input type="text"
+                                                   ng-model="ie.ReplantPercentage"
+                                                       logicon-decimal placeholder="0.000" />
+                                        </md-input-container>
+
+                                        <!--<div class="form-group fg-float">
+                                            <div class="fg-line">
+                                                <input ng-model="ie.ReplantPercentage"
+                                                       logicon-decimal
+                                                       type="text"
+                                                       class="form-control input-sm" placeholder="0.000" />
+                                                <label>Percentage(%)</label>
+                                            </div>
+                                        </div>-->
+                                    </div>
+                                    <div class="col-xs-12 col-md-6">
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                             <md-input-container class="md-block" flex-gt-sm> <label>Rate Excempted(%)</label>
+                                            <input type="text"
+                                                   ng-model="ie.ReplantExcemption"
+                                                       logicon-decimal placeholder="0.000" />
+                                        </md-input-container>
+
+                                        <!--<div class="form-group fg-float">
+                                            <div class="fg-line">
+                                                <input ng-model="ie.ReplantExcemption"
+                                                       logicon-decimal
+                                                       type="text"
+                                                       class="form-control input-sm" placeholder="0.000" />
+                                                <label>Rate Excempted(%)</label>
+                                            </div>
+                                        </div>-->
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-6">
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                             <md-input-container class="md-block" flex-gt-sm> <label>Specific</label>
+                                            <input type="text"
+                                                   ng-model="ie.ReplantSpecific"
+                                                       logicon-decimal placeholder="0.0000000" />
+                                        </md-input-container>
+
+                                        <!--<div class="form-group fg-float">
+                                            <div class="fg-line">
+                                                <input ng-model="ie.ReplantSpecific"
+                                                       logicon-decimal
+                                                       type="text"
+                                                       class="form-control input-sm" placeholder="0.0000000" />
+                                                <label>Specific</label>
+                                            </div>
+                                        </div>-->
+                                    </div>
+                                    <div class="col-xs-12 col-md-6">
+
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                             <md-input-container class="md-block" flex-gt-sm> <label>Rate Exempted(%)</label>
+                                            <input type="text"
+                                                   ng-model="ie.ReplantSpecificExcemption"
+                                                       logicon-decimal  placeholder="0.0000000"/>
+                                        </md-input-container>
+                                        <!--<div class="form-group fg-float">
+                                            <div class="fg-line">
+                                                <input ng-model="ie.ReplantSpecificExcemption"
+                                                       logicon-decimal
+                                                       type="text"
+                                                       class="form-control input-sm" placeholder="0.0000000" />
+                                                <label>Rate Exempted(%)</label>
+                                            </div>
+                                        </div>-->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-md-6">
+                        <div class="card collapsed-box">
+                            <div  class="lv-header-alt clearfix m-b-5">
+                                <h3  class="lvh-label">Research (CESS 2)</h3>
+                                <div class="box-tools pull-right">
+                                    <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                                        <i class="fa fa-plus"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div  class="card-body card-padding p-t-25 p-b-25" style="display: none;">
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-6">
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                             <md-input-container class="md-block" flex-gt-sm> <label>Method</label>
+                                            <md-select ng-model="ie.ResearchMethod">
+                                                <md-option ng-repeat="item in lookUpData.dutyMethodList" ng-value="item.Value">
+                                                    {{item.Text}}
+                                                </md-option>
+                                            </md-select>
+                                        </md-input-container>
+
+                                        <!--<div class="form-group fg-float">
+                                            <div class="fg-line">
+                                                <select ng-model="ie.ResearchMethod"
+                                                        class="form-control input-sm"
+                                                        ng-options="s.Value as s.Text for s in lookUpData.dutyMethodList"></select>
+                                                <label>Method</label>
+                                            </div>
+                                        </div>-->
+                                    </div>
+                                    <div class="col-xs-12 col-md-6">
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                             <md-input-container class="md-block" flex-gt-sm> <label>Tariff Code Type</label>
+                                            <md-select ng-model="ie.ResearchTariffCode">
+                                                <md-option ng-repeat="item in lookUpData.tariffCodeTypeList" ng-value="item.Value">
+                                                    {{item.Text}}
+                                                </md-option>
+                                            </md-select>
+                                        </md-input-container>
+
+                                        <!--<div class="form-group fg-float">
+                                            <div class="fg-line">
+                                                <select ng-model="ie.ResearchTariffCode"
+                                                        class="form-control input-sm"
+                                                        ng-options="s.Value as s.Text for s in lookUpData.tariffCodeTypeList"></select>
+                                                <label>Tariff Code Type</label>
+                                            </div>
+                                        </div>-->
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-6">
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                             <md-input-container class="md-block" flex-gt-sm> <label>Percentage(%)</label>
+                                            <input type="text"
+                                                   ng-model="ie.ResearchPercentage"
+                                                       logicon-decimal placeholder="0.000"/>
+                                        </md-input-container>
+
+
+                                        <!--<div class="form-group fg-float">
+                                            <div class="fg-line">
+                                                <input ng-model="ie.ResearchPercentage"
+                                                       logicon-decimal
+                                                       type="text"
+                                                       class="form-control input-sm" placeholder="0.000" />
+                                                <label>Percentage(%)</label>
+                                            </div>
+                                        </div>-->
+                                    </div>
+                                    <div class="col-xs-12 col-md-6">
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                             <md-input-container class="md-block" flex-gt-sm> <label>Rate Exempted(%)</label>
+                                            <input type="text"
+                                                   ng-model="ie.ResearchExcemption"
+                                                       logicon-decimal placeholder="0.000"/>
+                                        </md-input-container>
+
+
+                                        <!--<div class="form-group fg-float">
+                                            <div class="fg-line">
+                                                <input ng-model="ie.ResearchExcemption"
+                                                       logicon-decimal
+                                                       type="text"
+                                                       class="form-control input-sm" placeholder="0.000" />
+                                                <label>Rate Exempted(%)</label>
+                                            </div>
+                                        </div>-->
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-6">
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                             <md-input-container class="md-block" flex-gt-sm> <label>Specific</label>
+                                            <input type="text"
+                                                   ng-model="ie.ResearchSpecific"
+                                                       logicon-decimal  placeholder="0.0000000" />
+                                        </md-input-container>
+
+
+                                        <!--<div class="form-group fg-float">
+                                            <div class="fg-line">
+                                                <input ng-model="ie.ResearchSpecific"
+                                                       logicon-decimal
+                                                       type="text"
+                                                       class="form-control input-sm" placeholder="0.0000000" />
+                                                <label>Specific</label>
+                                            </div>
+                                        </div>-->
+                                    </div>
+                                    <div class="col-xs-12 col-md-6">
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                             <md-input-container class="md-block" flex-gt-sm> <label>Rate Exempted(%)</label>
+                                            <input type="text"
+                                                  ng-model="ie.ResearchSpecificExcemption"
+                                                       logicon-decimal placeholder="0.0000000" />
+                                        </md-input-container>
+
+
+                                        <!--<div class="form-group fg-float">
+                                            <div class="fg-line">
+                                                <input ng-model="ie.ResearchSpecificExcemption"
+                                                       logicon-decimal
+                                                       type="text"
+                                                       class="form-control input-sm"
+                                                       placeholder="0.0000000" />
+                                                <label>Rate Exempted(%)</label>
+                                            </div>
+                                        </div>-->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="card collapsed-box">
+                            <div  class="lv-header-alt clearfix m-b-5">
+                                <h3  class="lvh-label">Vehicle</h3>
+                                <div class="box-tools pull-right">
+                                    <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                                        <i class="fa fa-plus"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div  class="card-body card-padding p-t-25 p-b-25" style="display: none;">
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-6">
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                             <md-input-container class="md-block" flex-gt-sm> <label>Type</label>
+                                            <md-select ng-model="ie.VehicleType">
+                                                <md-option ng-repeat="item in lookUpData.vehicleTypeList" ng-value="item.Value">
+                                                    {{item.Text}}
+                                                </md-option>
+                                            </md-select>
+                                        </md-input-container>
+
+                                        <!--<div class="form-group fg-float">
+                                            <div class="fg-line">
+                                                <select class="form-control input-sm"
+                                                        ng-model="ie.VehicleType"
+                                                        ng-options="s.Value as s.Text for s in lookUpData.vehicleTypeList"></select>
+                                                <label>Type</label>
+                                            </div>
+                                        </div>-->
+                                    </div>
+                                    <div class="col-xs-12 col-md-6">
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                             <md-input-container class="md-block" flex-gt-sm> <label>Chassis No.</label>
+                                            <input type="text"
+                                                   ng-model="ie.VehicleChassisNo" />
+                                        </md-input-container>
+
+
+                                        <!--<div class="form-group fg-float">
+                                            <div class="fg-line">
+                                                <input type="text" class="form-control input-sm" ng-model="ie.VehicleChassisNo" />
+                                                <label>Chassis No.</label>
+                                            </div>
+                                        </div>-->
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-6">
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                             <md-input-container class="md-block" flex-gt-sm> <label>Brand</label>
+                                            <input type="text"
+                                                   ng-model="ie.VehicleBrand" />
+                                        </md-input-container>
+
+
+                                        <!--<div class="form-group fg-float">
+                                            <div class="fg-line">
+                                                <input type="text" class="form-control input-sm" ng-model="ie.VehicleBrand" />
+                                                <label>Brand</label>
+                                            </div>
+                                        </div>-->
+                                    </div>
+                                    <div class="col-xs-12 col-md-6">
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                             <md-input-container class="md-block" flex-gt-sm> <label>CC</label>
+                                            <input type="text"
+                                                   ng-model="ie.VehicleCC" />
+                                        </md-input-container>
+
+
+                                        <!--<div class="form-group fg-float">
+                                            <div class="fg-line">
+                                                <input type="text" class="form-control input-sm" ng-model="ie.VehicleCC" />
+                                                <label>CC</label>
+                                            </div>
+                                        </div>-->
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-6">
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                             <md-input-container class="md-block" flex-gt-sm> <label>Model</label>
+                                            <input type="text"
+                                                   ng-model="ie.VehicleModel"/>
+                                        </md-input-container>
+
+
+                                        <!--<div class="form-group fg-float">
+                                            <div class="fg-line">
+                                                <input type="text" class="form-control input-sm" ng-model="ie.VehicleModel" />
+                                                <label>Model</label>
+                                            </div>
+                                        </div>-->
+                                    </div>
+                                    <div class="col-xs-12 col-md-6">
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                             <md-input-container class="md-block" flex-gt-sm> <label>Year</label>
+                                            <input type="text"
+                                                   ng-model="ie.VehicleYear"
+                                                       logicon-number/>
+                                        </md-input-container>
+
+
+                                        <!--<div class="form-group fg-float">
+                                            <div class="fg-line">
+                                                <input ng-model="ie.VehicleYear"
+                                                       logicon-number
+                                                       type="text" class="form-control input-sm" />
+                                                <label>Year</label>
+                                            </div>
+                                        </div>-->
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-6">
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                             <md-input-container class="md-block" flex-gt-sm> <label>Engine No.</label>
+                                            <input type="text"
+                                                   ng-model="ie.VehicleEngineNo" />
+                                        </md-input-container>
+
+
+                                        <!--<div class="form-group fg-float">
+                                            <div class="fg-line">
+                                                <input type="text" class="form-control input-sm" ng-model="ie.VehicleEngineNo" />
+                                                <label>Engine No.</label>
+                                            </div>
+                                        </div>-->
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row" ng-if="showPetrolPnl">
+                            <div class="col-xs-12">
+                                <div class="card collapsed-box">
+                                    <div  class="lv-header-alt clearfix m-b-5">
+                                        <h3  class="lvh-label">Petroleum Working Note</h3>
+                                        <div class="box-tools pull-right">
+                                            <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                                                <i class="fa fa-plus"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div  class="card-body card-padding p-t-25 p-b-25" style="display: none;">
+                                        <div class="row">
+                                            <div class="col-xs-12 col-md-5"></div>
+                                            <div class="col-xs-6 col-md-3">
+                                                <label class="fg-label">Meter FIG</label>
+                                            </div>
+                                            <div class="col-xs-6 col-md-3">
+                                                <label class="fg-label">S/Tank FIG</label>
+                                            </div>
+                                        </div>
+                                        <div class="row" ng-repeat="i in [1, 2, 3, 4, 5]">
+                                            <div class="col-xs-12 col-md-2">
+                                                <label class="fg-label">Type {{$index + 1}}</label>
+                                            </div>
+                                            <div class="col-xs-6 col-md-3">
+                                                <input ng-model="ie.declarationsubItemsK2[$index].PType" type="text" class="form-control input-sm" />
+                                            </div>
+                                            <div class="col-xs-6 col-md-3">
+                                                <input ng-model="ie.declarationsubItemsK2[$index].PMeterFigure"
+                                                       logicon-decimal
+                                                       type="text"
+                                                       placeholder="0.000" class="form-control input-sm" />
+                                            </div>
+                                            <div class="col-xs-6 col-md-3">
+                                                <input ng-model="ie.declarationsubItemsK2[$index].PTankFigure"
+                                                       logicon-decimal
+                                                       type="text" placeholder="0.000" class="form-control input-sm" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="card collapsed-box">
+                                    <div  class="lv-header-alt clearfix m-b-5">
+                                        <h3  class="lvh-label">Palm Oil Working Note</h3>
+                                        <div class="box-tools pull-right">
+                                            <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                                                <i class="fa fa-plus"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div  class="card-body card-padding p-t-25 p-b-25" style="display: none;">
+                                        <div class="row">
+                                            <div class="col-xs-6 col-md-3">
+                                                <label class="fg-label">Gazetted Unit Price</label>
+                                            </div>
+                                            <div class="col-xs-6 col-md-3">
+                                                <label class="fg-label">Total Value</label>
+                                            </div>
+                                            <div class="col-xs-6 col-md-3">
+                                                <label class="fg-label">Rate</label>
+                                            </div>
+                                            <div class="col-xs-6 col-md-3">
+                                                <label class="fg-label">Amount</label>
+                                            </div>
+                                        </div>
+                                        <div class="row" ng-repeat="i in [1, 2, 3, 4, 5]">
+                                            <div class="col-xs-6 col-md-3">
+                                                <input ng-model="ie.declarationsubItemsK2[$index].POilUnitPrice"
+                                                       type="text"
+                                                       placeholder="0.00"
+                                                       class="form-control input-sm" />
+                                            </div>
+                                            <div class="col-xs-6 col-md-3">
+                                                <input ng-model="ie.declarationsubItemsK2[$index].POilTotalValue"
+                                                       logicon-decimal
+                                                       type="text"
+                                                       placeholder="0.00" class="form-control input-sm" />
+                                            </div>
+                                            <div class="col-xs-6 col-md-3">
+                                                <input ng-model="ie.declarationsubItemsK2[$index].POilRate"
+                                                       logicon-decimal
+                                                       type="text" placeholder="0.00" class="form-control input-sm" />
+                                            </div>
+                                            <div class="col-xs-6 col-md-3">
+                                                <input ng-model="ie.declarationsubItemsK2[$index].POilAmount"
+                                                       logicon-decimal
+                                                       type="text" placeholder="0.00" class="form-control input-sm" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+    <div class="overlay" style="opacity:0.8;" ng-show="showLoading">
+        <i class="fa fa-refresh fa-spin"></i>
+
+    </div>
+
+    </div>
+    <div class="modal-footer">
+        <div class="row" >
+            <div class="col-xs-12 col-md-9"></div>
+            <div class="col-md-3 pull-right">
+                <button class="btn btn-primary btn-sm" ng-click="submitted = true;" type="submit"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Save</button>
+                <button class="btn btn-default btn-sm" ng-click="cancel();"><i class="fa fa-times" aria-hidden="true"></i>&nbsp;Close</button>
+            </div>
+        </div>
+    </div>
+
+</form>

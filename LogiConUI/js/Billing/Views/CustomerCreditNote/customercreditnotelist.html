@@ -1,0 +1,103 @@
+﻿<div class="container" ng-controller="CustomerCreditList">
+    <div class="card">
+        <div class="lv-header-alt clearfix m-b-5">
+            <h2 class="lvh-label">Customer Credit Note List</h2>
+            <div class="lv-actions actions">
+                <button class="btn bgm-lightgreen btn-icon"
+                        type="button"
+                        aria-label="button"
+                        ng-click="BroadCastInvoice({invoiceno:'NEW'})">
+                    <i class="zmdi zmdi-plus" aria-hidden="true"></i>
+                </button>&nbsp;&nbsp;&nbsp;
+
+            </div>
+            <ul class="lv-actions actions">
+                <li>
+                    <button type="button" class="btn btn-info btn-icon m-r-10" tooltip-placement="bottom" uib-tooltip="Refresh" ng-click="refresh()"><i class="fa fa-refresh "></i></button>
+                </li>
+            </ul>
+        </div>
+        <div class="card-body card-padding p-t-5 p-b-5">
+            <!--<uib-accordion close-others="oneAtATime">
+                <div uib-accordion-group class="panel-default" heading="" is-open="status.isFirstOpen" is-disabled="status.isFirstDisabled">
+                    <uib-accordion-heading>
+                        <i class="pull-left zmdi zmdi-hc-fw" ng-class="{'zmdi-minus': status.isFirstOpen, 'zmdi-plus': !status.isFirstOpen}"></i>&nbsp;Advanced Search
+                    </uib-accordion-heading>
+
+                    <div class="card-body card-padding p-t-5 p-b-5">
+                        <form id="CustomerInvoiceListCntrl.frmSearch" name="CustomerInvoiceListCntrl.frmSearch" ng-class="{'submitted': SearchSubmitted}" ng-submit="GetTableData(true)" autocomplete="off" novalidate>
+                            <div class="row">
+                                <div class="col-xs-12 col-md-4">
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>Invoice No.</label>
+                                        <input type="text"
+                                               ng-model="i.InvoiceNo" />
+                                    </md-input-container>
+                                </div>
+                                <div class="col-xs-12 col-md-4">
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>Invoice Date</label>
+                                        <input mdc-datetime-picker="" class="date-icon" date="true" time="false" type="text" id="InvoiceDate" format="{{dateFormat}}"
+                                               min-date="date" ng-model="i.InvoiceDate">
+                                    </md-input-container>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12 col-md-4">
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>Date From</label>
+                                        <input mdc-datetime-picker="" class="date-icon" date="true" time="false" type="text" id="dateFrom" format="{{dateFormat}}"
+                                               min-date="date" ng-model="i.dateFrom">
+                                    </md-input-container>
+                                </div>
+                                <div class="col-xs-12 col-md-4">
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>Date To</label>
+                                        <input mdc-datetime-picker="" class="date-icon" date="true" time="false" type="text" id="dateTo" format="{{dateFormat}}"
+                                               min-date="date" ng-model="i.dateTo">
+                                    </md-input-container>
+                                </div>
+                                <div class="col-md-1">
+                                    <button ng-click="SearchSubmitted = true;" type="submit" class="btn btn-primary"><i class="fa fa-search" aria-hidden="true"></i>&nbsp;Search</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+            </uib-accordion>-->
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="table-responsive">
+                        <div style="min-height: 250px;">
+                            <div class="table-responsive">
+                                <table class="table table-vmiddle" ng-table="ngTblData">
+                                    <tr ng-repeat="w in $data">
+                                        
+
+                                        <td data-title="'Credit Note No.'" ><a style="cursor:pointer;" ng-click="BroadCastInvoice({CreditNoteNo:w.CreditNoteNo})">{{w.CreditNoteNo}}</a></td>
+
+                                        <td data-title="'Order No'" >{{w.OrderNo}}</td>
+                                        <td data-title="'Charge Code'">{{w.ChargeCode}}</td>
+                                        <td data-title="'Invoice No'">{{w.InvoiceNo}}</td>
+                                        <td data-title="'#Action'">
+                                            <button class="btn btn-default ng-scope waves-effect"
+                                                    type="button"
+                                                    ng-click="BroadCastInvoice({CreditNoteNo:w.CreditNoteNo})"
+                                                    aria-label="button" uib-tooltip="Edit" tooltip-placement="top">
+                                                <i class="zmdi zmdi-edit"></i>
+                                            </button>
+                                            <!--<button type="button" ng-click="DeleteCustomerInvoice(Invoiceno);" ng-disabled="item.Status" class="btn btn-danger  waves-effect" aria-label="button">
+                                                <i class="zmdi zmdi-delete" aria-hidden="true"></i>
+                                            </button>-->
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

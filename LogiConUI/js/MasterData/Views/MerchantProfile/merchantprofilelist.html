@@ -1,0 +1,192 @@
+﻿<div class="container" ng-controller="MerchantProfileController">
+    <style type="text/css">
+        .marginbottom {
+            margin: 7px 0 0px 0 !important;
+        }
+
+        .top-search {
+            background: #ececec;
+            margin-left: 10px;
+            margin-right: 10px;
+            padding-right: 5px;
+            padding-top: 0px;
+            padding-bottom: 4px;
+            padding-left: 10px;
+            border-radius: 5px;
+        }
+
+            .top-search .md-input-focused label, .top-search .md-input-has-value label {
+                margin-bottom: -6px;
+                font-size: 11px;
+            }
+
+            .top-search .md-input-focused .ng-empty .select-content {
+                top: 12px;
+                position: relative;
+            }
+
+            .top-search .md-input-focused .md-placeholder {
+                display: none;
+            }
+
+            .top-search .md-text {
+                font-size: 11px;
+            }
+    </style>
+    <!--<script type="text/ng-template" id="customTemplate.html">
+        <a  data-ui-sref="merchant({code:match.model.Value, taxID:match.model.TaxID, regNo:match.model.RegNo, isOriginal: (match.model.CompanyCode != match.model.UserCompanyCode)})" data-ng-click="mactrl.sidebarStat($event)">
+            <i>{{match.model.Text}}</i>
+        </a>
+    </script>-->
+    <div class="card">
+        <div class="lv-header-alt clearfix m-b-5 " style="padding-top:1px !important; padding-bottom:3px !important">
+
+
+            <div class="row">
+                <div class="col-xs-12 col-md-6">
+                    <h2 class="lvh-label m-t-5 ">Merchant Profile List</h2>
+                </div>
+                <div class="col-xs-12  col-md-6 text-right">
+                    <ul class="lv-actions actions pull-right m-t-5 ">
+                        <li><button type="button" class="btn btn-info btn-icon m-r-5" ng-click="refresh()" tooltip-placement="bottom" uib-tooltip="Refresh"><i class="fa fa-refresh "></i></button></li>
+                        <li>
+                            <button class="btn bgm-lightgreen btn-icon  m-r-10" tooltip-placement="bottom" uib-tooltip="Add" data-ui-sref="merchant({code:NEW, taxID:NEW, regNo:NEW})" data-ng-click="mactrl.sidebarStat($event)"><i class="zmdi zmdi-plus btn-small"></i></button>
+                        </li>
+                    </ul>
+                    <div class="pull-right top-search">
+                        <md-input-container class="text-left m-r-15 marginbottom" style="min-width:200px;" flex-gt-sm>
+                            <label>Merchant Type</label>
+                            <md-select ng-model="search.filter">
+                                <md-option value="forwardingAgent">
+                                    Forwarding Agent
+                                </md-option>
+                                <md-option value="shippingAgent">
+                                    Shipping Agent
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+
+                        <md-input-container class="text-left marginbottom" style="min-width:250px;" flex-gt-sm>
+                            <label>Merchant Name</label>
+                            <!--<input type="text"
+                            class="search-icon"
+                            ng-model="search.text"
+                            typeahead-min-length="3"
+                            uib-typeahead="d.Value as d.Text for d in results($viewValue)"
+                            typeahead-loading="loadingDeals"
+                            typeahead-template-url="customTemplate.html"
+                            typeahead-wait-ms="1000"
+                            style="width: 300px;" />-->
+                            <input type="text" ng-model="search.MerchantName" />
+                        </md-input-container>
+
+                        <span>
+                            <button class="btn btn-primary  btn-icon m-l-5 m-r-5" type="button" ng-click="GetTableData('admin'); " tooltip-placement="bottom" uib-tooltip="Search"><i class="fa fa-search" aria-hidden="true"></i></button>
+                        </span>
+                    </div>
+
+                </div>
+            </div>
+            <div class="clearfix">  </div>
+        </div>
+
+        <div class="card-body card-padding p-t-5 p-b-5">
+            <div class="row">
+                <div class="col-xs-12">
+                    <uib-accordion close-others="oneAtATime">
+                        <div uib-accordion-group class="panel-default" heading="Advanced Search" is-open="status.isFirstOpen" is-disabled="status.isFirstDisabled">
+                            <uib-accordion-heading>
+                                <i class="pull-left zmdi zmdi-hc-fw" ng-class="{'zmdi-minus': status.isFirstOpen, 'zmdi-plus': !status.isFirstOpen}"></i>&nbsp;Advanced Search
+                            </uib-accordion-heading>
+                            <div class="row">
+                                <div class="col-xs-12">
+
+                                    <div class="card-body card-padding p-t-5 p-b-5">
+                                        <form id="MerchantProfileController.frmSearch" name="MerchantProfileController.frmSearch" ng-class="{'submitted': SearchSubmitted}"
+                                              ng-submit="GetTableData('user')" autocomplete="off" novalidate>
+                                            <div class="row">
+                                                <div class="col-xs-12  col-md-4">
+                                                    <md-input-container class="md-block" flex-gt-sm>
+                                                        <label>Name</label>
+                                                        <input type="text"
+                                                               ng-model="search.Name" />
+                                                    </md-input-container>
+                                                </div>
+                                                <div class="col-xs-12  col-md-4">
+                                                    <md-input-container class="md-block" flex-gt-sm>
+                                                        <label>Reg No.</label>
+                                                        <input type="text"
+                                                               ng-model="search.RegNo" />
+                                                    </md-input-container>
+                                                </div>
+                                                <div class="col-xs-12  col-md-4">
+                                                    <md-input-container class="md-block" flex-gt-sm>
+                                                        <label>GST No.</label>
+                                                        <input type="text"
+                                                               ng-model="search.GSTNo" />
+                                                    </md-input-container>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-xs-12  col-md-4">
+                                                    <md-input-container class="md-block" flex-gt-sm>
+                                                        <label>Agent Code</label>
+                                                        <input type="text"
+                                                               ng-model="search.AgentCode" />
+                                                    </md-input-container>
+                                                </div>
+                                                <div class="col-xs-12 col-md-1  text-right">
+                                                    <button ng-click="SearchSubmitted = true;" type="submit" class="btn btn-primary"><i class="fa fa-search" aria-hidden="true"></i>&nbsp;Search</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </uib-accordion>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <div style="min-height: 250px;">
+                        <div class="table-responsive">
+                            <table class="table table-vmiddle" ng-table="ngTblData">
+                                <tr ng-repeat="w in $data">
+                                    <td data-title="'#Action'" class="action-m">
+                                        <button class="btn btn-default waves-effect" ng-if="w.CompanyCode == CompanyID"
+                                                type="button" data-ui-sref="merchant({code:w.MerchantCode, taxID:w.TaxID, regNo:w.RegNo, isOriginal: (w.CompanyCode != CompanyID) })" data-ng-click="mactrl.sidebarStat($event)"
+                                                aria-label="button" uib-tooltip="Edit" tooltip-placement="top">
+                                            <i class="zmdi zmdi-edit"></i>
+                                        </button>
+                                        <button class="btn btn-info waves-effect" ng-if="w.CompanyCode != CompanyID"
+                                                type="button" data-ui-sref="merchant({code:w.MerchantCode, taxID:w.TaxID, regNo:w.RegNo, isOriginal: (w.CompanyCode != CompanyID) })" data-ng-click="mactrl.sidebarStat($event)"
+                                                aria-label="button" uib-tooltip="View" tooltip-placement="top">
+                                            <i class="zmdi zmdi-view-dashboard"></i>
+                                        </button>
+                                        <button class="btn btn-danger waves-effect" ng-if="w.CompanyCode == CompanyID" ng-disabled="w.IsSubscriber && w.IsOriginal"
+                                                type="button"
+                                                ng-click="DeleteMerchant(w.MerchantCode,w.MerchantName)" aria-label="button" uib-tooltip="Delete" tooltip-placement="top">
+                                            <i class="zmdi zmdi-delete"></i>
+                                        </button>
+                                        <button class="btn btn-primary  waves-effect" ng-if="w.CompanyCode != CompanyID"
+                                                type="button"
+                                                ng-click="InsertMerchantProfile(w.MerchantCode,w.TaxID,w.RegNo)" aria-label="button" uib-tooltip="Copy and Create New Merchant" tooltip-placement="top">
+                                            <i class="zmdi zmdi-copy"></i>
+                                        </button>
+                                    </td>
+                                    <td data-title="'Merchant Code'" sortable="'MerchantCode'">{{w.MerchantCode}}</td>
+                                    <td data-title="'Merchant Name'" sortable="'MerchantName'">{{w.MerchantName}}</td>
+                                    <td data-title="'Reg No'" sortable="'RegNo'">{{w.RegNo}}</td>
+                                    <td data-title="'GST No'" sortable="'TaxID'">{{w.TaxID}}</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

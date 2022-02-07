@@ -1,0 +1,655 @@
+﻿<div class="container" ng-controller="MerchantProfileController">
+    <script type="text/ng-template" id="customTemplate.html">
+        <a ng-href="{{ '#/masterdata/merchant/' + match.model.Value }}">
+            <i>{{match.model.Text}}</i>
+        </a>
+    </script>
+    <form id="frmMerchantProfile" name="frmMerchantProfile" ng-submit="AddMerchantProfile(mp);" ng-class="{'submitted':submitted}" autocomplete="off" novalidate>
+        <div class="card">
+            <div class="lv-header-alt clearfix m-b-5">
+                <h2 class="lvh-label">Merchant Profile</h2>
+            </div>            
+            <div class="card-body card-padding p-t-5 p-b-5">
+                <div class="row">
+                    <div class="col-xs-12 col-md-9">
+                        <div class="row">
+                            <div class="col-xs-12 col-md-6">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Merchant Name</label>
+                                    <input type="text"
+                                           ng-model="mp.MerchantName" ng-required="true" />
+                                </md-input-container>
+                            </div>                            
+                            <div class="col-xs-12 col-md-6">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Registration No.</label>                                    
+                                    <input type="text" 
+                                           ng-model="mp.RegNo" 
+                                           ng-disabled="!isNewMerchant"
+                                           ng-blur="GetMerchantByRegNo()" />
+                                </md-input-container>
+                            </div>                           
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 col-md-6">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>GST No.</label>
+                                    <input type="text"
+                                           ng-model="mp.TaxID" 
+                                           ng-disabled="true" />
+                                </md-input-container>
+                            </div>
+
+                            <div class="col-xs-12 col-md-6">
+                                <div ng-if="IsFwdAgent">
+                                    <div ng-if="mp.IsVerified">
+                                        <div ng-if="mp.IsConsignee || mp.IsShipper || mp.IsFreightForwarder">
+                                            <div class="row">
+                                                <div class="col-xs-12 col-md-6">
+                                                    <md-switch class="md-primary" aria-label="View Declaration" ng-model="mp.IsViewDeclaration">View Declaration</md-switch>
+                                                </div>
+                                                <div class="col-xs-12 col-md-6">
+                                                    <md-switch class="md-primary" aria-label="Approve Declaration" ng-model="mp.IsApproveDeclaration">Approve Declaration</md-switch>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>                                                                        
+                                </div> 
+                                <div ng-if="mp.IsConsignee||mp.IsBillingCustomer||mp.IsShipper">
+                                    <div class="row">
+                                        <div class="col-xs-12 col-md-6">
+                                            <md-switch class="md-primary" aria-label="View Order" ng-model="mp.IsViewOrder">View Order</md-switch>
+                                        </div>
+                                        <div class="col-xs-12 col-md-6">
+                                            <md-switch class="md-primary" aria-label="Approve Order" ng-model="mp.IsApproveOrder">Approve Order</md-switch>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div ng-show="mp.MerchantCode != null" class="col-xs-12 col-md-3 mercompany-logo">
+                        <img ng-if="mp.IsVerified && mp.IsSubscriber" src="images/verified.png" height="100" alt="verified" />
+                        <img ng-if="mp.IsVerified && (mp.CompanyCode == 1000 || mp.SubscriberCompanyCode == 1000)" src="images/customs_verified.png" height="100" alt="customs verified" />
+                        <img ng-if="!mp.IsVerified" src="images/unverified.png" height="100" alt="unverified" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <md-tabs md-dynamic-height md-border-bottom>
+                            <md-tab label="General" class="md-primary">
+                                <md-content class="md-padding">
+                                    <div class="row">
+                                        <div class="col-sm-6 col-md-6 col-lg-6">
+                                            <div class="card">
+                                                <div class="lv-header-alt clearfix m-b-5">
+                                                    <h2 class="lvh-label">General</h2>
+                                                </div>
+                                                <div class="card-body card-padding p-t-25 p-b-25">
+                                                    <div class="row">
+                                                        <div class="col-xs-12">
+                                                            <md-input-container class="md-block" flex-gt-sm>
+                                                                <label>Billing Customer</label>
+                                                                <input type="text"
+                                                                       ng-model="mp.BillingCustomer" />
+                                                            </md-input-container>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-xs-12">
+                                                            <md-input-container class="md-block" flex-gt-sm>
+                                                                <label>Port Code</label>
+                                                                <input type="text"
+                                                                       ng-model="mp.PortCode" />
+                                                            </md-input-container>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-xs-12">
+                                                            <md-input-container class="md-block" flex-gt-sm>
+                                                                <label>Business Registration No.</label>
+                                                                <input type="text"
+                                                                       ng-model="mp.RegNo" 
+                                                                       ng-disabled="mp.MerchantCode != null" 
+                                                                       ng-required="validateCuntry == 'MY'" />
+                                                            </md-input-container>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-xs-12">
+                                                            <md-input-container class="md-block" flex-gt-sm>
+                                                                <label>Business Type</label>
+                                                                <md-select ng-model="mp.BusinessType" ng-required="mp.IsShipper || mp.IsConsignee">
+                                                                    <md-option ng-repeat="item in lookupData.businessType" ng-value="item.Value">
+                                                                        {{item.Text}}
+                                                                    </md-option>
+                                                                </md-select>
+                                                            </md-input-container>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-xs-12">
+                                                            <md-input-container class="md-block" flex-gt-sm>
+                                                                <label>Operator Code</label>
+                                                                <input type="text"
+                                                                       ng-model="mp.OwnerCode" />
+                                                            </md-input-container>
+                                                        </div>
+                                                       
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-xs-12">
+                                                            <md-input-container class="md-block" flex-gt-sm>
+                                                                <label>Agent Code</label>
+                                                                <input type="text"
+                                                                       ng-model="mp.AgentCode"  ng-required="mp.IsForwarder" maxlength="6"/>
+                                                            </md-input-container>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                       
+                                                        <div class="col-xs-12">
+                                                            <md-input-container class="md-block" flex-gt-sm>
+                                                                <label>Yard Code</label>
+                                                                <md-select ng-model="mp.YardCode">
+                                                                    <md-option ng-repeat="item in lookupData.terminalList" ng-value="item.Value">
+                                                                        {{item.Text}}
+                                                                    </md-option>
+                                                                </md-select>
+                                                            </md-input-container>
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-xs-12">
+                                                            <md-input-container class="md-block" flex-gt-sm>
+                                                                <label>Website</label>
+                                                                <input type="text"
+                                                                       ng-model="mp.WebSite" />
+                                                            </md-input-container>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-xs-12">
+                                                            <md-input-container class="md-block">
+                                                                <label>Remarks</label>
+                                                                <textarea ng-model="mp.Remarks"></textarea>
+                                                            </md-input-container>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6 col-md-6 col-lg-6">
+                                            <div class="card">
+                                                <div class="lv-header-alt clearfix m-b-5">
+                                                    <h2 class="lvh-label">Merchant Type</h2>
+                                                </div>
+                                                <div class="card-body card-padding p-t-25 p-b-25">
+                                                    <div class="row">
+                                                        <div class="col-xs-12 col-md-12">
+                                                            <md-switch class="md-primary" aria-label="Billing Customer" ng-model="mp.IsBillingCustomer" ng-init="mp.IsBillingCustomer = false">Billing Customer</md-switch>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-xs-12 col-md-12">
+                                                            <md-switch class="md-primary" aria-label="Shipper" ng-model="mp.IsShipper" ng-init="mp.IsShipper = false">Shipper/Exporter/Consignor/Seller</md-switch>
+                                                        </div>
+                                                        <div class="col-xs-12 col-md-12">
+                                                            <md-switch class="md-primary" aria-label="Principal" ng-model="mp.IsPrincipal" ng-init="mp.IsPrincipal = false">Principal</md-switch>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-xs-12 col-md-12">
+                                                            <md-switch class="md-primary" aria-label="Consignee" ng-model="mp.IsConsignee" ng-init="mp.IsConsignee = false">Importer/Consignee/Buyer</md-switch>
+                                                        </div>
+                                                        <div class="col-xs-12 col-md-12">
+                                                            <md-switch class="md-primary" aria-label="VMI Vendor" ng-model="mp.IsVMIVendor" ng-init="mp.IsVMIVendor = false">Vendor-managed Inventory</md-switch>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-xs-12 col-md-12">
+                                                            <md-switch class="md-primary" aria-label="Freight Forwarder" ng-model="mp.IsFreightForwarder" ng-init="mp.IsFreightForwarder = false">Freight Forwarder</md-switch>
+                                                        </div>
+                                                        <div class="col-xs-12 col-md-12">
+                                                            <md-switch class="md-primary" aria-label="Haulier" ng-model="mp.IsForwarder" ng-init="mp.IsForwarder = false">Forwarding Agent</md-switch>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-xs-12 col-md-12">
+                                                            <md-switch class="md-primary" aria-label="Freight Forwarder" ng-model="mp.IsOverseasAgent" ng-init="mp.IsOverseasAgent = false">Origin/Destination Agent</md-switch>
+                                                        </div>
+                                                        <div class="col-xs-12 col-md-12">
+                                                            <md-switch class="md-primary" aria-label="Haulier" ng-model="mp.IsHaulier" ng-init="mp.IsHaulier = false">Haulier</md-switch>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-xs-12 col-md-12">
+                                                            <md-switch class="md-primary" aria-label="Air Liner/Shipping Agent" ng-model="mp.IsLiner" ng-init="mp.IsLiner = false">Air Liner/Shipping Agent</md-switch>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-xs-12 col-md-12">
+                                                            <md-switch class="md-primary" aria-label="Transporter" ng-model="mp.IsTransporter" ng-init="mp.IsTransporter = false">Transport</md-switch>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-xs-12 col-md-12">
+                                                            <md-switch class="md-primary" aria-label="Vendor" ng-model="mp.IsVendor" ng-init="mp.IsVendor = false">Vendor</md-switch>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-xs-12 col-md-12">
+                                                            <md-switch class="md-primary" aria-label="Port/Terminal Operator" ng-model="mp.IsTerminal" ng-init="mp.IsTerminal = false">Port/Terminal Operator</md-switch>
+                                                        </div>
+                                                    </div>
+                                                    <hr />
+                                                    <div class="row">
+                                                        <div class="col-xs-12 col-md-12">
+                                                            <md-switch class="md-primary" aria-label="Active Account" ng-model="mp.IsActive" ng-init="mp.IsActive = false">Active Account</md-switch>
+                                                        </div>
+                                                    </div>                                                    
+                                                    <div class="row">
+                                                        <div class="col-xs-12 col-md-12">
+                                                            <md-switch class="md-primary" aria-label="Taxable" ng-model="mp.IsTaxable" ng-init="mp.IsTaxable = false">Taxable</md-switch>
+                                                        </div>
+                                                    </div>
+                                                                                                     
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </md-content>
+                            </md-tab>
+                            <md-tab label="Address" class="md-primary">
+                                <md-content class="md-padding">
+                                    <div class="row">
+                                        <div class="col-xs-12">
+                                            <div class="card">
+                                                <div class="lv-header-alt clearfix m-b-5">
+                                                    <h2 class="lvh-label">Address</h2>
+                                                    <ul class="lv-actions actions">
+                                                        <li>
+                                                            <button type="button" class="btn bgm-lightgreen btn-icon" data-ng-click="AddAddress(-1);" aria-label="button"><i class="zmdi zmdi-plus btn-small"></i></button>&nbsp;&nbsp;&nbsp;
+                                                        </li>
+                                                    </ul>
+                                                </div>
+
+                                                <div class="card-body card-padding p-t-5 p-b-5 m-t-15">
+                                                    <div class="table-responsive">
+
+                                                        <table class="table table-vmiddle">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>#Action</th>
+                                                                    <th>Active</th>
+                                                                    <th>Bill</th>
+                                                                    <th>Opr</th>
+                                                                    <th>Pck</th>
+                                                                    <th>Tel No.</th>
+                                                                    <th>Area Code</th>
+                                                                    <th>Address 1</th>
+                                                                    <th>Address 2</th>
+
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr ng-repeat="address in mp.AddressList" id="tr_{{$index}}" ng-hide="{{'tr_' + $index}}">
+                                                                    <td>
+                                                                        <button class="btn btn-default ng-scope waves-effect" type="button" ng-click="AddAddress($index)" aria-label="button">
+                                                                            <i class="zmdi zmdi-edit" aria-hidden="true"></i>
+
+                                                                        </button>
+                                                                        <button class="btn btn-danger ng-scope waves-effect" type="button" ng-click="DeleteAddress($index); ValidateCountry();" aria-label="button">
+                                                                            <i class="zmdi zmdi-delete" aria-hidden="true"></i>
+
+                                                                        </button>
+
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="checkbox m-0">
+                                                                            <label>
+                                                                                <input type="checkbox" value="" ng-model="address.IsActive" ng-disabled="true" aria-label="IsActive">
+                                                                                <i class="input-helper"></i>
+
+                                                                            </label>
+                                                                        </div>
+                                                                        
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="checkbox m-0">
+                                                                            <label>
+                                                                                <input type="checkbox" value="" ng-model="address.IsBilling" ng-disabled="true" aria-label="IsBilling">
+                                                                                <i class="input-helper"></i>
+
+                                                                            </label>
+                                                                        </div>
+                                                                        
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="checkbox m-0">
+                                                                            <label>
+                                                                                <input type="checkbox" value="" ng-model="address.IsOperation" ng-disabled="true" aria-label="IsOperation">
+                                                                                <i class="input-helper"></i>
+
+                                                                            </label>
+                                                                        </div>
+                                                                        
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="checkbox m-0">
+                                                                            <label>
+                                                                                <input type="checkbox" value="" ng-model="address.IsPickup" ng-disabled="true" aria-label="IsPickup">
+                                                                                <i class="input-helper"></i>
+
+                                                                            </label>
+                                                                        </div>
+                                                                        
+                                                                    </td>
+                                                                    <td>{{address.TelNo}}</td>
+                                                                    <td>{{address.AreaCode}}</td>
+                                                                    <td>{{address.Address1}}</td>
+                                                                    <td>{{address.Address2}}</td>
+
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </md-content>
+                            </md-tab>
+                            <md-tab label="Billing" class="md-primary">
+                                <md-content class="md-padding">
+                                    <div class="row">
+                                        <div class="col-md-8">
+                                            <div class="card">
+                                                <div class="lv-header-alt clearfix m-b-5">
+                                                    <h2 class="lvh-label">Billing</h2>
+                                                </div>
+
+                                                <!--<div class="lv-header-alt clearfix m-b-5">
+                                                    <h3 class="lvh-label">Billing</h3>
+                                                </div>-->
+                                                <div class="card-body card-padding p-t-25 p-b-25">
+                                                    <div class="row">
+                                                        <div class="col-xs-12 col-md-6">
+                                                            <md-input-container class="md-block" flex-gt-sm>
+                                                                <label>Debtor Code</label>
+                                                                <input type="text"
+                                                                       ng-model="mp.DebtorCode" />
+                                                            </md-input-container>
+                                                        </div>
+
+
+                                                        <!--<div class="col-xs-12 col-md-2">
+                                                            <label>Debtor Code</label>
+                                                        </div>
+                                                        <div class="col-xs-12 col-md-4">
+                                                            <input type="text"  ng-model="mp.DebtorCode" />
+                                                        </div>-->
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-xs-12 col-md-6">
+                                                            <md-input-container class="md-block" flex-gt-sm>
+                                                                <label>Creditor Code</label>
+                                                                <input type="text"
+                                                                       ng-model="mp.CreditorCode" />
+                                                            </md-input-container>
+                                                        </div>
+
+                                                        <!--<div class="col-xs-12 col-md-2">
+                                                            <label>Creditor Code</label>
+                                                        </div>
+                                                        <div class="col-xs-12 col-md-4">
+                                                            <input type="text"  ng-model="mp.CreditorCode" />
+                                                        </div>-->
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-xs-12 col-md-6">
+                                                            <md-input-container class="md-block" flex-gt-sm>
+                                                                <label>Default Currency</label>
+                                                                <md-select ng-model="mp.DefaultCurrency">
+                                                                    <md-option ng-repeat="item in lookupData.defaultCurrency" ng-value="item.Value">
+                                                                        {{item.Text}}
+                                                                    </md-option>
+                                                                </md-select>
+                                                            </md-input-container>
+                                                        </div>
+
+
+                                                        <!--<div class="col-xs-12 col-md-2">
+                                                            <label>Default Currency</label>
+                                                        </div>
+                                                        <div class="col-xs-12 col-md-4">
+                                                            <select  ng-model="mp.DefaultCurrency" ng-options="s.Value as s.Text for s in lookupData.defaultCurrency"></select>
+                                                        </div>-->
+
+                                                        <div class="col-xs-12 col-md-6">
+                                                            <md-input-container class="md-block" flex-gt-sm>
+                                                                <label>GST No.</label>
+                                                                <input type="text"
+                                                                       ng-model="mp.TaxID" 
+                                                                       ng-required="validateCuntry=='MY'" 
+                                                                       ng-disabled="mp.MerchantCode != null" />
+                                                            </md-input-container>
+                                                        </div>
+
+
+                                                        <!--<div class="col-xs-12 col-md-2">
+                                                            <label>GST No.</label>
+                                                        </div>
+                                                        <div class="col-xs-12 col-md-4">
+                                                            <input type="text"  ng-model="mp.TaxID" ng-required="true" ng-disabled="mp.MerchantCode != null" />
+                                                        </div>-->
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-xs-12 col-md-6">
+                                                            <md-input-container class="md-block" flex-gt-sm>
+                                                                <label>Credit Term</label>
+                                                                <input type="text"
+                                                                       ng-model="mp.CreditTerm"    logicon-decimal  ng-maxlength="10" logicon-format="2"/>
+                                                            </md-input-container>
+                                                        </div>
+
+
+
+                                                        <!--<div class="col-xs-12 col-md-2">
+                                                            <label>Credit Term</label>
+                                                        </div>
+                                                        <div class="col-xs-12 col-md-4">
+                                                            <input type="text"  ng-model="mp.CreditTerm"/>
+                                                        </div>-->
+
+                                                        <div class="col-xs-12 col-md-6">
+                                                            <md-input-container class="md-block" flex-gt-sm>
+                                                                <label>Billing Method</label>
+                                                                <md-select ng-model="mp.BillingMethod">
+                                                                    <md-option ng-repeat="item in lookupData.billingMethod" ng-value="item.Value">
+                                                                        {{item.Text}}
+                                                                    </md-option>
+                                                                </md-select>
+                                                            </md-input-container>
+
+                                                        </div>
+
+
+                                                        <!--<div class="col-xs-12 col-md-2">
+                                                            <label>Billing Method</label>
+                                                        </div>
+                                                        <div class="col-xs-12 col-md-4">
+                                                            <select  ng-model="mp.BillingMethod" ng-options="s.Value as s.Text for s in lookupData.billingMethod"></select>
+                                                        </div>-->
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-xs-12 col-md-6">
+                                                            <md-input-container class="md-block" flex-gt-sm>
+                                                                <label>Credit Limit</label>
+                                                                <input type="text"
+                                                                       ng-model="mp.CreditLimit"  logicon-number   ng-maxlength="10" logicon-format="2"   logicon-decimal/>
+                                                            </md-input-container>
+                                                        </div>
+
+
+                                                        <!--<div class="col-xs-12 col-md-2">
+                                                            <label>Credit Limit</label>
+                                                        </div>
+                                                        <div class="col-xs-12 col-md-4">
+                                                            <input type="text"  ng-model="mp.CreditLimit" />
+                                                        </div>-->
+                                                        <div class="col-xs-12 col-md-6">
+                                                            <md-input-container class="md-block" flex-gt-sm>
+                                                                <label>Current Balance</label>
+                                                                <input type="text"
+                                                                       ng-model="mp.CurrentBalance"  ng-disabled="true" logicon-decimal   ng-maxlength="10" logicon-format="2"/>
+                                                            </md-input-container>
+
+
+                                                        </div>
+
+
+                                                        <!--<div class="col-xs-12 col-md-2">
+                                                            <label>Current Balance</label>
+                                                        </div>
+                                                        <div class="col-xs-12 col-md-4">
+                                                            <input type="text"  ng-model="mp.CurrentBalance" />
+                                                        </div>-->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </md-content>
+                            </md-tab>
+                            <!--<md-tab class="md-primary" label="Other Rules">
+                                <md-content class="md-padding">
+                                    <div class="card other-merchant">
+                                        <div class="card-body card-padding p-t-25 p-b-25">
+                                            <div class="row">
+                                                <div class="col-xs-12 ">
+                                                    <md-input-container class="md-block" flex-gt-sm>
+                                                        <label>Business Relationship</label>
+                                                    </md-input-container>
+                                                    <tags-input ng-model="fResults"
+                                                                display-property="Text"
+                                                                replace-spaces-with-dashes="false"
+                                                                add-from-autocomplete-only="true"
+                                                                template="tag-template">
+                                                        <auto-complete source="forwarderResults($query)"
+                                                                       min-length="0"
+                                                                       load-on-focus="true"
+                                                                       load-on-empty="true"
+                                                                       max-results-to-show="32"
+                                                                       template="autocomplete-template">
+
+                                                        </auto-complete>
+                                                    </tags-input>
+
+
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-xs-12">
+                                                    <md-input-container class="md-block" flex-gt-sm>
+                                                        <label>Preferred Yard/Depot</label>
+                                                    </md-input-container>
+                                                    <tags-input ng-model="yResults"
+                                                                display-property="Text"
+                                                                replace-spaces-with-dashes="false"
+                                                                add-from-autocomplete-only="true"
+                                                                template="tag-template">
+                                                        <auto-complete source="yardResults($query)"
+                                                                       min-length="0"
+                                                                       load-on-focus="true"
+                                                                       load-on-empty="true"
+                                                                       max-results-to-show="32"
+                                                                       template="autocomplete-template"></auto-complete>
+                                                    </tags-input>
+
+                                                </div>
+                                            </div>
+                                            <div class="row">
+
+                                                <div class="col-xs-12">
+                                                    <md-input-container class="md-block" flex-gt-sm>
+                                                        <label>Preferred Transporter</label>
+                                                    </md-input-container>
+                                                    <tags-input ng-model="tResults"
+                                                                display-property="Text"
+                                                                replace-spaces-with-dashes="false"
+                                                                add-from-autocomplete-only="true"
+                                                                template="tag-template">
+                                                        <auto-complete source="transportResults($query)"
+                                                                       min-length="0"
+                                                                       load-on-focus="true"
+                                                                       load-on-empty="true"
+                                                                       max-results-to-show="32"
+                                                                       template="autocomplete-template"></auto-complete>
+                                                    </tags-input>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </md-content>
+                            </md-tab>-->
+                        </md-tabs>
+                        <script type="text/ng-template" id="tag-template">
+                            <div class="tag-template">
+                                <div class="right-panel">
+                                    <span uib-tooltip="{{data.Value}}">{{$getDisplayText()}}</span>
+                                    <a class="remove-button" ng-click="$removeTag()">&#10006;</a>
+                                </div>
+                            </div>
+                        </script>
+
+                        <script type="text/ng-template" id="autocomplete-template">
+                            <div class="autocomplete-template">
+                                <div class="right-panel">
+                                    <span ng-bind-html="$highlight($getDisplayText())"></span>
+                                    <!--<span>({{data.Value}})</span>-->
+                                </div>
+                            </div>
+                        </script>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body card-padding p-t-25 p-b-25">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <button ng-if="!isOriginal" class="btn btn-primary" type="submit" ng-click="submitted = true;"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Save</button>
+                        <button ng-if="false" class="btn btn-default" type="button" ng-click="print();"><i class="fa fa-print"></i>&nbsp;Print</button>
+
+                        <span class="pull-right">
+                            <button type="button" class="btn btn-default" ng-click="refresh2();">Clear</button>
+                            <button type="button" class="btn btn-primary" data-ui-sref="merchantlist"><i class="fa fa-backward" aria-hidden="true"></i>&nbsp;Back</button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

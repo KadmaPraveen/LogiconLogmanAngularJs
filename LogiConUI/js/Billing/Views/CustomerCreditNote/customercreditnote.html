@@ -1,0 +1,234 @@
+﻿<div class="container" ng-controller="CustomerCreditNoteCntrl">
+    <form name="frmCredit" id="frmCredit" ng-class="{'submitted':submitted}" ng-submit="SaveCreditNote(Cn)" novalidate>
+        <div class="card">
+            <div class="lv-header-alt clearfix m-b-5">
+                <h3 class="lvh-label">Customer Credit Note</h3>
+                <div class="box-tools pull-right">
+                    <button class="btn bgm-lightgreen btn-icon" tooltip-placement="bottom"
+                            uib-tooltip="Add" ng-click="AddCustomerCreditNote();" has-Right data-rightValue=""
+                            data-accessRight="1">
+                        <i class="zmdi zmdi-plus"></i>
+                    </button>&nbsp;&nbsp;&nbsp;
+                    <!--<button  type="button" class="btn bgm-lightgreen btn-icon" tooltip-placement="bottom"  uib-tooltip="Add"
+                            has-Right data-rightValue="" ng-click="AddCustomerCreditNote();" data-accessRight="1">
+                        <i class="zmdi zmdi-plus"></i>
+                    </button>-->
+                </div>
+            </div>
+            <div class="card-body card-padding p-t-25 p-b-25">
+                <div class="row">
+                    <div class="col-md-4">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Credit Note No</label>
+                            <input type="text"
+                                   ng-model="Cn.customerCreditNoteHeader.CreditNoteNo"
+                                   ng-disabled="true" />
+                        </md-input-container>
+                    </div><div class="col-md-4">
+                    </div>
+                    <div class="col-md-4 ">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Search for Invoice No.</label>
+                            <input type="text"
+                                   class="search-icon"
+                                   ng-model="InvoiceNo"
+                                   typeahead-min-length="3"
+                                   uib-typeahead="d.InvoiceNo as d.InvoiceNo for d in InvoiceResults($viewValue)"
+                                   typeahead-wait-ms="100"
+                                   typeahead-editable="false"
+                                   typeahead-on-select="InvoiceNoSelected($item)" />
+                        </md-input-container>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-md-6">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Customer</label>
+                            <input type="text"
+                                   class="search-icon"
+                                   ng-model="Cn.customerCreditNoteHeader.CustomerName"
+                                   typeahead-min-length="3"
+                                   uib-typeahead="d.Text as d.Text for d in MerchantResults($viewValue)"
+                                   typeahead-loading="loadingcustomers"
+                                   typeahead-wait-ms="1000"
+                                   typeahead-on-select="CustomerSelected($item, 'CustomerCode')" />
+                            <!--<input type="text" ng-model="Cn.customerCreditNoteHeader.CustomerName"
+                                   name="CustomerCode" ng-maxlength="100" />-->
+                        </md-input-container>
+                    </div>
+                    <div class="col-xs-12 col-md-6">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Credit</label>
+                            <input type="text" ng-model="Cn.customerCreditNoteHeader.CreditNoteNo"
+                                   name="credit" ng-maxlength="100" />
+                        </md-input-container>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-md-6">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>C/N date</label>
+                            <input mdc-datetime-picker="" date="true" time="false" type="text" id="OpenDate" format="{{dateFormat}}" class="date-icon"
+                                   min-date="date"
+                                   name="k1.OpenDate"
+                                   ng-model="Cn.customerCreditNoteHeader.CNDate"
+                                   ng-required="true"
+                                   ng-disabled="">
+                        </md-input-container>
+                    </div>
+                    <div class="col-xs-12 col-md-6">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Total Tax Amount</label>
+                            <input type="text" ng-model="Cn.customerCreditNoteHeader.TotalTaxAmount"
+                                   name="TaxAmt" ng-maxlength="100" />
+                        </md-input-container>
+                    </div>
+                </div>
+                <!--<div class="col-xs-12 col-md-4">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Currency / Rate</label>
+                        <md-select name="CurrencyCode" ng-model="Cn.customerCreditNoteHeader.CurrencyCode"
+                                   ng-required="true">
+                            <md-option ng-repeat="item in lookUpData.currencyList " ng-value="item.Value">
+                                {{item.Text}}
+                            </md-option>
+                        </md-select>
+                    </md-input-container>
+                </div>-->
+
+
+                <div class="row">
+                    <!--<div class="col-xs-12 col-md-4">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Exchange Rate</label>
+                            <md-select name="ExchangeRate"
+                                       ng-required="true" ng-model="Cn.customerCreditNoteHeader.ExRate">
+                                <md-option ng-repeat="item in lookUpData.currencyList" ng-value="item.Value">
+                                    {{item.Text}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                    </div>-->
+                    
+                    <div class="col-xs-12 col-md-6">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Total Local Amount</label>
+                            <input type="text" ng-model="Cn.customerCreditNoteHeader.LocalAmt"
+                                   name="LocalAmt" ng-maxlength="100" />
+                        </md-input-container>
+                    </div>
+                    <div class="col-xs-12 col-md-6">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Modules</label>
+                            <md-select name="Module" ng-model="Cn.customerCreditNoteHeader.Module">
+                                <md-option md-option-empty></md-option>
+                                <md-option ng-repeat="item in modules" ng-value="item.Value">
+                                    {{item.Text}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-md-6">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Remarks</label>
+                            <textarea ng-required="true" ng-model="Cn.customerCreditNoteHeader.Remarks" md-maxlength="350" rows="3"
+                                      md-select-on-focus style="overflow-y:auto"></textarea>
+                        </md-input-container>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="table-responsive">
+                            <table class="table  table-vmiddle">
+                                <thead>
+                                    <tr>
+                                        <!--<th>#Action</th>-->
+                                        <th>
+                                            <div class="checkbox m-0">
+                                                <label>
+                                                    <input value="" ng-click="toggleCreditNote()"
+                                                           aria-label="Priority" type="checkbox">
+                                                    <i class="input-helper"></i>
+
+                                                </label>
+                                            </div>
+                                        </th>
+                                        <th>Invoice No.</th>
+                                        <th>Order No.</th>
+                                        <th>Container Key</th>
+                                        <th>Size</th>
+                                        <th>Job No.</th>
+                                        <th>Charge Code</th>
+                                        <th>Description</th>
+                                        <th>Billing Unit</th>
+                                        <th>Curr.</th>
+                                        <th>Ex. Rate</th>
+                                        <th>Qty.</th>
+                                        <th>Price</th>
+                                        <th>Base Amt.</th>
+                                        <th>Local Amt.</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="item in CreditList">
+                                        <!--<td>
+                                            <input type="hidden" ng-model="item.Index" ng-init="item.Index = $index" />
+                                            <button type="button" ng-click="" ng-disabled="" class="btn btn-default ng-scope waves-effect" aria-label="button">
+                                                <i class="zmdi zmdi-edit" aria-hidden="true"></i>
+                                            </button>
+                                            <button type="button" ng-click="" ng-disabled="" class="btn btn-danger  waves-effect" aria-label="button">
+                                                <i class="zmdi zmdi-delete" aria-hidden="true"></i>
+                                            </button>
+                                        </td>-->
+                                        <td>
+                                            <div class="checkbox m-0">
+                                                <label>
+                                                    <input value="" ng-model="item['chk']"
+                                                           ng-init="item.chk = false"
+                                                           aria-label="Priority" type="checkbox" ng-change="onChanged(item['chk'])">
+                                                    <i class="input-helper"></i>
+                                                </label>
+                                            </div>
+                                        </td>
+                                        <td>{{item.InvoiceNo}}</td>
+                                        <td>{{item.OrderNo}}</td>
+                                        <td>{{item.ContainerKey}}</td>
+                                        <td>{{item.Size}}</td>
+                                        <td>{{item.JobNo}}</td>
+                                        <td>{{item.ChargeCode}}</td>
+                                        <td>{{item.ChargeCodeDescription}}</td>
+                                        <td>{{item.BillingUnitDescription}}</td>
+                                        <td>{{item.CurrencyCode}}</td>
+                                        <td>{{item.ExRate}}</td>
+                                        <td>{{item.Qty}}</td>
+                                        <td>{{item.Price}}</td>
+                                        <td>{{item.ActualAmount}}</td>
+                                        <td>{{item.LocalAmount}}</td>
+                                        <td></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="box-footer">
+                    <div class="row">
+
+                        <div class="col-xs-12">
+
+                            <button class="btn btn-primary waves-effect m-t-10" ng-disabled="!saveCheck" ng-click="submitted=true;"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Save</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+

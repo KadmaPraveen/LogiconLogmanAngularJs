@@ -1,0 +1,90 @@
+﻿<div class="container" ng-controller="PendingBillingCntrl">
+    <div class="card">
+        <div class="lv-header-alt clearfix m-b-5">
+            <h3 class="lvh-label">Pending Billing</h3>
+        </div>
+        <div class="card-body card-padding p-t-25 p-b-25">
+            <form id="frmSearchPendingBilling" name="frmSearchPendingBilling" ng-class="{'submitted':submitted}" ng-submit="SearchPendingBilling(pb)" autocomplete="off" novalidate>
+                <div class="row">
+                    <div class="col-xs-12 col-md-2">
+                        <label>Subscriber Name</label>
+                    </div>
+                    <div class="col-xs-6 col-md-3">
+                        <input type="text"
+                               ng-required="true"
+                               class="search-icon"
+                               ng-class="{'loadinggif': pb.nameLoading}"
+                               placeholder="Search Company"
+                               ng-model="pb.name"
+                               typeahead-min-length="3"
+                               uib-typeahead="d.Text as d.Text for d in CompanyResults($viewValue, 'billingCustomer')"
+                               typeahead-loading="pb.nameLoading"
+                               typeahead-wait-ms="100"
+                               typeahead-editable="false"
+                               typeahead-on-select="CompanySelected($item, 'CompanyCode')" />
+                    </div>
+                    <div class="col-xs-12 col-md-2">
+                        <label>Subscription Type</label>
+                    </div>
+                    <div class="col-xs-12 col-md-2">
+                        <select ng-model="pb.type"
+                                ng-required="true"
+                                ng-options="s.Value as s.Text for s in lookupData.registrationTypeList"></select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-md-2">
+                        <label>Date From</label>
+                    </div>
+                    <div class="col-xs-12 col-md-2">
+                        <div class="dropdown">
+                            <a class="dropdown-toggle" id="FromDate" role="button" data-toggle="dropdown">
+                                <div class="input-group">
+                                    <input type="text" class="form-control input-sm datepicker"
+                                           ng-model="pb.FromDate"
+                                           ng-required="true"
+                                           date-time-input="MM/DD/YYYY">
+                                    <span class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true"></i></span>
+                                </div>
+                            </a>
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                <datetimepicker ng-model="pb.FromDate"
+                                                data-datetimepicker-config="{ dropdownSelector: '#FromDate', startView:'day', minView:'day' }" />
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-1"></div>
+                    <div class="col-xs-12 col-md-2">
+                        <label>Date To</label>
+                    </div>
+                    <div class="col-xs-12 col-md-2">
+                        <div class="dropdown">
+                            <a class="dropdown-toggle" id="ToDate" role="button" data-toggle="dropdown">
+                                <div class="input-group">
+                                    <input type="text" class="form-control input-sm datepicker"
+                                           ng-model="pb.ToDate"
+                                           ng-required="true"
+                                           date-time-input="MM/DD/YYYY">
+                                    <span class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true"></i></span>
+                                </div>
+                            </a>
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                <datetimepicker ng-model="pb.ToDate"
+                                                data-datetimepicker-config="{ dropdownSelector: '#ToDate', startView:'day', minView:'day' }" />
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-md-2"></div>
+                    <div class="col-xs-12 col-md-10">
+                        <button type="submit" class="btn btn-primary" ng-click="submitted = true"><i class="fa fa-search" aria-hidden="true"></i>&nbsp;Search</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="overlay" style="opacity:0.8;" ng-show="showLoading">
+            <i class="fa fa-refresh fa-spin"></i>
+        </div>
+    </div>
+</div>

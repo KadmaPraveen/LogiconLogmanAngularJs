@@ -1,0 +1,159 @@
+﻿<div class="container" ng-controller="BookingInquiryCntrl">
+    <div class="card">
+        <div class="lv-header-alt clearfix m-b-5">
+            <h3 class="lvh-label">Booking Inquiry</h3>
+        </div>
+        <div class="card-body card-padding p-t-25 p-b-25">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="card">
+                        <div class="card-body card-padding p-t-25 p-b-25">
+                            <div class="col-xs-12">
+                                <div class="row">
+                                    <div class="col-md-1">
+                                        <label>Agent</label>
+                                    </div>
+                                    <div class="col-xs-12 col-md-4">
+                                        <input type="text"
+                                               class="search-icon"
+                                               ng-class="{'loadinggif': bi.AgentCodeNameLoading}"
+                                               placeholder="Search Agent"
+                                               ng-model="bi.AgentName"
+                                               typeahead-min-length="3"
+                                               uib-typeahead="d.Text as d.Text for d in AgentResults($viewValue)"
+                                               typeahead-loading="bi.AgentCodeNameLoading"
+                                               typeahead-wait-ms="1000"
+                                               typeahead-editable="false"
+                                               ng-required="true"
+                                               typeahead-on-select="CustomerSelected($item, 'AgentCode')" />
+                                    </div>
+                                    <div class="col-xs-12 col-md-2">
+                                        <label>Booking Type</label>
+                                    </div>
+                                    <div class="col-xs-12 col-md-2">
+                                        <select class="form-control input-sm" ng-model="bi.BookingType"
+                                                ng-options="s.Value as s.Text for s in lookUpData.bookingTypeList"></select>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-1">
+                                        <label>Forwarder</label>
+                                    </div>
+                                    <div class="col-xs-12 col-md-4">
+                                        <input type="text"
+                                               class="search-icon"
+                                               ng-class="{'loadinggif': bi.ForwarderCodeNameLoading}"
+                                               placeholder="Search Forwarder"
+                                               ng-model="bi.ForwarderName"
+                                               typeahead-min-length="3"
+                                               uib-typeahead="d.Text as d.Text for d in ForeignAgentsResults($viewValue)"
+                                               typeahead-loading="bi.ForwarderCodeNameLoading"
+                                               typeahead-wait-ms="1000"
+                                               typeahead-editable="false"
+                                               ng-required="true"
+                                               typeahead-on-select="CustomerSelected($item, 'CustomerCode')" />
+                                    </div>
+                                    <div class="col-xs-12 col-md-2">
+                                        <label>Booking B/L No.</label>
+                                    </div>
+                                    <div class="col-xs-12 col-md-2">
+                                        <input type="text" class="form-control input-sm" />
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-1">
+                                        <label>Customer</label>
+                                    </div>
+                                    <div class="col-xs-12 col-md-4">
+                                        <input type="text"
+                                               class="search-icon"
+                                               ng-class="{'loadinggif': bi.CustomerCodeNameLoading}"
+                                               placeholder="Search Customer"
+                                               ng-model="bi.CustomerName"
+                                               typeahead-min-length="3"
+                                               uib-typeahead="d.Text as d.Text for d in MerchantResults($viewValue)"
+                                               typeahead-loading="bi.CustomerCodeNameLoading"
+                                               typeahead-wait-ms="1000"
+                                               typeahead-editable="false"
+                                               ng-required="true"
+                                               typeahead-on-select="CustomerSelected($item, 'CustomerCode')" />
+                                    </div>
+                                    <div class="col-xs-12 col-md-2">
+                                        <label>Container No.</label>
+                                    </div>
+                                    <div class="col-xs-12 col-md-2">
+                                        <input type="text" class="form-control input-sm" />
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-2">
+                                        <label>Vessel Code</label>
+                                    </div>
+                                    <div class="col-xs-6 col-md-3">
+                                        <input type="text" />
+                                    </div>
+                                    <div class="col-md-1">
+                                        <label>Voyage No.</label>
+                                    </div>
+                                    <div class="col-xs-6 col-md-3">
+                                        <input type="text" class="form-control input-sm" />
+                                    </div>
+                                    <div class="col-xs-12 col-md-2">
+                                        <button class="btn btn-primary">Search</button>
+                                        <button class="btn btn-primary">Reset</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <table class="table table-striped table-vmiddle">
+                        <thead>
+                            <tr>
+                                <th>Order No.</th>
+                                <th>Container No.</th>
+                                <th>Container Key</th>
+                                <th>Booking Date</th>
+                                <th>Booking-B/L No.</th>
+                                <th>Booking Type</th>
+                                <th>Agent Code</th>
+                                <th>Customer</th>
+                                <th>Vessel Code</th>
+                                <th>Voyage No.</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <table class="table table-striped table-vmiddle">
+                        <thead>
+                            <tr>
+                                <th>Movement</th>
+                                <th>Transaction No</th>
+                                <th>Mvmt Date</th>
+                                <th>Status</th>
+                                <th>Yard Location</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

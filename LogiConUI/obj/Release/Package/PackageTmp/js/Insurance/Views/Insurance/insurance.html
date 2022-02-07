@@ -1,0 +1,549 @@
+﻿<div class="container">
+    <!--ng-controller="ShipperInvoiceCntrl"-->
+    <div class="card">
+        <div class="card-body card-padding p-t-25 p-b-25">
+
+            <div class="lv-header-alt clearfix m-b-5">
+                <h3 class="lvh-label">Insurance Entery</h3>
+            </div>
+            <div class="card-body card-padding p-t-25 p-b-25">
+                <div class="row">
+                    <div class="col-xs-12 col-md-6">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Insurance Job No.</label>
+                            <md-select ng-model="" ng-required="">
+                                <md-option ng-repeat="" ng-value="item.Value">
+                                    {{item.Text}}
+                                </md-option>
+                            </md-select>
+                            <!--<select></select>-->
+                        </md-input-container>
+                    </div>
+
+                    <div class="col-xs-12 col-md-6">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Shipment Type</label>
+
+                            <input type="text" />
+                        </md-input-container>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-md-6">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Transport Mode</label>
+                            <md-select ng-model="" ng-required="">
+                                <md-option ng-repeat="" ng-value="item.Value">
+                                    {{item.Text}}
+                                </md-option>
+                            </md-select>
+                            <!--<select></select>-->
+                        </md-input-container>
+                    </div>
+
+                    <div class="col-xs-12 col-md-6">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Declaration Number</label>
+
+                            <input type="text" />
+                        </md-input-container>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="card">
+                            <div class="lv-header-alt clearfix m-b-5">
+                                <h3 class="lvh-label">Party Information Invoice</h3>
+                            </div>
+                            <div class="card-body card-padding p-t-25 p-b-25">
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-6">
+                                        <div class="card">
+                                            <div class="lv-header-alt clearfix m-b-5">
+                                                <h3 class="lvh-label">Consignee</h3>
+                                            </div>
+                                            <div class="card-body card-padding p-t-25 p-b-25">
+                                                <div class="row">
+                                                    <div class="col-xs-12 col-md-6">
+                                                        <md-input-container class="md-block" flex-gt-sm>
+                                                            <label>Consignee Name</label>
+                                                            <input type="text" />
+
+                                                        </md-input-container>
+                                                    </div>
+
+                                                    <div class="col-xs-12 col-md-6">
+                                                        <md-input-container class="md-block" flex-gt-sm>
+                                                            <label>Consignee Code</label>
+
+                                                            <input type="text" />
+                                                        </md-input-container>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-xs-12 col-md-6">
+                                                        <md-input-container class="md-block" flex-gt-sm>
+                                                            <label>Consignee Registration of Company/Business</label>
+                                                            <input type="text" />
+                                                        </md-input-container>
+                                                    </div>
+
+                                                    <div class="col-xs-12 col-md-6">
+                                                        <md-input-container class="md-block" flex-gt-sm>
+                                                            <label>Consignee GST Number</label>
+
+                                                            <input type="text" />
+                                                        </md-input-container>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-xs-12 col-md-6">
+                                                        <md-input-container class="md-block" flex-gt-sm>
+                                                            <label>Consignee GST Registration Date</label>
+
+                                                            <input mdc-datetime-picker="" class="date-icon" date="true" time="false" type="text" id="OrderDate" format="{{dateFormat}}"
+                                                                   min-date="date" ng-model=""
+                                                                   ng-required="required">
+                                                        </md-input-container>
+                                                    </div>
+                                                    <div class="col-xs-12 col-md-6">
+                                                        <md-input-container class="md-block" flex-gt-sm>
+                                                            <label>Consignee Address Line 1</label>
+
+                                                            <textarea></textarea>
+                                                        </md-input-container>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-xs-12 col-md-6">
+                                                        <md-input-container class="md-block" flex-gt-sm>
+                                                            <label>Consignee Address Line 2</label>
+
+                                                            <textarea></textarea>
+                                                        </md-input-container>
+                                                    </div>
+
+                                                    <div class="col-xs-12 col-md-6">
+                                                        <md-input-container class="md-block" flex-gt-sm>
+                                                            <label>Consignee Address Line 3</label>
+
+                                                            <textarea></textarea>
+                                                        </md-input-container>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-xs-12 col-md-6">
+                                                        <md-input-container class="md-block" flex-gt-sm>
+                                                            <label>Consignee Address Line 4</label>
+
+                                                            <textarea></textarea>
+                                                        </md-input-container>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-md-6">
+                                        <div class="card">
+                                            <div class="lv-header-alt clearfix m-b-5">
+                                                <h3 class="lvh-label">Consignor</h3>
+                                            </div>
+                                            <div class="card-body card-padding p-t-25 p-b-25">
+                                                <div class="row">
+                                                    <div class="col-xs-12 col-md-6">
+                                                        <md-input-container class="md-block" flex-gt-sm>
+                                                            <label>Consignor Name</label>
+                                                            <input type="text" />
+
+                                                        </md-input-container>
+                                                    </div>
+
+                                                    <div class="col-xs-12 col-md-6">
+                                                        <md-input-container class="md-block" flex-gt-sm>
+                                                            <label>Consignor Code</label>
+
+                                                            <input type="text" />
+                                                        </md-input-container>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-xs-12 col-md-6">
+                                                        <md-input-container class="md-block" flex-gt-sm>
+                                                            <label>Consignor Registration of Company/Business</label>
+                                                            <input type="text" />
+                                                        </md-input-container>
+                                                    </div>
+
+                                                    <div class="col-xs-12 col-md-6">
+                                                        <md-input-container class="md-block" flex-gt-sm>
+                                                            <label>Consignor GST Number</label>
+
+                                                            <input type="text" />
+                                                        </md-input-container>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-xs-12 col-md-6">
+                                                        <md-input-container class="md-block" flex-gt-sm>
+                                                            <label>Consignor GST Registration Date</label>
+
+                                                            <input mdc-datetime-picker="" class="date-icon" date="true" time="false" type="text" id="OrderDate" format="{{dateFormat}}"
+                                                                   min-date="date" ng-model=""
+                                                                   ng-required="required">
+                                                        </md-input-container>
+                                                    </div>
+                                                    <div class="col-xs-12 col-md-6">
+                                                        <md-input-container class="md-block" flex-gt-sm>
+                                                            <label>Consignor Address Line 1</label>
+
+                                                            <textarea></textarea>
+                                                        </md-input-container>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-xs-12 col-md-6">
+                                                        <md-input-container class="md-block" flex-gt-sm>
+                                                            <label>Consignor Address Line 2</label>
+
+                                                            <textarea></textarea>
+                                                        </md-input-container>
+                                                    </div>
+
+                                                    <div class="col-xs-12 col-md-6">
+                                                        <md-input-container class="md-block" flex-gt-sm>
+                                                            <label>Consignor Address Line 3</label>
+
+                                                            <textarea></textarea>
+                                                        </md-input-container>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-xs-12 col-md-6">
+                                                        <md-input-container class="md-block" flex-gt-sm>
+                                                            <label>Consignor Address Line 4</label>
+
+                                                            <textarea></textarea>
+                                                        </md-input-container>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <div class="card">
+                                        <div class="lv-header-alt clearfix m-b-5">
+                                            <h3 class="lvh-label">Forwarding Agent</h3>
+                                        </div>
+                                        <div class="card-body card-padding p-t-25 p-b-25">
+                                            <div class="row">
+                                                <div class="col-xs-12 col-md-4">
+                                                    <md-input-container class="md-block" flex-gt-sm>
+                                                        <label>Forwarding Agent Name</label>
+                                                        <input type="text" />
+
+                                                    </md-input-container>
+                                                </div>
+
+                                                <div class="col-xs-12 col-md-4">
+                                                    <md-input-container class="md-block" flex-gt-sm>
+                                                        <label>Forwarding Agent Code</label>
+
+                                                        <input type="text" />
+                                                    </md-input-container>
+                                                </div>
+
+                                                <div class="col-xs-12 col-md-4">
+                                                    <md-input-container class="md-block" flex-gt-sm>
+                                                        <label>Forwarding Agent Registration of Company/Business</label>
+                                                        <input type="text" />
+                                                    </md-input-container>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-xs-12 col-md-4">
+                                                    <md-input-container class="md-block" flex-gt-sm>
+                                                        <label>Forwarding Agent GST Number</label>
+
+                                                        <input type="text" />
+                                                    </md-input-container>
+                                                </div>
+                                                <div class="col-xs-12 col-md-4">
+                                                    <md-input-container class="md-block" flex-gt-sm>
+                                                        <label>Forwarding Agent GST Registration Date</label>
+
+                                                        <input mdc-datetime-picker="" class="date-icon" date="true" time="false" type="text" id="OrderDate" format="{{dateFormat}}"
+                                                               min-date="date" ng-model=""
+                                                               ng-required="required">
+                                                    </md-input-container>
+                                                </div>
+                                                <div class="col-xs-12 col-md-4">
+                                                    <md-input-container class="md-block" flex-gt-sm>
+                                                        <label>Forwarding Agent Address Line 1</label>
+
+                                                        <textarea></textarea>
+                                                    </md-input-container>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-xs-12 col-md-4">
+                                                    <md-input-container class="md-block" flex-gt-sm>
+                                                        <label>Forwarding Agent Address Line 2</label>
+
+                                                        <textarea></textarea>
+                                                    </md-input-container>
+                                                </div>
+
+                                                <div class="col-xs-12 col-md-4">
+                                                    <md-input-container class="md-block" flex-gt-sm>
+                                                        <label>Forwarding Agent Address Line 3</label>
+
+                                                        <textarea></textarea>
+                                                    </md-input-container>
+                                                </div>
+                                                <div class="col-xs-12 col-md-4">
+                                                    <md-input-container class="md-block" flex-gt-sm>
+                                                        <label>Forwarding Agent Address Line 4</label>
+
+                                                        <textarea></textarea>
+                                                    </md-input-container>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-6">
+                        <div class="card">
+                            <div class="lv-header-alt clearfix m-b-5">
+                                <h3 class="lvh-label">Transport Information</h3>
+                            </div>
+                            <div class="card-body card-padding p-t-25 p-b-25">
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-6">
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                            <label>Country of Origin</label>
+
+                                            <input type="text" />
+                                        </md-input-container>
+                                    </div>
+                                    <div class="col-xs-12 col-md-6">
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                            <label>Country of Destination</label>
+
+                                            <input type="text" />
+                                        </md-input-container>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-6">
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                            <label>Port of Origin</label>
+
+                                            <input type="text" />
+                                        </md-input-container>
+                                    </div>
+                                    <div class="col-xs-12 col-md-6">
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                            <label>Port of Destination</label>
+
+                                            <input type="text" />
+                                        </md-input-container>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-6">
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                            <label>Port of Transhipment </label>
+
+                                            <input type="text" />
+                                        </md-input-container>
+                                    </div>
+                                    <div class="col-xs-12 col-md-6">
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                            <label>Vessel IMO Code</label>
+
+                                            <input type="text" />
+                                        </md-input-container>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-6">
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                            <label>Vessel Name</label>
+
+                                            <input type="text" />
+                                        </md-input-container>
+                                    </div>
+                                    <div class="col-xs-12 col-md-6">
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                            <label>Vessel SCN</label>
+
+                                            <input type="text" />
+                                        </md-input-container>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-6">
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                            <label>Voyage Number</label>
+
+                                            <input type="text" />
+                                        </md-input-container>
+                                    </div>
+                                    <div class="col-xs-12 col-md-6">
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                            <label>Estimated Date of Departure</label>
+
+                                            <input mdc-datetime-picker="" class="date-icon" date="true" time="false" type="text" id="OrderDate" format="{{dateFormat}}"
+                                                   min-date="date" ng-model=""
+                                                   ng-required="required">
+                                        </md-input-container>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-6">
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                            <label>Estimated Date of Arrival</label>
+
+                                            <input mdc-datetime-picker="" class="date-icon" date="true" time="false" type="text" id="OrderDate" format="{{dateFormat}}"
+                                                   min-date="date" ng-model=""
+                                                   ng-required="required">
+                                        </md-input-container>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-6">
+                        <div class="card">
+                            <div class="lv-header-alt clearfix m-b-5">
+                                <h3 class="lvh-label">Cargo Information</h3>
+                            </div>
+                            <div class="card-body card-padding p-t-25 p-b-25">
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-6">
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                            <label>Original Currency</label>
+
+                                            <input type="text" />
+                                        </md-input-container>
+                                    </div>
+                                    <div class="col-xs-12 col-md-6">
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                            <label>Quantity</label>
+
+                                            <input type="text" />
+                                        </md-input-container>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-6">
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                            <label>Invoice Value(Original Currency)</label>
+
+                                            <input type="text" />
+                                        </md-input-container>
+                                    </div>
+                                    <div class="col-xs-12 col-md-6">
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                            <label>Exchange Rate</label>
+
+                                            <input type="text" />
+                                        </md-input-container>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-6">
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                            <label>Invoice Number</label>
+
+                                            <input type="text" />
+                                        </md-input-container>
+                                    </div>
+                                    <div class="col-xs-12 col-md-6">
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                            <label>Invoice Date</label>
+
+                                            <input mdc-datetime-picker="" class="date-icon" date="true" time="false" type="text" id="OrderDate" format="{{dateFormat}}"
+                                                   min-date="date" ng-model=""
+                                                   ng-required="required">
+                                        </md-input-container>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-6">
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                            <label>Stowage Type Code</label>
+
+                                            <input type="text" />
+                                        </md-input-container>
+                                    </div>
+                                    <div class="col-xs-12 col-md-6">
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                            <label>Number of Package</label>
+
+                                            <input type="text" />
+                                        </md-input-container>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-6">
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                            <label>Package Type</label>
+
+                                            <input type="text" />
+                                        </md-input-container>
+                                    </div>
+                                    <div class="col-xs-12 col-md-6">
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                            <label>Hs Item No</label>
+
+                                            <input type="text" />
+                                        </md-input-container>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-6">
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                            <label>Hs Code</label>
+
+                                            <input type="text" />
+                                        </md-input-container>
+                                    </div>
+                                    <div class="col-xs-12 col-md-6">
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                            <label>Goods Description</label>
+
+                                            <input type="text" />
+                                        </md-input-container>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-6">
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                            <label>Hs Country of Origin</label>
+
+                                            <input type="text" />
+                                        </md-input-container>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

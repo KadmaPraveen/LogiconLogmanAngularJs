@@ -1,0 +1,757 @@
+﻿<style>
+    .custom-popup-wrapper {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        z-index: 1000;
+        display: none;
+        background-color: #f9f9f9;
+    }
+
+        .custom-popup-wrapper > .message {
+            padding: 10px 20px;
+            border-bottom: 1px solid #ddd;
+            color: #868686;
+        }
+
+        .custom-popup-wrapper > .dropdown-menu {
+            position: static;
+            float: none;
+            display: block;
+            min-width: 160px;
+            background-color: transparent;
+            border: none;
+            border-radius: 0;
+            box-shadow: none;
+        }
+
+    tr.dropdown-menu {
+        display: block;
+    }
+
+    .mytable {
+        background-color: #fff;
+        -webkit-background-clip: padding-box;
+        background-clip: padding-box;
+        border: 1px solid #ccc;
+        border: 1px solid rgba(0,0,0,.15);
+        border-radius: 4px;
+        -webkit-box-shadow: 0 6px 12px rgba(0,0,0,.175);
+        box-shadow: 0 6px 12px rgba(0,0,0,.5);
+        position: absolute;
+        width: 550px;
+        z-index: 99999;
+    }
+
+        .mytable thead tr {
+            background-color: #367fa9;
+            color: #fff;
+        }
+
+            .mytable thead tr td {
+                background-color: #367fa9;
+                color: #fff;
+                font-weight: bold;
+            }
+
+        .mytable > tbody > tr > td, .mytable > tbody > tr > th, .mytable > tfoot > tr > td, .mytable > tfoot > tr > th,
+        .mytable > thead > tr > td, .mytable > thead > tr > th {
+            padding: 3px;
+        }
+
+    .chart-width > div {
+        width: 20%;
+    }
+
+    .table-bordered {
+        border-bottom: 1px solid #f0f0f0;
+        border-left: 1px solid #f0f0f0;
+        border-right: 1px solid #f0f0f0;
+    }
+
+    .table tr td, .table tr th {
+        text-align: right;
+    }
+
+    /*.table tr th {
+           text-align: left;
+       }*/
+
+    .card {
+        margin-bottom: 10px !important;
+    }
+
+    /*@media screen and (min-width: 768px) .ng-table-pager {
+           background: #f4f4f4;
+       }*/
+</style>
+
+<div class="container" ng-controller="DepotBookingEntryCntrl as Cntrl">
+    <form id="frmBookingEntry" name="frmBookingEntry" ng-class="{'submitted': submitted}" ng-submit="SaveBookingEntry(bookingEntry);" autocomplete="off" novalidate>
+        <div class="card">
+            <div class="lv-header-alt clearfix m-b-5">
+                <h3 class="lvh-label">Booking Entry</h3>
+
+            </div>
+            <div class="card-body card-padding p-t-25 p-b-25">
+
+                <div class="row">
+
+                    <div class="col-xs-12 col-md-6">
+
+
+                        <h2 class="lvh-label">General</h2>
+
+                        <div class="row ">
+                            <!--<div class="col-xs-12 col-md-6">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Master Order No</label>
+                                    <input type="text" ng-model="bookingEntry.bookingHeader.MasterOrderNo" ng-disabled="true" />
+                                </md-input-container>
+                            </div>-->
+                            <div class="col-xs-12 col-md-6">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Port Booking No</label>
+                                    <input type="text" ng-model="bookingEntry.bookingHeader.OrderNo" ng-disabled="true" />
+                                </md-input-container>
+                            </div>
+                        </div>
+
+
+                        <div class="row ">
+                            <div class="col-xs-12 col-md-6">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Mode of Transport</label>
+                                    <md-select ng-model="bookingEntry.bookingHeader.TransportType"
+                                               ng-change="transportTypeChanged()" ng-disabled="!IsNew">
+                                        <md-option md-option-empty></md-option>
+                                        <md-option ng-repeat="item in lookUpData.transportList" ng-value="item.Value">
+                                            {{item.Text}}
+                                        </md-option>
+                                    </md-select>
+                                </md-input-container>
+
+                            </div>
+
+                            <div class="col-xs-12 col-md-6">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Booking Type</label>
+                                    <md-select ng-model="bookingEntry.bookingHeader.BookingType" ng-change="bookingTypeChange()" ng-required="true" ng-disabled="!IsNew">
+                                        <md-option ng-repeat="item in lookUpData.bookingType" ng-value="item.Value">
+                                            {{item.Text}}
+                                        </md-option>
+                                    </md-select>
+                                </md-input-container>
+
+                            </div>
+
+                        </div>
+                        <div class="row ">
+                            <div class="col-xs-12 col-md-6">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Order Type</label>
+                                    <md-select ng-disabled="bookingEntry.bookingHeader.BookingType == null" ng-required="true" ng-model="bookingEntry.bookingHeader.OrderType">
+                                        <md-option ng-repeat="item in lookUpData.orderTypeList" ng-value="item.Value">
+                                            {{item.Text}}
+                                        </md-option>
+                                    </md-select>
+                                </md-input-container>
+
+                            </div>
+
+                            <div class="col-xs-12 col-md-6">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Booking No.</label>
+
+                                    <input type="text" ng-model="bookingEntry.bookingHeader.BookingNo" ng-required="bookingEntry.bookingHeader.BookingType !=1060" />
+                                </md-input-container>
+
+                            </div>
+                        </div>
+                        <div class="row ">
+                            <div class="col-xs-12 col-md-6">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Booking Date</label>
+                                    <input mdc-datetime-picker="" class="date-icon" date="true" time="false" type="text" id="DateFrom" format="{{dateFormat}}"
+                                           min-date="date" ng-model="bookingEntry.bookingHeader.OrderDate">
+                                </md-input-container>
+                            </div>
+
+                            <div class="col-xs-12 col-md-6">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>BL No.</label>
+                                    <input type="text"
+                                           ng-model="bookingEntry.bookingHeader.BLNo"
+                                           ng-required="bookingEntry.bookingHeader.BookingType !=1061"
+                                           ng-maxlength="5"
+                                           logicon-limit />
+                                </md-input-container>
+                            </div>
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col-xs-12">
+
+                                <div class="row ">
+                                    <div class="col-xs-12">
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                            <label>Forwarder</label>
+
+                                            <input type="text"
+                                                   class="search-icon"
+                                                   ng-class="{'loadinggif': bookingHeader.FFNameLoading}"
+                                                   ng-model="bookingEntry.bookingHeader.ForwarderName"
+                                                   typeahead-min-length="3"
+                                                   uib-typeahead="d.Text as d.Text for d in GenericMerchantResults($viewValue,'freightForwarder')"
+                                                   typeahead-loading="bookingHeader.FFNameLoading"
+                                                   typeahead-wait-ms="1000"
+                                                   typeahead-editable="false"
+                                                   ng-required="true"
+                                                   typeahead-on-select="CustomerSelected($item, 'ForwarderCode')" />
+                                        </md-input-container>
+                                    </div>
+                                </div>
+                                <div class="row ">
+                                    <div class="col-xs-12">
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                            <label>Shipping Liner</label>
+
+                                            <input type="text"
+                                                   class="search-icon"
+                                                   ng-class="{'loadinggif': bookingHeader.ShippingAgentLoading}"
+                                                   ng-model="bookingEntry.bookingHeader.ShippingAgentName"
+                                                   typeahead-min-length="3"
+                                                   uib-typeahead="d.Text as d.Text for d in GenericMerchantResults($viewValue,'Liner')"
+                                                   typeahead-loading="bookingHeader.ShippingAgentLoading"
+                                                   typeahead-wait-ms="1000"
+                                                   typeahead-editable="false"
+                                                   ng-required="true"
+                                                   typeahead-on-select="CustomerSelected($item, 'ShippingAgent')" />
+                                        </md-input-container>
+                                    </div>
+                                </div>
+
+                                <div class="row ">
+                                    <div class="col-xs-12">
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                            <label>Billing Customer</label>
+
+                                            <input type="text"
+                                                   class="search-icon"
+                                                   ng-class="{'loadinggif': bookingHeader.CustomerNameLoading}"
+                                                   ng-model="bookingEntry.bookingHeader.CustomerName"
+                                                   typeahead-min-length="3"
+                                                   uib-typeahead="d.Text as d.Text for d in GenericMerchantResults($viewValue, 'billingCustomer')"
+                                                   typeahead-loading="bookingHeader.CustomerNameLoading"
+                                                   typeahead-wait-ms="1000"
+                                                   typeahead-editable="false"
+                                                   ng-required="true"
+                                                   typeahead-on-select="CustomerSelected($item, 'CustomerCode')" />
+                                        </md-input-container>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="row ">
+                                    <div class="col-xs-12">
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                            <label>Loading Port</label>
+
+                                            <input type="text"
+                                                   class="search-icon"
+                                                   ng-class="{'loadinggif': bookingHeader.LoadingPortNameLoading}"
+                                                   ng-model="bookingEntry.bookingHeader.LoadingPortName"
+                                                   typeahead-min-length="3"
+                                                   uib-typeahead="d.PortName as d.PortName for d in PortResults($viewValue)"
+                                                   typeahead-loading="bookingHeader.LoadingPortNameLoading"
+                                                   typeahead-wait-ms="1000"
+                                                   typeahead-editable="false"
+                                                   ng-required="true"
+                                                   typeahead-on-select="PortSelected($item, 'LoadingPort')" />
+                                        </md-input-container>
+                                    </div>
+
+                                </div>
+                                <div class="row ">
+                                    <div class="col-xs-12">
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                            <label>Discharge Port</label>
+
+                                            <input type="text"
+                                                   class="search-icon"
+                                                   ng-class="{'loadinggif': bookingHeader.DischargePortNameLoading}"
+                                                   ng-model="bookingEntry.bookingHeader.DischargePortName"
+                                                   typeahead-min-length="3"
+                                                   uib-typeahead="d.PortName as d.PortName for d in PortResults($viewValue)"
+                                                   typeahead-loading="bookingHeader.DischargePortNameLoading"
+                                                   typeahead-wait-ms="1000"
+                                                   typeahead-editable="false"
+                                                   ng-required="true"
+                                                   typeahead-on-select="PortSelected($item, 'DischargePort')" />
+                                        </md-input-container>
+                                    </div>
+                                </div>
+                                <div class="row ">
+                                    <div class="col-xs-12">
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                            <label>Destination Port</label>
+
+                                            <input type="text"
+                                                   class="search-icon"
+                                                   ng-class="{'loadinggif': bookingHeader.DestinationPortNameLoading}"
+                                                   ng-model="bookingEntry.bookingHeader.DestinationPortName"
+                                                   typeahead-min-length="3"
+                                                   uib-typeahead="d.PortName as d.PortName for d in PortResults($viewValue)"
+                                                   typeahead-loading="bookingHeader.DestinationPortNameLoading"
+                                                   typeahead-wait-ms="1000"
+                                                   typeahead-editable="false"
+                                                   ng-required="true"
+                                                   typeahead-on-select="PortSelected($item, 'DestinationPort')" />
+                                        </md-input-container>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-xs-12" ng-if="bookingEntry.bookingHeader.TransportType == 1021">
+
+                        <h3 class="lvh-label">Vessel &amp; Voyage Details</h3>
+
+
+                        <div class="card-body card-padding p-t-25 p-b-25">
+                            <div class="row">
+                                <div class="col-xs-12 col-md-6">
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>Vessel Name</label>
+                                        <input type="text"
+                                               class="search-icon"
+                                               ng-class="{'loadinggif': bookingHeader.VesselCodeLoading}"
+                                               ng-model="bookingEntry.bookingHeader.VesselName"
+                                               typeahead-min-length="3"
+                                               uib-typeahead="d.Text as d.Text for d in VesselCodeLoadingResults($viewValue)"
+                                               typeahead-loading="bookingHeader.VesselCodeLoading"
+                                               typeahead-wait-ms="1000"
+                                               typeahead-editable="false"
+                                               ng-required="bookingEntry.bookingHeader.TransportType == 1021"
+                                               typeahead-on-select="CustomerSelected($item, 'VesselID')" />
+                                    </md-input-container>                     <!--ng-blur="OnBlur('VesselName','VesselID')"-->
+                                </div>
+                                <div class="col-xs-12 col-md-6">
+                                    <div class="checkbox m-b-15">
+                                        <label>
+                                            <input type="checkbox" value="" aria-label="Allow Late Gate In"
+                                                   ng-model="bookingEntry.bookingHeader.IsAllowLateGate">
+                                            <i class="input-helper"></i>
+                                            Allow Late Gate In
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-6 ">
+                                        <script type="text/ng-template" id="customTemplate.html">
+                                            <table ng-show="isOpen() && !moveInProgress"
+                                                   aria-hidden="{{!isOpen()}}"
+                                                   class="table  table-vmiddle table-hover table-bordered mytable"
+                                                   ng-style="{top: position().top+'px', left: position().left+'px'}"
+                                                   style="">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Voyage</th>
+                                                        <th>Vessel Name</th>
+                                                        <th>ETA</th>
+                                                        <th>ETD</th>
+                                                        <th>Terminal</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr ng-repeat="match in matches track by $index" ng-click="selectMatch($index)">
+                                                        <td>{{match.model.VoyageNo}}</td>
+                                                        <td>{{match.model.VesselName}}</td>
+                                                        <td>{{match.model.ETA | date :  'dd/MM/yyyy hh:mm a' }}</td>
+                                                        <td>{{match.model.ETD | date :  'dd/MM/yyyy hh:mm a' }}</td>
+                                                        <td>{{match.model.TerminalName}}</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </script>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row ">
+                                <div class="col-xs-12 col-md-6">
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>Voyage No.</label>
+                                        <input type="text"
+                                               class="search-icon"
+                                               ng-disabled="bookingEntry.bookingHeader.BookingType == null || bookingEntry.bookingHeader.VesselName==null"
+                                               ng-class="{'loadinggif': bookingHeader.VoyageNoNameLoading}"
+                                               ng-model="bookingEntry.bookingHeader.VoyageNo"
+                                               typeahead-min-length="3"
+                                               uib-typeahead="d.VoyageNo for d in VoyageLoadingResults($viewValue)"
+                                               typeahead-loading="bookingHeader.VoyageNoNameLoading"
+                                               typeahead-popup-template-url="customTemplate.html"
+                                               typeahead-wait-ms="1000"
+                                               typeahead-editable="false"
+                                               ng-required="bookingEntry.bookingHeader.TransportType == 1021"
+                                               typeahead-on-select="VoyageSearchSelect($item)"
+                                               ng-blur="ValidateTheVesselDetails()" />
+                                    </md-input-container>
+                                </div>
+                                <div class="col-xs-12 col-md-6">
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>Wharf</label>
+                                        <md-select ng-model="bookingEntry.bookingHeader.WharfList">
+                                            <md-option md-option-empty></md-option>
+                                            <md-option ng-repeat="item in lookUpData.WharfList" ng-value="item.Value">
+                                                {{item.Text}}
+                                            </md-option>
+                                        </md-select>
+                                    </md-input-container>
+                                </div>
+                            </div>
+                            <div class="row ">
+                                <div class="col-xs-12 col-md-6">
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>Ship Call No.</label>
+
+                                        <input type="text"
+                                               ng-model="bookingEntry.bookingHeader.ShipCallNo"
+                                               ng-required="bookingEntry.bookingHeader.TransportType == 1021" />
+                                    </md-input-container>
+                                </div>
+                                <div class="col-xs-12 col-md-6">
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>Vessel Call Sign</label>
+                                        <input type="text"
+                                               ng-model="bookingEntry.bookingHeader.CallSignNo"
+                                               ng-required="bookingEntry.bookingHeader.TransportType == 1021" />
+                                    </md-input-container>
+                                </div>
+                            </div>
+                            <div class="row ">
+                                <div class="col-xs-12 col-md-6">
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>ETA</label>
+
+                                        <input mdc-datetime-picker="" class="date-icon" date="true" time="true" ng-model="bookingEntry.bookingHeader.ETA"
+                                               ng-required="bookingEntry.bookingHeader.TransportType == 1021 || bookingHeader.TransportType == 1020" type="text" id="DateFrom" format="{{dateTimeFormat12}}"
+                                               min-date="date">
+                                    </md-input-container>
+                                </div>
+                                <div class="col-xs-12 col-md-6">
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>ETD</label>
+                                        <input mdc-datetime-picker="" class="date-icon" date="true" time="true" ng-model="bookingEntry.bookingHeader.ETD"
+                                               ng-required="bookingEntry.bookingHeader.TransportType == 1021" type="text" id="DateFrom" format="{{dateTimeFormat12}}"
+                                               min-date="date">
+                                    </md-input-container>
+                                </div>
+                            </div>
+                            <div class="row ">
+                                <div class="col-xs-12 col-md-6">
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>Port Cut-Off (Dry)</label>
+                                        <input mdc-datetime-picker="" class="date-icon" date="true" time="true" ng-model="bookingEntry.bookingHeader.PortCutOffDry"
+                                               ng-required="bookingEntry.bookingHeader.TransportType == 1021" type="text" id="DateFrom" format="{{dateTimeFormat12}}"
+                                               min-date="date">
+                                    </md-input-container>
+                                </div>
+                                <div class="col-xs-12 col-md-6">
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>Port Cut-Off (Reefer)</label>
+                                        <input mdc-datetime-picker="" class="date-icon" date="true" time="true" ng-model="bookingEntry.bookingHeader.PortCutOffReefer"
+                                               ng-required="bookingEntry.bookingHeader.TransportType == 1021" type="text" id="DateFrom" format="{{dateTimeFormat12}}"
+                                               min-date="date">
+                                    </md-input-container>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-xs-12" ng-if="bookingEntry.bookingHeader.TransportType == 1020">
+                        <div class="row">
+                            <div class="col-xs-12">
+
+                                <h2 class="lvh-label">
+                                    FLIGHT DETAILS
+                                </h2>
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                            <label>Flight No.</label>
+
+                                            <input type="text"
+                                                   ng-model="bookingEntry.bookingHeader.FlightNo"
+                                                   ng-maxlength="70" logicon-limit />
+                                        </md-input-container>
+                                    </div>
+                                </div>
+                                <div class="row ">
+                                    <div class="col-xs-12">
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                            <label>ARN No.</label>
+
+                                            <input type="text"
+                                                   ng-model="bookingEntry.bookingHeader.ARNNo"
+                                                   ng-maxlength="70" logicon-limit />
+                                        </md-input-container>
+                                    </div>
+                                </div>
+                                <div class="row ">
+                                    <div class="col-xs-12">
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                            <label>ETA</label>
+                                            <input mdc-datetime-picker="" class="date-icon" date="true" time="true" ng-model="bookingEntry.bookingHeader.ETA" ng-required="bookingEntry.bookingHeader.TransportType == 1020 || bookingEntry.bookingHeader.TransportType == 1021" type="text" id="DateFrom" format="{{dateTimeFormat12}}"
+                                                   min-date="date">
+                                        </md-input-container>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-xs-12" ng-if="bookingEntry.bookingHeader.TransportType == 1022">
+                        <div class="row">
+                            <div class="col-xs-12">
+
+                                <h2 class="lvh-label">
+                                    RAIL DETAILS
+                                </h2>
+                                <div class="row ">
+                                    <div class="col-xs-12">
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                            <label>Wagon No.</label>
+
+                                            <input type="text"
+                                                   ng-model="bookingEntry.bookingHeader.WagonNo"
+                                                   ng-maxlength="70" logicon-limit />
+                                        </md-input-container>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-xs-12" ng-if="bookingEntry.bookingHeader.TransportType == 1023">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <h2 class="lvh-label">
+                                    ROAD DETAILS
+                                </h2>
+
+                                <div class="row ">
+                                    <div class="col-xs-12">
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                            <label>Vehicle Registration No. 1</label>
+
+                                            <input type="text"
+                                                   ng-model="bookingEntry.bookingHeader.VehicleNo1"
+                                                   ng-maxlength="70" logicon-limit />
+                                        </md-input-container>
+                                    </div>
+                                </div>
+
+                                <div class="row ">
+                                    <div class="col-xs-12">
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                            <label>Vehicle Registration No. 2</label>
+
+                                            <input type="text"
+                                                   ng-model="bookingEntry.bookingHeader.VehicleNo2"
+                                                   ng-maxlength="70" logicon-limit />
+                                        </md-input-container>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-md-6" ng-if="bookingEntry.bookingHeader.TransportType == 1024">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <h2 class="lvh-label">
+                                    POST DETAILS
+                                </h2>
+
+                                <div class="row ">
+                                    <div class="col-xs-12">
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                            <label>JK78 Information No.</label>
+
+                                            <input type="text"
+                                                   ng-model="bookingEntry.bookingHeader.JKNo"
+                                                   ng-maxlength="70" logicon-limit />
+                                        </md-input-container>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </div>
+        <div>
+            <div class="card">
+                <div class="lv-header-alt clearfix m-b-5">
+                    <h3 class="lvh-label">Container Details</h3>
+                    <div class="text-right m-r-10 pull-right">
+                        <button type="button" class="btn btn-primary  waves-effect" ng-click="AddContainerDetails(-1);"><i class="fa fa-plus"></i>&nbsp;Add</button>&nbsp;&nbsp;&nbsp;
+                    </div><div class="clearfix"></div>
+
+                </div>
+                <div class="card-body card-padding p-t-25 p-b-25">
+                    <div class="row">
+                        <div class="col-xs-12">
+
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <div class="table-responsive">
+                                        <table class="table  table-vmiddle" ng-table="tblContainerInfo">
+                                            <!--<thead>
+                                                <tr>
+                                                    <th>#Action</th>
+                                                    <th>Container No.</th>
+                                                    <th>Container Class</th>
+                                                    <th>Container Status</th>
+                                                    <th>Size</th>
+                                                    <th>Type</th>
+                                                    <th>P/U Mode</th>
+                                                    <th>Pickup Date</th>
+                                                    <th>IMO</th>
+                                                    <th>UNNo</th>
+                                                    <th>Cargo Category</th>
+                                                    <th>Weight</th>
+                                                    <th>Volume</th>
+                                                    <th>Agent Seal</th>
+                                                    <th>Customer Seal</th>
+                                                    <th>Vent</th>
+                                                    <th>Temperature</th>
+
+                                                </tr>
+                                            </thead>-->
+                                            <!--<tbody>-->
+                                            <tr ng-repeat="bc in $data" ng-click="containerDetailRowClick(bc.ContainerKey)">
+                                                <td data-title="'#Action'">
+                                                    <button class="btn btn-danger" type="button" ng-click="AddContainerDetails($index)"><i class="zmdi zmdi-edit"></i></button>
+                                                    <input type="hidden" ng-model="bc.index" ng-init="bc.index = $index" />
+                                                </td>
+                                                <td data-title="'Container No.'">{{bc.ContainerNo}}</td>
+                                                <td data-title="'Container Class'">{{(lookUpData.ContainerClassList | filter : {Value:bc.ContainerGrade})[0].Text}}</td>
+                                                <td data-title="'Container Status'">{{(lookUpData.efIndicatorList | filter : {Value:bc.EFIndicator})[0].Text}}</td>
+                                                <td data-title="'Size'">{{(lookUpData.SizeList | filter : {Value:bc.Size})[0].Text}}</td>
+                                                <td data-title="'Type'">{{bc.Type}}</td>
+                                                <td data-title="'P/U Mode'">{{(lookUpData.puModeList | filter : {Value:bc.PickupDropOffMode})[0].Text}}</td>
+                                                <td data-title="'Pickup Date'">{{formatDate(bc.PickupDate)}}</td>
+                                                <td data-title="'IMO'">{{(lookUpData.IMOCodeList | filter : {Value:bc.IMOCode})[0].Text}}</td>
+                                                <td data-title="'UNNo'">{{bc.UNNo}}</td>
+                                                <td data-title="'Cargo Category'">{{(lookUpData.CargoCategoryList | filter : {Value:bc.CargoCategory})[0].Text}}</td>
+                                                <td data-title="'Weight'">{{bc.Weight}}</td>
+                                                <td data-title="'Volume'">{{bc.Volume}}</td>
+                                                <td data-title="'Agent Seal'">{{bc.SealNo1}}</td>
+                                                <td data-title="'Customer Seal'">{{bc.SealNo2}}</td>
+                                                <td data-title="'Vent'">{{bc.Vent}}</td>
+                                                <td data-title="'Temperature'">{{bc.Temperature}}</td>
+
+                                            </tr>
+                                            <!--</tbody>-->
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div>
+            <div class="card">
+                <div class="lv-header-alt clearfix m-b-5">
+                    <h3 class="lvh-label">Movements</h3>
+
+                </div>
+                <div class="card-body card-padding p-t-25 p-b-25">
+
+                    <div class="row">
+                        <div class="col-xs-12 col-md-8">
+
+                            <div class="card-body card-padding p-t-25 p-b-25">
+                                <div class="row">
+                                    <div class="col-xs-12">
+
+                                        <div class="table-responsive">
+                                            <table class="table  table-vmiddle">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Movement</th>
+                                                        <th>Transaction No.</th>
+                                                        <th>Sequence No.</th>
+                                                        <th>Movement Date</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr ng-repeat="mvt in bookingEntry.bookingMovements | filter:{ContainerKey: tblSearch.ContainerKey}">
+                                                        <td>
+                                                            {{mvt.MovementCode}}
+                                                        </td>
+                                                        <td></td>
+                                                        <td>
+                                                            {{mvt.Sequence}}
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div>
+            <div class="card">
+                <div class="card-body card-padding p-t-25 p-b-25">
+                    <div class="row">
+                        <div class="col-xs-12 m-t-15">
+                            <button type="submit" class="btn btn-primary" ng-click="submitted = true;"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Save</button>
+                            <button type="button" class="btn btn-default ng-scope waves-effect" 
+                                    aria-label="button" uib-tooltip="Delete" tooltip-placement="top" ng-click="DeleteBookingEntry()" ng-show="!IsNew">
+                                <i class="fa fa-trash-o" aria-hidden="true" ></i>&nbsp;Delete
+                            </button>
+                            <a data-ui-sref="bookingentrylist" uib-tooltip="Open" tooltip-placement="top"></a>
+
+
+                            <span class="pull-right">
+
+                                <button class="btn btn-primary waves-effect" type="button" ng-click="back();">
+
+                                    <i class="fa fa-backward" aria-hidden="true"></i>&nbsp;Back
+                                </button>
+                                <button class="btn btn-default" type="button" ng-click="clear();">
+                                    <i class="fa fa-eraser" aria-hidden="true"></i>&nbsp;Clear
+                                </button>
+                            </span>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

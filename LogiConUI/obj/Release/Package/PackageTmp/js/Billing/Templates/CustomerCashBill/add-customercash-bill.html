@@ -1,0 +1,399 @@
+﻿
+<!--<form id="frmCustomerCashBill" name="frmCustomerCashBill" ng-class="{'submitted':submitted}" ng-submit="SaveCustomerCashBill(cb)" novalidate>-->
+
+<form id="frmCustomerCashBill" name="frmCustomerCashBill" ng-class="{'submitted':submitted}" ng-submit="savecash(cb)" novalidate>
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" ng-click="cancel();">&times;</button>
+        <h4 class="modal-title">Customer Cash Bill</h4>
+    </div>
+    <div class="modal-body">
+        <div class="c-overflow" ng-style="{'max-height': iframeHeight - 80 + 'px'}" resize >
+            <div class="modalbodymain">
+
+                <div class="row">
+                    <div class="col-xs-12 col-md-4">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Order No.</label>
+                            <input type="text"
+                                   class="search-icon"
+                                   ng-model="cb.OrderNo"
+                                   typeahead-min-length="3"
+                                   uib-typeahead="d.Text as d.Text for d in OrderResults($viewValue)"
+                                   typeahead-wait-ms="100"
+                                   typeahead-editable="false"
+                                   typeahead-on-select="orderNoSelected($item)" disabled />
+                        </md-input-container>
+                    </div>
+                    <div class="col-xs-12 col-md-4">
+
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Job No.</label>
+                            <md-select ng-model="cb.JobNo" disabled>
+                                <md-option ng-repeat="item in lookUpData.countryList" ng-value="item.Value">
+                                    {{item.Text}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                        <!--<md-input-container class="md-block" flex-gt-sm>
+                            <label>Job No.</label>
+
+                            <select ng-model="cb.JobNo"></select></md-input-container>-->
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-md-4">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Container No.</label>
+
+                            <input type="text"
+                                   class="search-icon"
+                                   ng-model="cb.ContainerNo"
+                                   typeahead-min-length="3"
+                                   uib-typeahead="d.ContainerNo as d.ContainerNo for d in ContainerNoResults($viewValue)"
+                                   typeahead-loading="loading"
+                                   typeahead-wait-ms="300"
+                                   typeahead-editable="true"
+                                   typeahead-on-select="ContainerNoSelected($item)" disabled />
+                        </md-input-container>
+
+                    </div>
+                    <div class="col-xs-12 col-md-4">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Prd Category</label>
+                            <md-select ng-model="cb.ProductCategory" disabled>
+                                <md-option ng-repeat="item in lookupData.productCategoryList" ng-value="item.Value">
+                                    {{item.Text}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                        <!--<md-input-container class="md-block" flex-gt-sm>
+                                            <label>Prd Category</label>
+
+                                            <select ng-model="cb.ProductCategory" ng-options="s.Value as s.Text for s in lookupData.productCategoryList" ng-required="required"></select>
+                        </md-input-container>-->
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-md-4">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Charge Code</label>
+
+                            <input type="text"
+                                   class="search-icon"
+                                   ng-model="cb.ChargeCode"
+                                   typeahead-min-length="3"
+                                   uib-typeahead="d.Text as d.Text for d in ChargeCodeResults($viewValue)"
+                                   typeahead-loading="loading"
+                                   typeahead-wait-ms="1000"
+                                   ng-required="required"
+                                   typeahead-on-select="ChargeCodeSelected($item, 'ChargeCode')" disabled />
+                        </md-input-container>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-md-4">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Output GST Code</label>
+
+                            <input type="text" ng-model="cb.OutPutGSTDescription" ng-required="required" disabled />
+                        </md-input-container>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-md-4">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Input GST Code</label>
+
+                            <input type="text" ng-model="cb.InPutGSTDescription" ng-required="required" disabled />
+                        </md-input-container>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-12 col-md-4">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Billing Unit</label>
+                            <md-select ng-required="true"
+                                       ng-model="cb.BillingUnit" disabled>
+                                <md-option ng-repeat="item in lookupData.billingUnitList" ng-value="item.Value">
+                                    {{item.Text}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                        <!--<md-input-container class="md-block" flex-gt-sm>
+                                            <label>Billing Unit</label>
+
+                                            <select ng-model="cb.BillingUnit"
+                                                    ng-required="required"
+                                                    ng-options="s.Value as s.Text for s in lookupData.billingUnitList"
+                                                    ng-change="cb.BillingUnitDescription=(lookupData.billingUnitList | filter : {Value:cs.BillingUnit})[0].Text"></select>
+                        </md-input-container>-->
+                    </div>
+                    <div class="col-xs-12 col-md-4">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Currency</label>
+                            <md-select ng-required="true"
+                                       ng-model="cb.CurrencyCode" disabled>
+                                <md-option ng-repeat="item in lookupData.currencyList" ng-value="item.Value">
+                                    {{item.Text}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+
+
+                    </div>
+                    <div class="col-xs-12 col-md-2">
+
+                        <label>Amount With Tax</label>
+                    </div>
+                    <div class="col-xs-12 col-md-2">
+                        <label ng-model="cb.TotalAmount">{{cb.TotalAmount}} </label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-md-4">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Quantity</label>
+
+                            <input type="text" class="form-control input-sm logiconNumber" ng-model="cb.Qty" ng-change="CaliculateAmounts()" ng-required="required" disabled />
+                        </md-input-container>
+                    </div>
+                    <div class="col-xs-12 col-md-2">
+                        <label>Exchange Amount</label>
+                    </div>
+                    <div class="col-xs-12 col-md-2">
+
+                        <label class="control-label logiconDecimal" ng-model="cb.ExRate">{{cb.ExRate}} </label>
+                    </div>
+                    <div class="col-xs-12 col-md-2">
+                        <label>Local Amount</label>
+                    </div>
+                    <div class="col-xs-12 col-md-2">
+                        <label ng-model="cb.LocalAmount">{{cb.LocalAmount}} </label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-md-4">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Unit Price</label>
+
+                            <input type="text" class="form-control input-sm logiconDecimal" ng-model="cb.Price" ng-change="CaliculateAmounts()" ng-required="required" disabled />
+                        </md-input-container>
+                    </div>
+                    <div class="col-xs-12 col-md-2">
+                        <label>Tax Amount</label>
+                    </div>
+                    <div class="col-xs-12 col-md-2">
+                        <label ng-model="cb.TaxAmount">{{cb.TaxAmount}} </label>
+                    </div>
+                </div>
+                <!-- <div class="row" >
+                     <div class="col-xs-12 col-md-2">
+                         <label>GST Code</label>
+                     </div>
+                     <div class="col-xs-12 col-md-2">
+                         <input type="text"  ng-model="cb.OutPutGSTDescription"/>
+                     </div>
+                     <div class="col-xs-12 col-md-4">
+                         <input type="text"  ng-model="cb.InPutGSTDescription"/>
+                     </div>
+                 </div>-->
+                <div class="row">
+                    <div class="col-xs-12 col-md-4">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Remarks</label>
+
+                            <textarea></textarea>
+                        </md-input-container>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+
+        <div class="row">
+
+            <div class="col-md-12 text-right">
+
+                <button class="btn btn-primary btn-sm" type="submit" ng-click="submitted = true;"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Save</button>
+                <button class="btn btn-default btn-sm" ng-click="cancel();"><i class="fa fa-times" aria-hidden="true"></i>&nbsp;Close</button>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+
+
+
+<!--<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" ng-click="cancel();">&times;</button>
+    <h4 class="modal-title">Cost Sheet</h4>
+</div>
+<div class="modal-body">
+    <div class="row" >
+        <div class="col-md-8">
+            <div class="row">
+                <div class="col-xs-6 col-md-3">
+                    <label>Container No.</label>
+                </div>
+                <div class="col-xs-6 col-md-3">
+                    <select  ng-model="cs.ContainerNo"></select>
+                </div>
+                <div class="col-xs-6 col-md-3">
+                    <label>Job No.</label>
+                </div>
+                <div class="col-xs-6 col-md-3">
+                    <select  ng-model="cs.JobNo"></select>
+                </div>
+            </div>
+            <div class="row" >
+                <div class="col-xs-6 col-md-3">
+                    <label>Container Key</label>
+                </div>
+                <div class="col-xs-6 col-md-3">
+                    <select  ng-model="cs.ContainerKey"></select>
+                </div>
+                <div class="col-xs-6 col-md-3">
+                    <label>Prd Category</label>
+                </div>
+                <div class="col-xs-6 col-md-3">
+                    <select  ng-model="cs.ProductCategory" ng-options="s.Value as s.Text for s in lookupData.productCategoryList"></select>
+                </div>
+            </div>
+            <div class="row" >
+                <div class="col-xs-6 col-md-3">
+                    <label>Charge Code</label>
+                </div>
+                <div class="col-xs-12 col-md-9">
+                    <select  ng-model="cs.ChargeCode"></select>
+                </div>
+            </div>
+            <div class="row" >
+                <div class="col-xs-6 col-md-3">
+                    <label>Output GST Code</label>
+                </div>
+                <div class="col-xs-6 col-md-3">
+                    <input type="text"  />
+                </div>
+                <div class="col-xs-6 col-md-3">
+                    <label>Input GST Code</label>
+                </div>
+                <div class="col-xs-6 col-md-3">
+                    <input type="text"  />
+                </div>
+            </div>
+            <div class="row" >
+                <div class="col-xs-6 col-md-3">
+                    <label>Vendor</label>
+                </div>
+                <div class="col-xs-12 col-md-9">
+                    <select  ng-model="cs.VendorCode" ng-options="s.Value as s.Text for s in lookupData.vendorList"></select>
+                </div>
+            </div>
+            <div class="row" >
+                <div class="col-xs-6 col-md-3">
+                    <label>Remarks</label>
+                </div>
+                <div class="col-xs-12 col-md-9">
+                    <textarea type="text"  ng-model="cs.Remark"></textarea>
+                </div>
+            </div>
+            <div class="row" >
+                <div class="col-xs-6 col-md-3">
+                    <label>Billing Unit</label>
+                </div>
+                <div class="col-xs-6 col-md-3">
+                    <select  ng-model="cs.BillingUnit" ng-options="s.Value as s.Text for s in lookupData.billingUnitList"></select>
+                </div>
+                <div class="col-xs-6 col-md-3">
+                    <label>Currency</label>
+                </div>
+                <div class="col-xs-6 col-md-3">
+                    <select  ng-model="cs.CurrencyCode" ng-options="s.Value as s.Text for s in lookupData.currencyList"></select>
+                </div>
+            </div>
+            <div class="row" >
+                <div class="col-xs-6 col-md-3">
+                    <label>Quantity</label>
+                </div>
+                <div class="col-xs-6 col-md-3">
+                    <input type="text"  ng-model="cs.Qty" />
+                </div>
+                <div class="col-xs-6 col-md-3">
+                    <label>Exchange Rate</label>
+                </div>
+                <div class="col-xs-6 col-md-3">
+                    <input type="text"  ng-model="cs.ExchangeRate" />
+                </div>
+            </div>
+            <div class="row" >
+                <div class="col-xs-6 col-md-3">
+                    <label>Price</label>
+                </div>
+                <div class="col-xs-6 col-md-3">
+                    <input type="text"  ng-model="cs.Price" />
+                </div>
+                <div class="col-xs-6 col-md-3">
+                    <label>Tax Amount</label>
+                </div>
+                <div class="col-xs-6 col-md-3">
+                    <input type="text"  ng-model="cs.TaxAmount" />
+                </div>
+            </div>
+
+        </div>
+        <div class="col-xs-12 col-md-4">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="row">
+                        <div class="col-xs-12 col-md-6">
+                            <label>Actual Amount</label>
+                        </div>
+                        <div class="col-xs-12 col-md-6">
+                            <input type="text"  ng-model="cs.ActualAmount" />
+                        </div>
+                    </div>
+                    <div class="row" >
+                        <div class="col-xs-12 col-md-6">
+                            <label>Discount Type</label>
+                        </div>
+                        <div class="col-xs-12 col-md-6">
+                            <select  ng-model="cs.DiscountType" ng-options="s.Value as s.Text for s in lookupData.discountTypeList" />
+                        </div>
+                    </div>
+                    <div class="row" >
+                        <div class="col-xs-12 col-md-6">
+                            <label>Discount Amount</label>
+                        </div>
+                        <div class="col-xs-12 col-md-6">
+                            <input type="text"  ng-model="cs.DiscountAmount" />
+                        </div>
+                    </div>
+                    <div class="row" >
+                        <div class="col-xs-12 col-md-6">
+                            <label>Total Amount</label>
+                        </div>
+                        <div class="col-xs-12 col-md-6">
+                            <input type="text"  ng-model="cs.TotalAmount" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <div class="row" >
+        <div class="col-xs-12 col-md-9"></div>
+        <div class="col-md-3 pull-right">
+            <button class="btn btn-primary btn-sm" ng-click="SaveCoseSheet(cs);"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Save</button>
+            <button class="btn btn-default btn-sm" ng-click="cancel();"><i class="fa fa-times" aria-hidden="true"></i>&nbsp;Close</button>
+        </div>
+    </div>
+</div>
+
+
+-->

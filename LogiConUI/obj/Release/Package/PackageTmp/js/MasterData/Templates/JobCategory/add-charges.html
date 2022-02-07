@@ -1,0 +1,196 @@
+﻿<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" ng-click="cancel();">&times;</button>
+    <h4 class="modal-title">Add Charges</h4>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div class="col-xs-12">
+            <md-tabs md-dynamic-height md-border-bottom>
+                <md-tab label="Charges" class="md-primary">
+                    <md-content class="md-padding">
+                        <div class="card">
+                            <div class="card-body card-padding p-t-25 p-b-25">
+                                <div class="row">
+
+                                    <div class="col-xs-12 col-md-6">
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                            <label>Charge Code</label>
+                                            <md-select ng-model="charges.ChargeCode" ng-required="true">
+                                                <md-option ng-repeat="item in lookUpData.chargeCodeList" ng-value="item.Value">
+                                                    {{item.Text}}
+                                                </md-option>
+                                            </md-select>
+                                        </md-input-container>
+                                    </div>
+                                    <div class="col-xs-12 col-md-6">
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                            <label>Payment Term</label>
+                                            <md-select ng-model="charges.PaymentTerm" ng-required="true" ng-change="charges.PaymentTermDesc=(lookUpData.paymentTypeList | filter: {Value:charges.PaymentTerm})[0].Text">
+                                                <md-option ng-repeat="item in lookUpData.paymentTypeList" ng-value="item.Value">
+                                                    {{item.Text}}
+                                                </md-option>
+                                            </md-select>
+                                        </md-input-container>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-6">
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                            <label>Billed To</label>
+                                            <md-select ng-model="charges.PaymentTo" ng-required="true" ng-change="charges.PaymentToDesc=(lookUpData.paymentToList | filter: {Value:charges.PaymentTo})[0].Text">
+                                                <md-option ng-repeat="item in lookUpData.paymentToList" ng-value="item.Value">
+                                                    {{item.Text}}
+                                                </md-option>
+                                            </md-select>
+                                        </md-input-container>
+                                    </div>
+                                    <div class="col-xs-12 col-md-2">
+                                        <div>
+                                            <md-switch class="md-primary"
+                                                       aria-label="Cargo Charge"
+                                                       ng-model="charges.IsCargoCharge">
+                                                Cargo Charge
+                                            </md-switch>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-md-2">
+                                        <button type="submit" ng-click="addCharges(charges);" class="btn btn-primary">{{buttonText}}</button>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <div class="table-responsive">
+                                            <table class="table table-striped table-vmiddle">
+                                                <thead>
+                                                    <tr>
+                                                        <th>#Action</th>
+                                                        <th>Charge Code</th>
+                                                        <th>Movement</th>
+                                                        <th>Payment</th>
+                                                        <th>Billed To</th>
+                                                        <th>Cargo Charges</th>
+
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr ng-repeat="charge in chargesList" ng-show="DTOObj.mvtCode == charge.MovementCode">
+                                                        <td>
+                                                            <button class="btn btn-default ng-scope waves-effect" type="button" ng-click="editCharges(charge);" aria-label="button">
+                                                                <i class="zmdi zmdi-edit" aria-hidden="true"></i>
+                                                            </button>
+                                                        </td>
+                                                        <td>{{charge.ChargeCodeDesc = (lookUpData.chargeCodeList | filter: {Value:charge.ChargeCode})[0].Text}}</td>
+                                                        <td>{{charge.MovementCode}}</td>
+                                                        <td>{{charge.PaymentTermDesc = (lookUpData.paymentTypeList | filter: {Value:charge.PaymentTerm})[0].Text}}</td>
+                                                        <td>{{charge.PaymentToDesc = (lookUpData.paymentToList | filter: {Value:charge.PaymentTo})[0].Text}}</td>
+                                                        <td>{{charge.IsCargoCharge}}</td>
+
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </md-content>
+                </md-tab>
+                <md-tab label="VAS" class="md-primary">
+                    <md-content class="md-padding">
+                        <div class="card">
+                            <div class="card-body card-padding p-t-25 p-b-25">
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-6">
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                            <label>Charge Code</label>
+                                            <md-select ng-model="vas.ChargeCode" ng-required="true">
+                                                <md-option ng-repeat="item in lookUpData.chargeCodeVasList" ng-value="item.Value">
+                                                    {{item.Text}}
+                                                </md-option>
+                                            </md-select>
+                                        </md-input-container>
+                                    </div>
+                                    <div class="col-xs-12 col-md-6">
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                            <label>Payment Term</label>
+                                            <md-select ng-model="vas.PaymentTerm" ng-required="true" ng-change="vas.PaymentTermDesc=(lookUpData.paymentTypeList | filter: {Value:vas.PaymentTerm})[0].Text">
+                                                <md-option ng-repeat="item in lookUpData.paymentTypeList" ng-value="item.Value">
+                                                    {{item.Text}}
+                                                </md-option>
+                                            </md-select>
+                                        </md-input-container>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-6">
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                            <label>Billed To</label>
+                                            <md-select ng-model="vas.PaymentTo" ng-required="true" ng-change="vas.PaymentToDesc=(lookUpData.paymentToList | filter: {Value:vas.PaymentTo})[0].Text">
+                                                <md-option ng-repeat="item in lookUpData.paymentToList" ng-value="item.Value">
+                                                    {{item.Text}}
+                                                </md-option>
+                                            </md-select>
+                                        </md-input-container>
+                                    </div>
+                                    <div class="col-xs-6 col-md-3">
+                                        <div>
+                                            <md-switch class="md-primary"
+                                                       aria-label="IsLoad At Gate"
+                                                       ng-model="vas.IsLoadAtGate">
+                                                IsLoad At GateIn
+                                            </md-switch>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-md-2">
+                                        <button type="submit" ng-click="addvas(vas);" class="btn btn-primary">{{buttonvasText}}</button>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <div class="table-responsive">
+                                            <table class="table table-striped table-vmiddle">
+                                                <thead>
+                                                    <tr>
+                                                        <th>#Action</th>
+                                                        <th>Charge Code</th>
+                                                        <th>Payment</th>
+                                                        <th>Billed To</th>
+                                                        <th>IsLoad At GateIn</th>
+
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr ng-repeat="vas in vasList">
+                                                        <td>
+                                                            <button class="btn btn-default ng-scope waves-effect" type="button" ng-click="editvas(vas);" aria-label="button">
+                                                                <i class="zmdi zmdi-edit" aria-hidden="true"></i>
+                                                            </button>
+                                                        </td>
+                                                        <td>{{vas.ChargeCodeDesc = (lookUpData.chargeCodeVasList | filter: {Value: vas.ChargeCode})[0].Text}}</td>
+                                                        <td>{{vas.PaymentTermDesc = (lookUpData.paymentTypeList | filter: {Value:vas.PaymentTerm})[0].Text}}</td>
+                                                        <td>{{vas.PaymentToDesc = (lookUpData.paymentToList | filter: {Value:vas.PaymentTo})[0].Text}}</td>
+                                                        <td>{{vas.IsLoadAtGate}}</td>
+
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </md-content>
+                </md-tab>
+            </md-tabs>
+        </div>
+    </div>
+    </div>
+<div class="modal-footer m-r-10">
+        <div class="row">
+            <div class="col-xs-12">
+            <button class="btn btn-primary btn-sm m-r-10" ng-click="SaveCharges();"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Save</button>
+                <div class="pull-right">
+                    <button class="btn btn-default btn-sm" type="button" ng-click="cancel();"><i class="fa fa-times" aria-hidden="true"></i>&nbsp;Close</button>
+                </div></div>
+        </div>
+    </div>

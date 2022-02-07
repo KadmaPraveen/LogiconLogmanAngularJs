@@ -1,0 +1,237 @@
+﻿<div class="container" ng-controller="OrderEntryController as oeCntrl">
+    <style type="text/css">
+        .dash-widget-item {
+            min-height: 0px !important;
+        }
+    </style>
+    <script type="text/ng-template" id="myPopoverTemplate.html">
+        <div>{{dynamicPopover.content}}</div>
+        <div class="form-group">
+            <label>Popup Title:</label>
+            <input type="text" ng-model="dynamicPopover.title" class="form-control">
+        </div>
+    </script>
+    <script type="text/ng-template" id="reject.html">
+        <style type="text/css">
+            .Reject {
+                width: 100%;
+                margin: 10px;
+            }
+        </style>
+        <div class="Reject">
+            <form id="oeCntrl.frmRejectRemarks" name="oeCntrl.frmRejectRemarks" ng-class="{'submitted': RejectRemarksSubmitted}" ng-submit="UpdateOrderStatus(oe.OrderNo,false,rejectremarks)" autocomplete="off" novalidate>
+                <div class="row">
+                    <div class="col-xs-12 col-md-5">
+                        <label>Reject Remarks</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <textarea ng-model="rejectremarks" ng-required="true" style="overflow-y:auto"></textarea>
+                        </md-input-container>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-2 col-md-2">
+                        <button type="button" ng-click="CloseRejectPopOver()" class="btn btn-default btn-block">Cancel</button>
+                    </div>
+                    <div class="col-xs-2 col-md-2">
+                        <button ng-click="RejectRemarksSubmitted = true;" type="submit" class="btn btn-primary btn-block">Submit</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </script>
+    <div class="row" ng-if="oeCntrl.dashBoardData != null">
+        <div class="col-md-2 col-sm-6">
+            <activity-logs linkbranch-id="{{oeCntrl.dashBoardData.OrderBranchID}}"
+                           linkmodule-id="9156"
+                           linkdocument-no="{{oeCntrl.dashBoardData.OrderNo}}"
+                           transactionbranch-id="{{oeCntrl.dashBoardData.OrderBranchID}}"
+                           transactionmodule-id="9156"
+                           transaction-no="{{oeCntrl.dashBoardData.OrderNo}}"
+                           title="Order Process Information"
+                           widgettitle="Order Process"
+                           widgetclass="bgm-purple"
+                           ispullright="false">
+            </activity-logs>
+        </div>
+        <div class="col-md-2 col-sm-6">
+            <activity-logs linkbranch-id="{{oeCntrl.dashBoardData.OrderBranchID}}"
+                           linkmodule-id="9156"
+                           linkdocument-no="{{oeCntrl.dashBoardData.OrderNo}}"
+                           transactionbranch-id=null
+                           transactionmodule-id=null
+                           transaction-no=null
+                           title="Lead Time Information"
+                           widgettitle="Lead Time List"
+                           widgetclass="bgm-pink"
+                           ispullright="true">
+            </activity-logs>
+        </div>
+        <div class="col-md-2 col-sm-6">
+            <activity-logs linkbranch-id="{{oeCntrl.dashBoardData.OrderBranchID}}"
+                           linkmodule-id="9156"
+                           linkdocument-no="{{oeCntrl.dashBoardData.OrderNo}}"
+                           transactionbranch-id="{{oeCntrl.dashBoardData.PortBookingBranchID}}"
+                           transactionmodule-id="9153"
+                           transaction-no="{{oeCntrl.dashBoardData.PortBookingNo}}"
+                           title="Container Movement Information"
+                           widgettitle="Container Movement"
+                           widgetclass="bgm-lightblue"
+                           ispullright="true">
+            </activity-logs>
+        </div>
+        <div class="col-md-2 col-sm-6">
+            <activity-logs linkbranch-id="{{oeCntrl.dashBoardData.OrderBranchID}}"
+                           linkmodule-id="9156"
+                           linkdocument-no="{{oeCntrl.dashBoardData.OrderNo}}"
+                           transactionbranch-id="{{oeCntrl.dashBoardData.TransactionBranchID}}"
+                           transactionmodule-id="9152"
+                           transaction-no="{{oeCntrl.dashBoardData.TransactionNo}}"
+                           title="Declaration Information"
+                           widgettitle="Declaration"
+                           widgetclass="bgm-lightgreen"
+                           ispullright="true">
+            </activity-logs>
+        </div>
+        <div class="col-md-2 col-sm-6">
+            <activity-logs linkbranch-id="{{oeCntrl.dashBoardData.OrderBranchID}}"
+                           linkmodule-id="9156"
+                           linkdocument-no="{{oeCntrl.dashBoardData.OrderNo}}"
+                           transactionbranch-id=null
+                           transactionmodule-id=null
+                           transaction-no=null
+                           title="Container List Information"
+                           widgettitle="Container List"
+                           widgetclass="bgm-orange"
+                           ispullright="true">
+            </activity-logs>
+        </div>
+        <div class="col-md-2 col-sm-6">
+            <activity-logs linkbranch-id="{{oeCntrl.dashBoardData.OrderBranchID}}"
+                           linkmodule-id="9156"
+                           linkdocument-no="{{oeCntrl.dashBoardData.OrderNo}}"
+                           transactionbranch-id=null
+                           transactionmodule-id=null
+                           transaction-no=null
+                           title="Invoice Information"
+                           widgettitle="Invoice List"
+                           widgetclass="bgm-deeppurple"
+                           ispullright="true">
+            </activity-logs>
+        </div>
+    </div>
+    <form id="frmOrderEntry" name="frmOrderEntry"
+          ng-class="{'submitted':submitted}"
+          ng-submit="SaveOrderEntry(oe)" autocomplete="off" novalidate>
+        <div ng-repeat="tab in tabs">
+            <div ng-if="tab.visible">
+                <div ng-include="tab.content"></div>
+            </div>
+        </div>
+        <div class="card" ng-if="declarationOrderStatus.length > 0">
+            <div class="lv-header-alt clearfix m-b-5">
+                <h2 class="lvh-label">Agent Status</h2>
+            </div>
+            <div class="card-body card-padding p-t-5 p-b-5 m-t-15">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="table-responsive">
+                            <table class="table  table-vmiddle">
+                                <thead>
+                                    <tr>
+                                        <th>Forwarding Agent</th>
+                                        <th>Declaration No</th>
+                                        <th>Date</th>
+                                        <th>Time</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="item in declarationOrderStatus">
+                                        <td>{{item.FwdAgentName}}</td>
+                                        <td>{{item.DeclarationNo}}</td>
+                                        <td>{{item.DeclinedOn | date : 'dd/MM/yyyy'}}</td>
+                                        <td>{{item.DeclinedOn | date : 'hh:mm'}}</td>
+                                        <td>
+                                            <div class="all-status" ng-switch="item.Status | lowercase">
+                                                <h5 ng-switch-when="declaration generated"> <span>JOB SENT TO AGENT</span></h5>
+                                                <h5 ng-switch-default><span>{{w.Status}}</span></h5>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 m-t-10 m-b-10">
+                <button type="button" class="btn bgm-bluegray" ng-click="SaveOrderEntryPartial(oe)" has-Right data-rightValue="OrderEntry.OrderEntry" data-accessRight="2"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Save Order</button>
+                <!--<button type="button" class="btn bgm-bluegray" ng-click="SaveOrderEntryPartial(oe)" ng-show="!IsWebOrder" has-Right data-rightValue="OrderEntry.OrderEntry" data-accessRight="2"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Save Order</button>-->
+                <button type="submit" class="btn btn-primary" ng-click="submitted = true;" ng-show="!IsWebOrder" has-Right data-rightValue="OrderEntry.OrderEntry" data-accessRight="2"><i class="fa fa-check-circle" aria-hidden="true"></i> &nbsp;Validate Order</button>
+                <!--<button type="button" ng-show="!IsNew && !IsWebOrder" class="btn btn-danger" ng-click="DeleteOrderEntry()" has-Right data-rightValue="OrderEntry.OrderEntry" data-accessRight="3"><i class="fa fa-trash-o" aria-hidden="true"></i>&nbsp;Delete Order</button>-->
+                <!--<span ng-if="companyType == 'TRADER' ">
+        <button class="btn btn-primary" ng-click="SendToAgent()" has-Right data-rightValue="OrderEntry.SendToAgent" type="button" ng-disabled="oe.WebOrderStatus != 4300 && (oe.OrderNo != null || oe.OrderNo != '')"><i class="fa fa-arrow-circle-right" aria-hidden="true"></i>&nbsp;Send To Agent</button>
+    </span>-->
+                <!--<span ng-if="companyType == 'AGENT'">
+        <button class="btn btn-success" ng-click="ApproveWebOrder(true);" has-Right data-rightValue="OrderEntry.Accept" type="button"><i class="fa fa-check-square-o"" aria-hidden="true"></i>&nbsp;Accept</button>
+        <button class="btn btn-danger" ng-click="ApproveWebOrder(false);" has-Right data-rightValue="OrderEntry.Reject" type="button"><i class="fa fa-times-circle-o" aria-hidden="true"></i>&nbsp;Reject</button>
+    </span>-->
+                <span ng-if="oe.ApproveOrderVisibility.IsApproveOrder">
+                    <span ng-if="!oe.ApproveOrderVisibility.IsOrderApproved">
+                        <button class="btn btn-success" type="button" ng-click="UpdateOrderStatus(oe.OrderNo, true,'success')"><i class="fa fa-thumbs-up"></i>&nbsp;Approve Order</button>
+                        <button class="btn btn-danger"
+                                type="button"
+                                popover-placement="top-left"
+                                popover-is-open="oeCntrl.RejectPopOver"
+                                popover-append-to-body="false"
+                                uib-popover-template="'reject.html'">
+                            <i class="fa fa-thumbs-down"></i>&nbsp;Reject Order
+                        </button>
+                    </span>
+                    <!--<span ng-if="oe.ApproveOrderVisibility.IsOrderApproved">
+
+        </span>-->
+                </span>
+                <span ng-if="isForwardingAgent && !IsNew && !oe.IsPartial && !IsWebOrder && (oe.ApproveOrderVisibility.IsSentToAgent && (oe.ApproveOrderVisibility.IsApproveOrder ? oe.ApproveOrderVisibility.IsOrderApproved : true))">
+                    <button type="button"
+                            class="btn bgm-orange"
+                            ng-click="GenerateDeclaration()"
+                            has-Right data-rightValue="OrderEntry.GenerateDecalaration">
+                        <i class="fa fa-cogs" aria-hidden="true"></i>&nbsp;Send to Agent
+                    </button>
+                </span>
+                <span class="pull-right">
+                    <button class="btn btn-default" type="button" ng-click="clear();">
+                        <i class="fa fa-eraser" aria-hidden="true"></i>&nbsp;Clear
+                    </button>
+                    <button class="btn btn-primary" type="button" data-ui-sref="orderentrylist" data-ng-click="mactrl.sidebarStat($event)">
+                        <i class="fa fa-backward" aria-hidden="true"></i>&nbsp;Back
+                    </button>
+                </span>
+                <!--<span ng-if="!oe.DeclarationVisibility.IsPartial && oe.DeclarationVisibility.ApprovedBy == null">
+        <button ng-if="oe.DeclarationVisibility.IsViewDeclaration" type="button" class="btn btn-success"><i class="fa fa-eye" aria-hidden="true"></i>&nbsp;View Declaration</button>
+        <button ng-if="oe.DeclarationVisibility.IsApproveDeclaration" ng-click="ApproveDeclaration(true)" type="button" class="btn btn-default"><i class="fa fa-check" aria-hidden="true"></i>&nbsp;Approve Declaration</button>
+        <button ng-if="oe.DeclarationVisibility.IsApproveDeclaration" ng-click="ApproveDeclaration(false)" type="button" class="btn btn-danger"><i class="fa fa-times" aria-hidden="true"></i>&nbsp;Reject Declaration</button>
+    </span>-->
+
+            </div>
+        </div>
+    </form>
+    <div id="feedback">
+        <div class="feedback-links">
+            <button style="display:block;" type="button" class="btn btn-default btn-block waves-effect" ng-click="navigateTo('general')"> <i class="fa fa-clone f-12" aria-hidden="true"></i>  General Information</button>
+            <button style="display:block;" type="button" class="btn btn-default btn-block waves-effect" ng-click="navigateTo('invoiceDetails')"> <i class="fa fa-bar-chart f-12" aria-hidden="true"></i> Invoice Details</button>
+            <button ng-if="isEnableTransport" style="display:block;" type="button" class="btn btn-default btn-block waves-effect" ng-click="navigateTo('transport')"><i class="fa fa-truck f-12" aria-hidden="true"></i> Transport</button>
+            <button style="display:block;" ng-if="!isEnableTransport" type="button" class="btn btn-default btn-block waves-effect" ng-click="navigateTo('container')"><i class="fa fa-th-large f-12" aria-hidden="true"></i> Container</button>
+            <button style="display:block;" type="button" class="btn btn-default btn-block waves-effect" ng-click="navigateTo('itemEntry')"> <i class="fa fa-server f-12" aria-hidden="true"></i> Item Entry</button>
+            <button style="display:block;" type="button" class="btn btn-default btn-block waves-effect" ng-click="navigateTo('documents')"> <i class="fa fa-file-word-o f-12" aria-hidden="true"></i>  Documents</button>
+        </div>
+        <a class="pull_feedback" style="display:block; font-size:18px;cursor:pointer;" ng-click="toggleFeedback()"><i class="zmdi zmdi-settings"></i></a>
+    </div>
+</div>

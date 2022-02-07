@@ -1,0 +1,80 @@
+﻿<div style="margin: 5px 5px 5px 5px">
+    <div class="row" >
+        <div class="col-md-5">
+            <label >Filter By</label>
+        </div>
+        <div class="col-md-7">
+            <select 
+                    ng-model="filterBy"
+                    ng-options="s.Value as s.Text for s in lookUpData.filterTypeList"></select>
+        </div>
+    </div>
+    <div class="row" >
+        <div class="col-md-5">
+            <label >Movement Status</label>
+        </div>
+        <div class="col-md-7">
+            <select 
+                    ng-model="movementStatus"
+                    ng-options="s.Value as s.Text for s in lookUpData.stateTypeList"></select>
+        </div>
+    </div>
+    <div class="row" >
+        <div class="col-md-5">
+            <label >Trailer Type</label>
+        </div>
+        <div class="col-md-7">
+            <select 
+                    ng-model="trailerType"
+                    ng-options="s.Value as s.Text for s in lookUpData.trailerTypeList"></select>
+        </div>
+    </div>
+    <div class="row" >
+        <div class="col-md-5">
+            <label >Order No.</label>
+        </div>
+        <div class="col-md-7">
+            <input type="text"  />
+        </div>
+    </div>
+    <div class="row" >
+        <div class="col-md-5">
+            <label >Container No.</label>
+        </div>
+        <div class="col-md-7">
+            <input type="text"  />
+        </div>
+    </div>
+    <div class="row" >
+        <div class="col-md-5">
+            <label >Liner Ref.</label>
+        </div>
+        <div class="col-md-7">
+            <input type="text"  />
+        </div>
+    </div>
+    <div class="row" >
+        <div class="col-md-5">
+            <label >Pickup From</label>
+        </div>
+        <div class="col-md-7">
+            <input type="text"  />
+        </div>
+    </div>
+    <div class="row" >
+        <div class="col-md-5">
+            <label >Deliver To</label>
+        </div>
+        <div class="col-md-7">
+            <input type="text"  />
+        </div>
+    </div>
+    <div class="row" >
+        <div class="col-md-5">
+            <label >Pickup Area</label>
+        </div>
+        <div class="col-md-7">
+            <select ></select>
+        </div>
+    </div> 
+</div>

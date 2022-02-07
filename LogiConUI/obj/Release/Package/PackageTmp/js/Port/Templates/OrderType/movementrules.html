@@ -1,0 +1,75 @@
+﻿<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" ng-click="cancel();">&times;</button>
+    <h4 class="modal-title">Movement Rules {{lookUpVm.chargetypeVAS}}</h4>
+</div>
+<div class="modal-body">
+    <div class="row" >
+        <div class="col-xs-6 col-md-3">
+            <label>Movement Code</label>
+        </div>
+        <div class="col-xs-12 col-md-9">
+            <select class="form-control input-sm" ng-model="Mvmt.movementCode" ng-options="s.EFDescription as s.Description for s in movementListICD"></select>
+        </div>
+    </div>
+    <div class="row" >
+        <div class="col-md-1"></div>
+        <div class="col-xs-12 col-md-11">
+            <div class="checkbox m-b-15">
+                <label>
+                    <input type="checkbox" value="" ng-model="Mvmt.IsAllowDamageCon" aria-label="Allow to release damage container">
+                    <i class="input-helper"></i>
+                    Allow to release damage container
+                </label>
+            </div>
+            <!--<md-checkbox class="md-primary" ng-model="Mvmt.IsAllowDamageCon" aria-label="Allow to release damage container">Allow to release damage container</md-checkbox>-->
+        </div>
+    </div>
+    <div class="row" >
+        <div class="col-md-1"></div>
+        <div class="col-xs-12 col-md-11">
+            <div class="checkbox m-b-15">
+                <label>
+                    <input type="checkbox" value="" ng-model="Mvmt.IsCheckMaxWeight" aria-label="Check max weight">
+                    <i class="input-helper"></i>
+                    Check max. weight
+                </label>
+            </div>
+            <!--<md-checkbox class="md-primary" ng-model="Mvmt.IsCheckMaxWeight" aria-label="Check max weight">Check max. weight</md-checkbox>-->
+        </div>
+    </div>
+    <div class="row" >
+        <div class="col-md-1"></div>
+        <div class="col-xs-12 col-md-11">
+            <div class="checkbox m-b-15">
+                <label>
+                    <input type="checkbox" value="" ng-model="Mvmt.IsCheckSealNum" aria-label="Check Seal Number">
+                    <i class="input-helper"></i>
+                    Check Seal Number
+                </label>
+            </div>
+            <!--<md-checkbox class="md-primary" ng-model="Mvmt.IsCheckSealNum" aria-label="Check Seal Number">Check Seal Number</md-checkbox>-->
+        </div>
+    </div>
+    <div class="row" >
+        <div class="col-md-1"></div>
+        <div class="col-xs-12 col-md-11">
+            <div class="checkbox m-b-15">
+                <label>
+                    <input type="checkbox" value="" ng-model="Mvmt.IsSkipEDI" aria-label="Skip EDI">
+                    <i class="input-helper"></i>
+                    Skip EDI
+                </label>
+            </div>
+            <!--<md-checkbox class="md-primary" ng-model="Mvmt.IsSkipEDI" aria-label="Skip EDI">Skip EDI</md-checkbox>-->
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <div class="row" >
+        <div class="col-md-8"></div>
+        <div class="col-md-4 pull-right">
+            <button class="btn btn-primary btn-sm" ng-click="SaveMvmt(Mvmt);"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Save</button>
+            <button class="btn btn-default btn-sm" ng-click="cancel();"><i class="fa fa-times" aria-hidden="true"></i>&nbsp;Close</button>
+        </div>
+    </div>
+</div>

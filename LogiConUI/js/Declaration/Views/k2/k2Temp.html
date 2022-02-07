@@ -1,0 +1,1935 @@
+﻿
+<div class="container" ng-controller="k2Cntrl as Cntrl">
+    <style>
+        .custom-popup-wrapper {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            z-index: 1000;
+            display: none;
+            background-color: #f9f9f9;
+        }
+
+            .custom-popup-wrapper > .message {
+                padding: 10px 20px;
+                border-bottom: 1px solid #ddd;
+                color: #868686;
+            }
+
+            .custom-popup-wrapper > .dropdown-menu {
+                position: static;
+                float: none;
+                display: block;
+                min-width: 160px;
+                background-color: transparent;
+                border: none;
+                border-radius: 0;
+                box-shadow: none;
+            }
+
+        tr.dropdown-menu {
+            display: block;
+        }
+
+        .mytable {
+            background-color: #fff;
+            -webkit-background-clip: padding-box;
+            background-clip: padding-box;
+            border: 1px solid #ccc;
+            border: 1px solid rgba(0,0,0,.15);
+            border-radius: 4px;
+            -webkit-box-shadow: 0 6px 12px rgba(0,0,0,.175);
+            box-shadow: 0 6px 12px rgba(0,0,0,.5);
+            position: absolute;
+            width: 550px;
+            z-index: 99999;
+        }
+
+            .mytable thead tr {
+                background-color: #367fa9;
+                color: #fff;
+            }
+
+                .mytable thead tr td {
+                    background-color: #367fa9;
+                    color: #fff;
+                    font-weight: bold;
+                }
+
+            .mytable > tbody > tr > td, .mytable > tbody > tr > th, .mytable > tfoot > tr > td, .mytable > tfoot > tr > th,
+            .mytable > thead > tr > td, .mytable > thead > tr > th {
+                padding: 3px;
+            }
+    </style>
+    <script type="text/ng-template" id="activities.html">
+        <div class="Activitycontainer">
+            <div class="row" style="height:300px;overflow-y:scroll">
+                <div class="col-xs-12" ng-repeat="item in Cntrl.activityList" style="border-bottom:1px solid rgb(224,224,224);">
+                    <a href="#">
+                        <p>
+                            {{ item.ActivityBy }}
+                            <span class="pull-right"><small><i class="fa fa-clock-o"></i> {{ item.ActivityDate | date:'medium' }}</small></span>
+                        </p>
+                        <h4>{{ item.AcitivtyMessage }}</h4>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </script>
+    <div class="card">
+        <form id="frmk2" name="frmk2" ng-class="{'submitted': submitted}" ng-submit="Savek2Declaration(k2)" autocomplete="off" novalidate>
+
+            <div class="lv-header-alt clearfix m-b-5">
+                <h2 class="lvh-label">K2 - EXPORT</h2>
+                <button popover-placement="left" ng-if="showPrintBtn" ng-click="CloneK2(k2.DeclarationNo)" ng-disabled="IsCloneBtnDisabled" popover-trigger="mouseenter" popover="Copy to new K2 Form" class="btn bgm-gray waves-effect pull-right" style="margin-right:15px;"><i class="zmdi zmdi-copy"></i></button>
+
+            </div>
+            <div class="card-body card-padding p-t-25 p-b-25">
+                <input type="hidden" ng-model="k2.DeclarationType" name="k2.DeclarationType" ng-init="k2.DeclarationType = 9102" />
+                <div class="row">
+                    <div class="col-xs-12 col-md-4">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Declaration Job No.</label>
+                            <input type="text"
+                                   ng-model="k2.DeclarationNo"
+                                   name="k2.DeclarationNo" ng-maxlength="100" logicon-limit ng-disabled="true" />
+                        </md-input-container>
+                    </div>
+                    <div class="col-xs-12 col-md-4">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Open Date</label>
+                            <input mdc-datetime-picker="" class="date-icon" date="true" time="false" type="text" id="dateFrom" format="{{dateFormat}}"
+                                   min-date="date" ng-model="k2.OpenDate"
+                                   name="k2.OpenDate"
+                                   ng-required="true"
+                                   ng-disabled="!IsNew">
+                        </md-input-container>
+                    </div>
+                    <div class="col-xs-12 col-md-4">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Export Date</label>
+                            <input mdc-datetime-picker="" date="true" class="date-icon" time="false" type="text" id="dateFrom" format="{{dateFormat}}"
+                                   min-date="date" ng-model="k2.ExportDate"
+                                   name="k2.ImportDate"
+                                   ng-required="true"
+                                   ng-disabled="!IsNew">
+                        </md-input-container>
+
+
+                    </div>
+
+                </div>
+                <div class="row">
+
+                    <div class="col-xs-12 col-md-4">
+
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Order No.</label>
+                            <input type="text"
+                                   ng-model="k2.OrderNo" name="k2.OrderNo" ng-disabled="true" />
+                        </md-input-container>
+
+
+                    </div>
+                    <div class="col-xs-12 col-md-4">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Reference No/Job No</label>
+                            <input type="text"
+                                   ng-model="k2.CustomerReferenceNo"
+                                   name="k1.CustomerReferenceNo" ng-maxlength="50" logicon-limit />
+                        </md-input-container>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-md-4">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Transport Mode</label>
+                            <md-select ng-model="k2.TransportMode" name="k2.TransportMode" ng-change="ChangeTransportMode(k2.TransportMode)" ng-disabled="!IsNew">
+                                <md-option ng-repeat="item in lookUpData.transportModeList" ng-value="item.Value">
+                                    {{item.Text}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+
+
+                    </div>
+                    <div class="col-xs-12 col-md-4">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Shipment Type</label>
+                            <md-select ng-model="k2.ShipmentType" ng-required="true" ng-disabled="!IsNew">
+                                <md-option ng-repeat="item in lookUpData.shipmentTypeList" ng-value="item.Value">
+                                    {{item.Text}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                    </div>
+                    <div class="col-xs-12 col-md-4">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Trans. Type</label>
+                            <md-select ng-model="k2.TransactionType" name="k2.TransactionType" ng-change="LoadSMKCode(k2.TransactionType)">
+                                <md-option ng-repeat="item in lookUpData.K2ATransactionTypeList" ng-value="item.Value">
+                                    {{item.Text}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-md-6">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Consignee/Importer</label>
+                            <input type="text" class="search-icon"
+                                   ng-class="{'loadinggif': k2.LocalTraderDescriptionLoading}"
+                                   ng-model="k2.ImporterName" name="k2.ImporterName"
+                                   typeahead-min-length="3"
+                                   uib-typeahead="d.Text as d.Text for d in GenericMerchantResults($viewValue, 'Shipper')"
+                                   typeahead-loading="k2.LocalTraderDescriptionLoading"
+                                   typeahead-wait-ms="100"
+                                   typeahead-editable="false"
+                                   typeahead-on-select="MerchantSelected($item, 'Importer')"
+                                   ng-required="true" />
+                        </md-input-container>
+
+                    </div>
+
+                    <div class="col-xs-12 col-md-2"></div>
+                    <div class="col-xs-12 col-md-4">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>SMK Code</label>
+                            <input type="text"
+                                   logicon-number ng-model="k2.TransactionTypeCode" name="k2.TransactionTypeCode" readonly="readonly" />
+                        </md-input-container>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-md-6">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Consignor/Exporter</label>
+                            <input type="text" class="search-icon"
+                                   ng-class="{'loadinggif': k2.OverseasTraderDescriptionLoading}"
+                                   ng-model="k2.ExporterName" name="k2.ExporterName"
+                                   typeahead-min-length="3"
+                                   uib-typeahead="d.Text as d.Text for d in GenericMerchantResults($viewValue, 'Shipper')"
+                                   typeahead-loading="k2.OverseasTraderDescriptionLoading"
+                                   typeahead-wait-ms="100"
+                                   typeahead-editable="false"
+                                   typeahead-on-select="MerchantSelected($item, 'Exporter')"
+                                   ng-required="true" />
+                        </md-input-container>
+
+                    </div>
+                    <div class="col-xs-12 col-md-6">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Customs Station Code</label>
+                            <md-select ng-model="k2.CustomStationCode" name="k2.CustomStationCode">
+                                <md-option ng-repeat="item in lookUpData.smkList" ng-value="item.Value">
+                                    {{item.Text}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-12 col-md-6">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Place of Export</label>
+                            <input type="text"
+                                   ng-model="k2.declarationShipmentK2.PlaceOfExport"
+                                   name="k2.declarationShipmentK2.PlaceOfExport"
+                                   class="form-control input-sm"
+                                   ng-required="true" />
+                        </md-input-container>
+
+                    </div>
+                    <div class="col-xs-12 col-md-6">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Loading Port</label>
+                            <input type="text" class="search-icon"
+                                   ng-class="{'loadinggif': k2.declarationShipmentK2.LoadingPortDescriptionLoading}"
+                                   ng-model="k2.LoadingPortName"
+                                   typeahead-min-length="3"
+                                   uib-typeahead="d.PortName as d.PortName for d in PortAutoComplete($viewValue)"
+                                   typeahead-loading="k2.declarationShipmentK2.LoadingPortDescriptionLoading"
+                                   typeahead-wait-ms="100"
+                                   typeahead-editable="false"
+                                   typeahead-on-select="PortSelected($item, 'LoadingPort')"
+                                   ng-required="true" />
+                        </md-input-container>
+
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-md-6">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Discharge Port</label>
+                            <input type="text"
+                                   ng-class="{'loadinggif': k2.declarationShipmentK2.DischargePortDescriptionLoading}"
+                                   ng-model="k2.DischargePortName"
+                                   class="search-icon"
+                                   typeahead-min-length="3"
+                                   uib-typeahead="d.PortName as d.PortName for d in PortAutoComplete($viewValue)"
+                                   typeahead-loading="k2.declarationShipmentK2.DischargePortDescriptionLoading"
+                                   typeahead-wait-ms="100"
+                                   typeahead-editable="false"
+                                   typeahead-on-select="PortSelected($item, 'DischargePort')"
+                                   ng-required="true" />
+                        </md-input-container>
+                    </div>
+                    <div class="col-xs-12 col-md-6">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Transhipment Port</label>
+                            <input type="text"
+                                   ng-class="{'loadinggif': k2.declarationShipmentK2.TranshipmentPortDescriptionLoading}"
+                                   ng-model="k2.TranshipmentPortName"
+                                   class="search-icon"
+                                   typeahead-min-length="3"
+                                   uib-typeahead="d.PortName as d.PortName for d in PortAutoComplete($viewValue)"
+                                   typeahead-loading="k2.declarationShipmentK2.TranshipmentPortDescriptionLoading"
+                                   typeahead-wait-ms="100"
+                                   typeahead-editable="false"
+                                   typeahead-on-select="PortSelected($item, 'TranshipmentPort')" />
+                        </md-input-container>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-md-6">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Terminal Operator</label>
+                            <md-select ng-model="k2.declarationShipmentK2.PortOperator" ng-required="true">
+                                <md-option ng-repeat="item in terminalList" ng-value="item.Value">
+                                    {{item.Text}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                    </div>
+                    <div class="col-xs-12 col-md-6">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Warehouse Info.</label>
+                            <input type="text"
+                                   ng-model="k2.declarationShipmentK2.WarehouseNo" name="k2.declarationShipmentK2.WarehouseNo" />
+                        </md-input-container>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-md-6">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Cargo Class</label>
+                            <md-select ng-model="k2.CargoClass" ng-required="true">
+                                <md-option ng-repeat="item in lookUpData.cargoClassList" ng-value="item.Value">
+                                    {{item.Text}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+
+                    </div>
+                    <div class="col-xs-12 col-md-6">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Cargo Description</label>
+                            <input type="text" ng-required="true"
+                                   ng-model="k2.CargoDescription"
+                                   ng-maxlength="100"
+                                   logicon-limit />
+                        </md-input-container>
+
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="lv-header-alt clearfix m-b-5">
+                        <h2 class="lvh-label">SUPPORTING DETAILS</h2>
+                    </div>
+                    <div class="card-body card-padding p-t-25 p-b-25">
+                        <div>
+                            <md-tabs md-selected="active" md-dynamic-height md-border-bottom>
+                                <md-tab label="Invoice Information">
+                                    <md-content class="md-padding">
+                                        <div class="row">
+                                            <div class="col-xs-12 ">
+                                                <div class="card">
+                                                    <div class="lv-header-alt clearfix m-b-5">
+                                                        <h2 class="lvh-label">Invoice Details</h2>
+                                                    </div>
+                                                    <div class="card-body card-padding p-t-25 p-b-25">
+                                                       
+                                                            <div class="row">
+                                                                <div class="col-xs-12 col-md-6">
+                                                                    <md-input-container class="md-block" flex-gt-sm>
+                                                                        <label>Invoice No</label>
+                                                                        <input type="text"
+                                                                               name="k2.declarationInvoiceK2.InvoiceNo"
+                                                                               ng-model="k2.declarationInvoiceK2.InvoiceNo"
+                                                                               ng-maxlength="100"
+                                                                               logicon-limit />
+                                                                    </md-input-container>
+                                                                </div>
+                                                                <div class="col-xs-12 col-md-6">
+                                                                    <md-input-container class="md-block" flex-gt-sm>
+                                                                        <label>Invoice Date</label>
+                                                                        <input mdc-datetime-picker="" date="true" time="false" type="text" id="dateFrom" format="{{dateFormat}}" class="date-icon"
+                                                                               min-date="date" name="k2.declarationInvoiceK2.InvoiceDate"
+                                                                               ng-required="k2.declarationInvoiceK2.InvoiceNo != '' && k2.declarationInvoiceK2.InvoiceNo != null"
+                                                                               ng-model="k2.declarationInvoiceK2.InvoiceDate">
+                                                                    </md-input-container>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-xs-12 col-md-6">
+                                                                    <md-input-container class="md-block" flex-gt-sm>
+                                                                        <label>INVOICE VALUE</label>
+                                                                        <input type="text"
+                                                                               name="k2.declarationInvoiceK2.InvoiceValue"
+                                                                               ng-model="k2.declarationInvoiceK2.InvoiceValue"
+                                                                               ng-maxlength="18"
+                                                                               ng-blur="IncoTermCalculation(k2.declarationInvoiceK2.IsFreightCurrency, k2.declarationInvoiceK2.IsInsuranceCurrency)"
+                                                                               logicon-limit
+                                                                               logicon-decimal />
+                                                                    </md-input-container>
+                                                                </div>
+                                                                <div class="col-xs-12 col-md-6">
+                                                                    <md-input-container class="md-block" flex-gt-sm>
+                                                                        <label>Currency / Rate</label>
+                                                                        <md-select name="k2.declarationInvoiceK2.InvoiceCurrencyCode"
+                                                                                   ng-model="k2.declarationInvoiceK2.InvoiceCurrencyCode"
+                                                                                   ng-change="CurrencyRateChanged(); ChargesInfoCurrencyRateChanged(k2.declarationInvoiceK2.FreightAmountPercent,k2.declarationInvoiceK2.IsFreightCurrency,k2.declarationInvoiceK2.FreightAmountCurrencyCode,'FreightAmountValue'); ChargesInfoCurrencyRateChanged(k2.declarationInvoiceK2.InsuranceAmountPercent,k2.declarationInvoiceK2.IsInsuranceCurrency,k2.declarationInvoiceK2.InsuranceAmountCurrencyCode,'InsuranceAmountValue');">
+                                                                            <md-option ng-repeat="item in lookUpData.currencyList" ng-value="item.Value">
+                                                                                {{item.Text}}
+                                                                            </md-option>
+                                                                        </md-select>
+                                                                    </md-input-container>
+                                                                </div>
+                                                                <div class="col-xs-12 col-md-6">
+                                                                    <md-input-container class="md-block" flex-gt-sm>
+                                                                        <label>INCOTERM</label>
+                                                                        <md-select name="k2.declarationInvoice.IncoTerms"
+                                                                                   ng-model="k2.declarationInvoiceK2.IncoTerms"
+                                                                                   ng-change="IncoTermChanged()">
+                                                                            <md-option ng-repeat="item in lookUpData.incoTermList" ng-value="item.Value">
+                                                                                {{item.Text}}
+                                                                            </md-option>
+                                                                        </md-select>
+                                                                    </md-input-container>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-xs-12 col-md-6">
+                                                                    <md-input-container class="md-block" flex-gt-sm>
+                                                                        <label>Invoice Value Equivalent in MYR</label>
+                                                                        <input type="text"
+                                                                               name="k2.declarationInvoiceK2.InvoiceLocalAmount"
+                                                                               ng-model="k2.declarationInvoiceK2.InvoiceLocalAmount"
+                                                                               ng-maxlength="9"
+                                                                               ng-disabled="true"
+                                                                               logicon-limit
+                                                                               logicon-decimal />
+                                                                    </md-input-container>
+                                                                </div>
+                                                            </div>
+
+                                                            <!--<div class="row">
+                                                                <div class="col-xs-12 col-md-6">
+                                                                    <md-input-container class="md-block" flex-gt-sm>
+                                                                        <label>Ex. Rate</label>
+                                                                        <md-select name="k1.declarationInvoice.LocalCurrencyCode"
+                                                                                   ng-model="k1.declarationInvoice.LocalCurrencyCode"
+                                                                                   ng-change="exRateChanged('LocalCurrencyCode','CurrencyExRate')">
+                                                                            <md-option ng-repeat="item in lookUpData.currencyList" ng-value="item.Value">
+                                                                                {{item.Text}}
+                                                                            </md-option>
+
+                                                                        </md-select>
+                                                                    </md-input-container>
+                                                                </div>
+                                                                <div class="col-xs-12 col-md-3">
+                                                                    <md-input-container class="md-block" flex-gt-sm>
+                                                                        <label></label>
+                                                                        <input type="text"
+                                                                               name="k1.declarationInvoice.CurrencyExRate"
+                                                                               ng-model="k1.declarationInvoice.CurrencyExRate"
+                                                                               ng-maxlength="9"
+                                                                               logicon-limit
+                                                                               logicon-decimal />
+                                                                    </md-input-container>
+                                                                </div>
+                                                            </div>-->
+                                                            <div class="row">
+                                                                <div class="col-xs-12 col-md-6">
+                                                                    <md-input-container class="md-block" flex-gt-sm>
+                                                                        <label>Pay Country</label>
+                                                                        <md-select name="k2.declarationInvoiceK2.PayCountry"
+                                                                                   ng-model="k2.declarationInvoiceK2.PayCountry" ng-change="PayCountryTest=(lookUpData.countryList | filter : {Value:k2.declarationInvoiceK2.PayCountry})[0].Text">
+                                                                            <md-option ng-repeat="item in lookUpData.countryList" ng-value="item.Value">
+                                                                                {{item.Text}}
+                                                                            </md-option>
+                                                                        </md-select>
+                                                                    </md-input-container>
+                                                                </div>
+                                                                <div class="col-xs-12 col-md-6">
+                                                                    <span>
+                                                                        <label>{{PayCountryTest}}</label>
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-xs-12 col-md-6">
+                                                                    <md-input-container class="md-block" flex-gt-sm>
+                                                                        <label>Amount Received</label>
+                                                                        <md-select name="k2.declarationInvoiceK2.AmountReceivedCurrencyCode"
+                                                                                   ng-model="k2.declarationInvoiceK2.AmountReceivedCurrencyCode" ng-required="true">
+                                                                            <md-option ng-repeat="item in lookUpData.currencyList" ng-value="item.Value">
+                                                                                {{item.Text}}
+                                                                            </md-option>
+                                                                        </md-select>
+                                                                    </md-input-container>
+                                                                </div>
+                                                                <div class="col-xs-12 col-md-3">
+                                                                    <md-input-container class="md-block" flex-gt-sm>
+                                                                        <label></label>
+                                                                        <input type="text"
+                                                                               ng-model="k2.declarationInvoiceK2.AmountReceived"
+                                                                               ng-maxlength="18"
+                                                                               logicon-limit
+                                                                               logicon-decimal
+                                                                               ng-blur="CalulateAmountReceivedLocalValue()" ng-required="true" />
+                                                                    </md-input-container>
+                                                                </div>
+
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-xs-12 col-md-6">
+                                                                    <md-input-container class="md-block" flex-gt-sm>
+                                                                        <label>Exchange Rate</label>
+                                                                        <md-select name="k2.declarationInvoiceK2.AmountReceivedLocalCurrencyCode"
+                                                                                   ng-model="k2.declarationInvoiceK2.AmountReceivedLocalCurrencyCode" ng-change="exRateChangedAndAmountReceivedLocalValue('AmountReceivedLocalCurrencyCode','AmountReceivedExchangeRate')">
+                                                                            <md-option ng-repeat="item in lookUpData.currencyList" ng-value="item.Value">
+                                                                                {{item.Text}}
+                                                                            </md-option>
+                                                                        </md-select>
+                                                                    </md-input-container>
+                                                                </div>
+                                                                <div class="col-xs-12 col-md-3">
+                                                                    <md-input-container class="md-block" flex-gt-sm>
+                                                                        <label></label>
+                                                                        <input type="text"
+                                                                               name="k2.declarationInvoiceK2.AmountReceivedExchangeRate"
+                                                                               class="form-control input-sm"
+                                                                               ng-model="k2.declarationInvoiceK2.AmountReceivedExchangeRate"
+                                                                               ng-maxlength="9"
+                                                                               logicon-limit
+                                                                               logicon-decimal
+                                                                               ng-blur="CalulateAmountReceivedLocalValue()" />
+                                                                    </md-input-container>
+                                                                </div>
+                                                                <div class="col-xs-12 col-md-3">
+                                                                    <md-input-container class="md-block" flex-gt-sm>
+                                                                        <label></label>
+                                                                        <input type="text"
+                                                                               name="k2.declarationInvoiceK2.AmountReceivedLocalValue"
+                                                                               class="form-control input-sm"
+                                                                               ng-model="k2.declarationInvoiceK2.AmountReceivedLocalValue"
+                                                                               disabled="disabled" />
+                                                                    </md-input-container>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                               
+                                            </div>
+                                            <div class="col-xs-12">
+                                                <div class="card">
+                                                    <div class="lv-header-alt clearfix m-b-5">
+                                                        <h2 class="lvh-label">Charges Information</h2>
+                                                    </div>
+                                                    <div class="card-body card-padding p-t-25 p-b-25">
+                                                        <div class="row">
+                                                            <div class="col-xs-12">
+                                                                <div class="card">
+                                                                    <!--<div class="lv-header-alt clearfix m-b-5">
+                                                                        <h2 class="lvh-label">Charges Information</h2>
+                                                                    </div>-->
+                                                                    <div class="card-body card-padding p-t-25 p-b-25">
+                                                                        <div class="row">
+                                                                            <div class="col-md-3">
+                                                                                <md-input-container class="md-block" flex-gt-sm>
+                                                                                    <label>Port</label>
+                                                                                    <input type="text"
+                                                                                           name="k2.declarationInvoiceK2.PortAmountPercent"
+                                                                                           ng-model="k2.declarationInvoiceK2.PortAmountPercent"
+                                                                                           class="form-control input-sm txtCls"
+                                                                                           ng-maxlength="18"
+                                                                                           ng-blur="ChargesInfoCurrencyRateChanged(k2.declarationInvoiceK2.PortAmountPercent,false,k2.declarationInvoiceK2.PortAmountCurrencyCode,'PortAmountValue');IncoTermCalculation(k2.declarationInvoiceK2.IsFreightCurrency, k2.declarationInvoiceK2.IsInsuranceCurrency)"
+                                                                                           logicon-control-currency="2"
+                                                                                           logicon-decimal
+                                                                                           logicon-limit />
+                                                                                </md-input-container>
+                                                                            </div>
+                                                                            <div class="col-md-1"></div>
+                                                                            <div class="col-md-3">
+                                                                                <md-input-container class="md-block" flex-gt-sm>
+                                                                                    <label>Curr. Rate</label>
+                                                                                    <md-select name="k2.declarationInvoiceK2.PortAmountCurrencyCode"
+                                                                                               ng-model="k2.declarationInvoiceK2.PortAmountCurrencyCode" ng-change="ChargesInfoCurrencyRateChanged(k2.declarationInvoiceK2.PortAmountPercent,false,k2.declarationInvoiceK2.PortAmountCurrencyCode,'PortAmountValue');">
+                                                                                        <!--exRateChanged('PortAmountCurrencyCode','PortAmountExRate')"-->
+                                                                                        <md-option ng-repeat="item in lookUpData.currencyList" ng-value="item.Value">
+                                                                                            {{item.Text}}
+                                                                                        </md-option>
+                                                                                    </md-select>
+                                                                                </md-input-container>
+                                                                            </div>                                                                            
+                                                                            <div class="col-md-2">
+
+                                                                            </div>
+                                                                            <div class="col-md-3">
+                                                                                <md-input-container class="md-block" flex-gt-sm>
+                                                                                    <label>Value In MYR</label>
+                                                                                    <input type="text"
+                                                                                           name="k2.declarationInvoiceK2.PortAmountValue"
+                                                                                           ng-model="k2.declarationInvoiceK2.PortAmountValue"
+                                                                                           class="form-control input-sm txtCls"
+                                                                                           ng-maxlength="18"
+                                                                                           ng-blur="IncoTermCalculation(k2.declarationInvoiceK2.IsFreightCurrency, k2.declarationInvoiceK2.IsInsuranceCurrency)"
+                                                                                           logicon-control-currency="2"
+                                                                                           logicon-decimal
+                                                                                           logicon-limit
+                                                                                           ng-disabled="true" />
+                                                                                </md-input-container>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="row">
+                                                                            <div class="col-md-3">
+                                                                                <md-input-container class="md-block" flex-gt-sm>
+                                                                                    <label>Freight</label>
+                                                                                    <input type="text"
+                                                                                           name="k2.declarationInvoiceK2.FreightAmountPercent"
+                                                                                           ng-model="k2.declarationInvoiceK2.FreightAmountPercent"
+                                                                                           class="form-control input-sm txtCls"
+                                                                                           ng-maxlength="18"
+                                                                                           ng-blur="ChargesInfoCurrencyRateChanged(k2.declarationInvoiceK2.FreightAmountPercent,k2.declarationInvoiceK2.IsFreightCurrency,k2.declarationInvoiceK2.FreightAmountCurrencyCode,'FreightAmountValue')"
+                                                                                           logicon-control-currency="2"
+                                                                                           logicon-decimal
+                                                                                           logicon-limit />
+                                                                                </md-input-container>
+                                                                            </div>
+                                                                            <div class="col-md-1">
+                                                                                <div class="checkbox m-b-15">
+                                                                                    <label>
+                                                                                        <input type="checkbox" value="" aria-label="Freight" name="k2.declarationInvoiceK2.IsFreightCurrency"
+                                                                                               ng-model="k2.declarationInvoiceK2.IsFreightCurrency"
+                                                                                               ng-click="ChargesInfoCurrencyRateChanged(k2.declarationInvoiceK2.FreightAmountPercent,k2.declarationInvoiceK2.IsFreightCurrency,k2.declarationInvoiceK2.FreightAmountCurrencyCode,'FreightAmountValue');IsFreightCurrencyChecked(k2.declarationInvoiceK2.IsFreightCurrency)">
+                                                                                        <i class="input-helper"></i>
+
+                                                                                    </label>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-md-3">
+                                                                                <md-input-container class="md-block" flex-gt-sm>
+                                                                                    <label>Curr. Rate</label>
+                                                                                    <md-select name="k2.declarationInvoiceK2.FreightAmountCurrencyCode"
+                                                                                               ng-model="k2.declarationInvoiceK2.FreightAmountCurrencyCode" ng-change="ChargesInfoCurrencyRateChanged(k2.declarationInvoiceK2.FreightAmountPercent,k2.declarationInvoiceK2.IsFreightCurrency,k2.declarationInvoiceK2.FreightAmountCurrencyCode,'FreightAmountValue');">
+                                                                                        <!--exRateChanged('FreightAmountCurrencyCode','FreightAmountExRate')-->
+                                                                                        <md-option ng-repeat="item in lookUpData.currencyList" ng-value="item.Value">
+                                                                                            {{item.Text}}
+                                                                                        </md-option>
+                                                                                    </md-select>
+                                                                                </md-input-container>
+                                                                            </div>
+                                                                            <div class="col-md-2">
+                                                                                <md-input-container class="md-block" flex-gt-sm>
+                                                                                    <label>INCO TERM</label>
+                                                                                    <md-select name="k2.declarationInvoiceK2.FreightIncoTerm"
+                                                                                               ng-model="k2.declarationInvoiceK2.FreightIncoTerm">
+                                                                                        <md-option ng-repeat="item in lookUpData.incoTermList" ng-value="item.Value">
+                                                                                            {{item.Text}}
+                                                                                        </md-option>
+                                                                                    </md-select>
+                                                                                </md-input-container>
+                                                                            </div>
+                                                                            <div class="col-md-3">
+                                                                                <md-input-container class="md-block" flex-gt-sm>
+                                                                                    <label>Value In MYR</label>
+                                                                                    <input type="text"
+                                                                                           name="k2.declarationInvoiceK2.FreightAmountValue"
+                                                                                           ng-model="k2.declarationInvoiceK2.FreightAmountValue"
+                                                                                           class="form-control input-sm txtCls"
+                                                                                           ng-maxlength="18"
+                                                                                           ng-blur="IncoTermCalculation(k2.declarationInvoiceK2.IsFreightCurrency, k2.declarationInvoiceK2.IsInsuranceCurrency)"
+                                                                                           logicon-control-currency="2"
+                                                                                           logicon-decimal
+                                                                                           logicon-limit
+                                                                                           ng-disabled="true" />
+                                                                                </md-input-container>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="row">
+                                                                            <div class="col-md-3">
+                                                                                <md-input-container class="md-block" flex-gt-sm>
+                                                                                    <label>Insurance</label>
+                                                                                    <input type="text"
+                                                                                           name="k2.declarationInvoiceK2.InsuranceAmountPercent"
+                                                                                           ng-model="k2.declarationInvoiceK2.InsuranceAmountPercent"
+                                                                                           ng-maxlength="18"
+                                                                                           ng-blur="ChargesInfoCurrencyRateChanged(k2.declarationInvoiceK2.InsuranceAmountPercent,k2.declarationInvoiceK2.IsInsuranceCurrency,k2.declarationInvoiceK2.InsuranceAmountCurrencyCode,'InsuranceAmountValue')"
+                                                                                           logicon-control-currency="4"
+                                                                                           logicon-decimal
+                                                                                           logicon-limit />
+                                                                                </md-input-container>
+                                                                            </div>
+                                                                            <div class="col-md-1">
+                                                                                <div class="checkbox m-b-15">
+                                                                                    <label>
+                                                                                        <input type="checkbox" value="" aria-label="Insurance" name="k2.declarationInvoiceK2.IsInsuranceCurrency"
+                                                                                               ng-model="k2.declarationInvoiceK2.IsInsuranceCurrency"
+                                                                                               ng-click="ChargesInfoCurrencyRateChanged(k2.declarationInvoiceK2.InsuranceAmountPercent,k2.declarationInvoiceK2.IsInsuranceCurrency,k2.declarationInvoiceK2.InsuranceAmountCurrencyCode,'InsuranceAmountValue');IsInsuranceCurrencyChecked(k2.declarationInvoiceK2.IsInsuranceCurrency)">
+                                                                                        <i class="input-helper"></i>
+
+                                                                                    </label>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-md-3">
+                                                                                <md-input-container class="md-block" flex-gt-sm>
+                                                                                    <label>CURR. RATE</label>
+                                                                                    <md-select name="k2.declarationInvoiceK2.InsuranceAmountCurrencyCode"
+                                                                                               ng-model="k2.declarationInvoiceK2.InsuranceAmountCurrencyCode" ng-change="ChargesInfoCurrencyRateChanged(k2.declarationInvoiceK2.InsuranceAmountPercent,k2.declarationInvoiceK2.IsInsuranceCurrency,k2.declarationInvoiceK2.InsuranceAmountCurrencyCode,'InsuranceAmountValue');">
+                                                                                        <!--exRateChanged('InsuranceAmountCurrencyCode','InsuranceAmountExRate')-->
+                                                                                        <md-option ng-repeat="item in lookUpData.currencyList" ng-value="item.Value">
+                                                                                            {{item.Text}}
+                                                                                        </md-option>
+                                                                                    </md-select>
+                                                                                </md-input-container>
+                                                                            </div>
+                                                                            <div class="col-md-2">
+                                                                                <md-input-container class="md-block" flex-gt-sm>
+                                                                                    <label>INCO TERM</label>
+                                                                                    <md-select name="k2.declarationInvoiceK2.InsuranceIncoTerm"
+                                                                                               ng-model="k2.declarationInvoiceK2.InsuranceIncoTerm">
+                                                                                        <md-option ng-repeat="item in lookUpData.incoTermList" ng-value="item.Value">
+                                                                                            {{item.Text}}
+                                                                                        </md-option>
+                                                                                    </md-select>
+                                                                                </md-input-container>
+                                                                            </div>
+                                                                            <div class="col-md-3">
+                                                                                <md-input-container class="md-block" flex-gt-sm>
+                                                                                    <label>Value In MYR</label>
+                                                                                    <input type="text"
+                                                                                           name="k2.declarationInvoiceK2.InsuranceAmountValue"
+                                                                                           ng-model="k2.declarationInvoiceK2.InsuranceAmountValue"
+                                                                                           class="form-control input-sm txtCls"
+                                                                                           ng-maxlength="18"
+                                                                                           ng-blur="IncoTermCalculation(k2.declarationInvoiceK2.IsFreightCurrency, k2.declarationInvoiceK2.IsInsuranceCurrency)"
+                                                                                           logicon-control-currency="2"
+                                                                                           logicon-decimal
+                                                                                           logicon-limit
+                                                                                           ng-disabled="true" />
+                                                                                </md-input-container>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="row">
+                                                                            <div class="col-md-3">
+                                                                                <md-input-container class="md-block" flex-gt-sm>
+                                                                                    <label>Others</label>
+                                                                                    <input type="text"
+                                                                                           name="k2.declarationInvoiceK2.OthersAmountPercent"
+                                                                                           ng-model="k2.declarationInvoiceK2.OthersAmountPercent"
+                                                                                           ng-blur="ChargesInfoCurrencyRateChanged(k2.declarationInvoiceK2.OthersAmountPercent,false,k2.declarationInvoiceK2.OthersAmountCurrencyCode,'OthersAmountValue');"
+                                                                                           ng-maxlength="18"
+                                                                                           logicon-control-currency="2"
+                                                                                           logicon-decimal
+                                                                                           logicon-limit />
+                                                                                </md-input-container>
+                                                                            </div>
+                                                                            <div class="col-md-1">
+
+                                                                            </div>
+                                                                            <div class="col-md-3">
+                                                                                <md-input-container class="md-block" flex-gt-sm>
+                                                                                    <label>CURR. RATE</label>
+                                                                                    <md-select name="k2.declarationInvoiceK2.OthersAmountCurrencyCode"
+                                                                                               ng-model="k2.declarationInvoiceK2.OthersAmountCurrencyCode" ng-change="ChargesInfoCurrencyRateChanged(k2.declarationInvoiceK2.OthersAmountPercent,false,k2.declarationInvoiceK2.OthersAmountCurrencyCode,'OthersAmountValue');">
+                                                                                        <!--exRateChanged('OthersAmountCurrencyCode','OthersAmountExRate')-->
+                                                                                        <md-option ng-repeat="item in lookUpData.currencyList" ng-value="item.Value">
+                                                                                            {{item.Text}}
+                                                                                        </md-option>
+                                                                                    </md-select>
+                                                                                </md-input-container>
+                                                                            </div>
+                                                                            <div class="col-md-2">
+
+                                                                            </div>
+                                                                            <div class="col-md-3">
+                                                                                <md-input-container class="md-block" flex-gt-sm>
+                                                                                    <label>Value In MYR</label>
+                                                                                    <input type="text"
+                                                                                           name="k2.declarationInvoiceK2.OthersAmountValue"
+                                                                                           ng-model="k2.declarationInvoiceK2.OthersAmountValue"
+                                                                                           class="form-control input-sm txtCls"
+                                                                                           ng-maxlength="18"
+                                                                                           ng-blur="IncoTermCalculation(k2.declarationInvoiceK2.IsFreightCurrency, k2.declarationInvoiceK2.IsInsuranceCurrency)"
+                                                                                           logicon-control-currency="2"
+                                                                                           logicon-decimal
+                                                                                           logicon-limit
+                                                                                           ng-disabled="true" />
+                                                                                </md-input-container>
+                                                                            </div>
+                                                                        </div>                                                                        
+                                                                    </div>
+                                                                </div>                                                               
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+
+                                            <div class="col-xs-12 col-md-6">
+                                                <div class="card">
+                                                    <div class="lv-header-alt clearfix m-b-5">
+                                                        <h2 class="lvh-label">Strategic Trade Act(STA)</h2>
+                                                    </div>
+                                                    <div class="card-body card-padding p-t-25 p-b-25">
+                                                        <div class="row">
+                                                            <div class="col-xs-12 col-md-6">
+                                                                <label class="fg-label">
+                                                                    Required STA Permit
+                                                                    <span class="passwordPopOverCss" style="color:red;">
+                                                                        <a popover-placement="right-middle" uib-popover-html="'<u>Special Scheme: ApprovedTrader Scheme(ATS).</u> <br/>Any taxable person registered under the ATS will be allowed to suspend GST payable on imported goods at the point of importation.'"
+                                                                           popover-trigger="mouseenter">
+                                                                            <i class="zmdi zmdi-info f-20" aria-hidden="true"></i>
+                                                                        </a>
+                                                                    </span>
+                                                                </label>
+                                                            </div>
+                                                            <div class="col-xs-12 col-md-6">
+                                                                <div class="col-xs-12 col-md-6">
+                                                                    <div class="radio m-b-15" ng-model="k2.declarationInvoiceK2.IsRequireSTA">
+                                                                        <label>
+                                                                            <input name="sample" value="" ng-value="true" type="radio">
+                                                                            <i class="input-helper"></i>
+                                                                            Yes
+                                                                        </label>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-xs-12 col-md-6">
+                                                                    <div class="radio m-b-15" ng-model="k2.declarationInvoiceK2.IsRequireSTA">
+                                                                        <label>
+                                                                            <input name="sample" value="" ng-value="false" type="radio">
+                                                                            <i class="input-helper"></i>
+                                                                            No
+                                                                        </label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </md-content>
+                                </md-tab>
+                                <md-tab label="Shipment Details">
+                                    <md-content class="md-padding">
+                                        <script type="text/ng-template" id="voyage-autocomplete.html">
+                                            <table ng-show="isOpen() && !moveInProgress"
+                                                   aria-hidden="{{!isOpen()}}"
+                                                   class="table table-striped table-vmiddle table-hover table-bordered mytable"
+                                                   ng-style="{top: position().top+'px', left: position().left+'px'}"
+                                                   style="">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Vessel ID</th>
+                                                        <th>Vessel Name</th>
+                                                        <th>ETA</th>
+                                                        <th>ETD</th>
+                                                        <th>Terminal</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr ng-repeat="match in matches track by $index" ng-click="selectMatch($index)">
+                                                        <td>{{match.model.VesselID}}</td>
+                                                        <td>{{match.model.VesselName}}</td>
+                                                        <td>{{match.model.ETA | date :  'dd/MM/yyyy hh:mm a' }}</td>
+                                                        <td>{{match.model.ETD | date :  'dd/MM/yyyy hh:mm a' }}</td>
+                                                        <td>{{match.model.TerminalName}}</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </script>
+                                        <div class="row" ng-if="k2.TransportMode == 1021">
+                                            <div class="col-xs-12 col-md-10">
+                                                <div class="card">
+                                                    <div class="lv-header-alt clearfix m-b-5">
+                                                        <h2 class="lvh-label">VESSEL DETAILS</h2>
+                                                    </div>
+                                                    <div class="card-body card-padding p-t-25 p-b-25">
+                                                        <div class="col-xs-12">
+                                                            <div class="row">
+                                                                <div class="col-xs-12 col-md-6">
+                                                                    <md-input-container class="md-block" flex-gt-sm>
+                                                                        <label>Ship Call No.</label>
+                                                                        <input type="text"
+                                                                               name="k2.declarationShipmentK2.SCNNo"
+                                                                               ng-required="transportMode == 1021"
+                                                                               class="search-icon"
+                                                                               ng-class="{'loadinggif': k2.declarationShipmentK2.SCNNoLoading}"
+                                                                               ng-model="k2.declarationShipmentK2.SCNNo"
+                                                                               typeahead-min-length="3"
+                                                                               uib-typeahead="d for d in ShipCallResults($viewValue)"
+                                                                               typeahead-loading="k2.declarationShipmentK2.SCNNoLoading"
+                                                                               typeahead-popup-template-url="voyage-autocomplete.html"
+                                                                               typeahead-wait-ms="100"
+                                                                               typeahead-editable="false"
+                                                                               typeahead-on-select="VoyageSelected($item)" />
+                                                                    </md-input-container>
+                                                                </div>
+                                                                <div class="col-xs-12 col-md-6">
+                                                                    <md-input-container class="md-block" flex-gt-sm>
+                                                                        <label>Voyage No.</label>
+                                                                        <input type="text"
+                                                                               name="k2.declarationShipmentK2.VoyageNo"
+                                                                               ng-required="transportMode == 1021"
+                                                                               class="search-icon"
+                                                                               ng-class="{'loadinggif': k2.declarationShipmentK2.VoyageNoLoading}"
+                                                                               ng-model="k2.declarationShipmentK2.VoyageNo"
+                                                                               typeahead-min-length="3"
+                                                                               uib-typeahead="d for d in VoyageNoInwardResults($viewValue)"
+                                                                               typeahead-loading="k1.declarationShipment.VoyageNoLoading"
+                                                                               typeahead-popup-template-url="voyage-autocomplete.html"
+                                                                               typeahead-wait-ms="100"
+                                                                               typeahead-editable="false"
+                                                                               typeahead-on-select="VoyageSelected($item)" />
+                                                                    </md-input-container>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-xs-12 col-md-6">
+                                                                    <md-input-container class="md-block" flex-gt-sm>
+                                                                        <label>Vessel ID</label>
+                                                                        <input type="text"
+                                                                               name="k2.declarationShipmentK2.VesselID"
+                                                                               ng-required="transportMode == 1021"
+                                                                               class="form-control input-sm"
+                                                                               ng-model="k2.declarationShipmentK2.VesselID" ng-maxlength="40" logicon-limit />
+                                                                    </md-input-container>
+                                                                </div>
+                                                                <div class="col-xs-12 col-md-6">
+                                                                    <md-input-container class="md-block" flex-gt-sm>
+                                                                        <label>Vessel Name</label>
+                                                                        <input type="text"
+                                                                               name="k2.declarationShipmentK2.VesselName"
+                                                                               class="form-control input-sm"
+                                                                               ng-model="k2.declarationShipmentK2.VesselName" ng-maxlength="200" logicon-limit />
+                                                                    </md-input-container>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-xs-12 col-md-6">
+                                                                    <md-input-container class="md-block" flex-gt-sm>
+                                                                        <label>ETA Date</label>
+                                                                        <input mdc-datetime-picker="" class="date-time-icon" date="true" time="true" type="text" id="ETADate" format="{{datetimeFormat}}"
+                                                                               min-date="date"
+                                                                               ng-model="k2.declarationShipmentK2.ETADate"
+                                                                               ng-required="transportMode == 1021 || transportMode == 1020">
+                                                                    </md-input-container>
+                                                                </div>
+                                                                <div class="col-xs-12 col-md-6">
+                                                                    <md-input-container class="md-block" flex-gt-sm>
+                                                                        <label>Manifest No.</label>
+                                                                        <input type="text"
+                                                                               name="k2.declarationShipmentK2.ManifestNo"
+                                                                               ng-model="k2.declarationShipmentK2.ManifestNo" ng-maxlength="100" logicon-limit />
+                                                                    </md-input-container>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-xs-12 col-md-6">
+                                                                    <md-input-container class="md-block" flex-gt-sm>
+                                                                        <label>Ocean B/L No.</label>
+                                                                        <input type="text"
+                                                                               name="k2.declarationShipmentK2.OceanBLNo"
+                                                                               ng-model="k2.declarationShipmentK2.OceanBLNo"
+                                                                               ng-maxlength="200" logicon-limit />
+                                                                    </md-input-container>
+                                                                </div>
+                                                                <div class="col-xs-12 col-md-6">
+                                                                    <md-input-container class="md-block" flex-gt-sm>
+                                                                        <label>House B/L No.</label>
+                                                                        <input type="text"
+                                                                               ng-model="k2.declarationShipmentK2.HouseBLNo" name="k2.declarationShipmentK2.HouseBLNo" ng-maxlength="200" logicon-limit />
+                                                                    </md-input-container>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                        <div style="clear:both"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row" ng-if="k2.TransportMode == 1022">
+                                            <div class="col-md-8">
+                                                <div class="card">
+                                                    <div class="lv-header-alt clearfix m-b-5">
+                                                        <h2 class="lvh-label">RAIL DETAILS</h2>
+                                                    </div>
+                                                    <div class="card-body card-padding p-t-25 p-b-25">
+                                                        <div class="row">
+                                                            <div class="col-xs-12 col-md-6">
+                                                                <md-input-container class="md-block" flex-gt-sm>
+                                                                    <label>Wagon No.</label>
+                                                                    <input type="text"
+                                                                           ng-model="k2.declarationShipmentK2.WagonNo" name="k2.declarationShipmentK2.WagonNo" ng-maxlength="70" logicon-limit />
+                                                                </md-input-container>
+                                                            </div>
+                                                            <div class="col-xs-12 col-md-6">
+                                                                <md-input-container class="md-block" flex-gt-sm>
+                                                                    <label>Ocean B/L</label>
+                                                                    <input type="text"
+                                                                           name="k2.declarationShipmentK2.OceanBLNo"
+                                                                           ng-required="transportMode == 1021 || transportMode == 1022"
+                                                                           ng-model="k2.declarationShipmentK2.OceanBLNo" ng-maxlength="200" logicon-limit />
+                                                                </md-input-container>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-xs-12 col-md-6">
+                                                                <md-input-container class="md-block" flex-gt-sm>
+                                                                    <label>House B/L</label>
+                                                                    <input type="text"
+                                                                           ng-model="k2.declarationShipmentK2.HouseBLNo" name="k2.declarationShipmentK2.HouseBLNo" ng-maxlength="200" logicon-limit />
+                                                                </md-input-container>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row" ng-if="k2.TransportMode == 1023">
+                                            <div class="col-md-8">
+                                                <div class="card">
+                                                    <div class="lv-header-alt clearfix m-b-5">
+                                                        <h2 class="lvh-label">ROAD DETAILS</h2>
+                                                    </div>
+                                                    <div class="card-body card-padding p-t-25 p-b-25">
+                                                        <div class="row">
+                                                            <div class="col-xs-12 col-md-6">
+                                                                <md-input-container class="md-block" flex-gt-sm>
+                                                                    <label>Vehicle Registration No. 1</label>
+                                                                    <input type="text"
+                                                                           ng-model="k2.declarationShipmentK2.VehicleNo1" name="k2.declarationShipmentK2.VehicleNo1" ng-maxlength="70" logicon-limit />
+                                                                </md-input-container>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-xs-12 col-md-6">
+                                                                <md-input-container class="md-block" flex-gt-sm>
+                                                                    <label>Vehicle Registration No. 2</label>
+                                                                    <input type="text"
+                                                                           ng-model="k2.declarationShipmentK2.VehicleNo2" name="k2.declarationShipmentK2.VehicleNo2" ng-maxlength="70" logicon-limit />
+                                                                </md-input-container>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row" ng-if="k2.TransportMode == 1020">
+                                            <div class="col-xs-12 col-md-10">
+                                                <div class="card">
+                                                    <div class="lv-header-alt clearfix m-b-5">
+                                                        <h2 class="lvh-label">FLIGHT DETAILS</h2>
+                                                    </div>
+                                                    <div class="card-body card-padding p-t-25 p-b-25">
+                                                        <div class="row">
+                                                            <div class="col-xs-12 col-md-6">
+                                                                <md-input-container class="md-block" flex-gt-sm>
+                                                                    <label>Master Airway B/L No.</label>
+                                                                    <input type="text"
+                                                                           name="k2.declarationShipmentK2.MasterAWBNo"
+                                                                           ng-model="k2.declarationShipmentK2.MasterAWBNo"
+                                                                           ng-maxlength="70"
+                                                                           logicon-limit />
+                                                                </md-input-container>
+                                                            </div>
+                                                            <div class="col-xs-12 col-md-6">
+                                                                <md-input-container class="md-block" flex-gt-sm>
+                                                                    <label>House Airway B/L No.</label>
+                                                                    <input type="text"
+                                                                           name="k2.declarationShipmentK2.HouseAWBNo"
+                                                                           ng-model="k2.declarationShipmentK2.HouseAWBNo"
+                                                                           ng-maxlength="70"
+                                                                           logicon-limit />
+                                                                </md-input-container>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-xs-12 col-md-6">
+                                                                <md-input-container class="md-block" flex-gt-sm>
+                                                                    <label>Flight No.</label>
+                                                                    <input type="text"
+                                                                           name="k2.declarationShipmentK2.FlightNo"
+                                                                           ng-model="k2.declarationShipmentK2.FlightNo"
+                                                                           ng-maxlength="70"
+                                                                           logicon-limit />
+                                                                </md-input-container>
+                                                            </div>
+                                                            <div class="col-xs-12 col-md-6">
+                                                                <md-input-container class="md-block" flex-gt-sm>
+                                                                    <label>Co Load No.</label>
+                                                                    <input type="text"
+                                                                           name="k2.declarationShipmentK2.AIRCOLoadNo"
+                                                                           ng-model="k2.declarationShipmentK2.AIRCOLoadNo"
+                                                                           ng-maxlength="70"
+                                                                           logicon-limit />
+                                                                </md-input-container>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-xs-12 col-md-6">
+                                                                <md-input-container class="md-block" flex-gt-sm>
+                                                                    <label>ETD</label>
+                                                                    <input mdc-datetime-picker="" date="true" time="true" type="text" id="dateFrom" format="{{datetimeFormat}}"
+                                                                           min-date="date" name="k2.declarationShipmentK2.ETADate"
+                                                                           ng-model="k2.declarationShipmentK2.ETADate"
+                                                                           ng-required="transportMode == 1021 || transportMode == 1020">
+                                                                </md-input-container>
+                                                            </div>
+                                                            <div class="col-xs-12 col-md-6">
+                                                                <md-input-container class="md-block" flex-gt-sm>
+                                                                    <label>ARN No.</label>
+                                                                    <input type="text"
+                                                                           name="k2.declarationShipmentK2.ARNNo"
+                                                                           ng-model="k2.declarationShipmentK2.ARNNo"
+                                                                           ng-maxlength="70"
+                                                                           logicon-limit />
+                                                                </md-input-container>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row" ng-if="k2.TransportMode == 1024">
+                                            <div class="col-md-8">
+                                                <div class="card">
+                                                    <div class="lv-header-alt clearfix m-b-5">
+                                                        <h2 class="lvh-label">POST DETAILS</h2>
+                                                    </div>
+                                                    <div class="card-body card-padding p-t-25 p-b-25">
+                                                        <div class="row">
+                                                            <div class="col-xs-12">
+                                                                <md-input-container class="md-block" flex-gt-sm>
+                                                                    <label>JK78 Information No.</label>
+                                                                    <input type="text"
+                                                                           ng-model="k2.declarationShipmentK2.JKNo" name="k2.declarationShipmentK2.JKNo" ng-maxlength="70" logicon-limit />
+                                                                </md-input-container>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </md-content>
+                                </md-tab>
+                                <md-tab label="Trading Partner">
+                                    <md-content class="md-padding">
+                                        <div class="row">
+                                            <div class="col-xs-12 col-md-6">
+                                                <div class="card">
+                                                    <div class="lv-header-alt clearfix m-b-5">
+                                                        <h2 class="lvh-label">Shipping Agent</h2>
+                                                    </div>
+                                                    <div class="card-body card-padding p-t-25 p-b-25">
+                                                        <div class="row">
+                                                            <div class="col-xs-12">
+                                                                <md-input-container class="md-block" flex-gt-sm>
+                                                                    <label>Shipping Agent</label>
+                                                                    <input type="text"
+                                                                           name="k2.ShippingAgentName"
+                                                                           ng-required="true"
+                                                                           class="search-icon"
+                                                                           ng-class="{'loadinggif': k2.ShippingAgentLoading}"
+                                                                           ng-model="k2.ShippingAgentName"
+                                                                           typeahead-min-length="3"
+                                                                           uib-typeahead="d.Text as d.Text for d in GenericMerchantResults($viewValue, 'Liner','ShippingAgentAddress')"
+                                                                           typeahead-loading="k2.ShippingAgentLoading"
+                                                                           typeahead-wait-ms="100"
+                                                                           typeahead-editable="false"
+                                                                           typeahead-on-select="CustomerSelected($item, 'ShippingAgent','ShippingAgentAddress')" />
+                                                                </md-input-container>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-xs-12">
+                                                                <span class="pull-left" ng-bind-html="k2.ShippingAgentAddress"></span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-12 col-md-6">
+                                                <div class="card">
+                                                    <div class="lv-header-alt clearfix m-b-5">
+                                                        <h2 class="lvh-label">Declarant</h2>
+                                                    </div>
+                                                    <div class="card-body card-padding p-t-25 p-b-25">
+                                                        <div class="row">
+                                                            <div class="col-xs-12">
+                                                                <md-input-container class="md-block" flex-gt-sm>
+                                                                    <label>Declarant ID</label>
+                                                                    <input type="text"
+                                                                           ng-required="true"
+                                                                           class="form-control input-sm"
+                                                                           ng-model="k2.DeclarantID"
+                                                                           ng-maxlength="70"
+                                                                           logicon-limit />
+                                                                </md-input-container>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-xs-12">
+                                                                <md-input-container class="md-block" flex-gt-sm>
+                                                                    <label>Declarant Name</label>
+                                                                    <input type="text"
+                                                                           name="k2.DeclarantName"
+                                                                           ng-required="true"
+                                                                           ng-model="k2.DeclarantName"
+                                                                           ng-maxlength="70"
+                                                                           logicon-limit />
+                                                                </md-input-container>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-xs-12">
+                                                                <md-input-container class="md-block" flex-gt-sm>
+                                                                    <label>Declarant Designation</label>
+                                                                    <input type="text"
+                                                                           name="k2.DeclarantDesignation"
+                                                                           ng-required="true"
+                                                                           class="form-control input-sm"
+                                                                           ng-model="k2.DeclarantDesignation"
+                                                                           ng-maxlength="70"
+                                                                           logicon-limit />
+                                                                </md-input-container>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-xs-12">
+                                                                <md-input-container class="md-block" flex-gt-sm>
+                                                                    <label>Declarant NRIC</label>
+                                                                    <input type="text"
+                                                                           name="k2.DeclarantNRIC"
+                                                                           ng-required="true"
+                                                                           ng-model="k2.DeclarantNRIC"
+                                                                           ng-maxlength="70"
+                                                                           logicon-limit />
+                                                                </md-input-container>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </md-content>
+                                </md-tab>
+                                <md-tab label="Exemptions">
+                                    <md-content class="md-padding">
+                                        <div class="row">
+                                            <div class="col-xs-12 col-md-6">
+                                                <div class="card">
+                                                    <div class="lv-header-alt clearfix m-b-5">
+                                                        <h2 class="lvh-label">Transaction Type</h2>
+                                                    </div>
+                                                    <div class="card-body card-padding p-t-25 p-b-25">
+                                                        <div class="row">
+                                                            <div class="col-xs-12">
+                                                                <md-input-container class="md-block" flex-gt-sm>
+                                                                    <label>Transaction Type</label>
+                                                                    <input type="text"
+                                                                           ng-model="k2.TransactionTypeDescription"
+                                                                           readonly="readonly" />
+                                                                </md-input-container>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-xs-12">
+                                                                <md-input-container class="md-block" flex-gt-sm>
+                                                                    <label>SMK Code</label>
+                                                                    <input type="text"
+                                                                           ng-model="k2.TransactionTypeCode" readonly="readonly" />
+                                                                </md-input-container>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="card">
+                                                    <div class="lv-header-alt clearfix m-b-5">
+                                                        <h2 class="lvh-label">Claimant Information</h2>
+                                                    </div>
+                                                    <div class="card-body card-padding p-t-25 p-b-25">
+                                                        <div class="row">
+                                                            <div class="col-xs-12">
+                                                                <md-input-container class="md-block" flex-gt-sm>
+                                                                    <label>Code</label>
+                                                                    <md-select ng-model="k2.declarationExcemptionK2.ClaimentCode">
+                                                                        <md-option ng-repeat="item in lookUpData.excemptionTypeList" ng-value="item.Value">
+                                                                            {{item.Text}}
+                                                                        </md-option>
+                                                                    </md-select>
+                                                                </md-input-container>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-xs-12">
+                                                                <md-input-container class="md-block" flex-gt-sm>
+                                                                    <label>Claiment Name</label>
+                                                                    <input type="text"
+                                                                           ng-model="k2.declarationExcemptionK2.ClaimentName" />
+                                                                </md-input-container>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-xs-12">
+                                                                <md-input-container class="md-block" flex-gt-sm>
+                                                                    <label>Claiment Company</label>
+                                                                    <input type="text"
+                                                                           ng-model="k2.declarationExcemptionK2.ClaimentCompany" />
+                                                                </md-input-container>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-xs-12">
+                                                                <md-input-container class="md-block" flex-gt-sm>
+                                                                    <label>Claiment NRIC <small>(No space or - allow)</small></label>
+                                                                    <input type="text"
+                                                                           ng-model="k2.declarationExcemptionK2.ClaimentNRIC" />
+                                                                </md-input-container>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-xs-12">
+                                                                <md-input-container class="md-block" flex-gt-sm>
+                                                                    <label>Designation</label>
+                                                                    <input type="text"
+                                                                           ng-model="k2.declarationExcemptionK2.ClaimentDesignation" />
+                                                                </md-input-container>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                            <div class="col-xs-12 col-md-6">
+                                                <div class="card">
+                                                    <div class="lv-header-alt clearfix m-b-5">
+                                                        <h2 class="lvh-label">General / Treasury Exemption</h2>
+                                                    </div>
+                                                    <div class="card-body card-padding p-t-25 p-b-25">
+                                                        <div class="row">
+                                                            <div class="col-xs-12">
+                                                                <md-input-container class="md-block" flex-gt-sm>
+                                                                    <label>Type</label>
+                                                                    <md-select ng-model="k2.declarationExcemptionK2.GeneralExcemptionType">
+                                                                        <md-option ng-repeat="item in lookUpData.excemptionTypeList" ng-value="item.Value">
+                                                                            {{item.Text}}
+                                                                        </md-option>
+                                                                    </md-select>
+                                                                </md-input-container>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-xs-12">
+                                                                <md-input-container class="md-block" flex-gt-sm>
+                                                                    <label>Reference No.</label>
+                                                                    <input type="text"
+                                                                           ng-model="k2.declarationExcemptionK2.GeneralExcemptionRefNo" />
+                                                                </md-input-container>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="card">
+                                                    <div class="lv-header-alt clearfix m-b-5">
+                                                        <h2 class="lvh-label">Sales Tax Exemption</h2>
+                                                    </div>
+                                                    <div class="card-body card-padding p-t-25 p-b-25">
+                                                        <div class="row">
+                                                            <div class="col-xs-12">
+                                                                <md-input-container class="md-block" flex-gt-sm>
+                                                                    <label>Type</label>
+                                                                    <md-select ng-model="k2.declarationExcemptionK2.SalesTaxExcemptionTyp">
+                                                                        <md-option ng-repeat="item in lookUpData.salesTaxExcemptionList" ng-value="item.Value">
+                                                                            {{item.Text}}
+                                                                        </md-option>
+                                                                    </md-select>
+                                                                </md-input-container>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-xs-12">
+                                                                <md-input-container class="md-block" flex-gt-sm>
+                                                                    <label>Customs Station Code</label>
+                                                                    <md-select ng-model="k2.declarationExcemptionK2.CustomStationCode">
+                                                                        <md-option ng-repeat="item in lookUpData.customStationCodeList" ng-value="item.Value">
+                                                                            {{item.Text}}
+                                                                        </md-option>
+                                                                    </md-select>
+                                                                </md-input-container>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-xs-12">
+                                                                <md-input-container class="md-block" flex-gt-sm>
+                                                                    <label>Reference No.</label>
+                                                                    <input type="text"
+                                                                           ng-model="k2.declarationExcemptionK2.SalesTaxReferenceNo" />
+                                                                </md-input-container>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-xs-12">
+                                                                <md-input-container class="md-block" flex-gt-sm>
+                                                                    <label>Registration Date</label>
+                                                                    <input mdc-datetime-picker="" class="date-icon" date="true" time="false" type="text" id="dateFrom" format="{{dateFormat}}"
+                                                                           min-date="date" ng-model="k2.declarationExcemptionK2.SalesTaxRegistratonDate">
+                                                                </md-input-container>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="card">
+                                                    <div class="lv-header-alt clearfix m-b-5">
+                                                        <h2 class="lvh-label">Special Treatment</h2>
+                                                    </div>
+
+
+
+                                                    <div class="card-body card-padding p-t-25 p-b-25">
+                                                        <div class="row">
+                                                            <div class="col-xs-12">
+                                                                <md-input-container class="md-block" flex-gt-sm>
+                                                                    <label>Type</label>
+                                                                    <md-select ng-model="k2.declarationExcemptionK2.SpecialTreatmentType">
+                                                                        <md-option ng-repeat="item in lookUpData.treatmentTypeList" ng-value="item.Value">
+                                                                            {{item.Text}}
+                                                                        </md-option>
+                                                                    </md-select>
+                                                                </md-input-container>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-xs-12">
+                                                                <md-input-container class="md-block" flex-gt-sm>
+                                                                    <label>Reference No.</label>
+                                                                    <input type="text"
+                                                                           ng-model="k2.declarationExcemptionK2.SpecialTreatmentReferenceNo" />
+                                                                </md-input-container>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </md-content>
+                                </md-tab>
+                                <md-tab label="Container Info.">
+                                    <md-content class="md-padding">
+                                        <div class="card">
+                                            <div class="card-body card-padding p-t-25 p-b-25">
+                                                <div class="row">
+                                                    <div class="col-xs-12">
+                                                        <div class="pull-right"><button class="btn btn-primary m-b-10" type="button" ng-click="editConInfo(-1)"><i class="fa fa-plus"></i>&nbsp;Add</button></div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-xs-12">
+                                                        <div class="table-responsive">
+                                                            <table class="table table-striped table-vmiddle">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>#Action</th>
+                                                                        <th>Select</th>
+                                                                        <th>Container No.</th>
+                                                                        <th>Size</th>
+                                                                        <th>Type</th>
+                                                                        <th>Container Type</th>
+                                                                        <th>Status</th>
+                                                                        <th>Marks & Numbers</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr ng-repeat="item in k2.declarationContainersK2">
+                                                                        <td>
+                                                                            <button class="btn btn-default ng-scope waves-effect"
+                                                                                    type="button"
+                                                                                    ng-click="editConInfo($index)"
+                                                                                    aria-label="button" uib-tooltip="Edit" tooltip-placement="top">
+                                                                                <i class="zmdi zmdi-edit"></i>
+                                                                            </button>
+                                                                            <button class="btn btn-danger ng-scope waves-effect"
+                                                                                    type="button"
+                                                                                    ng-click="deleteContainer($index)"
+                                                                                    aria-label="button" uib-tooltip="Delete" tooltip-placement="top">
+                                                                                <i class="zmdi zmdi-delete"></i>
+                                                                            </button>
+                                                                        </td>
+                                                                        <td>{{$index + 1}}</td>
+                                                                        <td>{{item.ContainerNo}}</td>
+                                                                        <td>{{(lookUpData.sizeList | filter : {Value:item.Size})[0].Text}}</td>
+                                                                        <td>{{item.Type}}</td>
+                                                                        <td>{{(lookUpData.jobTypeList | filter : {Value:item.EQDStatus})[0].Text}}</td>
+                                                                        <td>{{(lookUpData.containerStatusList | filter : {Value:item.ContainerStatus})[0].Text}}</td>
+                                                                        <td style="width:15%">{{item.MarksNos}}</td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </md-content>
+                                </md-tab>
+                                <md-tab label="Documents">
+                                    <md-content class="md-padding">
+                                        <div class="card">
+                                            <div class="card-body card-padding p-t-25 p-b-25">
+                                                <div class="row">
+                                                    <div class="col-xs-12">
+                                                        <div class="pull-right"><button type="button" ng-click="editDocument(-1);" class="btn btn-primary m-b-10"><i class="fa fa-plus"></i>&nbsp;Add</button></div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-xs-12">
+                                                        <div class="table-responsive">
+                                                            <table class="table table-striped table-vmiddle">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>#Action</th>
+                                                                        <th>Select</th>
+                                                                        <th>Code</th>
+                                                                        <th>Reference No.</th>
+                                                                        <th>Custom Station</th>
+                                                                        <th>Date Type</th>
+                                                                        <th>Doc. Date</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr ng-repeat="item in k2.declarationDocumentsK2">
+                                                                        <td>
+                                                                            <button class="btn btn-default ng-scope waves-effect"
+                                                                                    type="button"
+                                                                                    ng-click="editDocument($index)"
+                                                                                    aria-label="button" uib-tooltip="Edit" tooltip-placement="top">
+                                                                                <i class="zmdi zmdi-edit"></i>
+                                                                            </button>
+                                                                            <button class="btn btn-danger ng-scope waves-effect"
+                                                                                    type="button"
+                                                                                    ng-click="deleteDocument($index)"
+                                                                                    aria-label="button" uib-tooltip="Delete" tooltip-placement="top">
+                                                                                <i class="zmdi zmdi-delete"></i>
+                                                                            </button>
+                                                                        </td>
+                                                                        <td>{{$index + 1}}</td>
+                                                                        <td>{{(lookUpData.OGACodeList | filter : {Value:item.SupportingDocumentType})[0].Text}}</td>
+                                                                        <td>{{item.ReferenceNo}}</td>
+                                                                        <td>{{(lookUpData.customStationCodeList | filter : {Value:item.CustomStationCode})[0].Text}}</td>
+                                                                        <td>{{(lookUpData.docDateTypeList | filter : {Value:item.DocDateType})[0].Text}}</td>
+                                                                        <td>{{item.DocDate | date : 'dd/MM/yyyy'}}</td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </md-content>
+                                </md-tab>
+                                <md-tab label="Clause">
+                                    <md-content class="md-padding">
+                                        <div class="card">
+                                            <div class="card-body card-padding p-t-25 p-b-25">
+                                                <div class="row">
+
+                                                    <div class="col-xs-12">
+                                                        &nbsp;
+                                                        <div class="pull-right">
+                                                            <button type="button" ng-click="editClause(-1);" class="btn btn-primary m-b-10"><i class="fa fa-plus"></i>&nbsp;Add</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-xs-12">
+                                                        <div class="table-responsive">
+                                                            <table class="table table-striped table-vmiddle">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>#Action</th>
+                                                                        <th>Select</th>
+                                                                        <th>Clause Code</th>
+                                                                        <th>Clause Text</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr ng-repeat="item in k2.declarationClausesK2">
+                                                                        <td>
+                                                                            <button class="btn btn-default ng-scope waves-effect"
+                                                                                    type="button"
+                                                                                    ng-click="editClause($index)"
+                                                                                    aria-label="button" uib-tooltip="Edit" tooltip-placement="top">
+                                                                                <i class="zmdi zmdi-edit"></i>
+                                                                            </button>
+                                                                            <button class="btn btn-danger ng-scope waves-effect"
+                                                                                    type="button"
+                                                                                    ng-click="deleteClause($index)"
+                                                                                    aria-label="button" uib-tooltip="Delete" tooltip-placement="top">
+                                                                                <i class="zmdi zmdi-delete"></i>
+                                                                            </button>
+                                                                        </td>
+                                                                        <td>{{$index + 1}}</td>
+                                                                        <td>{{(lookUpData.clauseTypeList | filter : {Value:item.ClauseCode})[0].Text}}</td>
+                                                                        <td style="width:60%">{{item.ClauseText}}</td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </md-content>
+                                </md-tab>
+                                <md-tab label="Item Entries">
+                                    <md-content class="md-padding">
+                                        <div class="card">
+                                            <div class="card-body card-padding p-t-25 p-b-25">
+                                                <div class="row" ng-if="showAddBtn">
+                                                    <div class="col-xs-12">
+                                                        <div class="pull-right"><button type="button" ng-click="editItem(-1);" class="btn btn-primary m-b-10"><i class="fa fa-plus"></i>&nbsp;Add</button></div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-xs-12">
+                                                        <div class="table-responsive">
+                                                            <table class="table table-striped table-vmiddle">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>#Action</th>
+                                                                        <th>Product Code</th>
+                                                                        <th>Description</th>
+                                                                        <th>Origin</th>
+                                                                        <th>Amount</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr ng-repeat="item in k2.declarationItemsK2">
+                                                                        <td>
+                                                                            <button class="btn btn-default ng-scope waves-effect"
+                                                                                    type="button"
+                                                                                    ng-click="editItem($index)"
+                                                                                    aria-label="button" uib-tooltip="Edit" tooltip-placement="top">
+                                                                                <i class="zmdi zmdi-edit"></i>
+                                                                            </button>
+                                                                            <button class="btn btn-danger ng-scope waves-effect"
+                                                                                    type="button"
+                                                                                    ng-click="deleteItem($index)"
+                                                                                    aria-label="button" uib-tooltip="Delete" tooltip-placement="top">
+                                                                                <i class="zmdi zmdi-delete"></i>
+                                                                            </button>
+                                                                        </td>
+                                                                        <td>{{item.ProductCode}}</td>
+                                                                        <td>{{item.ItemDescription1}}</td>
+                                                                        <td>{{item.OriginCountryCode}}</td>
+                                                                        <td>{{item.ItemAmount}}</td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </md-content>
+                                </md-tab>
+                                <md-tab label="Responses" ng-if="customresponses.length>0">
+                                    <md-content class="md-padding">
+                                        <div class="card">
+                                            <div class="card-body card-padding p-t-25 p-b-25">
+                                                <div class="row">
+                                                    <div class="col-xs-12">
+                                                        <div class="table-responsive">
+                                                            <table class="table table-striped table-vmiddle">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>Reg No.</th>
+                                                                        <th>Date</th>
+                                                                        <th>Time</th>
+                                                                        <th>Remark</th>
+                                                                        <th>Code</th>
+                                                                        <th>SNRF</th>
+                                                                        <th>Status</th>
+                                                                        <th>Office ID</th>
+                                                                        <th>Office Name</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr ng-repeat="item in customresponses">
+                                                                        <td><a ng-click="DisplayResponseData(item)"> {{item.RegistrationNo}}</a></td>
+                                                                        <td>{{item.RegistrationDate | date : 'dd/MM/yyyy'}}</td> <!--| date : 'dd/MM/yyyy'-->
+                                                                        <td>{{item.RegistrationDate | date : 'hh:mm'}}</td> <!--| time : 'HH:mm'-->
+                                                                        <td>{{item.Remark}}</td>
+                                                                        <td>{{item.Code}}</td>
+                                                                        <td>{{item.SNRF}}</td>
+                                                                        <td>{{item.Status}}</td>
+                                                                        <td>{{item.OfficerID}}</td>
+                                                                        <td>{{item.OfficeName}}</td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row p-t-25">
+                                                    <div class="col-xs-12 col-md-6">
+                                                        <div class="card">
+                                                            <div class="lv-header-alt clearfix m-b-5">
+                                                                <h2 class="lvh-label">Customs Registration Details</h2>
+                                                            </div>
+                                                            <div class="card-body card-padding p-t-25 p-b-25">
+                                                                <div class="row">
+                                                                    <div class="col-xs-12 ">
+
+                                                                        <md-input-container class="md-block" flex-gt-sm>
+                                                                            <label>Registration No.</label>
+
+
+                                                                            <input type="text"
+                                                                                   ng-model="customresponseheaderItem.RegistrationNo" />
+                                                                        </md-input-container>
+
+
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <div class="col-xs-12 col-md-6">
+
+
+                                                                        <md-input-container class="md-block" flex-gt-sm>
+                                                                            <label>Registration Date</label>
+                                                                            <input mdc-datetime-picker="" class="date-icon" date="true" time="false" type="text" id="dateFrom" format="{{dateFormat}}"
+                                                                                   min-date="date" ng-model="customresponseheaderItem.RegistrationDate" name="customresponseheaderItem.RegistrationDate">
+                                                                        </md-input-container>
+                                                                    </div>
+                                                                    <div class="col-xs-12 col-md-6">
+                                                                        <!--<label class="fg-label">Time</label>-->
+
+
+                                                                        <md-input-container class="md-block" flex-gt-sm>
+                                                                            <label>Time</label>
+                                                                            <input mdc-datetime-picker="" date="false" class="time-icon" type="text" id="dateFrom" format="{{timeFormat}}"
+                                                                                   min-date="date" ng-model="customresponseheaderItem.RegistrationDate" name="customresponseheaderItem.RegistrationDate">
+
+
+                                                                        </md-input-container>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <div class="col-md-6">
+                                                                        <md-input-container class="md-block" flex-gt-sm>
+                                                                            <label>Total Duty Amount(MYR)</label>
+                                                                            <input type="text" />
+                                                                        </md-input-container>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="row">
+                                                                    <div class="col-md-6">
+                                                                        <md-input-container class="md-block" flex-gt-sm>
+                                                                            <label>Total GST Amount(MYR)</label>
+                                                                            <input type="text" />
+                                                                        </md-input-container>
+                                                                    </div>
+
+                                                                </div>
+                                                                <div class="row">
+                                                                    <div class="col-md-6">
+                                                                        <md-input-container class="md-block" flex-gt-sm>
+                                                                            <label>Total Duty Amount Amended(MYR)</label>
+                                                                            <input type="text" />
+                                                                        </md-input-container>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="col-xs-12 col-md-6">
+                                                        <div class="card">
+                                                            <div class="lv-header-alt clearfix m-b-5">
+                                                                <h2 class="lvh-label">Response(s) from Declaration and Customs</h2>
+                                                            </div>
+                                                            <div class="card-body card-padding p-t-25 p-b-25">
+                                                                <div class="row">
+                                                                    <div class="col-xs-12">
+                                                                        <table class="table table-striped table-vmiddle">
+                                                                            <thead>
+                                                                                <tr>
+                                                                                    <th>Code</th>
+                                                                                    <th>Description</th>
+                                                                                    <th>Line No.</th>
+                                                                                    <th>SNRF</th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody>
+                                                                                <tr ng-repeat="item in customresponseheaderItem.customResponseDetails">
+                                                                                    <td>{{item.Code}}</td>
+                                                                                    <td>{{item.Description}}</td>
+                                                                                    <td>{{item.ItemLine}}</td>
+                                                                                    <td>{{customresponseheaderItem.SNRF}}</td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-xs-12">
+                                                        <div class="table-responsive">
+                                                            <table class="table table-striped table-vmiddle">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>Code</th>
+                                                                        <th>HS Original</th>
+                                                                        <th>HS Amended</th>
+                                                                        <th>Unit Price Original</th>
+                                                                        <th>Unit Price Amended</th>
+                                                                        <th>Item No.</th>
+                                                                        <th>SNRF</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr></tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </md-content>
+                                </md-tab>
+                            </md-tabs>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-12 m-t-15 m-b-10">
+                        <span class="pull-left">
+                            <button class="btn btn-primary" type="submit" ng-click="submitted = true;"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Save</button>
+                            <!--<button class="btn btn-default" type="button" ng-click="submitted = true;"><i class="fa fa-eraser" aria-hidden="true"></i>&nbsp;Delete</button>-->
+                            <!--<button class="btn btn-success" type="button" ng-click="GenerateFile(k2.DeclarationNo)"><i class="fa fa-cogs" aria-hidden="true"></i>&nbsp;Submit to Cutsom</button>-->
+                            <button class="btn btn-success" ng-disabled="btncustom" type="button" ng-click="GenerateFile(k2.DeclarationNo)"><i class="fa fa-cogs" aria-hidden="true"></i>&nbsp;Send to Customs</button>
+                        </span>
+                        <span class="pull-left">&nbsp;</span>
+                        <span class="pull-left">
+                            <div class="btn-group" ng-if="showPrintBtn">
+                                <div class="btn-group" uib-dropdown>
+                                    <button type="button" class="btn btn-primary" uib-dropdown-toggle>
+                                        Print
+                                        <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li><a class="cursorCss" ng-click="GenerateReportPDF('A4')">&nbsp;K2 A4</a></li>
+                                        <li><a class="cursorCss" ng-click="GenerateReportPDF('PDF')">&nbsp;K2 Pdf</a></li>
+                                        <li><a class="cursorCss" ng-click="GenerateReport('K2 Chit','DNeX.DeclarationK2Chit','ViewReportK1')">&nbsp;K2 Chit</a></li>
+
+                                    </ul>
+                                </div>
+                            </div>
+                        </span>
+                        <span class="pull-right">
+                            <button class="btn btn-default" type="button" ng-click="clear();">
+                                <i class="fa fa-eraser" aria-hidden="true"></i>&nbsp;Clear
+                            </button>
+                            <button class="btn btn-primary" type="button" data-ui-sref="k2Inquiry" data-ng-click="mactrl.sidebarStat($event)">
+                                <i class="fa fa-backward" aria-hidden="true"></i>&nbsp;Back
+                            </button>
+                        </span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 m-15" style="font-weight:400;">
+                        <em>
+                            FOB: {{k2.declarationInvoiceK2.FOBAmount}} CIF: {{k2.declarationInvoiceK2.CIFAmount}} EXW: {{k2.declarationInvoiceK2.EXWAmount}} CNF: {{k2.declarationInvoiceK2.CNFAmount}} CNI: {{k2.declarationInvoiceK2.CNIAmount}} Freight: {{k2.declarationInvoiceK2.FreightAmount}} insurance: {{k2.declarationInvoiceK2.InsuranceAmount}} CIFC: {{k2.declarationInvoiceK2.CIFCAmount}}
+                        </em>
+                    </div>
+                    <div class="col-xs-12">
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+USE [LogiCon_04122017]
+GO
+INSERT [Master].[CustomCurrencyRate] ([CountryCode], [CurrencyCode], [StartDate], [EndDate], [ImportRate], [ExportRate], [CreatedBy], [CreatedOn], [ModifiedBy], [ModifiedOn]) VALUES (N'MY', N'AED', CAST(N'2017-04-10 00:00:00.000' AS DateTime), CAST(N'2017-04-16 00:00:00.000' AS DateTime), CAST(1.2096 AS Decimal(18, 4)), CAST(1.2096 AS Decimal(18, 4)), N'ADMIN', CAST(N'2017-04-09 11:24:22.980' AS DateTime), N'ADMIN', CAST(N'2017-04-09 11:24:22.980' AS DateTime))
+INSERT [Master].[CustomCurrencyRate] ([CountryCode], [CurrencyCode], [StartDate], [EndDate], [ImportRate], [ExportRate], [CreatedBy], [CreatedOn], [ModifiedBy], [ModifiedOn]) VALUES (N'MY', N'AUD', CAST(N'2017-04-10 00:00:00.000' AS DateTime), CAST(N'2017-04-16 00:00:00.000' AS DateTime), CAST(3.4126 AS Decimal(18, 4)), CAST(3.3437 AS Decimal(18, 4)), N'ADMIN', CAST(N'2017-04-09 11:24:22.980' AS DateTime), N'ADMIN', CAST(N'2017-04-09 11:24:22.980' AS DateTime))
+INSERT [Master].[CustomCurrencyRate] ([CountryCode], [CurrencyCode], [StartDate], [EndDate], [ImportRate], [ExportRate], [CreatedBy], [CreatedOn], [ModifiedBy], [ModifiedOn]) VALUES (N'MY', N'BDT', CAST(N'2017-04-10 00:00:00.000' AS DateTime), CAST(N'2017-04-16 00:00:00.000' AS DateTime), CAST(0.0556 AS Decimal(18, 4)), CAST(0.0545 AS Decimal(18, 4)), N'ADMIN', CAST(N'2017-04-09 11:24:22.980' AS DateTime), N'ADMIN', CAST(N'2017-04-09 11:24:22.980' AS DateTime))
+INSERT [Master].[CustomCurrencyRate] ([CountryCode], [CurrencyCode], [StartDate], [EndDate], [ImportRate], [ExportRate], [CreatedBy], [CreatedOn], [ModifiedBy], [ModifiedOn]) VALUES (N'MY', N'BND', CAST(N'2017-04-10 00:00:00.000' AS DateTime), CAST(N'2017-04-16 00:00:00.000' AS DateTime), CAST(3.1978 AS Decimal(18, 4)), CAST(3.1342 AS Decimal(18, 4)), N'ADMIN', CAST(N'2017-04-09 11:24:22.980' AS DateTime), N'ADMIN', CAST(N'2017-04-09 11:24:22.980' AS DateTime))
+INSERT [Master].[CustomCurrencyRate] ([CountryCode], [CurrencyCode], [StartDate], [EndDate], [ImportRate], [ExportRate], [CreatedBy], [CreatedOn], [ModifiedBy], [ModifiedOn]) VALUES (N'MY', N'CAD', CAST(N'2017-04-10 00:00:00.000' AS DateTime), CAST(N'2017-04-16 00:00:00.000' AS DateTime), CAST(3.3422 AS Decimal(18, 4)), CAST(3.2756 AS Decimal(18, 4)), N'ADMIN', CAST(N'2017-04-09 11:24:22.980' AS DateTime), N'ADMIN', CAST(N'2017-04-09 11:24:22.980' AS DateTime))
+INSERT [Master].[CustomCurrencyRate] ([CountryCode], [CurrencyCode], [StartDate], [EndDate], [ImportRate], [ExportRate], [CreatedBy], [CreatedOn], [ModifiedBy], [ModifiedOn]) VALUES (N'MY', N'CHF', CAST(N'2017-04-10 00:00:00.000' AS DateTime), CAST(N'2017-04-16 00:00:00.000' AS DateTime), CAST(4.4965 AS Decimal(18, 4)), CAST(4.4050 AS Decimal(18, 4)), N'ADMIN', CAST(N'2017-04-09 11:24:22.980' AS DateTime), N'ADMIN', CAST(N'2017-04-09 11:24:22.980' AS DateTime))
+INSERT [Master].[CustomCurrencyRate] ([CountryCode], [CurrencyCode], [StartDate], [EndDate], [ImportRate], [ExportRate], [CreatedBy], [CreatedOn], [ModifiedBy], [ModifiedOn]) VALUES (N'MY', N'CNY', CAST(N'2017-04-10 00:00:00.000' AS DateTime), CAST(N'2017-04-16 00:00:00.000' AS DateTime), CAST(0.6486 AS Decimal(18, 4)), CAST(0.6357 AS Decimal(18, 4)), N'ADMIN', CAST(N'2017-04-09 11:24:22.980' AS DateTime), N'ADMIN', CAST(N'2017-04-09 11:24:22.980' AS DateTime))
+INSERT [Master].[CustomCurrencyRate] ([CountryCode], [CurrencyCode], [StartDate], [EndDate], [ImportRate], [ExportRate], [CreatedBy], [CreatedOn], [ModifiedBy], [ModifiedOn]) VALUES (N'MY', N'DKK', CAST(N'2017-04-10 00:00:00.000' AS DateTime), CAST(N'2017-04-16 00:00:00.000' AS DateTime), CAST(0.6476 AS Decimal(18, 4)), CAST(0.6347 AS Decimal(18, 4)), N'ADMIN', CAST(N'2017-04-09 11:24:22.980' AS DateTime), N'ADMIN', CAST(N'2017-04-09 11:24:22.980' AS DateTime))
+INSERT [Master].[CustomCurrencyRate] ([CountryCode], [CurrencyCode], [StartDate], [EndDate], [ImportRate], [ExportRate], [CreatedBy], [CreatedOn], [ModifiedBy], [ModifiedOn]) VALUES (N'MY', N'EUR', CAST(N'2017-04-10 00:00:00.000' AS DateTime), CAST(N'2017-04-16 00:00:00.000' AS DateTime), CAST(4.8175 AS Decimal(18, 4)), CAST(4.7221 AS Decimal(18, 4)), N'ADMIN', CAST(N'2017-04-09 11:24:22.980' AS DateTime), N'ADMIN', CAST(N'2017-04-09 11:24:22.980' AS DateTime))
+INSERT [Master].[CustomCurrencyRate] ([CountryCode], [CurrencyCode], [StartDate], [EndDate], [ImportRate], [ExportRate], [CreatedBy], [CreatedOn], [ModifiedBy], [ModifiedOn]) VALUES (N'MY', N'FJD', CAST(N'2017-04-10 00:00:00.000' AS DateTime), CAST(N'2017-04-16 00:00:00.000' AS DateTime), CAST(2.1515 AS Decimal(18, 4)), CAST(2.1089 AS Decimal(18, 4)), N'ADMIN', CAST(N'2017-04-09 11:24:22.980' AS DateTime), N'ADMIN', CAST(N'2017-04-09 11:24:22.980' AS DateTime))
+INSERT [Master].[CustomCurrencyRate] ([CountryCode], [CurrencyCode], [StartDate], [EndDate], [ImportRate], [ExportRate], [CreatedBy], [CreatedOn], [ModifiedBy], [ModifiedOn]) VALUES (N'MY', N'GBP', CAST(N'2017-04-10 00:00:00.000' AS DateTime), CAST(N'2017-04-16 00:00:00.000' AS DateTime), CAST(5.5722 AS Decimal(18, 4)), CAST(5.4615 AS Decimal(18, 4)), N'ADMIN', CAST(N'2017-04-09 11:24:22.980' AS DateTime), N'ADMIN', CAST(N'2017-04-09 11:24:22.980' AS DateTime))
+INSERT [Master].[CustomCurrencyRate] ([CountryCode], [CurrencyCode], [StartDate], [EndDate], [ImportRate], [ExportRate], [CreatedBy], [CreatedOn], [ModifiedBy], [ModifiedOn]) VALUES (N'MY', N'HKD', CAST(N'2017-04-10 00:00:00.000' AS DateTime), CAST(N'2017-04-16 00:00:00.000' AS DateTime), CAST(0.5747 AS Decimal(18, 4)), CAST(0.5633 AS Decimal(18, 4)), N'ADMIN', CAST(N'2017-04-09 11:24:22.980' AS DateTime), N'ADMIN', CAST(N'2017-04-09 11:24:22.980' AS DateTime))
+INSERT [Master].[CustomCurrencyRate] ([CountryCode], [CurrencyCode], [StartDate], [EndDate], [ImportRate], [ExportRate], [CreatedBy], [CreatedOn], [ModifiedBy], [ModifiedOn]) VALUES (N'MY', N'IDR', CAST(N'2017-04-10 00:00:00.000' AS DateTime), CAST(N'2017-04-16 00:00:00.000' AS DateTime), CAST(0.0003 AS Decimal(18, 4)), CAST(0.0003 AS Decimal(18, 4)), N'ADMIN', CAST(N'2017-04-09 11:24:22.980' AS DateTime), N'ADMIN', CAST(N'2017-04-09 11:24:22.980' AS DateTime))
+INSERT [Master].[CustomCurrencyRate] ([CountryCode], [CurrencyCode], [StartDate], [EndDate], [ImportRate], [ExportRate], [CreatedBy], [CreatedOn], [ModifiedBy], [ModifiedOn]) VALUES (N'MY', N'INR', CAST(N'2017-04-10 00:00:00.000' AS DateTime), CAST(N'2017-04-16 00:00:00.000' AS DateTime), CAST(0.0686 AS Decimal(18, 4)), CAST(0.0672 AS Decimal(18, 4)), N'ADMIN', CAST(N'2017-04-09 11:24:22.980' AS DateTime), N'ADMIN', CAST(N'2017-04-09 11:24:22.980' AS DateTime))
+INSERT [Master].[CustomCurrencyRate] ([CountryCode], [CurrencyCode], [StartDate], [EndDate], [ImportRate], [ExportRate], [CreatedBy], [CreatedOn], [ModifiedBy], [ModifiedOn]) VALUES (N'MY', N'IRR', CAST(N'2017-04-10 00:00:00.000' AS DateTime), CAST(N'2017-04-16 00:00:00.000' AS DateTime), CAST(0.0001 AS Decimal(18, 4)), CAST(0.0001 AS Decimal(18, 4)), N'ADMIN', CAST(N'2017-04-09 11:24:22.980' AS DateTime), N'ADMIN', CAST(N'2017-04-09 11:24:22.980' AS DateTime))
+INSERT [Master].[CustomCurrencyRate] ([CountryCode], [CurrencyCode], [StartDate], [EndDate], [ImportRate], [ExportRate], [CreatedBy], [CreatedOn], [ModifiedBy], [ModifiedOn]) VALUES (N'MY', N'JOD', CAST(N'2017-04-10 00:00:00.000' AS DateTime), CAST(N'2017-04-16 00:00:00.000' AS DateTime), CAST(6.2948 AS Decimal(18, 4)), CAST(6.1702 AS Decimal(18, 4)), N'ADMIN', CAST(N'2017-04-09 11:24:22.980' AS DateTime), N'ADMIN', CAST(N'2017-04-09 11:24:22.980' AS DateTime))
+INSERT [Master].[CustomCurrencyRate] ([CountryCode], [CurrencyCode], [StartDate], [EndDate], [ImportRate], [ExportRate], [CreatedBy], [CreatedOn], [ModifiedBy], [ModifiedOn]) VALUES (N'MY', N'JPY', CAST(N'2017-04-10 00:00:00.000' AS DateTime), CAST(N'2017-04-16 00:00:00.000' AS DateTime), CAST(0.0402 AS Decimal(18, 4)), CAST(0.0394 AS Decimal(18, 4)), N'ADMIN', CAST(N'2017-04-09 11:24:22.980' AS DateTime), N'ADMIN', CAST(N'2017-04-09 11:24:22.980' AS DateTime))
+INSERT [Master].[CustomCurrencyRate] ([CountryCode], [CurrencyCode], [StartDate], [EndDate], [ImportRate], [ExportRate], [CreatedBy], [CreatedOn], [ModifiedBy], [ModifiedOn]) VALUES (N'MY', N'KES', CAST(N'2017-04-10 00:00:00.000' AS DateTime), CAST(N'2017-04-16 00:00:00.000' AS DateTime), CAST(0.0434 AS Decimal(18, 4)), CAST(0.0425 AS Decimal(18, 4)), N'ADMIN', CAST(N'2017-04-09 11:24:22.980' AS DateTime), N'ADMIN', CAST(N'2017-04-09 11:24:22.980' AS DateTime))
+INSERT [Master].[CustomCurrencyRate] ([CountryCode], [CurrencyCode], [StartDate], [EndDate], [ImportRate], [ExportRate], [CreatedBy], [CreatedOn], [ModifiedBy], [ModifiedOn]) VALUES (N'MY', N'KRW', CAST(N'2017-04-10 00:00:00.000' AS DateTime), CAST(N'2017-04-16 00:00:00.000' AS DateTime), CAST(0.0040 AS Decimal(18, 4)), CAST(0.0039 AS Decimal(18, 4)), N'ADMIN', CAST(N'2017-04-09 11:24:22.980' AS DateTime), N'ADMIN', CAST(N'2017-04-09 11:24:22.980' AS DateTime))
+INSERT [Master].[CustomCurrencyRate] ([CountryCode], [CurrencyCode], [StartDate], [EndDate], [ImportRate], [ExportRate], [CreatedBy], [CreatedOn], [ModifiedBy], [ModifiedOn]) VALUES (N'MY', N'KWD', CAST(N'2017-04-10 00:00:00.000' AS DateTime), CAST(N'2017-04-16 00:00:00.000' AS DateTime), CAST(14.6597 AS Decimal(18, 4)), CAST(14.3694 AS Decimal(18, 4)), N'ADMIN', CAST(N'2017-04-09 11:24:22.980' AS DateTime), N'ADMIN', CAST(N'2017-04-09 11:24:22.980' AS DateTime))
+INSERT [Master].[CustomCurrencyRate] ([CountryCode], [CurrencyCode], [StartDate], [EndDate], [ImportRate], [ExportRate], [CreatedBy], [CreatedOn], [ModifiedBy], [ModifiedOn]) VALUES (N'MY', N'LBP', CAST(N'2017-04-10 00:00:00.000' AS DateTime), CAST(N'2017-04-16 00:00:00.000' AS DateTime), CAST(0.0030 AS Decimal(18, 4)), CAST(0.0029 AS Decimal(18, 4)), N'ADMIN', CAST(N'2017-04-09 11:24:22.980' AS DateTime), N'ADMIN', CAST(N'2017-04-09 11:24:22.980' AS DateTime))
+INSERT [Master].[CustomCurrencyRate] ([CountryCode], [CurrencyCode], [StartDate], [EndDate], [ImportRate], [ExportRate], [CreatedBy], [CreatedOn], [ModifiedBy], [ModifiedOn]) VALUES (N'MY', N'LKR', CAST(N'2017-04-03 00:00:00.000' AS DateTime), CAST(N'2017-04-09 00:00:00.000' AS DateTime), CAST(0.0294 AS Decimal(18, 4)), CAST(0.0288 AS Decimal(18, 4)), N'ADMIN', CAST(N'2017-04-09 11:24:22.980' AS DateTime), N'ADMIN', CAST(N'2017-04-09 11:24:22.980' AS DateTime))
+INSERT [Master].[CustomCurrencyRate] ([CountryCode], [CurrencyCode], [StartDate], [EndDate], [ImportRate], [ExportRate], [CreatedBy], [CreatedOn], [ModifiedBy], [ModifiedOn]) VALUES (N'MY', N'LKR', CAST(N'2017-04-10 00:00:00.000' AS DateTime), CAST(N'2017-04-16 00:00:00.000' AS DateTime), CAST(0.0294 AS Decimal(18, 4)), CAST(0.0288 AS Decimal(18, 4)), N'ADMIN', CAST(N'2017-04-09 11:24:22.980' AS DateTime), N'ADMIN', CAST(N'2017-04-09 11:24:22.980' AS DateTime))
+INSERT [Master].[CustomCurrencyRate] ([CountryCode], [CurrencyCode], [StartDate], [EndDate], [ImportRate], [ExportRate], [CreatedBy], [CreatedOn], [ModifiedBy], [ModifiedOn]) VALUES (N'MY', N'LYD', CAST(N'2017-04-03 00:00:00.000' AS DateTime), CAST(N'2017-04-09 00:00:00.000' AS DateTime), CAST(3.1438 AS Decimal(18, 4)), CAST(3.0815 AS Decimal(18, 4)), N'ADMIN', CAST(N'2017-04-09 11:24:22.980' AS DateTime), N'ADMIN', CAST(N'2017-04-09 11:24:22.980' AS DateTime))
+INSERT [Master].[CustomCurrencyRate] ([CountryCode], [CurrencyCode], [StartDate], [EndDate], [ImportRate], [ExportRate], [CreatedBy], [CreatedOn], [ModifiedBy], [ModifiedOn]) VALUES (N'MY', N'MMK', CAST(N'2017-04-03 00:00:00.000' AS DateTime), CAST(N'2017-04-09 00:00:00.000' AS DateTime), CAST(0.0033 AS Decimal(18, 4)), CAST(0.0032 AS Decimal(18, 4)), N'ADMIN', CAST(N'2017-04-09 11:24:22.980' AS DateTime), N'ADMIN', CAST(N'2017-04-09 11:24:22.980' AS DateTime))
+INSERT [Master].[CustomCurrencyRate] ([CountryCode], [CurrencyCode], [StartDate], [EndDate], [ImportRate], [ExportRate], [CreatedBy], [CreatedOn], [ModifiedBy], [ModifiedOn]) VALUES (N'MY', N'MXN', CAST(N'2017-04-03 00:00:00.000' AS DateTime), CAST(N'2017-04-09 00:00:00.000' AS DateTime), CAST(0.2295 AS Decimal(18, 4)), CAST(0.2295 AS Decimal(18, 4)), N'ADMIN', CAST(N'2017-04-09 11:24:22.980' AS DateTime), N'ADMIN', CAST(N'2017-04-09 11:24:22.980' AS DateTime))
+INSERT [Master].[CustomCurrencyRate] ([CountryCode], [CurrencyCode], [StartDate], [EndDate], [ImportRate], [ExportRate], [CreatedBy], [CreatedOn], [ModifiedBy], [ModifiedOn]) VALUES (N'MY', N'MYR', CAST(N'2017-01-01 00:00:00.000' AS DateTime), CAST(N'2020-12-31 00:00:00.000' AS DateTime), CAST(1.0000 AS Decimal(18, 4)), CAST(1.0000 AS Decimal(18, 4)), N'ADMIN', CAST(N'2017-06-11 00:00:00.000' AS DateTime), N'ADMIN', CAST(N'2012-06-11 00:00:00.000' AS DateTime))
+INSERT [Master].[CustomCurrencyRate] ([CountryCode], [CurrencyCode], [StartDate], [EndDate], [ImportRate], [ExportRate], [CreatedBy], [CreatedOn], [ModifiedBy], [ModifiedOn]) VALUES (N'MY', N'NGN', CAST(N'2017-04-10 00:00:00.000' AS DateTime), CAST(N'2017-04-16 00:00:00.000' AS DateTime), CAST(0.0146 AS Decimal(18, 4)), CAST(0.0143 AS Decimal(18, 4)), N'ADMIN', CAST(N'2017-04-09 11:24:22.980' AS DateTime), N'ADMIN', CAST(N'2017-04-09 11:24:22.980' AS DateTime))
+INSERT [Master].[CustomCurrencyRate] ([CountryCode], [CurrencyCode], [StartDate], [EndDate], [ImportRate], [ExportRate], [CreatedBy], [CreatedOn], [ModifiedBy], [ModifiedOn]) VALUES (N'MY', N'NOK', CAST(N'2017-04-10 00:00:00.000' AS DateTime), CAST(N'2017-04-16 00:00:00.000' AS DateTime), CAST(0.5245 AS Decimal(18, 4)), CAST(0.5141 AS Decimal(18, 4)), N'ADMIN', CAST(N'2017-04-09 11:24:22.980' AS DateTime), N'ADMIN', CAST(N'2017-04-09 11:24:22.980' AS DateTime))
+INSERT [Master].[CustomCurrencyRate] ([CountryCode], [CurrencyCode], [StartDate], [EndDate], [ImportRate], [ExportRate], [CreatedBy], [CreatedOn], [ModifiedBy], [ModifiedOn]) VALUES (N'MY', N'NZD', CAST(N'2017-04-10 00:00:00.000' AS DateTime), CAST(N'2017-04-16 00:00:00.000' AS DateTime), CAST(3.1358 AS Decimal(18, 4)), CAST(3.0723 AS Decimal(18, 4)), N'ADMIN', CAST(N'2017-04-09 11:24:22.980' AS DateTime), N'ADMIN', CAST(N'2017-04-09 11:24:22.980' AS DateTime))
+INSERT [Master].[CustomCurrencyRate] ([CountryCode], [CurrencyCode], [StartDate], [EndDate], [ImportRate], [ExportRate], [CreatedBy], [CreatedOn], [ModifiedBy], [ModifiedOn]) VALUES (N'MY', N'PGK', CAST(N'2017-04-10 00:00:00.000' AS DateTime), CAST(N'2017-04-16 00:00:00.000' AS DateTime), CAST(1.3648 AS Decimal(18, 4)), CAST(1.3648 AS Decimal(18, 4)), N'ADMIN', CAST(N'2017-04-09 11:24:22.980' AS DateTime), N'ADMIN', CAST(N'2017-04-09 11:24:22.980' AS DateTime))
+INSERT [Master].[CustomCurrencyRate] ([CountryCode], [CurrencyCode], [StartDate], [EndDate], [ImportRate], [ExportRate], [CreatedBy], [CreatedOn], [ModifiedBy], [ModifiedOn]) VALUES (N'MY', N'PHP', CAST(N'2017-04-10 00:00:00.000' AS DateTime), CAST(N'2017-04-16 00:00:00.000' AS DateTime), CAST(0.0890 AS Decimal(18, 4)), CAST(0.0872 AS Decimal(18, 4)), N'ADMIN', CAST(N'2017-04-09 11:24:22.980' AS DateTime), N'ADMIN', CAST(N'2017-04-09 11:24:22.980' AS DateTime))
+INSERT [Master].[CustomCurrencyRate] ([CountryCode], [CurrencyCode], [StartDate], [EndDate], [ImportRate], [ExportRate], [CreatedBy], [CreatedOn], [ModifiedBy], [ModifiedOn]) VALUES (N'MY', N'PKR', CAST(N'2017-04-10 00:00:00.000' AS DateTime), CAST(N'2017-04-16 00:00:00.000' AS DateTime), CAST(0.0426 AS Decimal(18, 4)), CAST(0.0417 AS Decimal(18, 4)), N'ADMIN', CAST(N'2017-04-09 11:24:22.980' AS DateTime), N'ADMIN', CAST(N'2017-04-09 11:24:22.980' AS DateTime))
+INSERT [Master].[CustomCurrencyRate] ([CountryCode], [CurrencyCode], [StartDate], [EndDate], [ImportRate], [ExportRate], [CreatedBy], [CreatedOn], [ModifiedBy], [ModifiedOn]) VALUES (N'MY', N'QAR', CAST(N'2017-04-10 00:00:00.000' AS DateTime), CAST(N'2017-04-16 00:00:00.000' AS DateTime), CAST(1.2200 AS Decimal(18, 4)), CAST(1.2200 AS Decimal(18, 4)), N'ADMIN', CAST(N'2017-04-09 11:24:22.980' AS DateTime), N'ADMIN', CAST(N'2017-04-09 11:24:22.980' AS DateTime))
+INSERT [Master].[CustomCurrencyRate] ([CountryCode], [CurrencyCode], [StartDate], [EndDate], [ImportRate], [ExportRate], [CreatedBy], [CreatedOn], [ModifiedBy], [ModifiedOn]) VALUES (N'MY', N'SAR', CAST(N'2017-04-10 00:00:00.000' AS DateTime), CAST(N'2017-04-16 00:00:00.000' AS DateTime), CAST(1.1905 AS Decimal(18, 4)), CAST(1.1669 AS Decimal(18, 4)), N'ADMIN', CAST(N'2017-04-09 11:24:22.980' AS DateTime), N'ADMIN', CAST(N'2017-04-09 11:24:22.980' AS DateTime))
+INSERT [Master].[CustomCurrencyRate] ([CountryCode], [CurrencyCode], [StartDate], [EndDate], [ImportRate], [ExportRate], [CreatedBy], [CreatedOn], [ModifiedBy], [ModifiedOn]) VALUES (N'MY', N'SEK', CAST(N'2017-04-10 00:00:00.000' AS DateTime), CAST(N'2017-04-16 00:00:00.000' AS DateTime), CAST(0.5048 AS Decimal(18, 4)), CAST(0.4948 AS Decimal(18, 4)), N'ADMIN', CAST(N'2017-04-09 11:24:22.980' AS DateTime), N'ADMIN', CAST(N'2017-04-09 11:24:22.980' AS DateTime))
+INSERT [Master].[CustomCurrencyRate] ([CountryCode], [CurrencyCode], [StartDate], [EndDate], [ImportRate], [ExportRate], [CreatedBy], [CreatedOn], [ModifiedBy], [ModifiedOn]) VALUES (N'MY', N'SGD', CAST(N'2017-04-10 00:00:00.000' AS DateTime), CAST(N'2017-04-16 00:00:00.000' AS DateTime), CAST(3.1977 AS Decimal(18, 4)), CAST(3.1344 AS Decimal(18, 4)), N'ADMIN', CAST(N'2017-04-09 11:24:22.980' AS DateTime), N'ADMIN', CAST(N'2017-04-09 11:24:22.980' AS DateTime))
+INSERT [Master].[CustomCurrencyRate] ([CountryCode], [CurrencyCode], [StartDate], [EndDate], [ImportRate], [ExportRate], [CreatedBy], [CreatedOn], [ModifiedBy], [ModifiedOn]) VALUES (N'MY', N'THB', CAST(N'2017-04-10 00:00:00.000' AS DateTime), CAST(N'2017-04-16 00:00:00.000' AS DateTime), CAST(0.1294 AS Decimal(18, 4)), CAST(0.1269 AS Decimal(18, 4)), N'ADMIN', CAST(N'2017-04-09 11:24:22.980' AS DateTime), N'ADMIN', CAST(N'2017-04-09 11:24:22.980' AS DateTime))
+INSERT [Master].[CustomCurrencyRate] ([CountryCode], [CurrencyCode], [StartDate], [EndDate], [ImportRate], [ExportRate], [CreatedBy], [CreatedOn], [ModifiedBy], [ModifiedOn]) VALUES (N'MY', N'TWD', CAST(N'2017-04-10 00:00:00.000' AS DateTime), CAST(N'2017-04-16 00:00:00.000' AS DateTime), CAST(0.1475 AS Decimal(18, 4)), CAST(0.1446 AS Decimal(18, 4)), N'ADMIN', CAST(N'2017-04-09 11:24:22.980' AS DateTime), N'ADMIN', CAST(N'2017-04-09 11:24:22.980' AS DateTime))
+INSERT [Master].[CustomCurrencyRate] ([CountryCode], [CurrencyCode], [StartDate], [EndDate], [ImportRate], [ExportRate], [CreatedBy], [CreatedOn], [ModifiedBy], [ModifiedOn]) VALUES (N'MY', N'USD', CAST(N'2017-04-10 00:00:00.000' AS DateTime), CAST(N'2017-04-16 00:00:00.000' AS DateTime), CAST(4.4644 AS Decimal(18, 4)), CAST(4.3754 AS Decimal(18, 4)), N'ADMIN', CAST(N'2017-04-09 11:24:22.980' AS DateTime), N'ADMIN', CAST(N'2017-04-09 11:24:22.980' AS DateTime))
+INSERT [Master].[CustomCurrencyRate] ([CountryCode], [CurrencyCode], [StartDate], [EndDate], [ImportRate], [ExportRate], [CreatedBy], [CreatedOn], [ModifiedBy], [ModifiedOn]) VALUES (N'MY', N'VND', CAST(N'2017-04-10 00:00:00.000' AS DateTime), CAST(N'2017-04-16 00:00:00.000' AS DateTime), CAST(0.0002 AS Decimal(18, 4)), CAST(0.0002 AS Decimal(18, 4)), N'ADMIN', CAST(N'2017-04-09 11:24:22.980' AS DateTime), N'ADMIN', CAST(N'2017-04-09 11:24:22.980' AS DateTime))
+INSERT [Master].[CustomCurrencyRate] ([CountryCode], [CurrencyCode], [StartDate], [EndDate], [ImportRate], [ExportRate], [CreatedBy], [CreatedOn], [ModifiedBy], [ModifiedOn]) VALUES (N'MY', N'ZAR', CAST(N'2017-04-03 00:00:00.000' AS DateTime), CAST(N'2017-04-09 00:00:00.000' AS DateTime), CAST(0.3545 AS Decimal(18, 4)), CAST(0.3475 AS Decimal(18, 4)), N'ADMIN', CAST(N'2017-04-09 11:24:22.980' AS DateTime), N'ADMIN', CAST(N'2017-04-09 11:24:22.980' AS DateTime))

@@ -1,0 +1,210 @@
+﻿<div class="container" ng-controller="OrderTypeCntrl">
+    <div class="card">
+        <div  class="lv-header-alt clearfix m-b-5">
+            <h3  class="lvh-label">Order Type</h3>
+        </div>
+        <div  class="card-body card-padding p-t-25 p-b-25">
+            <div class="row">
+                <div class="col-xs-12 col-md-2">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <h4>Order Type Master</h4>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <table class="table table-striped table-vmiddle">                                
+                                <tbody>
+                                    <tr ng-repeat="item in OrderTypeList"><td><a ng-click="OrderTypeDetails(item.Code)">{{item.Code}}</a></td></tr>                                    
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-md-10">
+                    <div class="row" >
+                        <div class="col-xs-12">
+                            <div class="card">
+                                <div  class="lv-header-alt clearfix m-b-5">
+                                    <h3  class="lvh-label">Order Type</h3>
+                                </div>
+                                <div  class="card-body card-padding p-t-25 p-b-25">
+                                    <div class="row" >
+                                        <div class="col-xs-12 col-md-2">
+                                            <label>Code</label>
+                                        </div>
+                                        <div class="col-xs-12 col-md-10">
+                                            <input type="text" class="form-control input-sm" />
+                                        </div>
+                                    </div>
+                                    <div class="row" >
+                                        <div class="col-xs-12 col-md-2">
+                                            <label>Description</label>
+                                        </div>
+                                        <div class="col-xs-12 col-md-10">
+                                            <input type="text" class="form-control input-sm" />
+                                        </div>
+                                    </div>
+                                    <div class="row" >
+                                        <div class="col-xs-12 col-md-2">
+                                            <label>Booking Type</label>
+                                        </div>
+                                        <div class="col-xs-12 col-md-4">
+                                            <select class="form-control input-sm" ng-model="orderType.BookingType" ng-options="s.LookupCode as s.LookupDescription for s in lookUpVm.bookingType"></select>
+                                        </div>
+                                        <div class="col-xs-12 col-md-2">
+                                            <label>Booking Mode</label>
+                                        </div>
+                                        <div class="col-xs-12 col-md-4">
+                                            <select class="form-control input-sm" ng-model="orderType.ShipmentType" ng-options="s.LookupCode as s.LookupDescription for s in lookUpVm.bookingMode"></select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="box-footer">
+                                    <div class="row">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" >
+                        <div class="col-xs-12">
+                            <div class="card">
+                                <div  class="lv-header-alt clearfix m-b-5">
+                                    <h3  class="lvh-label">Movements & Rules</h3>
+                                    <div class="box-tools pull-right">
+                                        <button type="button" class="btn btn-box-tool" ng-click="AddMovementRules(-1);">
+                                            <i class="fa fa-plus"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div  class="card-body card-padding p-t-25 p-b-25">
+                                    <div class="row" >
+                                        <div class="col-xs-12">
+                                            <div class="well well-sm" style="min-height: 250px;">
+                                                <table class="table table-striped table-vmiddle">
+                                                    <thead >
+                                                        <tr>
+                                                            <th>#Action</th>  <th>Movement Code</th>
+                                                            <th>Seq.</th>
+                                                            <th>Release DM</th>
+                                                            <th>Gross Wgt.</th>
+                                                            <th>Seal No.</th>
+                                                            <th>EDI</th>
+                                                            
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>                                            
+                                        </div>
+                                    </div>
+                                </div>
+                               
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" >
+                        <div class="col-xs-12">
+                            <div class="card">
+                                <div  class="lv-header-alt clearfix m-b-5">
+                                    <h3  class="lvh-label">Charges</h3>
+                                    <div class="box-tools pull-right">
+                                        <button type="button" class="btn btn-box-tool" ng-click="AddCharges();">
+                                            <i class="fa fa-plus"></i>
+                                        </button>
+                                    </div>
+                                </div>                                
+                                <div  class="card-body card-padding p-t-25 p-b-25">
+                                    <div class="row" >
+                                        <div class="col-xs-12">
+                                            <div class="well well-sm" style="min-height: 250px;">
+                                                <table class="table table-striped table-vmiddle">
+                                                    <thead >
+                                                        <tr>
+                                                            <th>#Action</th>  <th>Charge Code</th>
+                                                            <th>Movement</th>
+                                                            <th>Payment</th>
+                                                            <th>Billed To</th>
+                                                            <th>Cargo Charge</th>                                                        
+                                                           
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>                                                        
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>                                            
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" >
+                        <div class="col-xs-12">
+                            <div class="card">
+                                <div  class="lv-header-alt clearfix m-b-5">
+                                    <h3  class="lvh-label">VAS Charges</h3>
+                                    <div class="box-tools pull-right">
+                                        <button type="button" class="btn btn-box-tool" ng-click="AddVASCharges();">
+                                            <i class="fa fa-plus"></i>
+                                        </button>
+                                    </div>
+                                </div>                                
+                                <div  class="card-body card-padding p-t-25 p-b-25">
+                                    <div class="row" >
+                                        <div class="col-xs-12">
+                                            <div class="well well-sm" style="min-height: 250px;">
+                                                <table class="table table-striped table-vmiddle">
+                                                    <thead >
+                                                        <tr>
+                                                            <th>#Action</th>  <th>Charge Code</th>
+                                                            <th>Payment Term</th>
+                                                            <th>Payment To</th>
+                                                            <th>Load at Gate In-MTY</th>                                                                                                                
+                                                           
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>                                                                                                          
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>                                            
+                                        </div>
+                                    </div>
+                                </div>
+                               
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+       
+    </div>
+</div>

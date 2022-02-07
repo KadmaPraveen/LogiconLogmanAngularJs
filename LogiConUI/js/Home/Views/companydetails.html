@@ -1,0 +1,430 @@
+﻿<div class="container" ng-controller="CompanyDetailsCntrl as Cntrl">
+    <style type="text/css">
+        .smpopover .popover-content {
+            min-width: 350px;
+        }
+
+        .Rejectcontainer {
+            width: 100%;
+        }
+    </style>
+
+    <script type="text/ng-template" id="reject-status.html">        
+        <div class="Rejectcontainer">
+            <form id="Cntrl.frmReject" name="Cntrl.frmReject" ng-class="{'submitted': RejectSubmitted}" ng-submit="Reject(remarks)" autocomplete="off" novalidate>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Remarks</label>
+                            <textarea ng-model="remarks" ng-required="true" md-maxlength="100" logicon-limit rows="3" md-select-on-focus style="overflow-y:auto"></textarea>
+                        </md-input-container>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 text-center">
+                        <button ng-click="isOpenRemarksPP = false" type="button" class="btn btn-default">Cancel</button>
+                 
+                        <button ng-click="DeleteSubmitted = true;" type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </script>
+    <script type="text/ng-template" id="additionalinfo.html">
+        
+        <div class="Rejectcontainer">
+            <form id="Cntrl.frmAddInfo" name="Cntrl.frmAddInfo" ng-class="{'submitted': AddInfoSubmitted}" ng-submit="AdditionalInfo(remarks)" autocomplete="off" novalidate>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Remarks</label>
+                            <textarea ng-model="remarks" ng-required="true" md-maxlength="100" logicon-limit rows="3" md-select-on-focus style="overflow-y:auto"></textarea>
+                        </md-input-container>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 text-center">
+                        <button ng-click="isOpenAddInfoPP = false" type="button" class="btn btn-default">Cancel</button>
+                    
+                        <button ng-click="DeleteSubmitted = true;" type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </script>
+    <div class="card">
+        <div class="lv-header-alt clearfix m-b-5">
+            <h2 class="lvh-label">Company Details</h2>
+        </div>
+        <div class="card-body card-padding p-t-25 p-b-25">
+            <div class="row">
+                <div class="col-xs-12 col-md-6">
+                    <div class="card">
+                        <div class="lv-header-alt clearfix m-b-5">
+                            <h2 class="lvh-label">Company Info.</h2>
+                        </div>
+                        <div class="card-body card-padding p-t-25 p-b-25">
+                            <div class="row" >
+                                <div class="col-xs-12 col-md-5">
+                                    <label>Company Name:</label>
+                                </div>
+                                <div class="col-xs-12 col-md-7">
+                                    <label>{{registeredCompany.CompanyName}}</label>
+                                </div>
+                            </div>
+                            <div class="row" >
+                                <div class="col-xs-12 col-md-5">
+                                    <label>Agent Code:</label>
+                                </div>
+                                <div class="col-xs-12 col-md-7">
+                                    <label>{{registeredCompany.AgentName}}</label>
+                                </div>
+                            </div>
+                            <div class="row" >
+                                <div class="col-xs-12 col-md-5">
+                                    <label>Organisation Type:</label>
+                                </div>
+                                <div class="col-xs-12 col-md-7">
+                                    <label>{{registeredCompany.OrganisationTypeDescription}}</label>
+                                </div>
+                            </div>
+                            <div class="row" >
+                                <div class="col-xs-12 col-md-5">
+                                    <label>Registration No.:</label>
+                                </div>
+                                <div class="col-xs-12 col-md-7">
+                                    <label>{{registeredCompany.RegistrationNo}}</label>
+                                </div>
+                            </div>
+
+                            <div class="row" >
+                                <div class="col-xs-12 col-md-5">
+                                    <label>GST Registration No.:</label>
+                                </div>
+                                <div class="col-xs-12 col-md-7">
+                                    <label>{{registeredCompany.GSTNo}}</label>
+                                </div>
+                            </div>
+                            <div class="row" >
+                                <div class="col-xs-12 col-md-5">
+                                    <label>GST Registration Date:</label>
+                                </div>
+                                <div class="col-xs-12 col-md-7">
+                                    <label>{{registeredCompany.GSTRegistrationDate | date : 'dd/MM/yyyy'}}</label>
+                                </div>
+                            </div>
+                            <div class="row" >
+                                <div class="col-xs-12 col-md-5">
+                                    <label>Dagangnet Account No.:</label>
+                                </div>
+                                <div class="col-xs-12 col-md-7">
+                                    <label>{{registeredCompany.CPAMAccountNo}}</label>
+                                </div>
+                            </div>
+                            <div class="row" >
+                                <div class="col-xs-12 col-md-5">
+                                    <label>OTP:</label>
+                                </div>
+                                <div class="col-xs-12 col-md-7">
+                                    <label>{{OTP}}</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-md-6">
+                    <div class="card">
+                        <div class="lv-header-alt clearfix m-b-5">
+                            <h2 class="lvh-label">Company Address</h2>
+                        </div>
+                        <div class="card-body card-padding p-t-25 p-b-25">
+                            <div class="row" >
+                                <div class="col-xs-12 col-md-5">
+                                    <label>Address:</label>Company Address
+                                </div>
+                                <div class="col-xs-12 col-md-7">
+                                    <label>{{registeredCompany.companyAddress.Address1}}</label>
+                                </div>
+                            </div>
+                            <div class="row" >
+                                <div class="col-xs-12 col-md-5">
+
+                                </div>
+                                <div class="col-xs-12 col-md-7">
+                                    <label>{{registeredCompany.companyAddress.Address2}}</label>
+                                </div>
+                            </div>
+                            <div class="row" >
+                                <div class="col-xs-12 col-md-5">
+
+                                </div>
+                                <div class="col-xs-12 col-md-7">
+                                    <label>{{registeredCompany.companyAddress.Address3}}</label>
+                                </div>
+                            </div>
+                            <div class="row" >
+                                <div class="col-xs-12 col-md-5">
+                                    <label>Postcode:</label>
+                                </div>
+                                <div class="col-xs-12 col-md-7">
+                                    <label>{{registeredCompany.companyAddress.PostCode}}</label>
+                                </div>
+                            </div>
+
+                            <div class="row" >
+                                <div class="col-xs-12 col-md-5">
+                                    <label>State:</label>
+                                </div>
+                                <div class="col-xs-12 col-md-7">
+                                    <label>{{registeredCompany.companyAddress.State}}</label>
+                                </div>
+                            </div>
+                            <div class="row" >
+                                <div class="col-xs-12 col-md-5">
+                                    <label>City / District:</label>
+                                </div>
+                                <div class="col-xs-12 col-md-7">
+                                    <label>{{registeredCompany.companyAddress.City}}</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+
+                <div class="col-xs-12 col-md-6">
+                    <div class="card">
+                        <div class="lv-header-alt clearfix m-b-5">
+                            <h2 class="lvh-label">Billing Contact Person</h2>
+                        </div>
+                        <div class="card-body card-padding p-t-25 p-b-25">
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <div class="row">
+                                        <div class="col-xs-6 col-md-3">
+                                            <label>Name:</label>
+                                        </div>
+                                        <div class="col-xs-6 col-md-3">
+                                            <label>{{registeredCompany.companyAddress.ContactPerson1}}</label>
+                                        </div>
+                                        <div class="col-xs-6 col-md-3">
+                                            <label>Designation:</label>
+                                        </div>
+                                        <div class="col-xs-6 col-md-3">
+                                            <label>{{registeredCompany.companyAddress.Designation1}}</label>
+                                        </div>
+                                    </div>
+                                    <div class="row ">
+                                        <div class="col-xs-6 col-md-3">
+                                            <label>Phone No.:</label>
+                                        </div>
+                                        <div class="col-xs-6 col-md-3">
+                                            <label>({{DailingCode1}}) {{registeredCompany.companyAddress.Phone1}}</label>
+                                        </div>
+                                        <div class="col-xs-6 col-md-3">
+                                            <label>Ext.:</label>
+                                        </div>
+                                        <div class="col-xs-6 col-md-3">
+                                            <label>{{registeredCompany.companyAddress.Extension1}}</label>
+                                        </div>
+                                    </div>
+                                    <div class="row ">
+                                        <div class="col-xs-6 col-md-3">
+                                            <label>Mob. Ph No.:</label>
+                                        </div>
+                                        <div class="col-xs-6 col-md-3">
+                                            <label>({{DailingCode2}}) {{registeredCompany.companyAddress.Mobile1}}</label>
+                                        </div>
+                                    </div>
+                                    <div class="row ">
+                                        <div class="col-xs-6 col-md-3">
+                                            <label>Email:</label>
+                                        </div>
+                                        <div class="col-xs-6 col-md-3">
+                                            <label>{{registeredCompany.companyAddress.ContactEmailID1}}</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-md-6">
+                    <div class="card">
+                        <div class="lv-header-alt clearfix m-b-5">
+                            <h2 class="lvh-label">Operations Contact Person</h2>
+                        </div>
+                        <div class="card-body card-padding p-t-25 p-b-25">
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <div class="row">
+                                        <div class="col-xs-6 col-md-3">
+                                            <label>Name:</label>
+                                        </div>
+                                        <div class="col-xs-6 col-md-3">
+                                            <label>{{registeredCompany.companyAddress.ContactPerson2}}</label>
+                                        </div>
+                                        <div class="col-xs-6 col-md-3">
+                                            <label>Designation:</label>
+                                        </div>
+                                        <div class="col-xs-6 col-md-3">
+                                            <label>{{registeredCompany.companyAddress.Designation2}}</label>
+                                        </div>
+                                    </div>
+                                    <div class="row ">
+                                        <div class="col-xs-6 col-md-3">
+                                            <label>Phone No.:</label>
+                                        </div>
+                                        <div class="col-xs-6 col-md-3">
+                                            <label>({{DailingCode3}}) {{registeredCompany.companyAddress.Phone2}}</label>
+                                        </div>
+                                        <div class="col-xs-6 col-md-3">
+                                            <label>Ext.:</label>
+                                        </div>
+                                        <div class="col-xs-6 col-md-3">
+                                            <label>{{registeredCompany.companyAddress.Extension2}}</label>
+                                        </div>
+                                    </div>
+                                    <div class="row ">
+                                        <div class="col-xs-6 col-md-3">
+                                            <label>Mob. Ph. No.:</label>
+                                        </div>
+                                        <div class="col-xs-6 col-md-3">
+                                            <label>({{DailingCode4}}) {{registeredCompany.companyAddress.Mobile2}}</label>
+                                        </div>
+                                    </div>
+                                    <div class="row ">
+                                        <div class="col-xs-6 col-md-3">
+                                            <label>Email:</label>
+                                        </div>
+                                        <div class="col-xs-6 col-md-3">
+                                            <label>{{registeredCompany.companyAddress.ContactEmailID2}}</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="card">
+                        <div class="lv-header-alt clearfix m-b-5">
+                            <h2 class="lvh-label">Billing Modules</h2>
+                            <!--<h2 class="lvh-label">Business Modules</h2>-->
+                        </div>
+
+                        <div class="card-body card-padding p-t-25 p-b-25">
+                            <div class="row">
+                                <div class="col-xs-6 col-md-3"  ng-repeat="item in registeredCompany.CompanyRegistrationTypeList">
+                                    <md-switch class="md-primary" ng-disabled="true" ng-model="item.isSelected" aria-label="item.ModuleDescription">
+                                        {{item.ModuleDescription}}
+                                        <span ng-if="item.isSelected">{{item.Rate}} RM</span>
+                                    </md-switch>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-vmiddle">
+                            <thead >
+                                <tr>
+                                    <th>No.</th>
+                                    <th>Name</th>
+                                    <th>Document Type</th>
+                                    <th>View</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="item in registeredCompany.RegisteredCompanyDocsList">
+                                    <td>{{$index + 1}}</td>
+                                    <td>{{item.FileName}}</td>
+                                    <td>{{item.RegistrationDocTypeDescription}}</td>
+                                    <td>
+                                        <button type="button"
+                                                ng-disabled="item.FileName == ''"
+                                                class="btn btn-primary waves-effect"
+                                                ng-click="downLoad(item.FileName, registeredCompany.CompanyID)">
+                                            <i class="zmdi zmdi-exposure"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="row" ng-if="registeredCompany.RegistrationStatus == 4062">
+                <div class="col-xs-12">
+                    <div uib-alert class="alert-danger" close="closeAlert($index)">
+                        User didn't verify the email
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="card">
+                        <div  class="lv-header-alt clearfix m-b-5">
+                            <h3 class="box-title text-center">Declaration</h3>
+                        </div>
+                        <div  class="card-body card-padding p-t-25 p-b-25">
+                            <div class="row" style="padding-right:10px;font-size:14px;color:black;font-weight:600;height:450px;overflow-y:scroll;">
+                                <div class="col-xs-12">
+                                    <p style="text-align:justify">
+                                        I/We <span style="text-decoration:underline;">{{registeredCompany.CompanyName}}</span><span ng-show="registeredCompany.CompanyName == null">______________________________________</span> (name of company) having company registration number <span ng-show="registeredCompany.RegistrationNo == null">______________________________________</span><span style="text-decoration:underline">{{registeredCompany.RegistrationNo}}</span>, hereby confirm that I/We have read,  understood and accepted the Terms and Conditions as attached herewith.<br />
+                                        <span style="font-weight:bold;text-decoration:underline;">Privacy Policy and Consent to Use Personal Data</span><br />
+                                        At DNeXPORT, we are committed to protecting your privacy as our valued customers and pledge to comply with the Personal Data Protection Act (“PDPA”) 2010.<br />
+                                        Please note that any personal information (“Personal Data”) in respect of commercial transactions that relates directly or indirectly to you as an individual, that had been collected, processed and retained by DNeXPORT is protected under our Privacy Policy, formulated in pursuant to the PDPA 2010.<br />
+                                        Please refer to our Privacy Policy at <a style="color:blue;text-decoration:underline" href="www.dnex.com.my/privacy-policy">www.dnex.com.my/privacy-policy</a> to understand how we do this and feel free to reach us at pdpa@dnex.com.my should you have any additional enquiries.
+                                        IMPORTANT: By submitting this form, you agree and consent to the use, processing and disclosure of your Personal Data by DNeXPORT for the purpose as described in this form.
+
+                                    </p>
+                                    <div ng-include="'Js/Default/Templates/declaration.html'"></div>
+                                </div>
+                                <div class="col-xs-12">
+                                    <div class="checkbox m-b-15">
+                                        <label>
+                                            <input type="checkbox" value="" ng-model="registeredCompany.IsDeclared" ng-disabled="true">
+                                            <i class="input-helper"></i>
+                                            I DECLARE THAT I HAVE READ AND UNDERSTOOD THE ABOVE DECLARATION
+                                        </label>
+                                    </div>
+                                    <!--<md-checkbox ng-model="registeredCompany.IsDeclared" ng-disabled="true">I DECLARE THAT I HAVE READ AND UNDERSTOOD THE ABOVE DECLARATION</md-checkbox>-->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row " ng-if="registeredCompany.RegistrationStatus != 4062">
+                <div class="col-xs-12 smpopover text-center">
+                    <button class="btn btn-primary m-r-5" type="button" ng-click="Approve()" ng-disabled="approvedisable">Approve</button>
+                
+                    <button popover-is-open="isOpenRejectPP" ng-click="isOpenRejectPP = true;" uib-popover-template="'reject-status.html'" class="btn btn-warning m-r-5" type="button">Reject</button>
+                
+                    <button popover-is-open="isOpenAddInfoPP" ng-click="isOpenAddInfoPP = true;" uib-popover-template="'additionalinfo.html'" class="btn btn-demo m-r-5 " type="button">Additional Info</button>
+                </div>
+            </div>
+            <div class="row ">
+                <div class="col-xs-12">
+                    <div class="pull-right">
+                        <button class="btn btn-default" type="button" data-ui-sref="registrationlist" data-ng-click="mactrl.sidebarStat($event)">
+                            <i class="fa fa-backward" aria-hidden="true"></i>&nbsp;Back
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="overlay" style="opacity:0.8;" ng-show="showLoading">
+            <i class="fa fa-refresh fa-spin"></i>
+        </div>
+    </div>
+</div>

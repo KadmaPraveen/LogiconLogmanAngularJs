@@ -1,0 +1,99 @@
+﻿<form id="frmTariffDetail" name="frmTariffDetail" ng-class="{'submitted':submitted}" ng-submit="SaveTariffDetail(tariffDetail)" novalidate>
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" ng-click="cancel();">&times;</button>
+        <h4 class="modal-title">Affiliation Tariff Detail</h4>
+    </div>
+    <div class="modal-body">
+        <div class="c-overflow" ng-style="{'max-height': iframeHeight - 80 + 'px'}" resize>
+            <div class="modalbodymain">
+                <div class="row">
+                    <input type="hidden" ng-model="tariffDetail.QuotationType" ng-init="tariffDetail.QuotationType = 26101" />
+                    <div class="col-xs-6 col-md-3">
+                        <label>Tariff Mode</label>
+                    </div>
+                    <div class="col-xs-6 col-md-3">
+                        <select ng-model="tariffDetail.TariffMode" ng-required="true"
+                                ng-options="s.Value as s.Text for s in LookupData.tariffModeList"
+                                ng-change="TariffModeChange()"></select>
+                    </div>
+                </div>
+                <div class="row" ng-if="IsModule">
+                    <div class="col-xs-6 col-md-3">
+                        <label>Module</label>
+                    </div>
+                    <div class="col-xs-6 col-md-3">
+                        <select ng-model="tariffDetail.Module"
+                                ng-options="s.Value as s.Text for s in LookupData.moduleList"
+                                ng-change="tariffDetail.ModuleDescription = (LookupData.moduleList | filter : {Value:tariffDetail.Module})[0].Text"
+                                ng-required="IsModule"></select>
+                    </div>
+                </div>
+                <div class="row" ng-if="IsTransaction">
+                    <div class="col-xs-6 col-md-3">
+                        <label>Transactions</label>
+                    </div>
+                    <div class="col-xs-6 col-md-3">
+                        <select ng-model="tariffDetail.Transactions"
+                                ng-options="s.Value as s.Text for s in LookupData.transDiscountType"
+                                ng-change="tariffDetail.TransactionsDescription = (LookupData.transDiscountType | filter : {Value:tariffDetail.Transactions})[0].Text"
+                                ng-required="IsTransaction"></select>
+                    </div>
+                </div>
+                <div class="row" ng-if="!IsModule">
+                    <div class="col-xs-6 col-md-3">
+                        <label>From</label>
+                    </div>
+                    <div class="col-xs-6 col-md-3">
+                        <input type="text"
+                               ng-model="tariffDetail.SlabFrom"
+                               ng-required="true"
+                               ng-maxlength="6"
+                               logicon-limit
+                               logicon-number />
+                    </div>
+                    <div class="col-xs-6 col-md-3">
+                        <label>To</label>
+                    </div>
+                    <div class="col-xs-6 col-md-3">
+                        <input id="SlabTo" type="text"
+                               ng-model="tariffDetail.SlabTo"
+                               ng-required="true"
+                               ng-disabled="tariffDetail.SlabFrom == null"
+                               ng-blur="SlabToBlur()"
+                               ng-maxlength="6"
+                               logicon-limit
+                               logicon-number />
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-6 col-md-3">
+                        <label>Rebate</label>
+                    </div>
+                    <div class="col-xs-6 col-md-3">
+                        <input type="text"
+                               ng-model="tariffDetail.Percentage"
+                               ng-required="true"
+                               ng-maxlength="18"
+                               logicon-decimal
+                               logicon-limit />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <label style="color:red !important" ng-if="ErrorMsg">Slab To Should be greater than Slab From</label>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+            <div class="modal-footer">
+                <div class="row">
+                    <div class="col-md-8"></div>
+                    <div class="col-md-4 pull-right">
+                        <button type="submit" class="btn btn-primary btn-sm" ng-click="submitted = true"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Save</button>
+                        <button type="button" class="btn btn-default btn-sm" ng-click="cancel();"><i class="fa fa-times" aria-hidden="true"></i>&nbsp;Close</button>
+                    </div>
+                </div>
+            </div>
+</form>

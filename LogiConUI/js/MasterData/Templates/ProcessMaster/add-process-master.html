@@ -1,0 +1,143 @@
+﻿<style type="text/css">
+    .md-select-menu-container, .md-backdrop-select {
+        z-index: 999999 !important;
+    }
+</style>
+<form name="frmAddProcessMaster" id="frmAddProcessMaster" ng-submit="AddProcessMaster(pm)" ng-class="{'submitted':submitted}" novalidate>
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" ng-click="cancel();">&times;</button>
+        <h4 class="modal-title">Add Process Master</h4>
+    </div>
+    <div class="modal-body">
+        <div class="c-overflow" ng-style="{'max-height': iframeHeight - 80 + 'px'}" resize>
+            <div class="modalbodymain">
+                <div class="row">
+                    <div class="col-xs-12 col-md-6">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Code</label>
+                            <input type="text"
+                                   ng-model="pm.Code" ng-required="true" ng-disabled="!isNew" ng-maxlength="15" logicon-limit ng-blur="IsProcessMasterExists(pm.Code)" />
+                        </md-input-container>
+                    </div>
+                    <div class="col-xs-12 col-md-6">
+
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Module</label>
+                            <md-select ng-model="pm.Module" ng-required="true" ng-change="ValidateModule(pm.Module);">
+                                <md-option ng-repeat="item in lookupData.moduleList" ng-value="item.Value">
+                                    {{item.Text}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <md-input-container class="md-block">
+                            <label>Description</label>
+                            <textarea ng-required="true" ng-model="pm.Description" md-maxlength="100" ng-disabled="!isNew"></textarea>
+                        </md-input-container>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-md-6">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Process Type</label>
+                            <md-select ng-model="pm.ProcessType" ng-required="isProcessType" ng-disabled="!isProcessType" ng-change="ValidateProcessType(pm.Module, pm.ProcessType);">
+                                <md-option ng-repeat="item in lookupData.processTypeList" ng-value="item.Value">
+                                    {{item.Text}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                    </div>
+                    <div class="col-xs-12 col-md-6">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Transport Mode</label>
+                            <md-select ng-model="pm.TransportMode" ng-required="isTransportMode" ng-disabled="!isTransportMode">
+                                <md-option ng-repeat="item in lookupData.transportModeList" ng-value="item.Value">
+                                    {{item.Text}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-md-6">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Pickup From</label>
+                            <md-select ng-model="pm.PickupFrom" ng-required="isPickupFrom" ng-disabled="!isPickupFrom">
+                                <md-option ng-repeat="item in lookupData.pUDOModeList" ng-value="item.Value">
+                                    {{item.Text}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                    </div>
+                    <div class="col-xs-12 col-md-6">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Freight Mode</label>
+                            <md-select ng-model="pm.FreightMode" ng-required="isFreightMode" ng-disabled="!isFreightMode">
+                                <md-option ng-repeat="item in lookupData.freightModeList" ng-value="item.Value">
+                                    {{item.Text}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-md-6">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Deliver To</label>
+                            <md-select ng-model="pm.DeliveryTo" ng-required="isDeliveryTo" ng-disabled="!isDeliveryTo">
+                                <md-option ng-repeat="item in lookupData.pUDOModeList" ng-value="item.Value">
+                                    {{item.Text}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                    </div>
+                    <div class="col-xs-12 col-md-6">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <md-switch class="md-primary" aria-label="Require Planning" ng-init="pm.IsPlanningRequired = false" ng-model="pm.IsPlanningRequired" ng-disabled="!isRequiredPlanning">Require Planning</md-switch>
+                        </md-input-container>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-md-6">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Empty / Full</label>
+                            <md-select ng-model="pm.EFIndicator" ng-required="isEmptyFull" ng-disabled="!isEmptyFull">
+                                <md-option ng-repeat="item in lookupData.eFIndicatorList" ng-value="item.Value">
+                                    {{item.Text}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                    </div>
+                    <div class="col-xs-12 col-md-6">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <md-switch class="md-primary" aria-label="Staging" ng-init="pm.IsStagingRequired = false" ng-model="pm.IsStagingRequired" ng-disabled="!isRequiredStaging">Staging</md-switch>
+                        </md-input-container>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-md-6">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Movement Indicator</label>
+                            <md-select ng-model="pm.MovementIndicator" ng-required="isMovementIndicator" ng-disabled="!isMovementIndicator">
+                                <md-option ng-repeat="item in lookupData.mvmIndicatorList" ng-value="item.Value">
+                                    {{item.Text}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+            <div class="modal-footer">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <button type="submit" class="btn btn-primary btn-sm m-l-15" ng-click="submitted = true"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Save</button>
+                        <button type="button" class="btn btn-default btn-sm m-r-15" ng-click="cancel();"><i class="fa fa-times" aria-hidden="true"></i>&nbsp;Close</button>
+                    </div>
+                </div>
+            </div>
+</form> 

@@ -1,0 +1,121 @@
+﻿<form id="frmCustomerInvoice" name="frmCustomerInvoice" ng-class="{'submitted':submitted}" ng-submit="SaveCustomerInvoice(ci)" novalidate>
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" ng-click="cancel();">&times;</button>
+        <h4 class="modal-title">Generate Invoice</h4>
+    </div>
+    <div class="modal-body">
+        <div class="c-overflow" ng-style="{'max-height': iframeHeight - 80 + 'px'}" resize >
+            <div class="modalbodymain">
+
+                <div class="row">
+                    <div class="col-xs-12 col-md-2">
+                        <label>Charge Code</label>
+                    </div>
+                    <div class="col-xs-12 col-md-6">
+                        <input type="text"
+                               class="search-icon"
+                               placeholder="Search Charge Code"
+                               ng-model="ci.ChargeCode"
+                               typeahead-min-length="3"
+                               uib-typeahead="d.Text as d.Text for d in ChargeCodeResults($viewValue)"
+                               typeahead-loading="loading"
+                               typeahead-wait-ms="1000"
+                               ng-required="required"
+                               typeahead-on-select="ChargeCodeSelected($item, 'ChargeCode')" />
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-12 col-md-2">
+                        <label>Billing Unit</label>
+                    </div>
+                    <div class="col-xs-12 col-md-2">
+                        <select ng-model="ci.BillingUnit"
+                                ng-required="required"
+                                ng-options="s.Value as s.Text for s in lookupData.billingUnitList"
+                                ng-change="ci.BillingUnitDescription=(lookupData.billingUnitList | filter : {Value:cs.BillingUnit})[0].Text"></select>
+                    </div>
+                    <div class="col-xs-12 col-md-2">
+                        <label>Currency</label>
+                    </div>
+                    <div class="col-xs-12 col-md-2">
+                        <select ng-model="ci.CurrencyCode"
+                                ng-required="required"
+                                ng-options="s.Value as s.Text for s in lookupData.currencyList"
+                                ng-change="SelectCurrencyCode(ci.CurrencyCode)"></select>
+                        <!--ng-change="ci.CurrencyCodeDescription=(lookupData.currencyList | filter : {Value:cs.CurrencyCode})[0].Text">-->
+                    </div>
+                    <div class="col-xs-12 col-md-2">
+                        <label>Amount With Tax</label>
+                    </div>
+                    <div class="col-xs-12 col-md-2">
+                        <label ng-model="ci.TotalAmount">{{ci.TotalAmount}} </label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-md-2">
+                        <label>Quantity</label>
+                    </div>
+                    <div class="col-xs-12 col-md-2">
+                        <input type="text" class="form-control input-sm logiconNumber" ng-model="ci.Qty" ng-change="CaliculateAmounts()" ng-required="required" />
+                    </div>
+                    <div class="col-xs-12 col-md-2">
+                        <label>Exchange Amount</label>
+                    </div>
+                    <div class="col-xs-12 col-md-2">
+
+                        <label class="control-label logiconDecimal" ng-model="ci.ExRate">{{ci.ExRate}} </label>
+                    </div>
+                    <div class="col-xs-12 col-md-2">
+                        <label>Local Amount</label>
+                    </div>
+                    <div class="col-xs-12 col-md-2">
+                        <label ng-model="ci.LocalAmount">{{ci.LocalAmount}} </label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-md-2">
+                        <label>Unit Price</label>
+                    </div>
+                    <div class="col-xs-12 col-md-2">
+                        <input type="text" class="form-control input-sm logiconDecimal" ng-model="ci.Price" ng-change="CaliculateAmounts()" ng-required="required" />
+                    </div>
+                    <div class="col-xs-12 col-md-2">
+                        <label>Tax Amount</label>
+                    </div>
+                    <div class="col-xs-12 col-md-2">
+                        <label ng-model="ci.TaxAmount">{{ci.TaxAmount}} </label>
+                    </div>
+                </div>
+                <!-- <div class="row" >
+                     <div class="col-xs-12 col-md-2">
+                         <label>GST Code</label>
+                     </div>
+                     <div class="col-xs-12 col-md-2">
+                         <input type="text"  ng-model="ci.OutPutGSTDescription"/>
+                     </div>
+                     <div class="col-xs-12 col-md-4">
+                         <input type="text"  ng-model="ci.InPutGSTDescription"/>
+                     </div>
+                 </div>-->
+                <div class="row">
+                    <div class="col-xs-12 col-md-2">
+                        <label>Remarks</label>
+                    </div>
+                    <div class="col-xs-12 col-md-9">
+                        <textarea></textarea>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+            <div class="modal-footer">
+                <div class="row">
+                    <div class="col-xs-12 col-md-9"></div>
+                    <div class="col-md-3 pull-right">
+                        <button class="btn btn-primary btn-sm" ng-click="submitted = true"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Save</button>
+                        <button class="btn btn-default btn-sm" ng-click="cancel();"><i class="fa fa-times" aria-hidden="true"></i>&nbsp;Close</button>
+                    </div>
+                </div>
+            </div>
+</form>

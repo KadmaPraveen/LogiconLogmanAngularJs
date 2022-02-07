@@ -1,0 +1,73 @@
+﻿<form id="frmClause" name="frmClause" ng-class="{'submitted':submitted}" ng-submit="SaveClause(cl)" novalidate>
+    <style type="text/css">
+        .box.box-solid.box-default {
+            border: 0px solid #d2d6de;
+        }
+    </style>
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" ng-click="cancel();">&times;</button>
+        <h4 class="modal-title">Clause</h4>
+    </div>
+    <div class="modal-body">
+
+        <div class="c-overflow" ng-style="{'max-height': iframeHeight - 80 + 'px'}" resize>
+            <div class="modalbodymain">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Clause Code</label>
+                                    <md-select ng-model="cl.ClauseCode" name="cl.ClauseCode"
+                                               ng-required="true" ng-change="cl.ClauseText=(lookUpData.clauseTypeList | filter : {Value:cl.ClauseCode})[0].ClauseText">
+                                        <md-option md-option-empty></md-option>
+                                        <md-option ng-repeat="item in lookUpData.clauseTypeList" ng-value="item.Value">
+                                            {{item.Text}}
+                                        </md-option>
+                                    </md-select>
+                                </md-input-container>
+
+                                <!--<div class="form-group fg-float">
+                                    <div class="fg-line">
+                                        <select class="form-control input-sm"
+                                                ng-model="cl.ClauseCode" name="cl.ClauseCode"
+                                                ng-required="true"
+                                                ng-options="s.Value as s.Text for s in lookUpData.clauseTypeList"
+                                                ng-change="cl.ClauseText=(lookUpData.clauseTypeList | filter : {Value:cl.ClauseCode})[0].ClauseText"></select>
+                                        <label class="fg-label">Clause Code</label>
+                                    </div>
+                                </div>-->
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <md-input-container class="md-block">
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>Clause Text</label>
+                                        <textarea rows="5" ng-model="cl.ClauseText" name="cl.ClauseText"></textarea>
+                                    </md-input-container>
+
+                                    <!--<div class="form-group fg-float">
+                                        <div class="fg-line">
+                                            <textarea class="form-control input-sm" rows="5" ng-model="cl.ClauseText" name="cl.ClauseText"></textarea>
+                                            <label class="fg-label">Clause Text</label>
+                                        </div>
+                                    </div-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+</div>
+            <div class="modal-footer">
+                <div class="row">
+                    <div class="col-xs-12 col-md-6"></div>
+                    <div class="col-md-6 pull-right">
+                        <button class="btn btn-primary btn-sm" ng-click="submitted = true;" type="submit"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Save</button>
+                        <button type="button" class="btn btn-default btn-sm" ng-click="cancel();"><i class="fa fa-times" aria-hidden="true"></i>&nbsp;Close</button>
+                    </div>
+                </div>
+            </div>
+
+</form>

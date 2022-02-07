@@ -1,0 +1,227 @@
+﻿
+<form id="frmContainer" name="frmContainer" ng-class="{'submitted':submitted}" ng-submit="SaveContainer(con)" novalidate>
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" ng-click="cancel();">&times;</button>
+        <h4 class="modal-title">Add Container</h4>
+    </div>
+    <div class="modal-body">
+        <div class="c-overflow" ng-style="{'max-height': iframeHeight - 80 + 'px'}" resize>
+            <div class="modalbodymain">
+                <div class="row ">
+                    <div class="col-xs-12 col-md-6">
+                        <div class="row ">
+                            <div class="col-xs-12 col-md-8">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Container No.</label>
+                                    <input type="text"
+                                           ng-model="con.ContainerNo"
+                                           name="ContainerNo"
+                                           ng-required="IsContainerMandatory"
+                                           ng-pattern="ValidateContainerPattern"
+                                           ng-maxlength="11"
+                                           ng-minlength="11" logicon-limit />
+                                    <div ng-show="frmContainer.ContainerNo.$error.pattern" role="alert">
+                                        <div style="color:red">
+                                            Container No. is not valid
+                                        </div>
+                                    </div>
+                                </md-input-container>
+                            </div>
+                            <div class="col-md-4 col-xs-12 ">
+                                <label>
+                                    <input type="checkbox" value=""
+                                           aria-label="Containerised Cargo ?"
+                                           ng-model="con.IsSOC"
+                                           name="con.IsSOC"
+                                           ng-click="SOCChecked()">
+                                    <i class="input-helper"></i>
+                                    SOC Type ?
+                                </label>
+                            </div>
+                        </div>
+                        <div class="row ">
+                            <div class="col-xs-12 col-md-6">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Size</label>
+                                    <md-select ng-model="con.Size" ng-change="sizeChanged()" ng-required="true">
+                                        <md-option ng-repeat="item in lookupData.sizeList" ng-value="item.Value">
+                                            {{item.Text}}
+                                        </md-option>
+                                    </md-select>
+                                </md-input-container>
+                            </div>
+                            <div class="col-xs-12 col-md-6">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Type</label>
+                                    <md-select ng-model="con.Type"
+                                               ng-required="true"
+                                               ng-disabled="con.Size == null">
+                                        <md-option ng-repeat="item in lookupData.TypeList" ng-value="item.Value">
+                                            {{item.Text}}
+                                        </md-option>
+                                    </md-select>
+                                </md-input-container>
+                            </div>
+                        </div>
+
+                        <div class="row ">
+                            <div class="col-xs-12">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Seal No.</label>
+                                    <input type="text"
+                                           ng-model="con.SealNo"
+                                           ng-maxlength="20"
+                                           logicon-limit />
+                                </md-input-container>
+                            </div>
+                        </div>
+                        <div class="row ">
+                            <div class="col-xs-12 ">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Declared Gross Weight (KGM)</label>
+                                    <input type="text"
+                                           ng-model="con.GrossWeight"
+                                           logicon-decimal
+                                           ng-maxlength="18"
+                                           logicon-limit />
+                                </md-input-container>
+                            </div>
+                        </div>
+                        <div class="row ">
+                            <div class="col-xs-12">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Container Grade</label>
+                                    <md-select ng-model="con.ContainerGrade">
+                                        <md-option md-option-empty></md-option>
+                                        <md-option ng-repeat="item in lookupData.conGradeTypeList" ng-value="item.Value">
+                                            {{item.Text}}
+                                        </md-option>
+                                    </md-select>
+                                </md-input-container>
+                            </div>
+                        </div>
+                        <div class="row ">
+                            <div class="col-xs-12 col-md-6">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Temperature</label>
+                                    <input type="number"
+                                           ng-model="con.Temprature"
+                                           ng-maxlength="10"
+                                           logicon-limit
+                                           string-to-number />
+                                </md-input-container>
+                            </div>
+                            <div class="col-xs-12 col-md-6">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Temperature Units</label>
+                                    <md-select ng-model="con.TemperatureMode">
+                                        <md-option md-option-empty></md-option>
+                                        <md-option ng-repeat="item in lookupData.tempratureTypeList" ng-value="item.Value">
+                                            {{item.Text}}
+                                        </md-option>
+                                    </md-select>
+                                </md-input-container>
+                            </div>
+                        </div>
+                        <div class="row ">
+                            <div class="col-xs-12">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Cargo Handling</label>
+                                    <input type="text"
+                                           ng-model="con.CargoHandling"
+                                           ng-maxlength="20"
+                                           logicon-limit />
+                                </md-input-container>
+                            </div>
+                        </div>
+                        <!--<div class="row ">
+                            <div class="col-xs-12">
+                                <md-input-container class="md-block">
+                                    <label>Marks and Numbers</label>
+                                    <textarea ng-model="con.Remarks" md-maxlength="100" logicon-limit rows="3" md-select-on-focus style="overflow-y:auto"></textarea>
+                                </md-input-container>
+                            </div>
+                        </div>-->
+                    </div>
+                    <div class="col-xs-12 col-md-6">
+                        <div class="card">
+                            <div class="card-header ch-alt">
+                                <h2>VGM</h2>
+                            </div>
+                            <div class="card-body card-padding p-t-25 p-b-25">
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                            <label>Verified Gross Mass (KGM)</label>
+                                            <input type="text"
+                                                   ng-model="con.VGM"
+                                                   logicon-decimal
+                                                   ng-maxlength="18"
+                                                   logicon-limit />
+                                        </md-input-container>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                            <label>Date Of Weighing</label>
+                                            <input mdc-datetime-picker="" class="date-icon" date="true" time="false" type="text" id="dateFrom" format="{{dateFormat}}"
+                                                   max-date="maxdate" ng-model="con.WeighingDate"
+                                                   readonly="readonly">
+
+                                        </md-input-container>
+                                        <div class="row">
+                                            <div class="col-xs-12">
+                                                <md-input-container class="md-block" flex-gt-sm>
+                                                    <label>Place of Weighing</label>
+                                                    <input type="text"
+                                                           ng-model="con.WeighingPlace"
+                                                           ng-maxlength="50"
+                                                           logicon-limit />
+                                                </md-input-container>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-12">
+                                                <md-input-container class="md-block" flex-gt-sm>
+                                                    <label>SOLAS Method</label>
+                                                    <md-select ng-model="con.SOLASMethod">
+                                                        <md-option md-option-empty></md-option>
+                                                        <md-option ng-repeat="item in lookupData.solasList" ng-value="item.Value">
+                                                            {{item.Text}}
+                                                        </md-option>
+                                                    </md-select>
+                                                </md-input-container>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-12">
+                                                <md-input-container class="md-block" flex-gt-sm>
+                                                    <label>Certification No.</label>
+                                                    <input type="text"
+                                                           ng-model="con.CertificateNo"
+                                                           ng-maxlength="50"
+                                                           logicon-limit />
+                                                </md-input-container>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+     <div class="modal-footer">
+            <div class="row">
+                <div class="col-xs-6 col-md-4 col-md-offset-8 " style="margin-bottom: 10px; text-align:right;margin-right:10px;">
+                    <button class="btn btn-primary" ng-click="submitted = true" ng-show="!IsWebOrder"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Save</button>
+                    <!--has-Securable data-securable='Order Entry.Save'-->
+                    <button type="button" class="btn btn-default btn-sm" ng-click="cancel();"><i class="fa fa-times" aria-hidden="true"></i>&nbsp;Close</button>
+                </div>
+            </div>
+            </div>
+       
+</form>

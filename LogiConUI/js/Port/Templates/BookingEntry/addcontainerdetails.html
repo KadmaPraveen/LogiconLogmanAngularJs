@@ -1,0 +1,261 @@
+﻿<form id="frmBookingConInfo" name="frmBookingConInfo" ng-class="{'submitted': submitted }" ng-submit="SaveBookingContainer(bc);" novalidate>
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" ng-click="cancel();">&times;</button>
+        <h4 class="modal-title">Container Info</h4>
+    </div>
+    <div class="modal-body">
+        <div class="c-overflow" ng-style="{'max-height': iframeHeight - 80 + 'px'}" resize >
+            <div class="modalbodymain">
+
+                <div class="row ">
+                    <div class="col-xs-12 col-md-6">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Container No.</label>
+
+                            <input type="text" ng-model="bc.ContainerNo" ng-required="true" ng-minlength="11" ng-maxlength="11" logicon-limit />
+                        </md-input-container>
+                    </div>
+                    <div class="col-xs-12 col-md-6">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Container Class</label>
+                            <md-select ng-model="bc.ContainerGrade">
+                                <md-option ng-repeat="item in lookUpData.ContainerClassList" ng-value="item.Value">
+                                    {{item.Text}}
+                                </md-option>
+                            </md-select>
+                            <!--<select ng-model="bc.ContainerGrade"
+                                    ng-options="s.Value as s.Text for s in lookUpData.ContainerClassList"></select>-->
+                        </md-input-container>
+                    </div>
+                </div>
+                <div class="row ">
+                    <div class="col-xs-12 col-md-6">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Container Status</label>
+                            <md-select ng-model="bc.EFIndicator" ng-required="true">
+                                <md-option ng-repeat="item in lookUpData.efIndicatorList" ng-value="item.Value">
+                                    {{item.Text}}
+                                </md-option>
+                            </md-select>
+                            <!--<select ng-model="bc.Status"
+                                    ng-options="s.Value as s.Text for s in lookUpData.efIndicatorList" ng-required="true"></select>-->
+                        </md-input-container>
+                    </div>
+
+                    <div class="col-xs-6 col-md-3">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Size</label>
+                            <md-select ng-change="sizeChanged()"
+                                       ng-model="bc.Size" ng-required="true">
+                                <md-option ng-repeat="item in lookUpData.SizeList" ng-value="item.Value">
+                                    {{item.Text}}
+                                </md-option>
+                            </md-select>
+                            <!--<select ng-change="sizeChanged()"
+                                    ng-model="bc.Size"
+                                    ng-options="s.Value as s.Text for s in lookUpData.SizeList" ng-required="true"></select>-->
+                        </md-input-container>
+                    </div>
+                    <div class="col-xs-6 col-md-3">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Size Type</label>
+                            <md-select ng-model="bc.Type"
+                                       ng-disabled="bc.Size == null" ng-required="true">
+                                <md-option ng-repeat="item in lookUpData.TypeList" ng-value="item.Value">
+                                    {{item.Text}}
+                                </md-option>
+                            </md-select>
+                            <!--<select ng-model="bc.Type"
+                                    ng-disabled="bc.Size == null"
+                                    ng-options="s.Text as s.Text for s in lookUpData.TypeList" ng-required="true"></select>-->
+                        </md-input-container>
+                    </div>
+                </div>
+
+                <div class="row ">
+                    <div class="col-xs-12 col-md-3">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>IMO No.</label>
+                            <md-select ng-model="bc.IMOCode">
+                                <md-option ng-repeat="item in lookUpData.IMOCodeList" ng-value="item.Value">
+                                    {{item.Text}}
+                                </md-option>
+                            </md-select>
+                            <!--<select ng-model="bc.IMOCode"
+                                    ng-options="s.Value as s.Text for s in lookUpData.IMOCodeList"></select>-->
+                        </md-input-container>
+                    </div>
+                    <div class="col-xs-6 col-md-3">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>UN No.</label>
+                            <input type="text" ng-model="bc.UNNo" />
+                        </md-input-container>
+                    </div>
+                    <div class="col-xs-6 col-md-6">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Cargo Category</label>
+                            <md-select ng-model="bc.CargoCategory">
+                                <md-option ng-repeat="item in lookUpData.CargoCategoryList" ng-value="item.Value">
+                                    {{item.Text}}
+                                </md-option>
+                            </md-select>
+                            <!--<select ng-model="bc.CargoCategory"
+                                    ng-options="s.Value as s.Text for s in lookUpData.CargoCategoryList"></select>-->
+                        </md-input-container>
+                    </div>
+                </div>
+                <div class="row ">
+                    <div class="col-xs-6 col-md-3">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Weight</label>
+
+                            <input type="text" ng-model="bc.Weight" logicon-decimal />
+                        </md-input-container>
+                    </div>
+                    <div class="col-xs-6 col-md-3">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Volume</label>
+                            <input type="text" ng-model="bc.Volume" logicon-decimal />
+                        </md-input-container>
+                    </div>
+                    <div class="col-xs-12 col-md-6">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Pickup Date</label>
+                            <input mdc-datetime-picker="" class="date-icon" date="true" time="false" type="text" id="DateFrom" format="{{dateFormat}}"
+                                   min-date="date" ng-model="bc.PickupDate">
+                        </md-input-container>
+                        <!--<div class="dropdown">
+                            <a class="dropdown-toggle" id="PickupDate" role="button" data-toggle="dropdown">
+                                <div class="input-group">
+                                    <input type="text"
+                                           class="form-control input-sm datepicker"
+                                           ng-model="bc.PickupDate"
+                                           date-time-input="{{dateFormat}}">
+                                    <span class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true"></i></span>
+                                </div>
+                            </a>
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                <datetimepicker ng-model="bc.PickupDate"
+                                                data-datetimepicker-config="{ dropdownSelector: '#PickupDate', startView:'day', minView:'day' }" />
+                            </ul>
+                        </div>-->
+                    </div>
+                </div>
+                <div class="row ">
+                    <div class="col-xs-6 col-md-3">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Temperature</label>
+
+                            <input type="number" ng-model="bc.Temperature" />
+                        </md-input-container>
+                    </div>
+                    <div class="col-xs-6 col-md-3">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Temperature Units</label>
+                            <md-select ng-model="bc.TempratureType">
+                                <md-option ng-repeat="item in lookUpData.TmpTypeList" ng-value="item.Value">
+                                    {{item.Text}}
+                                </md-option>
+                            </md-select>
+                            <!--<select ng-model="bc.TempratureMode"
+                                    ng-options="s.Value as s.Text for s in lookUpData.TmpTypeList">
+                                <option value=""></option>
+                            </select>-->
+                        </md-input-container>
+                    </div>
+                    <div class="col-xs-12 col-md-6">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Agent Seal</label>
+
+                            <input type="text" ng-model="bc.SealNo1" />
+                        </md-input-container>
+                    </div>
+                </div>
+                <div class="row ">
+                    <div class="col-xs-6 col-md-3">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Vent</label>
+
+                            <input type="text" ng-model="bc.Vent" />
+                        </md-input-container>
+                    </div>
+                    <div class="col-xs-6 col-md-3">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Vent  Type</label>
+                            <md-select ng-model="bc.VentType">
+                                <md-option ng-repeat="item in lookUpData.VentTypeList" ng-value="item.Value">
+                                    {{item.Text}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                        <!--<select ng-model="bc.VentMode"
+                                ng-options="s.Value as s.Text for s in lookUpData.VentTypeList">
+                            <option value=""></option>
+                        </select>-->
+                    </div>
+                    <div class="col-xs-12 col-md-6">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Customer Seal</label>
+
+                            <input type="text" ng-model="bc.SealNo2" />
+                        </md-input-container>
+                    </div>
+
+                </div>
+                <div class="row ">
+                    <div class="col-xs-12 col-md-6">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Verified Gross Mass</label>
+
+                            <input type="text" ng-model="bc.VGM" logicon-decimal ng-maxlength="18" logicon-limit />
+                        </md-input-container>
+                    </div>
+
+                    <div class="col-xs-12 col-md-6">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Stowage Cell</label>
+
+                            <input type="text" ng-model="bc.StowageCell" />
+                        </md-input-container>
+                    </div>
+                </div>
+                <div class="row ">
+                    <div class="col-xs-12">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Commodity</label>
+
+                            <input type="text" ng-model="bc.Commodity" />
+                        </md-input-container>
+                    </div>
+                </div>
+                <div class="row ">
+                    <div class="col-xs-12">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Special Instruction</label>
+
+                            <textarea ng-model="bc.SpecialInstructions" md-maxlength="100" logicon-limit rows="3" md-select-on-focus style="overflow-y:auto"></textarea>
+                        </md-input-container>
+                    </div>
+                </div>
+                <div class="row ">
+                    <div class="col-xs-12">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Remarks</label>
+
+                            <textarea ng-model="bc.Remarks" md-maxlength="100" logicon-limit rows="3" md-select-on-focus style="overflow-y:auto"></textarea>
+                        </md-input-container>
+                    </div>
+                </div>
+            </div>
+           </div>
+</div>
+             <div class="modal-footer">
+                <div class="row">
+                    <div class="col-xs-12 col-md-9"></div>
+                    <div class="col-md-3 pull-right">
+                        <button class="btn btn-primary" type="submit" ng-click="submitted = true;"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Save</button>
+                        <button type="button" class="btn btn-default btn-sm" ng-click="cancel();"><i class="fa fa-times" aria-hidden="true"></i>&nbsp;Close</button>
+                    </div>
+                </div>
+            </div>
+</form>

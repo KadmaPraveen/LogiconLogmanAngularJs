@@ -1,0 +1,63 @@
+<ul class="header-inner clearfix">
+
+    <li id="menu-trigger" data-target="mainmenu" data-toggle-sidebar data-model-left="mactrl.sidebarToggle.left" data-ng-class="{ 'open': mactrl.sidebarToggle.left === true }"  ng-if="companyType !=null && companyType !=''">
+        <div class="line-wrap">
+            <div class="line top"></div>
+            <div class="line center"></div>
+            <div class="line bottom"></div>
+        </div>
+    </li>
+   
+
+    <li class="logo">
+        <a ng-href="{{showLinks ? (companyType == 'OWNER' ? '#/owner' : '#/user') : 'default.html'}}">
+            <img src="../img/logman-logo.png" width="125" />
+        </a>
+    </li>
+ 
+    <li class="pull-right profile-icon" ng-if="showLinks">
+        <ul class="top-menu">            
+            <li id="toggle-width">
+                <div class="toggle-switch">
+                    <input id="tw-switch" type="checkbox" hidden="hidden" data-change-layout="mactrl.layoutType">
+                    <label for="tw-switch" class="ts-helper"></label>
+                </div>
+            </li>
+            <li class="dropdown hidden-xs " uib-dropdown >
+                <a uib-dropdown-toggle href=""  >
+                    <span ng-if="logo!=undefined && logo!=''">
+                        <img ng-src="{{logo}}" class="m-l-5" style="height: 30px; margin-top: 5px; vertical-align: top; width: 30px; border-radius:5px; border:none !important" />
+                    </span>
+
+                    <b class="f-16" style="padding:9px 5px; display:inline-block;">{{userName}}</b> 
+                </a>
+                <div class="dropdown-menu pull-right dropdown-menu-lg">
+                    <div class="listview">
+                        <div class="lv-header">
+                            <br />
+                            {{userName}}
+                            <br /><br/>
+                            {{userDesignation}}
+                        </div>
+                        <div class="lv-body">
+                            <div class="lv-item">
+                                <div class="center text-center"> <img src="../img/user2-160x160.jpg" style="width:40%;" class="img-circle" alt="User Image"></div>
+                                <a class="lv-footer f-16" href="#" data-ng-click="logout()">Sign out</a>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </li>
+   
+</ul>
+
+<!-- Top Search Content -->
+<div id="top-search-wrap">
+    <div class="tsw-inner">
+        <i id="top-search-close" class="zmdi zmdi-arrow-left" data-ng-click="hctrl.closeSearch()"></i>
+        <input type="text">
+    </div>
+</div>

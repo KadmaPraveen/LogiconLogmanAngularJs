@@ -1,0 +1,306 @@
+﻿<div class="row" >
+    <div class="col-md-8">
+        <div class="row" >
+            <div class="col-xs-12 col-md-2">
+                <label>Principal/Vendor</label>
+            </div>
+            <div class="col-xs-12 col-md-4">
+                <div class="input-group">
+                    <select ></select>
+                    <span class="input-group-btn dropdown">
+                        <button type="button" class="btn btn-default btn-sm dropdown-toggle" aria-haspopup="true" aria-expanded="false"><i class="fa fa-plus" aria-hidden="true"></i></button>
+                    </span>
+                </div>
+            </div>
+            <div class="col-xs-12 col-md-6">
+                <input type="text"  />
+            </div>
+        </div>
+        <div class="row" >
+            <div class="col-xs-12 col-md-2">
+                <label>Customer</label>
+            </div>
+            <div class="col-xs-12 col-md-4">
+                <div class="input-group">
+                    <select ></select>
+                    <span class="input-group-btn dropdown">
+                        <button type="button" class="btn btn-default btn-sm dropdown-toggle" aria-haspopup="true" aria-expanded="false"><i class="fa fa-plus" aria-hidden="true"></i></button>
+                    </span>
+                </div>
+            </div>
+            <div class="col-xs-12 col-md-6">
+                <input type="text"  />
+            </div>
+        </div>
+        <div class="row" >
+            <div class="col-xs-12 col-md-2">
+                <label>Remarks</label>
+            </div>
+            <div class="col-xs-12 col-md-10">
+                <textarea ></textarea>
+            </div>
+        </div>
+        <div class="row" >
+            <div class="col-xs-12">
+                <div class="card">                    
+                    <div  class="card-body card-padding p-t-25 p-b-25">
+                        <div class="row" >
+                            <div class="col-xs-12">
+                                <h5>Generate New Invoice</h5>
+                                <div class="card">                                    
+                                    <div  class="card-body card-padding p-t-25 p-b-25">
+                                        <div class="row" >                                            
+                                            <div class="col-xs-12">
+                                               
+
+                                                <div class="checkbox m-b-15">
+                                                    <label>
+                                                        <input type="checkbox" value="" aria-label="Storage Charge">
+                                                        <i class="input-helper"></i>
+                                                        Storage Charge
+                                                    </label>
+                                                </div>
+                                                <!--<md-checkbox class="md-primary" aria-label="Storage Charge">Storage Charge</md-checkbox>-->
+                                            </div>
+                                        </div>
+                                        <div class="row" >
+                                            <div class="col-xs-12 col-md-2">
+                                                <label>Bill From</label>
+                                            </div>
+                                            <div class="col-xs-12 col-md-4">
+                                                <div class="input-group my-datepicker">
+                                                    <input type="text" class="form-control input-sm datepicker" uib-datepicker-popup="{{format}}" ng-model="dt" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
+                                                    <span class="input-group-btn">
+                                                        <button type="button" class="btn btn-default input-sm" ng-click="open1()"><i class="fa fa-calendar" aria-hidden="true"></i></button>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-12 col-md-2">
+                                                <label>To</label>
+                                            </div>
+                                            <div class="col-xs-12 col-md-4">
+                                                <div class="input-group my-datepicker">
+                                                    <input type="text" class="form-control input-sm datepicker" uib-datepicker-popup="{{format}}" ng-model="dt" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
+                                                    <span class="input-group-btn">
+                                                        <button type="button" class="btn btn-default input-sm" ng-click="open1()"><i class="fa fa-calendar" aria-hidden="true"></i></button>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="box-footer">
+                                        <div class="row">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card">                                    
+                                    <div  class="card-body card-padding p-t-25 p-b-25">
+                                        <div class="row" >                                            
+                                            <div class="col-xs-12">
+
+                                                <div class="checkbox m-b-15">
+                                                    <label>
+                                                        <input type="checkbox" value="" aria-label="Storage Charge">
+                                                        <i class="input-helper"></i>
+                                                        Handling Charge
+                                                    </label>
+                                                </div>
+                                                <!--<md-checkbox class="md-primary" aria-label="Storage Charge">Handling Charge</md-checkbox>-->
+                                            </div>
+                                        </div>
+                                        <div class="row" >
+                                            <div class="col-xs-12 col-md-2">
+                                                <label>Bill From</label>
+                                            </div>
+                                            <div class="col-xs-12 col-md-4">
+                                                <div class="input-group my-datepicker">
+                                                    <input type="text" class="form-control input-sm datepicker" uib-datepicker-popup="{{format}}" ng-model="dt" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
+                                                    <span class="input-group-btn">
+                                                        <button type="button" class="btn btn-default input-sm" ng-click="open1()"><i class="fa fa-calendar" aria-hidden="true"></i></button>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-12 col-md-2">
+                                                <label>To</label>
+                                            </div>
+                                            <div class="col-xs-12 col-md-4">
+                                                <div class="input-group my-datepicker">
+                                                    <input type="text" class="form-control input-sm datepicker" uib-datepicker-popup="{{format}}" ng-model="dt" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
+                                                    <span class="input-group-btn">
+                                                        <button type="button" class="btn btn-default input-sm" ng-click="open1()"><i class="fa fa-calendar" aria-hidden="true"></i></button>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="box-footer">
+                                        <div class="row">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box-footer">
+                        <div class="row">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-12 col-md-4">
+        <div class="row" >
+            <div class="col-xs-12 col-md-4">
+                <label>Warehouse</label>
+            </div>
+            <div class="col-md-8">
+                <select ></select>
+            </div>
+        </div>
+        <div class="row" >
+            <div class="col-xs-12 col-md-4">
+                <label>Invoice Date</label>
+            </div>
+            <div class="col-md-8">
+                <div class="input-group my-datepicker">
+                    <input type="text" class="form-control input-sm datepicker" uib-datepicker-popup="{{format}}" ng-model="dt" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default input-sm" ng-click="open1()"><i class="fa fa-calendar" aria-hidden="true"></i></button>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="row" >
+            <div class="col-xs-12 col-md-4">
+                <label>Credit Term</label>
+            </div>
+            <div class="col-md-8">
+                <input type="text"  />
+            </div>
+        </div>
+        <div class="row" >
+            <div class="col-xs-12 col-md-4">
+                <label>Currency</label>
+            </div>
+            <div class="col-md-8">
+                <select ></select>
+            </div>
+        </div>
+        <div class="row" >
+            <div class="col-xs-12 col-md-4">
+                <label>Ex. Rate</label>
+            </div>
+            <div class="col-md-8">
+                <input type="text"  />
+            </div>
+        </div>
+        <div class="row" >
+            <div class="col-xs-12 col-md-4">
+                <label>Tax Amt.</label>
+            </div>
+            <div class="col-md-8">
+                <input type="text"  />
+            </div>
+        </div>
+        <div class="row" >
+            <div class="col-xs-12 col-md-4">
+                <label>Local Amt.</label>
+            </div>
+            <div class="col-md-8">
+                <input type="text"  />
+            </div>
+        </div>
+        <div class="row" >
+            <div class="col-xs-12">
+                <div class="card">
+                    <div  class="lv-header-alt clearfix m-b-5">
+                        <h3  class="lvh-label">Storage Calculation</h3>
+                    </div>
+                    <div  class="card-body card-padding p-t-25 p-b-25">
+                        <div class="row" >
+                            <div class="col-xs-12 col-md-4">
+                                <label>Rate Profile</label>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="input-group">
+                                    <input type="text"  />
+                                    <span class="input-group-btn dropdown">
+                                        <button type="button" class="btn btn-default btn-sm dropdown-toggle" aria-haspopup="true" aria-expanded="false"><i class="fa fa-plus" aria-hidden="true"></i></button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" >
+                            <div class="col-xs-12 col-md-4">
+                                <label>Quotation No.</label>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="input-group">
+                                    <input type="text"  />
+                                    <span class="input-group-btn dropdown">
+                                        <button type="button" class="btn btn-default btn-sm dropdown-toggle" aria-haspopup="true" aria-expanded="false"><i class="fa fa-plus" aria-hidden="true"></i></button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" >
+                            <div class="col-xs-12 col-md-4">
+                                <label>Cal Period</label>
+                            </div>
+                            <div class="col-md-8">
+                                <input type="text"  />
+                            </div>
+                        </div>
+                        <div class="row" >
+                            <div class="col-xs-12 col-md-4">
+                                <label>Storage Selection</label>
+                            </div>
+                            <div class="col-md-8">
+                                <input type="text"  />
+                            </div>
+                        </div>
+                        <div class="row" >
+                            <div class="col-xs-12">
+                                <label>Free Period</label>
+                            </div>
+                        </div>
+                        <div class="row" >
+                            <div class="col-xs-12 col-md-4">
+                                <label>Import</label>
+                            </div>
+                            <div class="col-md-8">
+                                <input type="text"  />
+                            </div>
+                        </div>
+                        <div class="row" >
+                            <div class="col-xs-12 col-md-4">
+                                <label>Export</label>
+                            </div>
+                            <div class="col-md-8">
+                                <input type="text"  />
+                            </div>
+                        </div>
+                        <div class="row" >
+                            <div class="col-xs-12 col-md-4">
+                                <label>Local</label>
+                            </div>
+                            <div class="col-md-8">
+                                <input type="text"  />
+                            </div>
+                        </div>
+                        <div class="row" >
+                            <div class="col-xs-12 col-md-4">
+                                <md-button class="md-raised md-primary"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Check</md-button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box-footer">
+                        <div class="row">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

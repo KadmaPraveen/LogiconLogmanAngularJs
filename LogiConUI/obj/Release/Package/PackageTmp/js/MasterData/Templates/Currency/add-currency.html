@@ -1,0 +1,33 @@
+﻿<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" ng-click="cancel();">&times;</button>
+    <h4 class="modal-title">Currency</h4>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div class="col-xs-12 col-md-6">
+            <md-input-container class="md-block" flex-gt-sm>
+                <label>Currency Code</label>
+
+                <input type="text" ng-model="currency.CurrencyCode" ng-required="true" ng-readonly="true" />
+            </md-input-container>
+</div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12 col-md-6">
+            <md-input-container class="md-block" flex-gt-sm>
+                <label>Currency Description</label>
+
+                <textarea ng-model="currency.Description" ng-required="true"></textarea>
+            </md-input-container>
+        </div>
+    </div>    
+</div>
+<div class="modal-footer">
+    <div class="row">
+       
+        <div class="col-xs-12 text-right">
+            <button class="btn btn-primary btn-sm" ng-click="SaveCurrency(currency);"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Save</button>
+            <button class="btn btn-default btn-sm" ng-click="cancel();"><i class="fa fa-times" aria-hidden="true"></i>&nbsp;Close</button>
+        </div>
+    </div>
+</div>

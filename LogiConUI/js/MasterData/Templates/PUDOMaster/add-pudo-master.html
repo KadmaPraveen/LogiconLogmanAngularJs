@@ -1,0 +1,85 @@
+﻿<form name="frmAddPUDOMaster" id="frmAddPUDOMaster" ng-submit="AddPUDOMaster(pudomaster)" ng-class="{'submitted':submitted}"  novalidate>
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" ng-click="cancel();">&times;</button>
+        <h4 class="modal-title">Add/Edit PUDO Master </h4>
+    </div>
+    <div class="modal-body">
+        <div class="c-overflow" ng-style="{'max-height': iframeHeight - 80 + 'px'}" resize>
+            <div class="modalbodymain">
+                <div class="row">
+                    <div class="col-xs-12 col-md-6">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Booking Type</label>
+                            <md-select ng-model="pudomaster.JobType" ng-change="GetPUDOCodes(pudomaster.JobType);" ng-required="true">
+                                <md-option ng-repeat="item in bookingtypeList" ng-value="item.Value">
+                                    {{item.Text}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                        <!--<select  ng-model="pudomaster.JobType" ng-options="c.Value as c.Text for c in bookingtypeList" ng-change="GetPUDOCodes(pudomaster.JobType);"  ng-required="true"></select>-->
+                    </div>
+
+                    <div class="col-xs-12 col-md-6">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>PU/DO Mode</label>
+                            <md-select ng-model="pudomaster.PUDOMode" ng-required="true" ng-change="pudomaster.PUDOModeDesc=(pudomodeList|filter:{Value:pudomaster.PUDOMode})[0].Text">
+                                <md-option ng-repeat="item in pudomodeList" ng-value="item.Value">
+                                    {{item.Text}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                        <!--<select  ng-model="pudomaster.PUDOMode" ng-options="c.Value as c.Text for c in pudomodeList" ng-change="pudomaster.PUDOModeDesc=(pudomodeList|filter:{Value:pudomaster.PUDOMode})[0].Text"  ng-required="true"></select>-->
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-md-6">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Order Type</label>
+                            <md-select ng-model="pudomaster.OrderType" ng-required="true" ng-change="GetMovementCodes(pudomaster.OrderType);">
+                                <md-option ng-repeat="item in ordertypeList" ng-value="item.Value">
+                                    {{item.Text}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                        <!--<select  ng-model="pudomaster.OrderType" ng-options="c.Value as c.Text for c in ordertypeList" ng-change="GetMovementCodes(pudomaster.OrderType);"  ng-required="true"></select>-->
+                    </div>
+
+                    <div class="col-xs-12 col-md-6">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Movement Code</label>
+                            <md-select ng-model="pudomaster.MovementCode" ng-required="true">
+                                <md-option ng-repeat="item in movementcodeList" ng-value="item.Value">
+                                    {{item.Text}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                        <!--<select  ng-model="pudomaster.MovementCode" ng-options="c.Value as c.Text for c in movementcodeList"  ng-required="true"></select>-->
+                    </div>
+                </div>
+            </div>
+            </div>
+</div>
+            <div class="modal-footer">
+                <div class="row">
+
+                    <div class="col-xs-12 text-right">
+                        <button class="btn btn-primary ng-scope waves-effect "
+                                type="button"
+                                ng-click="submitted = true;"
+                                aria-label="button" uib-tooltip="Save" tooltip-placement="top">
+                            Save
+                        </button>
+                        <!--<button  class="btn btn-primary btn-sm" ng-click="submitted = true;"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Save</button>-->
+
+                        <button class="btn btn-default ng-scope waves-effect "
+                                type="button"
+                                ng-click="cancel();"
+                                aria-label="button" uib-tooltip="Close" tooltip-placement="top">
+                            Close
+                        </button>
+                        <!--<button class="btn btn-default btn-sm" ng-click="cancel();"><i class="fa fa-times" aria-hidden="true"></i>&nbsp;Close</button>-->
+                    </div>
+                </div>
+            </div>
+</form>
+

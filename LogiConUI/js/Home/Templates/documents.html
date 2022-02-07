@@ -1,0 +1,104 @@
+﻿<div class="row">
+    <div class="col-xs-12">
+        <p>Dagang Net Technologies Sdn Bhd (177974-T)</p>
+        <p>Tower 3, Avenue 5,</p>
+        <p>The Horizon Bangsar South,</p>
+        <p>No 8 Jalan Kerinchi,</p>
+        <p>59200 Kuala Lumpur.</p>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12">
+        <h4 class="text-center">Dokumen Sokongan Diperlukan</h4>
+    </div>
+</div>
+<div class="row" data-ng-controller="DemoFileUploadController">
+    <div class="col-xs-12">
+        <form id="fileupload" method="POST" enctype="multipart/form-data" data-file-upload="options" data-ng-class="{'fileupload-processing': processing() || loadingFiles}" autocomplete="off">
+            <noscript><input type="hidden" name="redirect" value="https://blueimp.github.io/jQuery-File-Upload/"></noscript>
+            <div class="row fileupload-buttonbar">
+                <div class="col-lg-8">
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <select ng-model="docTypeId"
+                                    class="form-control input-sm"
+                                    ng-options="s.Value as s.Text for s in lookUpData.registrationDocTypeList"></select>
+                        </div>
+                        <div class="col-lg-2">
+                            <span class="btn btn-success fileinput-button" ng-class="{disabled: disabled}" ng-disabled="docTypeId == null">
+                                <i class="fa fa-plus" aria-hidden="true"></i>
+                                <span>Add files...</span>
+                                <input type="file" name="files[]" ng-disabled="disabled">
+                            </span>
+                        </div>
+                        <div class="col-lg-2">
+                            <button type="button" class="btn btn-primary start" data-ng-click="submit()" ng-disabled="docTypeId == null">
+                                <i class="fa fa-upload" aria-hidden="true"></i>
+                                <span>Start Upload</span>
+                            </button>
+                        </div>
+                        <div class="col-lg-2">
+                            <button type="button" class="btn btn-warning cancel" data-ng-click="cancel()" ng-disabled="docTypeId == null">
+                                <i class="fa fa-ban" aria-hidden="true"></i>
+                                <span>Cancel Upload</span>
+                            </button>
+                        </div>
+                    </div>
+                    <span class="fileupload-process"></span>
+                </div>
+                <div class="col-lg-4 fade" data-ng-class="{in: active()}">
+                    <div class="progress progress-striped active" data-file-upload-progress="progress()"><div class="progress-bar progress-bar-success" data-ng-style="{width: num + '%'}"></div></div>
+                    <div class="progress-extended">&nbsp;</div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <table class="table table-striped files ng-cloak">
+                        <tr data-ng-repeat="file in queue" data-ng-class="{'processing': file.$processing()}">                            
+                            <td>
+                                <input type="hidden" ng-model="imagesArr[$index].FileName" ng-init="imagesArr[$index].FileName = file.name" />
+                                <input type="hidden" ng-model="imagesArr[$index].RegistrationDocType" ng-init="imagesArr[$index].RegistrationDocType = docTypeId;" />
+                                <input type="hidden" ng-model="imagesArr[$index].RegistrationDocTypeText" ng-init="imagesArr[$index].RegistrationDocTypeText = (lookUpData.registrationDocTypeList | filter : { Value: docTypeId })[0].Text;" />
+                                {{ imagesArr[$index].RegistrationDocTypeText }}
+                            </td>
+                            <td>
+                                <p class="name" data-ng-switch data-on="!!file.url">
+                                    <span data-ng-switch-when="true" data-ng-switch data-on="!!file.thumbnailUrl">
+                                        <a data-ng-switch-when="true" data-ng-href="{{file.url}}" title="{{file.name}}" download="{{file.name}}" data-gallery>{{file.name}}</a>
+                                        <a data-ng-switch-default data-ng-href="{{file.url}}" title="{{file.name}}" download="{{file.name}}">{{file.name}}</a>
+                                    </span>
+                                    <span data-ng-switch-default>{{file.name}}</span>
+                                </p>
+                                <strong data-ng-show="file.error" class="error text-danger">{{file.error}}</strong>
+                            </td>
+                            <td>
+                                <p class="size">{{file.size | formatFileSize}}</p>
+                                <div class="progress progress-striped active fade" data-ng-class="{pending: 'in'}[file.$state()]" data-file-upload-progress="file.$progress()"><div class="progress-bar progress-bar-success" data-ng-style="{width: num + '%'}"></div></div>
+                            </td>
+                            <td>
+                                <!--<button type="button" class="btn btn-primary start" data-ng-click="file.$submit()" data-ng-hide="!file.$submit || options.autoUpload" data-ng-disabled="file.$state() == 'pending' || file.$state() == 'rejected'">
+                                    <i class="glyphicon glyphicon-upload"></i>
+                                    <span>Start</span>
+                                </button>-->
+                                <button type="button" class="btn btn-warning cancel" data-ng-click="file.$cancel()" data-ng-hide="!file.$cancel">
+                                    <i class="glyphicon glyphicon-ban-circle"></i>
+                                    <span>Cancel</span>
+                                </button>
+                                <button data-ng-controller="FileDestroyController" type="button" class="btn btn-danger destroy" data-ng-click="file.$destroy()" data-ng-hide="!file.$destroy">
+                                    <i class="glyphicon glyphicon-trash"></i>
+                                    <span>Delete</span>
+                                </button>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 pull-center">
+                    <a href="javascript:;" class="btn btn-primary" ng-click="SaveDocuments()">Next</a>
+                </div>
+            </div>
+        </form>
+    </div>    
+</div>
+

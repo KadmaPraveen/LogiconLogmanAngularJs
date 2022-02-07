@@ -1,0 +1,12 @@
+﻿<md-input-container class="md-block" flex-gt-sm>
+    <label>{{labelText}}</label>
+    <input type="text"
+           class="search-icon"
+           ng-model="portName"
+           ng-required="isrequired == 'true' ? true : false"
+           typeahead-min-length="3"
+           uib-typeahead="d.PortName as d.PortName for d in portResults($viewValue)"
+           typeahead-wait-ms="300"
+           typeahead-editable="iseditable == 'true' ? true : false"
+           typeahead-on-select="PortSelected($item)" />
+</md-input-container>

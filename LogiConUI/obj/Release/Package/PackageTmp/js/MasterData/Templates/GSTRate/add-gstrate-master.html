@@ -1,0 +1,48 @@
+﻿<form name="frmAddGSTRateMaster" id="frmAddGSTRateMaster" ng-submit="AddGSTRateMaster(gst)" ng-class="{'submitted':submitted}" novalidate>
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" ng-click="cancel();">&times;</button>
+        <h4 class="modal-title">Add/Edit GST Rate </h4>
+    </div>
+    <div class="modal-body">
+        <div class="c-overflow" ng-style="{'max-height': iframeHeight - 80 + 'px'}" resize>
+            <div class="modalbodymain">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>GST Code</label>
+                            <input type="text" ng-model="gst.GSTCode" ng-required="true" ng-readonly="truefalse" />
+                        </md-input-container>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-12">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Description</label>
+                            <input type="text" ng-model="gst.Description" ng-required="true" />
+                        </md-input-container>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>GST Rate</label>
+                            <input type="text" ng-model="gst.Rate" ng-required="true" logicon-decimal />
+                        </md-input-container>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> <div class="modal-footer">
+        <div class="row">
+            <div class="col-xs-12 text-right">
+                <button class="btn btn-primary btn-sm" ng-click="submitted = true;"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Save</button>
+
+
+                <button type="button" class="btn btn-default btn-sm" ng-click="cancel();"><i class="fa fa-times" aria-hidden="true"></i>&nbsp;Close</button>
+
+            </div>
+        </div>
+    </div>
+
+</form>

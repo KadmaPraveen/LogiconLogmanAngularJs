@@ -1,0 +1,150 @@
+﻿<div  class="container"   ng-controller="addEquipment">
+
+    <div class="card">
+        <div class="lv-header-alt clearfix m-b-5">
+            <h2 class="lvh-label">Equipment Planning</h2>
+        </div>
+        <div class="card-body card-padding p-t-5 p-b-5">
+            <div class="row">
+                <div class="col-xs-12 col-md-4">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Job No.</label>
+
+                        <input type="text" class="form-control input-sm" />
+                    </md-input-container>
+                </div>
+                <div class="col-xs-12 col-md-4">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Truck ID</label>
+
+                        <input type="text" class="form-control input-sm" />
+                    </md-input-container>
+                </div>
+                <div class="col-xs-12 col-md-4">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Est Start Date</label>
+                        <input mdc-datetime-picker="" date="true" time="false" type="text" id="dateFrom" format="{{dateFormat}}" class="date-icon"
+                               min-date="date" ng-model="customresponseheaderItem.RegistrationDate" name="customresponseheaderItem.RegistrationDate" ng-disabled="true">
+                    </md-input-container>
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-md-4">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Reg. No.</label>
+
+                        <input type="text" class="form-control input-sm" />
+                    </md-input-container>
+                </div>
+                <div class="col-xs-12 col-md-4">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Trailer ID</label>
+
+                        <input type="text" class="form-control input-sm" />
+                    </md-input-container>
+                </div>
+                <div class="col-xs-12 col-md-4">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Est Start Time</label>
+                        <input mdc-datetime-picker="" date="true" time="false" type="text" id="dateFrom" format="{{dateFormat}}" class="date-icon"
+                               min-date="date" ng-model="customresponseheaderItem.RegistrationDate" name="customresponseheaderItem.RegistrationDate" ng-disabled="true">
+                    </md-input-container>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-md-4">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Movement</label>
+
+                        <input type="text" class="form-control input-sm" />
+                    </md-input-container>
+                </div>
+                <div class="col-xs-12 col-md-4">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Driver ID</label>
+
+                        <input type="text" class="form-control input-sm" />
+                    </md-input-container>
+                </div>
+                <div class="col-xs-12 col-md-4">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Req. Date</label>
+
+                        <input mdc-datetime-picker="" date="true" time="false" type="text" id="dateFrom" format="{{dateFormat}}" class="date-icon"
+                               min-date="date" ng-model="customresponseheaderItem.RegistrationDate" name="customresponseheaderItem.RegistrationDate" ng-disabled="true">
+                    </md-input-container>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-md-6">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Shipper/Consignee</label>
+
+                        <input type="text" class="form-control input-sm" />
+                    </md-input-container>
+                </div>
+                <div class="col-xs-12 col-md-2">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Req. Time</label>
+                        <input mdc-datetime-picker="" date="true" time="false" type="text" id="dateFrom" format="{{dateFormat}}" class="date-icon"
+                               min-date="date" ng-model="customresponseheaderItem.RegistrationDate" name="customresponseheaderItem.RegistrationDate" ng-disabled="true">
+                    </md-input-container>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-md-6">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Pickup From</label>
+
+                        <input type="text" class="form-control input-sm" />
+                    </md-input-container>
+                </div>
+
+                <div class="col-xs-12 col-md-6">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Delivery To</label>
+
+                        <input type="text" class="form-control input-sm" />
+                    </md-input-container>
+                </div>
+            </div>
+            <div class="row">
+
+                <div class="col-xs-12 col-md-2">
+                    <div class="checkbox m-b-15">
+                        <label>
+                            <input type="checkbox" value="" aria-label="Uncouple Trailer">
+                            <i class="input-helper"></i>
+                            Uncouple Trailer
+                        </label>
+                    </div>
+                    <!--<md-checkbox aria-label="Uncouple Trailer">Uncouple Trailer</md-checkbox>-->
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div>
+        <div class="card">
+            <div class="card-body card-padding p-t-5 p-b-5">
+
+                <div class="row">
+                    <div class="col-xs-12 m-t-15 m-b-10">
+                        <button type="button" class="btn btn-primary waves-effect" ng-click="cancel();"><i class="fa fa-floppy-o" aria-hidden="true"></i> &nbsp;Save</button>
+
+                        <div class="pull-right">
+                          
+                            <button class="btn btn-primary btn btn-primary waves-effect" type="button" data-ui-sref="k1Inquiry" data-ng-click="mactrl.sidebarStat($event)">
+                                <i class="fa fa-backward" aria-hidden="true"></i>&nbsp;Back
+                            </button>
+                            <button class="btn btn-default  waves-effect" type="button" ng-click="clear();">
+                                <i class="fa fa-eraser" aria-hidden="true"></i>&nbsp;Clear
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

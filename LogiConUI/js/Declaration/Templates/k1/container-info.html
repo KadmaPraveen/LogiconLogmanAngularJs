@@ -1,0 +1,137 @@
+﻿<!--
+MSKU2666542 [ Good ]  | MSKU2666542 [ 2 ]
+NYKU3086856 [ Good ]  | NYKU3086856 [ 3 ]
+HLXU1234567 [ Bad ]   | HLXU1234567 [ 0 ]
+-->
+
+<form id="frmContainerInfo" name="frmContainerInfo" ng-class="{'submitted':submitted}" ng-submit="SaveContainerInfo(dc)" novalidate>
+    <style type="text/css">
+        .box.box-solid.box-default {
+            border: 0px solid #d2d6de;
+        }
+    </style>
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" ng-click="cancel();">&times;</button>
+        <h4 class="modal-title">Container Info.</h4>
+    </div>
+    <div class="modal-body">
+        <div class="c-overflow" ng-style="{'max-height': iframeHeight - 80 + 'px'}" resize >
+            <div class="modalbodymain" >
+
+                <input type="hidden" ng-model="dc.ContainerKey" ng-init="dc.ContainerKey = ''" name="dc.ContainerKey" />
+
+                <div class="row">
+                    <div class="col-xs-8 col-md-4">
+                        <!--<md-input-container class="md-block" flex-gt-sm ng-class="{'md-input-invalid': !IsContainerValid, 'md-input-has-value': IsContainerValid}">
+                            <label>Container No.</label>
+                            <input type="text"
+                                   ng-model="dc.ContainerNo"
+                                   name="dc.ContainerNo"
+                                   ng-required="true"
+                                   ng-class="{'ng-invalid': !IsContainerValid, 'ng-invalid-required': !IsContainerValid, 'ng-dirty': !IsContainerValid}"
+                                   ng-blur="ValidateContainer(dc.ContainerNo)" />
+                        </md-input-container>-->
+                        <!--<md-input-container class="md-block" flex-gt-sm>
+                            <label>Container No.</label>
+                            <input type="text"
+                                   ng-model="dc.ContainerNo"
+                                   name="dc.ContainerNo"
+                                   ng-required="true"
+                                   ng-pattern="ValidateContainer"
+                                   ng-maxlength="11"
+                                   ng-minlength="11" logicon-limit />
+                        </md-input-container>-->
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Container No.</label>
+                            <input type="text"
+                                   ng-model="dc.ContainerNo"
+                                   name="ContainerNo"
+                                   ng-required="true"
+                                   ng-pattern="ValidateContainerPattern"
+                                   ng-maxlength="11"
+                                   ng-minlength="11" logicon-limit />
+                            <div ng-show="frmContainerInfo.ContainerNo.$error.pattern" role="alert">
+                                <div style="color:red">
+                                    Container No. is not valid
+                                </div>
+                            </div>
+                        </md-input-container>
+                    </div>
+                    <div class="col-xs-4 col-md-4">
+                        <div class="checkbox m-b-15">
+                            <label>
+                                <input type="checkbox" value=""
+                                       aria-label="Containerised Cargo ?"
+                                       ng-model="dc.IsSOC"
+                                       name="dc.IsSOC"
+                                       ng-click="SOCChecked()">
+                                <i class="input-helper"></i>
+                                SOC Type ?
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-md-2">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Size </label>
+                            <md-select name="dc.Size"
+                                       ng-model="dc.Size"
+                                       ng-required="true" ng-change="sizeChanged()">
+                                <md-option ng-repeat="item in lookUpData.sizeList" ng-value="item.Value">
+                                    {{item.Text}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                    </div>
+                    <div class="col-xs-12 col-md-2">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Type</label>
+                            <md-select name="dc.Type"
+                                       ng-disabled="dc.Size == null"
+                                       ng-model="dc.Type"
+                                       ng-required="true">
+                                <md-option ng-repeat="item in lookUpData.TypeList" ng-value="item.Value">
+                                    {{item.Text}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                    </div>
+                    <div class="col-xs-12 col-md-4">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Container Type</label>
+                            <md-select name="dc.EQDStatus"
+                                       ng-model="dc.EQDStatus">
+                                <md-option md-option-empty></md-option>
+                                <md-option ng-repeat="item in lookUpData.jobTypeList" ng-value="item.Value">
+                                    {{item.Text}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                    </div>
+                    <div class="col-xs-12 col-md-4">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Status</label>
+                            <md-select name="dc.ContainerStatus"
+                                       ng-model="dc.ContainerStatus"
+                                       ng-required="true">
+                                <md-option ng-repeat="item in lookUpData.containerStatusList" ng-value="item.Value">
+                                    {{item.Text}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <div class="row">
+            <div class="col-xs-12 col-md-9"></div>
+            <div class="col-md-3 pull-right">
+                <button class="btn btn-primary btn-sm" ng-click="submitted = true;" type="submit"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Save</button>
+                <button type="button" class="btn btn-default btn-sm" ng-click="cancel();"><i class="fa fa-times" aria-hidden="true"></i>&nbsp;Close</button>
+            </div>
+        </div>
+    </div>
+</form>

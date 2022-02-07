@@ -1,0 +1,1304 @@
+﻿
+<style>
+    .custom-popup-wrapper {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        z-index: 1000;
+        display: none;
+        background-color: #f9f9f9;
+    }
+
+        .custom-popup-wrapper > .message {
+            padding: 10px 20px;
+            border-bottom: 1px solid #ddd;
+            color: #868686;
+        }
+
+        .custom-popup-wrapper > .dropdown-menu {
+            position: static;
+            float: none;
+            display: block;
+            min-width: 160px;
+            background-color: transparent;
+            border: none;
+            border-radius: 0;
+            box-shadow: none;
+        }
+
+    tr.dropdown-menu {
+        display: block;
+    }
+
+    .mytable {
+        background-color: #fff;
+        -webkit-background-clip: padding-box;
+        background-clip: padding-box;
+        border: 1px solid #ccc;
+        border: 1px solid rgba(0,0,0,.15);
+        border-radius: 4px;
+        -webkit-box-shadow: 0 6px 12px rgba(0,0,0,.175);
+        box-shadow: 0 6px 12px rgba(0,0,0,.5);
+        position: absolute;
+        width: 550px;
+        z-index: 99999;
+    }
+
+        .mytable thead tr {
+            background-color: #367fa9;
+            color: #fff;
+        }
+
+            .mytable thead tr td {
+                background-color: #367fa9;
+                color: #fff;
+                font-weight: bold;
+            }
+
+        .mytable > tbody > tr > td, .mytable > tbody > tr > th, .mytable > tfoot > tr > td, .mytable > tfoot > tr > th,
+        .mytable > thead > tr > td, .mytable > thead > tr > th {
+            padding: 3px;
+        }
+
+    .radio, .checkbox {
+        position: relative;
+        display: block;
+        margin-top: 1px !important;
+        margin-bottom: 1px !important;
+    }
+</style>
+<script type="text/ng-template" id="add-merchant.html">
+    <div class="Rejectcontainer">
+        <form id="oeCntrl.frmMerchant" name="oeCntrl.frmMerchant" ng-class="{'submitted':submitted}" ng-submit="SaveMerchant(mp)" autocomplete="off" novalidate>
+            <h4 class="modal-title"><b>{{oeCntrl.modaltitle}}</b></h4>
+            <div class="modal-body">
+
+                <div class="row ">
+                    <div class="col-xs-12 col-md-4">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Merchant Name</label>
+                            <input type="text"
+                                   ng-model="mp.MerchantName" ng-required="true" />
+                        </md-input-container>
+                    </div>
+
+                    <div class="col-xs-12 col-md-4">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Registration No.</label>
+                            <input type="text" ng-model="mp.RegNo" ng-required="mp.address.CountryCode=='MY'" />
+                        </md-input-container>
+                    </div>
+                    <div class="col-xs-12 col-md-4">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>GST No.</label>
+                            <input type="text" ng-model="mp.TaxID" ng-required="mp.address.CountryCode=='MY'" />
+                        </md-input-container>
+                    </div>
+                </div>
+                <div class="row ">
+                    <div class="col-xs-12 col-md-4">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Address </label>
+                            <input type="text" ng-model="mp.address.Address1" />
+                        </md-input-container>
+                    </div>
+                    <div class="col-xs-12 col-md-4">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Address2</label>
+                            <input type="text" ng-model="mp.address.Address2" />
+                        </md-input-container>
+                    </div>
+                    <div class="col-xs-12 col-md-4">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>City / Suburb</label>
+                            <input type="text" ng-model="mp.address.City" />
+                        </md-input-container>
+                    </div>
+                </div>
+                <div class="row ">
+                    <div class="col-xs-12 col-md-4">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>State</label>
+                            <input type="text" ng-model="mp.address.State" />
+                        </md-input-container>
+                    </div>
+                    <div class="col-xs-12 col-md-4">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Country</label>
+                            <input type="text"
+                                   class="search-icon"
+                                   ng-class="{'loadinggif': address.CountryNameLoading}"
+                                   ng-model="mp.address.CountryName"
+                                   typeahead-min-length="3"
+                                   uib-typeahead="s.Text as s.Text for s in countryResults($viewValue)"
+                                   typeahead-loading="mp.address.CountryNameLoading"
+                                   typeahead-wait-ms="100"
+                                   typeahead-editable="false"
+                                   typeahead-on-select="countrySelect($item)"
+                                   autocomplete="off" />
+                        </md-input-container>
+                    </div>
+                    <div class="col-xs-12 col-md-4">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Post Code</label>
+                            <input type="text" ng-model="mp.address.ZipCode" logicon-number />
+                        </md-input-container>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <div class="row">
+
+                    <div class="col-md-4 pull-right">
+                        <button class="btn btn-success waves-effect" ng-click="submitted = true"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Save</button>
+                        <button type="button" class="btn btn-default btn-sm" ng-click="validateRecord(false,'')"><i class="fa fa-times" aria-hidden="true"></i>&nbsp;Close</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</script>
+<script type="text/ng-template" id="voyage-autocomplete.html">
+    <div class="table-responsive">
+        <table ng-show="isOpen() && !moveInProgress"
+               aria-hidden="{{!isOpen()}}"
+               class="table table-striped table-vmiddle table-hover table-bordered mytable"
+               ng-style="{top: position().top+'px', left: position().left+'px'}"
+               style="">
+            <thead>
+                <tr>
+                    <th>Vessel ID</th>
+                    <th>Vessel Name</th>
+                    <th>ETA</th>
+                    <th>ETD</th>
+                    <th>Terminal</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="match in matches track by $index" ng-click="selectMatch($index)">
+                    <td>{{match.model.VesselID}}</td>
+                    <td>{{match.model.VesselName}}</td>
+                    <td>{{match.model.ETA | date :  'dd/MM/yyyy hh:mm a' }}</td>
+                    <td>{{match.model.ETD | date :  'dd/MM/yyyy hh:mm a' }}</td>
+                    <td>{{match.model.TerminalName}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</script>
+<script type="text/ng-template" id="reject-declaration.html">
+    <style type="text/css">
+        .Rejectcontainer {
+            width: 100%;
+            margin: 10px;
+        }
+    </style>
+    <div class="Rejectcontainer">
+        <form id="oeCntrl.frmReject" name="oeCntrl.frmReject" ng-class="{'submitted': RejectSubmitted}" ng-submit="RejectDeclaration(remarks)" autocomplete="off" novalidate>
+                <div class="row">
+                    <div class="col-xs-12 col-md-5">
+                        <label>Reject Remarks</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <textarea ng-model="remarks" ng-required="true" style="overflow-y:auto"></textarea>
+                        </md-input-container>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-2 col-md-2">
+                        <button type="button" ng-click="CloseRejectPopOver()" class="btn btn-default btn-block">Cancel</button>
+                    </div>
+                    <div class="col-xs-2 col-md-2">
+                        <button ng-click="RejectSubmitted = true;" type="submit" class="btn btn-primary btn-block">Submit</button>
+                    </div>
+                </div>
+        </form>
+    </div>
+</script>
+<div id="general">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="card">
+                <div class="lv-header-alt clearfix m-b-5">
+                    <h2 class="lvh-label">General</h2>
+
+
+                    <span class="m-t-10 m-r-5 pull-right" ng-if="IsWebOrder">
+                        <label style="color:green;">Web Order Created By : {{OrderOwner}}</label>
+                    </span>
+                    <div class="pull-right m-r-5" ng-if="!oe.DeclarationVisibility.IsPartial">
+                        <button ng-if="oe.DeclarationVisibility.IsViewDeclaration" ng-click="ViewDeclaration()" type="button" class="btn btn-success"><i class="fa fa-eye" aria-hidden="true"></i>&nbsp;View</button>
+                        <button ng-if="oe.DeclarationVisibility.IsApproveDeclaration && oe.DeclarationVisibility.ApprovedBy == null" ng-click="ApproveDeclaration(true)" type="button" class="btn btn-default"><i class="fa fa-check" aria-hidden="true"></i>&nbsp;Approve</button>
+                        <button ng-if="oe.DeclarationVisibility.IsApproveDeclaration && oe.DeclarationVisibility.ApprovedBy == null"
+                                type="button"
+                                class="btn btn-danger"
+                                popover-placement="left-top"
+                                popover-is-open="oeCntrl.RejectPopOver"
+                                uib-popover-template="'reject-declaration.html'">
+                            <i class="fa fa-times" aria-hidden="true"></i>&nbsp;Reject
+                        </button>
+                    </div>
+                    <button type="button" ng-if="oe.OrderNo != null && !IsWebOrder" ng-click="CloneOrderEntry(oe.BranchID, oe.OrderNo)" ng-disabled="IsCloneBtnDisabled" has-Right data-rightValue="OrderEntry.CopyOrder" uib-tooltip="Copy to new Order Entry Form" tooltip-placement="left" class="btn bgm-gray m-r-5 waves-effect pull-right" style="margin-right:15px;"><i class="zmdi zmdi-copy"></i></button>
+                    &nbsp; &nbsp; &nbsp;
+                    <a ng-if="UUIDInfo.UUID != null && UUIDInfo.UUID != '' && !isDownloadToken"
+                       ng-href='https://52.163.52.156/webapi/eInsurance/selectProposal/@/{{UUIDInfo.UUID}}'
+                       target="_blank" class="btn bgm-deeporange waves-effect pull-right m-r-5"
+                       style="text-transform:none;font-weight:bold"
+                       uib-tooltip="Please retrieve your Insurance proposal here."
+                       tooltip-placement="left">&nbsp;&nbsp;&nbsp;&nbsp;eMI proposal&nbsp;&nbsp;&nbsp;&nbsp;</a>
+
+                    <a class="btn bgm-green waves-effect pull-right m-r-5"
+                       ng-if="isDownloadToken"
+                       style="text-transform:none;"
+                       target="_blank"
+                       ng-href="{{downloadUrl}}">eMI Certificate</a>
+
+                    <!--<span ng-if="!oe.DeclarationVisibility.IsPartial && oe.DeclarationVisibility.ApprovedBy == null">
+                        <button ng-if="oe.DeclarationVisibility.IsViewDeclaration" type="button" class="btn btn-success"><i class="fa fa-eye" aria-hidden="true"></i>&nbsp;View Declaration</button>
+                        <button ng-if="oe.DeclarationVisibility.IsApproveDeclaration" ng-click="ApproveDeclaration(true)" type="button" class="btn btn-default"><i class="fa fa-check" aria-hidden="true"></i>&nbsp;Approve Declaration</button>
+                        <button ng-if="oe.DeclarationVisibility.IsApproveDeclaration" ng-click="ApproveDeclaration(false)" type="button" class="btn btn-danger"><i class="fa fa-times" aria-hidden="true"></i>&nbsp;Reject Declaration</button>
+                    </span>-->
+                </div>
+                <div class="card-body card-padding p-t-5 p-b-5">
+                    <div class="row">
+                        <div class="col-xs-12 col-md-4 oeDropDown">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Order No.</label>
+                                <input type="text"
+                                       ng-class="{'loadinggif': oe.OrderNoLoading}"
+                                       ng-model="oe.OrderNo"
+                                       typeahead-min-length="3"
+                                       uib-typeahead="d.Text as d.Text for d in OrderResults($viewValue)"
+                                       typeahead-loading="oe.OrderNoLoading"
+                                       typeahead-wait-ms="100"
+                                       typeahead-editable="false"
+                                       typeahead-on-select="orderNoSelected($item)"
+                                       ng-disabled="true" />
+                            </md-input-container>
+                        </div>
+                        <div class="col-xs-12 col-md-4">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Open Date</label>
+                                <input mdc-datetime-picker="" class="date-icon" date="true" time="false" type="text" id="OrderDate" format="{{dateFormat}}"
+                                       min-date="date" ng-model="oe.OrderDate" readonly="readonly">
+                            </md-input-container>
+                        </div>
+                        <div class="col-xs-12  col-md-4">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Reference No/Job No</label>
+                                <input type="text"
+                                       ng-model="oe.CustomerRef" ng-required="true" ng-maxlength="35" logicon-limit />
+                            </md-input-container>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-md-4 ">
+                            <md-input-container class="md-block extrareq" flex-gt-sm>
+                                <label>Transport Type</label>
+                                <md-select ng-model="oe.TransportType" ng-required="true" ng-change="transportTypeChanged()" ng-disabled="!IsNew">
+                                    <md-option ng-repeat="item in lookupData.transportList" ng-value="item.Value">
+                                        {{item.Text}}
+                                    </md-option>
+
+                                </md-select>
+                            </md-input-container>
+                        </div>
+                        <div class="col-xs-12 col-md-4">
+                            <md-input-container class="md-block extrareq" flex-gt-sm>
+                                <label>Shipment Type</label>
+                                <md-select ng-model="oe.ShipmentType" ng-change="jobTypeChanged(oe.JobType);changeShipmentType(oe.ShipmentType);oe.OrderCategory = null;" ng-required="true"
+                                           ng-disabled="!IsNew">
+                                    <md-option ng-repeat="item in lookupData.shipementTypeList" ng-value="item.Value">
+                                        {{item.Text}}
+                                    </md-option>
+                                </md-select>
+                            </md-input-container>
+                        </div>
+                        <div class="col-xs-12 col-md-4">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Job Type</label>
+                                <md-select ng-model="oe.JobType" ng-change="jobTypeChanged(oe.JobType);" ng-disabled="oe.OrderCategory != null || oe.ShipmentType == null || !IsNew"
+                                           ng-required="true">
+                                    <md-option ng-repeat="item in lookupData.jobTypeList" ng-value="item.Value">
+                                        {{item.Text}}
+                                    </md-option>
+                                </md-select>
+                            </md-input-container>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-md-4">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Order Category</label>
+                                <md-select ng-model="oe.OrderCategory" ng-change="orderCategoryChanged()"
+                                           ng-disabled="oe.JobType == null || !IsNew || !IsClone"
+                                           ng-required="true">
+                                    <md-option ng-repeat="item in lookupData.OrderCategoryList" ng-value="item.Value">
+                                        {{item.Text}}
+                                    </md-option>
+                                </md-select>
+                            </md-input-container>
+                        </div>
+                        <div class="col-xs-12 col-md-4">
+                            <md-input-container class="md-block extrareq" flex-gt-sm>
+                                <label>Inco Term</label>
+                                <md-select ng-model="oe.IncoTerm" ng-required="true">
+                                    <md-option ng-repeat="item in lookupData.incoTermsList" ng-value="item.Value">
+                                        {{item.Text}}
+                                    </md-option>
+                                </md-select>
+                            </md-input-container>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xs-12 col-md-4">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Master {{BLText}} No.</label>
+                                <input type="text"
+                                       ng-model="oe.OceanBLNo"
+                                       ng-maxlength="35"
+                                       logicon-limit />
+                            </md-input-container>
+                        </div>
+                        <div class="col-xs-12 col-md-4">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>House {{BLText}} No.</label>
+                                <input type="text"
+                                       ng-model="oe.HouseBLNo" ng-maxlength="35" logicon-limit />
+                            </md-input-container>
+                        </div>
+                        <div class="col-xs-12 col-md-4">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Manifest No.</label>
+                                <input type="text"
+                                       ng-model="oe.ManifestNo" ng-maxlength="35" logicon-limit />
+                            </md-input-container>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xs-12 col-md-6">
+                            <h2 class="lvh-label  full-width">
+                                <span class="pull-left">
+                                    CUSTOMER
+                                </span>
+                                <span class="pull-right"><label class="m-b-0">{{oe.CustomerROCNo}}</label></span>
+                            </h2>
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>Customer</label>
+                                        <input type="text"
+                                               ng-required="true"
+                                               class="search-icon"
+                                               ng-class="{'loadinggif': oe.CustomerCodeTextLoading}"
+                                               ng-model="oe.CustomerName"
+                                               typeahead-min-length="3"
+                                               uib-typeahead="d.Text as d.Text for d in GenericMerchantResults($viewValue, 'billingCustomer','CustomerAddress')"
+                                               typeahead-loading="oe.CustomerCodeTextLoading"
+                                               typeahead-wait-ms="100"
+                                               typeahead-editable="false"
+                                               typeahead-on-select="CustomerSelected($item, 'CustomerCode','CustomerAddress','CustomerROCNo','CustomerAddressID')"
+                                               ng-blur="clearAddress()" />
+                                    </md-input-container>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <span class="pull-left " ng-bind-html="oe.CustomerAddress"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-md-6">
+                            <h2 class="lvh-label  full-width">
+                                <span class="pull-left">
+                                    NOTIFY PARTY&nbsp;&nbsp;
+                                    <button type="button" class="btn bgm-deeppurple btn-xs waves-effect" popover-append-to-body="false" popover-placement="bottom" ng-click="validateRecord(true, 'NOTIFY PARTY')" popover-is-open="oeCntrl.isOpenMerchantPPNotifyParty" uib-popover-template="'add-merchant.html'" aria-label="button"
+                                            ng-show="!IsWebOrder">
+                                        <i class="zmdi zmdi-plus"></i>&nbsp; ADD
+                                    </button>
+                                </span>
+                                <span class="pull-right">
+                                    <label>{{oe.NotifyPartyROCNo}}</label>
+                                </span>
+                            </h2>
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>Notify Party</label>
+                                        <input type="text"
+                                               class="search-icon"
+                                               ng-class="{'loadinggif': oe.NotifyPartyTextLoading}"
+                                               ng-model="oe.NotifyPartyName"
+                                               typeahead-min-length="3"
+                                               uib-typeahead="d.Text as d.Text for d in GenericMerchantResults($viewValue, 'billingCustomer','NotifyPartyAddress')"
+                                               typeahead-loading="oe.NotifyPartyTextLoading"
+                                               typeahead-wait-ms="100"
+                                               typeahead-editable="false"
+                                               typeahead-on-select="CustomerSelected($item, 'NotifyParty','NotifyPartyAddress','NotifyPartyROCNo','NotifyPartyAddressID')"
+                                               ng-blur="clearAddress()" />
+                                    </md-input-container>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <span class="pull-left " ng-bind-html="oe.NotifyPartyAddress"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <div class="row">
+                        <div class="col-xs-12 col-md-6">
+                            <h2 class="lvh-label  full-width">
+                                <span class="pull-left">
+                                    CONSIGNEE&nbsp;&nbsp;
+                                    <button type="button" class="btn bgm-deeppurple btn-xs waves-effect" popover-append-to-body="false" popover-placement="bottom-left" ng-click="validateRecord(true, 'CONSIGNEE')" popover-is-open="oeCntrl.isOpenMerchantPPConsignee" uib-popover-template="'add-merchant.html'" aria-label="button"
+                                            ng-show="!IsWebOrder">
+                                        <i class="zmdi zmdi-plus"></i> &nbsp; ADD
+                                    </button>
+                                </span>
+                                <span class="pull-right"><label class="m-b-0">{{oe.ConsigneeROCNo}}</label></span>
+                            </h2>
+                            <div class="row p-b-20">
+                                <div class="col-xs-12  text-right">
+                                    <div class="checkbox pull-right heade-check m-b-15 ">
+                                        <label>
+                                            <input type="checkbox" ng-model="oe.ConsigneeChk" ng-change="mychecked('ConsigneeName','ConsigneeCode','ConsigneeAddress','ConsigneeROCNo','ConsigneeAddressID','ShipperName','ShipperCode','ShipperAddress','ShipperROCNo','ShipperAddressID')" ng-disabled="isConsignorChecked">
+                                            <i class="input-helper"></i>
+                                            same as customer
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label class="extrareq">CONSIGNEE / BUYER / IMPORTER </label>
+                                        <input type="text"
+                                               class="search-icon"
+                                               ng-class="{'loadinggif': oe.ConsigneeNameLoading}"
+                                               ng-model="oe.ConsigneeName"
+                                               typeahead-min-length="3"
+                                               uib-typeahead="d.Text as d.Text for d in GenericMerchantResults($viewValue, 'consignee','ConsigneeAddress')"
+                                               typeahead-loading="oe.ConsigneeNameLoading"
+                                               typeahead-wait-ms="100"
+                                               typeahead-editable="false"
+                                               typeahead-on-select="CustomerSelected($item, 'ConsigneeCode','ConsigneeAddress','ConsigneeROCNo','ConsigneeAddressID')"
+                                               ng-required="true"
+                                               ng-blur="clearAddress()" />
+                                    </md-input-container>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <span class="pull-left" ng-bind-html="oe.ConsigneeAddress"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-md-6">
+                            <h2 class="lvh-label  full-width">
+                                <span class="pull-left">
+                                    CONSIGNOR&nbsp;&nbsp;
+                                    <button type="button" class="btn bgm-deeppurple btn-xs waves-effect" popover-append-to-body="false" popover-placement="bottom" ng-click="validateRecord(true, 'CONSIGNOR')" popover-is-open="oeCntrl.isOpenMerchantPPConsignor" uib-popover-template="'add-merchant.html'" aria-label="button" ng-show="!IsWebOrder">
+                                        <i class="zmdi zmdi-plus"></i> &nbsp; ADD
+                                    </button>
+                                </span>
+                                <span class="pull-right">
+                                    <label>{{oe.ShipperROCNo}}</label>
+                                </span>
+                            </h2>
+                            <div class="row p-b-20">
+                                <div class="col-xs-12 text-right ">
+                                    <div class="checkbox pull-right heade-check m-b-15">
+                                        <label>
+                                            <input type="checkbox" ng-model="oe.ShipperChk" ng-change="mychecked('ShipperName','ShipperCode','ShipperAddress','ShipperROCNo','ShipperAddressID','ConsigneeName','ConsigneeCode','ConsigneeAddress','ConsigneeROCNo','ConsigneeAddressID')" ng-disabled="isConsigneeChecked">
+                                            <i class="input-helper"></i>
+                                            same as customer
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label class="extrareq">CONSIGNOR / EXPORTER / SELLER / SHIPPER</label>
+                                        <input type="text"
+                                               class="search-icon"
+                                               ng-class="{'loadinggif': oe.ShipperNameLoading}"
+                                               ng-model="oe.ShipperName"
+                                               typeahead-min-length="3"
+                                               uib-typeahead="d.Text as d.Text for d in GenericMerchantResults($viewValue, 'Shipper','ShipperAddress')"
+                                               typeahead-loading="oe.ShipperNameLoading"
+                                               typeahead-wait-ms="100"
+                                               typeahead-editable="false"
+                                               typeahead-on-select="CustomerSelected($item, 'ShipperCode','ShipperAddress','ShipperROCNo','ShipperAddressID')"
+                                               ng-required="true"
+                                               ng-blur="clearAddress()" />
+                                    </md-input-container>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <span class="pull-left" ng-bind-html="oe.ShipperAddress"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Customs Acknowledgement No.</label>
+                                <input type="text"
+                                       ng-model="oe.KANo" ng-maxlength="35" logicon-limit
+                                       ng-disabled="true" />
+                            </md-input-container>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-md-4">
+                            <md-input-container class="md-block extrareq" flex-gt-sm>
+                                <label>Stowage Code</label>
+                                <md-select ng-model="oe.StowageCode" ng-required="true">
+                                    <md-option ng-repeat="item in lookupData.stowageCodeList" ng-value="item.Value">
+                                        {{item.Text}}
+                                    </md-option>
+                                </md-select>
+                            </md-input-container>
+                        </div>
+                        <div class="col-xs-12 col-md-4">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Cargo Class </label>
+                                <md-select ng-model="oe.CargoClass">
+                                    <md-option md-option-empty></md-option>
+                                    <md-option ng-repeat="item in lookupData.cargoClassList" ng-value="item.Value">
+                                        {{item.Text}}
+                                    </md-option>
+                                </md-select>
+                            </md-input-container>
+                        </div>
+                        <div class="col-xs-12 col-md-4">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Cargo Description</label>
+                                <input type="text" ng-required="oe.CargoClass==1639"
+                                       ng-model="oe.CargoDescription"
+                                       md-maxlength="70" logicon-limit md-select-on-focus style="overflow-y:auto" />
+                            </md-input-container>
+
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Extra Cargo Description</label>
+                                <textarea ng-model="oe.ExtraCargoDescription" md-maxlength="70" logicon-limit md-select-on-focus style="overflow-y:auto"></textarea>
+                            </md-input-container>
+
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div ng-if="oe.TransportType == null || oe.TransportType == 1021">
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <h2 class="lvh-label ">VESSEL DETAILS</h2>
+                                    </div>
+                                </div>
+                                <div class="row ">
+                                    <div class="col-xs-12 col-md-4">
+                                        <md-input-container class="md-block extrareq" flex-gt-sm>
+                                            <label>Ship Call No.</label>
+                                            <input type="text"
+                                                   class="search-icon"
+                                                   ng-disabled="oe.JobType == null"
+                                                   ng-required="oe.JobType == 1060 || oe.JobType == 1061"
+                                                   ng-class="{'loadinggif': searchLoading}"
+                                                   ng-model="oe.SCNNo"
+                                                   typeahead-min-length="3"
+                                                   uib-typeahead="d for d in ShipCallResults($viewValue)"
+                                                   typeahead-loading="searchLoading"
+                                                   typeahead-popup-template-url="voyage-autocomplete.html"
+                                                   typeahead-wait-ms="100"
+                                                   typeahead-editable="false"
+                                                   typeahead-on-select="VoyageSelected($item)" />
+                                        </md-input-container>
+                                    </div>
+                                    <div class="col-xs-12 col-md-4">
+                                        <md-input-container class="md-block extrareq" flex-gt-sm>
+                                            <label>Voyage No.</label>
+                                            <input type="text"
+                                                   class="search-icon"
+                                                   ng-disabled="oe.JobType == null"
+                                                   ng-class="{'loadinggif': SCNNoLoading}"
+                                                   ng-model="oe.Voyageno"
+                                                   typeahead-min-length="3"
+                                                   uib-typeahead="d for d in VoyageResults($viewValue)"
+                                                   typeahead-loading="SCNNoLoading"
+                                                   typeahead-popup-template-url="voyage-autocomplete.html"
+                                                   typeahead-wait-ms="100"
+                                                   typeahead-editable="false"
+                                                   typeahead-on-select="VoyageSelected($item)"
+                                                   ng-blur="oe.Voyageno==null?oe.Voyageno=null:oe.Voyageno=oe.Voyageno;" />
+                                        </md-input-container>
+                                    </div>
+                                    <div class="col-xs-12 col-md-4">
+                                        <md-input-container class="md-block extrareq" flex-gt-sm>
+                                            <label>Vessel Name</label>
+                                            <input type="text"
+                                                   class="search-icon"
+                                                   ng-disabled="oe.JobType == null"
+                                                   ng-class="{'loadinggif': oe.VesselNameLoading}"
+                                                   ng-model="oe.VesselName"
+                                                   typeahead-min-length="3"
+                                                   uib-typeahead="d for d in VesselNameResults($viewValue)"
+                                                   typeahead-loading="oe.VesselNameLoading"
+                                                   typeahead-popup-template-url="voyage-autocomplete.html"
+                                                   typeahead-wait-ms="100"
+                                                   typeahead-editable="false"
+                                                   typeahead-on-select="VoyageSelected($item)"
+                                                   ng-blur="oe.VesselName==null?oe.VesselName=null:oe.VesselName=oe.VesselName;" />
+                                        </md-input-container>
+                                    </div>
+                                    <!--<div class="col-xs-12 col-md-6">
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                            <label>Vessel ID</label>
+                                            <input type="text"
+                                                   ng-model="oe.VesselID"
+                                                   ng-maxlength="50"
+                                                   logicon-limit />
+                                        </md-input-container>
+                                    </div>-->
+                                </div>
+                                <div class="row ">
+                                    <div class="col-xs-12 col-md-4">
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                            <label>Vessel Call Sign</label>
+                                            <input type="text"
+                                                   ng-model="oe.CallSignNo"
+                                                   ng-maxlength="50"
+                                                   logicon-limit />
+                                        </md-input-container>
+                                    </div>
+                                    <div class="col-xs-12 col-md-4">
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                            <label>Terminal</label>
+                                            <!--<md-select ng-model="oe.PortOperator">
+                                                <md-option ng-repeat="item in terminalList" ng-value="item.Value">
+                                                    {{item.Text}}
+                                                </md-option>
+                                            </md-select>-->
+                                            <input type="text"
+                                                   class="search-icon"
+                                                   ng-model="oe.PortOperatorName"
+                                                   typeahead-min-length="3"
+                                                   uib-typeahead="d.Text for d in PortOperatorResults($viewValue)"
+                                                   typeahead-wait-ms="100"
+                                                   typeahead-editable="false"
+                                                   typeahead-on-select="TerminalOperaterSelected($item)"
+                                                   ng-blur="oe.PortOperatorName==null?oe.PortOperator=null:oe.PortOperator=oe.PortOperator;" />
+                                        </md-input-container>
+                                    </div>
+                                    <div class="col-xs-2 col-md-1" ng-show="!IsNew && !IsWebOrder && !oe.IsPartial">
+                                        <button type="button"
+                                                class="btn btn-primary"
+                                                ng-click="GenerateBookingEntry()"
+                                                has-Right data-rightValue="OrderEntry.PublishPort">
+                                            <i class="fa fa-ship" aria-hidden="true"></i>&nbsp;Publish To Port
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div ng-if="oe.TransportType == 1023">
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <h2 class="lvh-label ">ROAD DETAILS</h2>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-6">
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                            <label>Vehicle Registration No. 1</label>
+                                            <input type="text"
+                                                   ng-model="oe.VehicleNo1" ng-maxlength="70" logicon-limit />
+                                        </md-input-container>
+                                    </div>
+                                    <div class="col-xs-12 col-md-6">
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                            <label>Vehicle Registration No. 2</label>
+                                            <input type="text"
+                                                   ng-model="oe.VehicleNo2" ng-maxlength="70" logicon-limit />
+                                        </md-input-container>
+                                    </div>
+                                </div>
+                            </div>
+                            <div ng-if="oe.TransportType == 1022">
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <h2 class="lvh-label ">RAIL DETAILS</h2>
+                                    </div>
+
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-6">
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                            <label>Wagon No.</label>
+                                            <input type="text"
+                                                   ng-model="oe.WagonNo" ng-maxlength="70" logicon-limit />
+                                        </md-input-container>
+                                    </div>
+                                </div>
+                            </div>
+                            <div ng-if="oe.TransportType == 1020">
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <h2 class="lvh-label ">FLIGHT DETAILS</h2>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-4">
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                            <label>Flight No.</label>
+                                            <input type="text"
+                                                   ng-model="oe.FlightNo" ng-maxlength="70" logicon-limit />
+                                        </md-input-container>
+                                    </div>
+                                    <!--<div class="col-xs-12 col-md-4">
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                            <label>ETA</label>
+                                            <input mdc-datetime-picker="" class="date-icon" date="true" time="false" type="text" id="ETA" format="{{dateTimeFormat}}"
+                                                   min-date="date" ng-model="oe.ETA">
+                                        </md-input-container>
+                                    </div>-->
+                                    <div class="col-xs-12 col-md-4">
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                            <label>ARN No.</label>
+                                            <input type="text"
+                                                   ng-model="oe.ARNNo" ng-maxlength="70" logicon-limit />
+                                        </md-input-container>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-4">
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                            <label>Master Airway BILL No.</label>
+                                            <input type="text"
+                                                   ng-model="oe.MasterAWBNo" ng-maxlength="35" logicon-limit />
+                                        </md-input-container>
+                                    </div>
+                                    <div class="col-xs-12 col-md-4">
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                            <label>House Airway BILL No.</label>
+                                            <input type="text"
+                                                   ng-model="oe.HouseAWBNo" ng-maxlength="35" logicon-limit />
+                                        </md-input-container>
+                                    </div>
+                                    <div class="col-xs-12 col-md-4">
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                            <label>Co-Load No.</label>
+                                            <input type="text"
+                                                   ng-model="oe.AIRCOLoadNo"
+                                                   ng-maxlength="35"
+                                                   logicon-limit />
+                                        </md-input-container>
+                                    </div>
+                                </div>
+                            </div>
+                            <div ng-if="oe.TransportType == 1024">
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <h2 class="lvh-label ">POST DETAILS</h2>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-6">
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                            <label>JK78 Information No.</label>
+                                            <input type="text"
+                                                   ng-model="oe.JKNo" ng-maxlength="70" logicon-limit />
+                                        </md-input-container>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <h2 class="lvh-label ">Transport Details</h2>
+                        </div>
+                    </div>
+                    <div class="row ">
+                        <div class="col-xs-12 col-md-4">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label class="extrareq">Loading Port</label>
+                                <input type="text"
+                                       class="search-icon"
+                                       ng-class="{'loadinggif': oe.PortOfLoadingNameLoading}"
+                                       ng-model="oe.PortOfLoadingName"
+                                       ng-required="true"
+                                       typeahead-min-length="3"
+                                       uib-typeahead="d.PortName as d.PortName for d in portResults($viewValue)"
+                                       typeahead-loading="oe.PortOfLoadingNameLoading"
+                                       typeahead-wait-ms="100"
+                                       typeahead-editable="false"
+                                       typeahead-on-select="PortSelected($item, 'PortOfLoading')" />
+                            </md-input-container>
+                        </div>
+                        <div class="col-xs-12 col-md-4">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label class="extrareq">Discharge Port</label>
+                                <input type="text" class="search-icon"
+                                       ng-class="{'loadinggif': oe.PortOfDischargeNameLoading}"
+                                       ng-model="oe.PortOfDischargeName"
+                                       ng-required="true"
+                                       typeahead-min-length="3"
+                                       uib-typeahead="d.PortName as d.PortName for d in portResults($viewValue)"
+                                       typeahead-loading="oe.PortOfDischargeNameLoading"
+                                       typeahead-wait-ms="100"
+                                       typeahead-editable="false"
+                                       typeahead-on-select="PortSelected($item, 'PortOfDischarge')" />
+                            </md-input-container>
+                        </div>
+                        <div class="col-xs-12 col-md-4">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Transhipment Port </label>
+                                <input type="text"
+                                       class="search-icon"
+                                       ng-class="{'loadinggif': oe.PortOfTranshipmentNameLoading}"
+                                       ng-model="oe.TranshipmentPortName"
+                                       typeahead-min-length="3"
+                                       uib-typeahead="d.PortName as d.PortName for d in portResults($viewValue)"
+                                       typeahead-loading="oe.PortOfTranshipmentNameLoading"
+                                       typeahead-wait-ms="100"
+                                       typeahead-editable="false"
+                                       typeahead-on-select="PortSelected($item, 'TranshipmentPort')"
+                                       ng-blur="oe.TranshipmentPortName==null?oe.TranshipmentPort=null:oe.TranshipmentPort=oe.TranshipmentPort;" />
+                            </md-input-container>
+                        </div>
+                    </div>
+                    <div class="row ">
+                        <div class="col-xs-12 col-md-4">
+                            <md-input-container class="md-block extrareq" flex-gt-sm>
+                                <label>ETA Date</label>
+                                <input class="date-time-icon" mdc-datetime-picker="" date="true" time="true" type="text" id="ETA" format="{{dateTimeFormat}}"
+                                       min-date="date" ng-model="oe.ETA" ng-disabled="true">
+                            </md-input-container>
+                        </div>
+                        <div class="col-xs-12 col-md-4">
+                            <md-input-container class="md-block extrareq" flex-gt-sm>
+                                <label>ETD Date</label>
+                                <input mdc-datetime-picker="" class="date-time-icon" date="true" time="true" type="text" id="dateFrom" format="{{dateTimeFormat}}"
+                                       min-date="date" ng-model="oe.ETD" ng-disabled="true">
+                            </md-input-container>
+                        </div>
+                        <div class="col-xs-12 col-md-4">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Yard Cut Off Time</label>
+                                <input mdc-datetime-picker="" class="date-time-icon" date="true" time="true" type="text" id="YardCutOffTime" format="{{dateTimeFormat}}"
+                                       min-date="date" ng-model="oe.YardCutOffTime" ng-disabled="true">
+                            </md-input-container>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xs-12 col-md-6">
+                            <h2 class="lvh-label  full-width">
+                                <span class="pull-left">
+                                    FORWARDING AGENT
+                                </span>
+                            </h2>
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <md-input-container class="md-block extrareq" flex-gt-sm>
+                                        <label>Forwarding Agent</label>
+                                        <input type="text"
+                                               class="search-icon"
+                                               ng-required="IsFwdAgentRequired"
+                                               ng-class="{'loadinggif': oe.ForwarderNameLoading}"
+                                               ng-model="oe.ForwardingAgentName"
+                                               typeahead-min-length="3"
+                                               uib-typeahead="d.Text as d.Text for d in GenericMerchantResults($viewValue, 'Forwarder','FwdAgentAddress')"
+                                               typeahead-loading="oe.ForwarderNameLoading"
+                                               typeahead-wait-ms="100"
+                                               typeahead-editable="false"
+                                               typeahead-on-select="CustomerSelected($item, 'FwdAgent','FwdAgentAddress','FwdAgentROCNo','FwdAgentAddressID')"
+                                               ng-blur="clearAddress()" />
+                                    </md-input-container>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <span class="pull-left" ng-bind-html="oe.FwdAgentAddress"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-md-6">
+                            <h2 class="lvh-label  full-width">
+                                <span class="pull-left">
+                                    SHIPPING AGENT
+                                </span>
+                            </h2>
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>SHIPPING AGENT</label>
+                                        <input type="text"
+                                               class="search-icon"
+                                               ng-class="{'loadinggif': oe.ShippingAgentNameLoading}"
+                                               ng-model="oe.ShippingAgentName"
+                                               typeahead-min-length="3"
+                                               uib-typeahead="d.Text as d.Text for d in GenericMerchantResults($viewValue, 'Liner','ShippingAgentAddress')"
+                                               typeahead-loading="oe.ShippingAgentNameLoading"
+                                               typeahead-wait-ms="100"
+                                               typeahead-editable="false"
+                                               typeahead-on-select="CustomerSelected($item, 'ShippingAgent','ShippingAgentAddress','ShippingAgentROCNo','ShippingAgentAddressID')"
+                                               ng-blur="clearAddress()" />
+                                    </md-input-container>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <span class="pull-left" ng-bind-html="oe.ShippingAgentAddress"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-xs-12 col-md-6">
+                            <h2 class="lvh-label  full-width">
+                                <span class="pull-left">
+                                    FREIGHT FORWARDER
+                                </span>
+                            </h2>
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>FREIGHT FORWARDER</label>
+                                        <input type="text"
+                                               class="search-icon"
+                                               ng-class="{'loadinggif': oe.FreightForwarderNameLoading}"
+                                               ng-model="oe.FreightForwarderName"
+                                               typeahead-min-length="3"
+                                               uib-typeahead="d.Text as d.Text for d in GenericMerchantResults($viewValue, 'FreightForwarder','FreightForwarderAddress')"
+                                               typeahead-loading="oe.FreightForwarderNameLoading"
+                                               typeahead-wait-ms="100"
+                                               typeahead-editable="false"
+                                               typeahead-on-select="CustomerSelected($item, 'FregihtForwarderCode','FreightForwarderAddress','FreightForwarderROCNo','FreightForwarderAddressID')"
+                                               ng-blur="clearAddress()" />
+                                    </md-input-container>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <span class="pull-left" ng-bind-html="oe.FreightForwarderAddress"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-md-6">
+                            <h2 class="lvh-label  full-width">
+                                <span class="pull-left">
+
+
+                                    <!--{{AgentText}} AGENT-->
+                                    ORIGIN/DESTINATION AGENT
+                                </span>
+                            </h2>
+                            <div class="row">
+
+                                <div class="col-xs-12">
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label> ORIGIN/DESTINATION AGENT</label>
+                                        <input type="text"
+                                               class="search-icon"
+                                               ng-class="{'loadinggif': oe.ShippingAgentNameLoading}"
+                                               ng-model="oe.OverseasAgentName"
+                                               typeahead-min-length="3"
+                                               uib-typeahead="d.Text as d.Text for d in GenericMerchantResults($viewValue, 'OverseasAgent','OverseasAgentAddress')"
+                                               typeahead-loading="oe.OverseasAgentNameLoading"
+                                               typeahead-wait-ms="100"
+                                               typeahead-editable="false"
+                                               typeahead-on-select="CustomerSelected($item, 'OverseasAgentCode','OverseasAgentAddress','OverseasAgentROCNo','OverseasAgentAddressID')"
+                                               ng-blur="clearAddress()" />
+                                    </md-input-container>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <span class="pull-left" ng-bind-html="oe.OverseasAgentAddress"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row" ng-if="showCoLoader">
+                        <div class="col-xs-12 col-md-6">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Co-Loader</label>
+                                <input type="text" ng-model="oe.CoLoaderName" />
+                                <!--<input type="text"
+                                       class="search-icon"
+                                       ng-class="{'loadinggif': oe.CoLoaderNameLoading}"
+                                       ng-model="oe.CoLoaderName"
+                                       ng-required="oe.TransportType == 1020"
+                                       typeahead-min-length="3"
+                                       uib-typeahead="d.Text as d.Text for d in GenericMerchantResults($viewValue, 'Liner')"
+                                       typeahead-loading="oe.CoLoaderNameLoading"
+                                       typeahead-wait-ms="100"
+                                       typeahead-editable="false"
+                                       typeahead-on-select="CustomerSelected($item, 'CoLoaderCode','CoLoaderCodeAddress','CoLoaderCodeROCNo','CoLoaderCodeAddressID')" />-->
+                            </md-input-container>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="invoiceDetails">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="card">
+                <div class="lv-header-alt clearfix m-b-5">
+                    <h2 class="lvh-label">Invoice Details</h2>
+                </div>
+                <div class="card-body card-padding p-t-5 p-b-5">
+
+
+                    <div class="row">
+                        <div class="col-xs-12 col-md-6">
+                            <md-input-container class="md-block extrareq" flex-gt-sm>
+                                <label>Invoice No.</label>
+                                <input type="text"
+                                       ng-model="oe.InvoiceNo"
+                                       ng-required="oe.JobType == 1060 || oe.JobType == 1061"
+                                       ng-maxlength="70"
+                                       logicon-limit />
+                            </md-input-container>
+                        </div>
+
+                        <div class="col-xs-12 col-md-6">
+                            <md-input-container class="md-block extrareq" flex-gt-sm>
+                                <label>INVOICE DATE</label>
+                                <input mdc-datetime-picker="" class="date-icon" date="true" time="false" type="text" id="InvoiceDate" format="{{dateFormat}}"
+                                       min-date="date" ng-model="oe.InvoiceDate"
+                                       ng-required="oe.JobType == 1060 || oe.JobType == 1061">
+                            </md-input-container>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-xs-12 col-md-6">
+                            <md-input-container class="md-block extrareq" flex-gt-sm>
+                                <label>INVOICE VALUE</label>
+                                <input type="text"
+                                       ng-model="oe.InvoiceAmount"
+                                       ng-required="oe.JobType == 1060 || oe.JobType == 1061"
+                                       ng-maxlength="18"
+                                       logicon-format="2"
+                                       ng-blur="CalulateLocalAmount()"
+                                       decimal-Number />
+                            </md-input-container>
+                        </div>
+                        <div class="col-xs-12 col-md-6">
+                            <md-input-container class="md-block extrareq" flex-gt-sm>
+                                <label>CURRENCY CODE  </label>
+                                <md-select ng-model="oe.InvoiceCurrency" ng-change="CalulateLocalAmount()">
+                                    <md-option md-option-empty></md-option>
+                                    <md-option ng-repeat="item in lookupData.currencyList" ng-value="item.Value">
+                                        {{item.Text}}
+                                    </md-option>
+                                </md-select>
+                            </md-input-container>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-md-6">
+                            <md-input-container class="md-block extrareq" flex-gt-sm>
+                                <label>Exchange Rate</label>
+                                <input type="text"
+                                       ng-model="oe.ExchangeRate"
+                                       ng-required="oe.JobType == 1060 || oe.JobType == 1061"
+                                       ng-maxlength="18"
+                                       logicon-format="4"
+                                       ng-blur="CalulateLocalAmountByExchangeRate()"
+                                       decimal-Number />
+                            </md-input-container>
+                        </div>
+                        <div class="col-xs-12 col-md-6">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Invoice Value Equivalent in MYR</label>
+                                <input type="text"
+                                       ng-model="oe.LocalAmount" logicon-format="2" ng-disabled="true" />
+                            </md-input-container>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xs-12 col-md-4">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>PURCHASE ORDER NO.</label>
+                                <input type="text"
+                                       ng-model="oe.PONo" ng-maxlength="70" logicon-limit />
+                            </md-input-container>
+                        </div>
+                        <div class="col-xs-12 col-md-4">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Sales Order No.</label>
+                                <input type="text"
+                                       ng-model="oe.SalesOrderNo" ng-maxlength="70" logicon-limit />
+                            </md-input-container>
+                        </div>
+                        <div class="col-xs-12 col-md-4">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Contract No.</label>
+                                <input type="text"
+                                       ng-model="oe.ContractNo" ng-maxlength="70" logicon-limit />
+                            </md-input-container>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xs-12 col-md-4">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Term of payment</label>
+                                <input type="text"
+                                       ng-model="oe.PaymentTerm" ng-maxlength="200" logicon-limit />
+                            </md-input-container>
+                        </div>
+                        <div class="col-xs-12 col-md-4" ng-if="oe.TransportType == 1020">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Co-Loded {{BLText}} No.</label>
+                                <input type="text"
+                                       ng-required="oe.TransportType == 1020"
+                                       ng-model="oe.COLoaderBLNo"
+                                       ng-maxlength="70" logicon-limit />
+                            </md-input-container>
+                        </div>
+                        <!--<div class="col-xs-12 col-md-6">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Sales Order Date</label>
+                                <input mdc-datetime-picker="" class="date-icon" date="true" time="false" type="text" id="dateFrom" format="{{dateFormat}}"
+                                       min-date="date" ng-model="oe.SalesOrderDate">
+                            </md-input-container>
+                        </div>-->
+                    </div>
+                    <div class="row">
+                       
+                        <div class="col-xs-12">
+                            <md-input-container class="md-block">
+                                <label>Remarks</label>
+                                <textarea ng-model="oe.Remarks" md-maxlength="350" logicon-limit md-select-on-focus style="overflow-y:auto"></textarea>
+                            </md-input-container>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="declarationSection" ng-if="showDeclaration">
+    <!--<div class="-->
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="card">
+                <div class="lv-header-alt clearfix m-b-5">
+                    <h2 class="lvh-label">Declaration Section</h2>
+                </div>
+                <div class="card-body card-padding p-t-5 p-b-5">
+
+                    <div class="row chart-width ">
+                        <div class="col-xs-6 col-md-2">
+                            <div class="mini-charts-item bgm-cyan">
+                                <div class="clearfix">
+                                    <div class="chart stats-bar" data-sparkline-bar=""><canvas width="63" height="45" style="display: inline-block; width: 83px; height: 45px; vertical-align: top;"></canvas></div>
+                                    <div class="count">
+                                        <small>Information of Declaration</small>
+
+                                        <h2>{{summary.DeclarationNo}}</h2>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-6 col-md-2">
+                            <div class="mini-charts-item bgm-cyan">
+                                <div class="clearfix">
+                                    <div class="chart stats-bar" data-sparkline-bar=""><canvas width="63" height="45" style="display: inline-block; width: 83px; height: 45px; vertical-align: top;"></canvas></div>
+                                    :
+                                    <div class="count">
+                                        <small>Total # of Containers</small>
+                                        <h2>{{summary.ContainerCount}}</h2>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-6 col-md-2">
+                            <div class="mini-charts-item bgm-lightgreen">
+                                <div class="clearfix">
+                                    <div class="chart stats-line" data-sparkline-line=""><canvas width="83" height="45" style="display: inline-block; width: 83px; height: 45px; vertical-align: top;"></canvas></div>
+
+
+                                    <div class="count">
+                                        <small>Total # of Items</small>
+                                        <h2>{{ summary.ItemCount}}</h2>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-6 col-md-2">
+                            <div class="mini-charts-item bgm-orange">
+                                <div class="clearfix">
+                                    <div class="chart stats-pie" data-sparkline-pie="">
+                                        <canvas width="83" height="45" style="display: inline-block; width: 83px; height: 45px; vertical-align: top;"></canvas>
+                                    </div>
+                                    <div class="count">
+                                        <small>Total Duty Payable</small>
+                                        <h2>{{summary.TotalDutyAmount}}</h2>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-6 col-md-2">
+                            <div class="mini-charts-item bgm-cyan">
+                                <div class="clearfix">
+                                    <div class="chart stats-bar" data-sparkline-bar=""><canvas width="63" height="45" style="display: inline-block; width: 83px; height: 45px; vertical-align: top;"></canvas></div>
+                                    :
+                                    <div class="count">
+                                        <small>Total GST Payable</small>
+                                        <h2>{{summary.TotalGSTAmount}}</h2>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-6 col-md-2">
+                            <div class="mini-charts-item bgm-blue">
+                                <div class="clearfix">
+                                    <div class="chart stats-bar" data-sparkline-bar="">
+                                        <canvas width="83" height="45" style="display: inline-block; width: 83px; height: 45px; vertical-align: top;"></canvas>
+                                    </div>
+                                    <div class="count">
+                                        <small>Total in Local Currency populated from declaration</small>
+                                        <h2>{{summary.TotalAmount}}</h2>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,51 @@
+﻿<div class="row">
+    <div class="col-md-12">
+        <table class="table table-bordered">
+            <thead class="thCss">
+                <tr>
+                    <th width="60">No.</th>
+                    <th>Status Description</th>
+                    <th>Date & Time</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="item in lookUpData.registrationStatusList">
+                    <td>{{$index + 1}}</td>
+                    <td>Created</td>
+                    <td>11/16/2016 09:23:11 PM</td>
+                    <td>{{item.Text}}</td>
+                </tr>
+                <!--<tr>
+                    <td>2</td>
+                    <td>Email Verification</td>
+                    <td></td>
+                    <td>Awaiting Email Verification</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>FAMA Verification Status</td>
+                    <td></td>
+                    <td>Awaiting Verification</td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td>Payment Status</td>
+                    <td></td>
+                    <td>Awaiting Payment</td>
+                </tr>
+                <tr>
+                    <td>5</td>
+                    <td>FAMA Approval Status</td>
+                    <td></td>
+                    <td>Awaiting Approval</td>
+                </tr>-->
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12 pull-center">
+        <a href="javascript:;" class="btn btn-primary" ng-click="nextTab()">Next</a>
+    </div>
+</div>

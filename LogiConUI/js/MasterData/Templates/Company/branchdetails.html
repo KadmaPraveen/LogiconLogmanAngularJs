@@ -1,0 +1,203 @@
+﻿<form id="Cntrl.frmBranchDetails" name="Cntrl.frmBranchDetails" ng-class="{'submitted':submitted}" ng-submit="SaveBranch(BranchDetails);" novalidate>
+    <div class="card">
+        <div class="lv-header-alt clearfix m-b-5">
+            <h3 class="lvh-label">Branch Details &nbsp;<span style="text-align: right;">Company Code [<b>{{BranchDetails.CompanyCode }}</b>]</span></h3>
+            <input type="hidden" ng-model="BranchDetails.CompanyCode" />
+        </div>
+        <div class="card-body card-padding p-t-25 p-b-25">
+            <div class="row">
+                <div class="col-xs-12 col-md-6">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Branch Code</label>
+
+                        <input type="text" ng-minlength="3" maxlength="3" ng-model="BranchDetails.BranchCode" ng-required="true" />
+                    </md-input-container>
+                </div>
+
+                <div class="col-xs-12 col-md-6">
+                    <md-switch class="md-primary" aria-label="Active Account" ng-model="BranchDetails.IsActive">Active Account</md-switch>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Branch Name</label>
+
+                        <input type="text" ng-model="BranchDetails.BranchName" ng-required="true"  />
+                    </md-input-container>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-md-6">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Registration No.</label>
+
+                        <input type="text" ng-model="BranchDetails.RegNo" ng-required="BranchDetails.address.CountryCode == 'MY'" />
+                    </md-input-container>
+                </div>
+
+                <div class="col-xs-12 col-md-6">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Customs Mail Box No.</label>
+                        <input type="text" ng-model="BranchDetails.EDIMailBoxNo" ng-disabled="true" />
+                    </md-input-container>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-md-6">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Agent Code</label>
+                        <input type="text" ng-model="BranchDetails.AgentCode" ng-disabled="true" />
+                    </md-input-container>
+                </div>
+                <div class="col-xs-12 col-md-6">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>DAGANG NET A/C NO</label>
+                        <input type="text" ng-model="registeredCompany.CPAMAccountNo" ng-disabled="true" />
+                    </md-input-container>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-md-6">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>GST No.</label>
+
+                        <input type="text" ng-model="BranchDetails.GSTNo" ng-required="BranchDetails.address.CountryCode == 'MY'" />
+                    </md-input-container>
+                </div>
+                <div class="col-xs-12 col-md-6">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>TAX ID</label>
+
+                        <input type="text" ng-model="BranchDetails.TaxID" />
+                    </md-input-container>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Address</label>
+
+                        <input type="text" ng-model="BranchDetails.address.Address1" ng-required="true" />
+                    </md-input-container>
+                </div>
+            </div>
+            <div class="row">
+
+                <div class="col-xs-12">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Address2</label>
+                        <input type="text" ng-model="BranchDetails.address.Address2" ng-required="true" />
+                    </md-input-container>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-md-6">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Post Code</label>
+
+                        <input type="text" ng-model="BranchDetails.address.ZipCode" ng-required="true" logicon-number />
+                    </md-input-container>
+                </div>
+                <div class="col-xs-12 col-md-6">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>City/Suburb</label>
+
+                        <input type="text" ng-model="BranchDetails.address.City" ng-required="true" />
+                    </md-input-container>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>State</label>
+
+                        <input type="text" ng-model="BranchDetails.address.State" ng-required="true" />
+                    </md-input-container>
+                </div>
+
+                <div class="col-xs-12 col-md-6">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Country</label>
+                        <md-select ng-model="BranchDetails.address.CountryCode" ng-required="true" ng-init="BranchDetails.address.CountryCode == 'MY'">
+                            <md-option ng-repeat="item in CountriesList" ng-value="item.CompanyCode">
+                                {{item.CompanyName}}
+                            </md-option>
+                        </md-select>
+                        <!--<select ng-model="BranchDetails.address.CountryCode" ng-options="s.CompanyCode as s.CompanyName for s in CountriesList" ng-required="true"></select>-->
+                    </md-input-container>
+                </div>
+                <!--<div class="col-xs-12 col-md-7">
+                    <input type="text"  />
+                </div>-->
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-md-6">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Tel No.</label>
+
+                        <input type="text" ng-model="BranchDetails.address.TelNo" ng-required="true" logicon-number />
+                    </md-input-container>
+                </div>
+                <!--<div class="col-xs-12 col-md-2">
+                     <md-input-container class="md-block" flex-gt-sm> <label>Contact</label>
+                </div>
+                <div class="col-xs-12 col-md-4">
+                    <input type="text"  />
+                </div>-->
+                <div class="col-xs-12 col-md-6">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Mobile No.</label>
+
+                        <input type="text" ng-model="BranchDetails.address.MobileNo" ng-required="true" logicon-number />
+                    </md-input-container>
+                </div>
+            </div>
+            <div class="row">
+
+
+                <div class="col-xs-12 col-md-6">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Fax No.</label>
+
+                        <input type="text" ng-model="BranchDetails.address.FaxNo" ng-required="true" />
+                    </md-input-container>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Email</label>
+
+                        <input type="text" ng-model="BranchDetails.address.Email" ng-pattern="/^[a-z]+[a-z0-9._]+@[a-z]+\.[a-z.]{2,5}$/" ng-required="true" />
+                    </md-input-container>
+                </div>
+            </div>
+            <!--<div class="row">
+                <div class="col-xs-12 col-md-2">
+                     <md-input-container class="md-block" flex-gt-sm> <label>Remarks</label>
+                </div>
+                <div class="col-xs-12 col-md-10">
+                    <textarea ></textarea>
+                </div>
+            </div>-->
+            <div class="row">
+                <div class="col-xs-12">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Website</label>
+
+                        <input type="text" ng-model="BranchDetails.address.WebSite" />
+                    </md-input-container>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xs-12">                    
+                    <button class="btn btn-primary" type="submit" ng-click="submitted = true;" ng-disabled="BranchDetails.BranchCode=='HQ'"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Save</button>
+                    <button class="btn btn-default"  type="button"><i class="fa fa-eraser" aria-hidden="true"></i>&nbsp;Clear</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</form>

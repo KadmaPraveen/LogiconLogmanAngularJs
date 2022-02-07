@@ -1,0 +1,41 @@
+﻿<div class="container" ng-controller="ChargeCodeController">
+    <div class="card">
+        <div class="lv-header-alt clearfix m-b-5">
+            <h2 class="lvh-label">CHARGE CODE MASTER</h2>
+
+            <div class="lv-actions actions">
+                <button class="btn bgm-lightgreen btn-icon  waves-effect waves-circle m-r-10"
+                        type="button"
+                        aria-label="button"
+                        data-ui-sref="chargecodemaster({chargecode:NEW})">
+                    <i class="zmdi zmdi-plus" aria-hidden="true"></i>
+                </button>&nbsp;&nbsp;&nbsp;
+            </div>
+        </div>
+        <div class="card-body card-padding p-t-5 p-b-5">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div style="min-height: 250px;">
+                        <div class="table-responsive">
+                            <table class="table table-vmiddle" ng-table="ngTblData">
+                                <tr ng-repeat="w in $data">
+                                    <td data-title="'#Action'">
+                                        <button class="btn btn-default ng-scope waves-effect" type="button" data-ui-sref="chargecodemaster({chargecode:w.ChargeCode})" aria-label="button">
+                                            <i class="zmdi zmdi-edit" aria-hidden="true"></i>
+                                        </button>
+                                        <button class="btn btn-danger ng-scope waves-effect" type="button" ng-click="DeleteChargeCode(w.ChargeCode)" aria-label="button">
+                                            <i class="zmdi zmdi-delete" aria-hidden="true"></i>
+                                        </button>
+                                    </td>
+                                    <td data-title="'Code'" sortable="'ChargeCode'">{{w.ChargeCode}}</td>
+                                    <td data-title="'Description'" sortable="'ChargeDescription'">{{w.ChargeDescription}}</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+         
+        </div>
+    </div>
+</div>

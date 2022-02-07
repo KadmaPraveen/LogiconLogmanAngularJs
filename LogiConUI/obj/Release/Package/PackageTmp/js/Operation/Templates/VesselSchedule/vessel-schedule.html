@@ -1,0 +1,332 @@
+﻿<form tabindex="-1" id="frmVesselSchedule" name="frmVesselSchedule" ng-submit="SaveVesselSchedule(vs);" ng-class="{'submitted':submitted}" novalidate>
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" ng-click="cancel();">&times;</button>
+        <h4 class="modal-title">Vessel Schedule&nbsp;<i ng-show="showLoading" class="fa fa-spinner fa-pulse fa-1x fa-fw"></i></h4>
+    </div>
+    <div class="modal-body">
+        <div class="c-overflow" ng-style="{'max-height': iframeHeight - 80 + 'px'}" resize>
+            <div class="modalbodymain">
+                <div class="row">
+                    <div class="col-xs-12 col-md-6">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Vessel Id</label>
+                            <input type="text" class="search-icon"
+                                   typeahead-loading="showLoading"
+                                   ng-model="vs.VesselID"
+                                   typeahead-min-length="1"
+                                   uib-typeahead="d.Value as d.Value for d in VesselIDResults($viewValue)"
+                                   typeahead-wait-ms="1000"
+                                   typeahead-on-select="vesselIDClick($item)"
+                                   typeahead-editable="false" ng-required="true" ng-disabled="isEdit" />
+                        </md-input-container>
+
+                    </div>
+                    <div class="col-xs-12 col-md-6">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Vessel Name</label>
+                            <input type="text" class="search-icon"
+                                   ng-model="vs.VesselName"
+                                   typeahead-min-length="3"
+                                   uib-typeahead="d.Text as d.Text for d in VesselNameResults($viewValue)"
+                                   typeahead-loading="showLoading"
+                                   typeahead-wait-ms="1000"
+                                   typeahead-on-select="vesselNameClick($item)"
+                                   typeahead-editable="false" ng-required="true" ng-disabled="isEdit" />
+                        </md-input-container>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-md-6">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Custom Station Code</label>
+                            <input type="text" ng-model="vs.CustomStationCode" />
+                        </md-input-container>
+
+                    </div>
+                    <div class="col-xs-12 col-md-6">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <!--Terminal--> <label>Port Name</label>
+                            <!--<md-select ng-model="vs.Terminal" ng-disabled="isEdit && !isChangeTerminal" ng-required="true">
+                                <md-option ng-repeat="item in vesselClassList" ng-value="item.Value">
+                                    {{item.Text}}
+                                </md-option>
+                            </md-select>-->
+                            <input type=
+                            <input type="text"
+                                   class="search-icon"
+                                   ng-model="vs.TerminalName"
+                                   typeahead-min-length="3"
+                                   uib-typeahead="d.Text for d in PortOperatorResults($viewValue)"
+                                   typeahead-wait-ms="100"
+                                   typeahead-editable="false"
+                                   typeahead-on-select="TerminalOperaterSelected($item)" logicon-limit />
+                        </md-input-container>
+
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-md-6">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Voyage No. Inward</label>
+                            <input type="text" ng-model="vs.VoyageNoInWard" ng-required="true" ng-disabled="isEdit" />
+                        </md-input-container>
+
+                    </div>
+                    <div class="col-xs-12 col-md-6">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Voyage No. Outward</label>
+                            <input type="text" ng-model="vs.VoyageNoOutWard" ng-required="true" ng-disabled="isEdit" />
+                        </md-input-container>
+                    </div>
+                </div>
+
+                <!--<div class="row">
+                <div class="col-xs-12 col-md-6">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Custom Station Code</label>
+                        <input type="text" ng-model="vs.CustomStationCode" />
+                    </md-input-container>
+
+                </div>
+                <div class="col-xs-12 col-md-6">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Ship Call No.</label>
+                        <input type="text" ng-model="vs.ShipCallNo" ng-required="true" />
+                    </md-input-container>
+                </div>
+                    </div>-->
+
+                <div class="row">
+                    <div class="col-xs-12 col-md-6">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Place Of Arrival</label>
+                            <input type="text" ng-model="vs.PlaceOfArrival" />
+                        </md-input-container>
+
+                    </div>
+                    <div class="col-xs-12 col-md-6">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <!--Loading Port--><label>Next Port of Call</label>
+                            <input type="text" class="search-icon"
+                                   ng-model="vs.LoadingPortName"
+                                   typeahead-min-length="3"
+                                   uib-typeahead="d.PortName as d.PortName for d in portResults($viewValue)"
+                                   typeahead-loading="showLoading"
+                                   typeahead-wait-ms="1000"
+                                   typeahead-on-select="PortSelected($item, 'LoadingPort')"
+                                   typeahead-editable="false" ng-required="true" ng-disabled="isEdit && !isCallNewPort" />
+                        </md-input-container>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-12 col-md-6">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Entry Point</label>
+                            <input type="text" ng-model="vs.EntryPoint" />
+                        </md-input-container>
+
+                    </div>
+                    <div class="col-xs-12 col-md-6">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Ship Call No.</label>
+                            <input type="text" ng-model="vs.ShipCallNo" ng-required="true" />
+                        </md-input-container>
+                    </div>
+                    <!--<div class="col-xs-12 col-md-6">
+                            <md-input-container class="md-block" flex-gt-sm>
+                        <label>Discharge Port</label>
+                        <input type="text" class="search-icon"
+                               ng-model="vs.DischargePortName"
+                               typeahead-min-length="3"
+                               uib-typeahead="d.PortName as d.PortName for d in portResults($viewValue)"
+                               typeahead-loading="showLoading"
+                               typeahead-wait-ms="1000"
+                               typeahead-on-select="PortSelected($item, 'DischargePort')"
+                               typeahead-editable="false" ng-required="true" ng-disabled="isEdit" ng-blur="ValidatePorts()" />
+                    </md-input-container>
+                        </div>-->
+                </div>
+
+                <div class="row">
+                    <!--<div class="col-xs-12 col-md-6">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Terminal</label>
+                        <md-select ng-model="vs.Terminal" ng-disabled="isEdit && !isChangeTerminal" ng-required="true">
+                            <md-option ng-repeat="item in vesselClassList" ng-value="item.Value">
+                                {{item.Text}}
+                            </md-option>
+                        </md-select>
+                    </md-input-container>
+
+                        </div>-->
+                    <!--<div class="col-xs-12 col-md-6">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Ship Call No.</label>
+                            <input type="text" ng-model="vs.ShipCallNo" ng-required="true" />
+                        </md-input-container>
+                    </div>-->
+                    <div class="col-xs-12 col-md-6">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <!--Discharge Port--><label>Last Port of Call</label>
+                            <input type="text" class="search-icon"
+                                   ng-model="vs.DischargePortName"
+                                   typeahead-min-length="3"
+                                   uib-typeahead="d.PortName as d.PortName for d in portResults($viewValue)"
+                                   typeahead-loading="showLoading"
+                                   typeahead-wait-ms="1000"
+                                   typeahead-on-select="PortSelected($item, 'DischargePort')"
+                                   typeahead-editable="false" ng-required="true" ng-disabled="isEdit" ng-blur="ValidatePorts()" />
+                        </md-input-container>
+                    </div>
+                    <div class="col-xs-12 col-md-6">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <!--Destination Port--><label>Final Port of Call</label>
+                            <input type="text" class="search-icon"
+                                   ng-model="vs.DestinationPortName"
+                                   typeahead-min-length="3"
+                                   uib-typeahead="d.PortName as d.PortName for d in portResults($viewValue)"
+                                   typeahead-loading="showLoading"
+                                   typeahead-wait-ms="1000"
+                                   typeahead-on-select="PortSelected($item, 'DestinationPort')"
+                                   typeahead-editable="false" ng-required="true" ng-disabled="isEdit" ng-blur="ValidatePorts()" />
+                        </md-input-container>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-12 col-md-6">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>ETA</label>
+                            <input mdc-datetime-picker="" date="true" time="true" type="text" id="ETA" format="{{dateTimeFormat12}}" class="date-time-icon"
+                                   min-date="date" ng-model="vs.ETA" ng-required="true" ng-change="validateDates('ETD','ETD',vs.ETD)">
+                        </md-input-container>
+                    </div>
+                    <div class="col-xs-12 col-md-6">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>ETD</label>
+                            <input mdc-datetime-picker="" date="true" time="true" type="text" id="ETD" format="{{dateTimeFormat12}}" class="date-time-icon"
+                                   min-date="date" ng-model="vs.ETD" ng-required="true" ng-change="validateDates('ETD','ETD',vs.ETD)">
+                        </md-input-container>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-md-6">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Actual Arrival</label>
+                            <input mdc-datetime-picker="" date="true" time="true" type="text" id="ActualETA" format="{{dateTimeFormat12}}" class="date-time-icon"
+                                   min-date="date" ng-model="vs.ActualETA" ng-change="validatings('Actual Arrival','ActualETA',vs.ActualETA)">
+                        </md-input-container>
+                    </div>
+                    <div class="col-xs-12 col-md-6">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Actual Depature</label>
+                            <input mdc-datetime-picker="" date="true" time="true" type="text" id="ActualETD" format="{{dateTimeFormat12}}" class="date-time-icon"
+                                   min-date="date" ng-model="vs.ActualETD" ng-change="validatigs('Actual Depature','ActualETD',vs.ActualETD)">
+                        </md-input-container>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-md-6">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Imp available date</label>
+                            <input mdc-datetime-picker="" date="true" time="false" type="text" id="ImpAvaliableDate" format="{{dateFormat}}" class="date-icon"
+                                   min-date="date" ng-model="vs.ImpAvaliableDate"
+                                   ng-change="validatigss('Imp available date','ImpAvaliableDate',vs.ImpAvaliableDate)">
+                        </md-input-container>
+                    </div>
+                    <div class="col-xs-12 col-md-6">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Imp storage date</label>
+                            <input mdc-datetime-picker="" date="true" time="false" type="text" id="ImportStorageStartDate" format="{{dateFormat}}" class="date-icon"
+                                   min-date="date" ng-model="vs.ImportStorageStartDate"
+                                   ng-change="valid('Imp storage date','ImportStorageStartDate',vs.ImportStorageStartDate)">
+                        </md-input-container>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-12 col-md-6">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Exp available date</label>
+                            <input mdc-datetime-picker="" date="true" time="false" type="text" id="ExpAvailableDate" format="{{dateFormat}}" class="date-icon"
+                                   min-date="date" ng-model="vs.ExpAvailableDate"
+                                   ng-change="valids('Exp available date','ExpAvailableDate',vs.ExpAvailableDate)">
+                        </md-input-container>
+                    </div>
+                    <div class="col-xs-12 col-md-6">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Closing Date</label>
+                            <input mdc-datetime-picker="" date="true" time="true" type="text" id="ClosingDate" format="{{dateTimeFormat12}}" class="date-time-icon"
+                                   min-date="date" ng-model="vs.ClosingDate"
+                                   ng-change="validating('Closing Date','ClosingDate',vs.ClosingDate)">
+                        </md-input-container>
+                    </div>
+                </div>
+
+
+
+                <div class="row">
+                    <div class="col-xs-12 col-md-6">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Yard CutOff</label>
+                            <input mdc-datetime-picker="" date="true" time="true" type="text" id="YardCutOffDate" format="{{dateTimeFormat12}}" class="date-time-icon"
+                                   min-date="date" ng-model="vs.YardCutOffDate"
+                                   ng-change="validation('Yard CutOff','YardCutOffDate',vs.YardCutOffDate)">
+                        </md-input-container>
+                    </div>
+                    <div class="col-xs-12 col-md-6">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Yard CutOff (RF)</label>
+                            <input mdc-datetime-picker="" date="true" time="true" type="text" id="YardCutOffDateRF" format="{{dateTimeFormat12}}" class="date-time-icon"
+                                   min-date="date" ng-model="vs.YardCutOffDateRF"
+                                   ng-change="validations('Yard CutOff (RF)','YardCutOffDateRF',vs.YardCutOffDateRF)">
+                        </md-input-container>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-12 col-md-6">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Closing Date RF</label>
+                            <input mdc-datetime-picker="" date="true" time="true" type="text" id="ClosingDateRF" format="{{dateTimeFormat12}}" class="date-time-icon"
+                                   min-date="date" ng-model="vs.ClosingDateRF"
+                                   ng-change="validate('Closing Date RF','ClosingDateRF',vs.ClosingDateRF)">
+                        </md-input-container>
+                    </div>
+                    <!--<div class="col-xs-12 col-md-6">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>PSA Code</label>
+                        <input type="text" ng-model="vs.PSACode" />
+                    </md-input-container>
+                        </div>-->
+                </div>
+
+                <!--<div class="row">
+                <div class="col-xs-12 col-md-6">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>PSA Name</label>
+                        <input type="text" ng-model="vs.PSAName" />
+                    </md-input-container>
+                </div>
+                <div class="col-xs-12 col-md-6">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>PSA Address</label>
+                        <input type="text" ng-model="vs.PSAAddress" />
+                    </md-input-container>
+                </div>
+                    </div>-->
+            </div>
+        </div>
+    </div> <div class="modal-footer">
+        <div class="row">
+            <div class="col-xs-12 col-md-9"></div>
+            <div class="col-md-3 pull-right">
+                <button class="btn btn-primary" ng-click="submitted = true;"><i class="fa fa-floppy-o"></i>&nbsp;Save</button>
+                <button class="btn btn-default" type="button" ng-click="cancel();"><i class="fa fa-times" aria-hidden="true"></i>&nbsp;Close</button>
+            </div>
+        </div>
+    </div>
+</form>

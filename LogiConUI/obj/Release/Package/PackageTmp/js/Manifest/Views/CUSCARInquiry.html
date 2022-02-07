@@ -1,0 +1,117 @@
+﻿<div class="container" ng-controller="CUSCARInquiryCntrl">
+    <div class="card">
+        <div  class="lv-header-alt clearfix m-b-5">
+            <h3  class="lvh-label">CUSCAR Inquiry</h3>
+        </div>
+        <div  class="card-body card-padding p-t-25 p-b-25">
+            <div class="row" >
+                <div class="col-xs-12 col-md-2">
+                    <label>Vessel Name</label>
+                </div>
+                <div class="col-xs-6 col-md-3">
+                    <input type="text"
+                                       class="search-icon"
+                           
+                           ng-class="{'loadinggif': i.VesselNameLoading}"
+                           placeholder="Vessel Name"
+                           ng-model="i.vesselName"
+                           typeahead-min-length="3"
+                           uib-typeahead="d.Text as d.Text for d in VesselNameResults($viewValue)"
+                           typeahead-loading="i.VesselNameLoading"
+                           typeahead-wait-ms="100"
+                           typeahead-editable="false"
+                           typeahead-on-select="vesselNameClick($item)" />
+                </div>
+                <div class="col-md-1">
+                    <label>Voyage No.</label>
+                </div>
+                <div class="col-xs-12 col-md-2">
+                    <input type="text" class="form-control input-sm" ng-model="i.voyageNo" />
+                </div>
+                <div class="col-md-1">
+                    <label class="control-label pull-right text-nowrap">Discharge Port</label>
+                </div>
+                <div class="col-xs-6 col-md-3">
+                    <input type="text"
+                                       class="search-icon"
+                           
+                           ng-class="{'loadinggif': i.PortOfDischargeNameLoading}"
+                           placeholder="Discharge Port"
+                           ng-model="i.dischargePort"
+                           typeahead-min-length="3"
+                           uib-typeahead="d.PortName as d.PortName for d in portResults($viewValue)"
+                           typeahead-loading="i.PortOfDischargeNameLoading"
+                           typeahead-wait-ms="100"
+                           typeahead-editable="false"
+                           typeahead-on-select="PortSelected($item, 'PortOfDischarge')" />
+                </div>
+            </div>
+            <div class="row ">
+                <div class="col-xs-12 col-md-2">
+                    <label>Place Of Arrival</label>
+                </div>
+                <div class="col-xs-6 col-md-3">
+                    <input type="text"
+                                       class="search-icon"
+                           
+                           ng-class="{'loadinggif': i.PlaceOfArrivalNameLoading}"
+                           placeholder="Place Of Arrival"
+                           ng-model="i.PlaceOfArrivalName"
+                           typeahead-min-length="3"
+                           uib-typeahead="d.PortName as d.PortName for d in portResults($viewValue)"
+                           typeahead-loading="i.PortOfDischargeNameLoading"
+                           typeahead-wait-ms="100"
+                           typeahead-editable="false"
+                           typeahead-on-select="PortSelected($item, 'PlaceOfArrival')" />
+                </div>
+                <div class="col-md-1">
+                    <label>ETA</label>
+                </div>
+                <div class="col-xs-12 col-md-2">
+                    <div class="dropdown">
+                        <a class="dropdown-toggle" id="eta" role="button" data-toggle="dropdown">
+                            <div class="input-group">
+                                <input type="text" class="form-control input-sm datepicker"
+                                       ng-model="i.eta"
+                                       ng-required="true"
+                                       date-time-input="MM/DD/YYYY">
+                                <span class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true"></i></span>
+                            </div>
+                        </a>
+                        <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                            <datetimepicker ng-model="i.eta"
+                                            data-datetimepicker-config="{ dropdownSelector: '#eta', startView:'day', minView:'day' }" />
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-1">
+                    <label>ETD</label>
+                </div>
+                <div class="col-xs-12 col-md-2">
+                    <div class="dropdown">
+                        <a class="dropdown-toggle" id="etd" role="button" data-toggle="dropdown">
+                            <div class="input-group">
+                                <input type="text" class="form-control input-sm datepicker"
+                                       ng-model="i.etd"
+                                       ng-required="true"
+                                       date-time-input="MM/DD/YYYY">
+                                <span class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true"></i></span>
+                            </div>
+                        </a>
+                        <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                            <datetimepicker ng-model="i.etd"
+                                            data-datetimepicker-config="{ dropdownSelector: '#etd', startView:'day', minView:'day' }" />
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-1">
+                    <button class="btn btn-primary" ng-click="Search()">Search</button>
+                </div>
+            </div>
+        </div>
+        <div class="box-footer">
+            <div class="row">
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,48 @@
+﻿<div class="container" ng-controller="BookingEntryCntrl">
+    <div class="card">
+        <div  class="lv-header-alt clearfix m-b-5">
+            <h3  class="lvh-label">Booking Entry List</h3>.<div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" onclick="location.href = '#/tms/bookingentry/NEW'">
+                    <i class="fa fa-plus"></i>
+                </button>
+            </div>
+        </div>
+        <div  class="card-body card-padding p-t-25 p-b-25">
+            <div class="row" >
+                <div class="col-xs-12">
+                    <table class="table table-striped table-vmiddle">
+                        <thead >
+                            <tr>
+                                <th>Order No.</th>
+                                <th>Booking BL No.</th>
+                                <th>Sub Booking BL No.</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="bh in bookingHeaderList">
+                                <td><a href="#/tms/bookingentry/{{bh.OrderNo}}">{{bh.OrderNo}}</a></td>
+                                <td>{{bh.BookingBLNo}}</td>
+                                <td>{{bh.SubBookingBLNo}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <uib-pagination ng-model="currentPage"
+                                    total-items="totalItems"
+                                    ng-change="pageChanged()"
+                                    class="pagination-sm pull-right"
+                                    max-size="10"
+                                    items-per-page="limit">
+                    </uib-pagination>
+                </div>
+            </div>
+        </div>
+        <div class="box-footer">
+            <div class="row">
+            </div>
+        </div>
+    </div>
+</div>

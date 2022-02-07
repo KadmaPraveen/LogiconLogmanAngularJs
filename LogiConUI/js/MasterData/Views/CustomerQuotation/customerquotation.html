@@ -1,0 +1,374 @@
+﻿
+<div class="container" ng-controller="CustomerQuotationCntrl">
+    <form id="frmCustomerQuotation"
+          ng-submit="SaveCustomerQuotation(cq);"
+          name="frmCustomerQuotation" ng-class="{'submitted': submitted}" autocomplete="off" novalidate>
+        <input type="hidden" ng-model="cq.QuotationType" ng-init="cq.QuotationType = 3861" />
+        <div class="card">
+            <div class="lv-header-alt clearfix m-b-5">
+                <h3 class="lvh-label"><!--{{tab.title}}--> Merchant Quotation</h3>
+            </div>
+            <div class="card-body card-padding p-t-5 p-b-5">
+
+                <div class="row">
+                    <div class="col-xs-12 col-md-4">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Quotation No.</label>
+                            <input type="text" ng-model="cq.QuotationNo" ng-disabled="true" />
+                        </md-input-container>
+                    </div>
+                    <div class="col-xs-12 col-md-4">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Quotation Date</label>
+                            <input mdc-datetime-picker="" class="date-icon" date="true" time="false" type="text" id="DateFrom" format="{{dateFormat}}"
+                                   min-date="date" ng-model="cq.QuotationDate"
+                                   ng-required="true" ng-disabled="true">
+                        </md-input-container>
+                    </div>
+                    <div class="col-xs-12 col-md-4">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Prepared By</label>
+                            <input type="text" ng-model="cq.CreatedBy" ng-disabled="true" />
+                        </md-input-container>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-md-4">
+                        <!--<md-input-container class="md-block" flex-gt-sm>
+                            <label>Customer</label>
+                            <input type="text"
+                                   class="search-icon"
+                                   ng-class="{'loadinggif': cq.CustomerNameLoading}"
+                                   ng-model="cq.CustomerName"
+                                   typeahead-min-length="3"
+                                   uib-typeahead="d.Text as d.Text for d in CustomerResults($viewValue, 'ShipperConsignee')"
+                                   typeahead-on-select="cq.CustomerCode = ($item.Value)"
+                                   typeahead-loading="cq.CustomerNameLoading"
+                                   typeahead-wait-ms="1000"
+                                   typeahead-editable="false" ng-required="true" />
+                        </md-input-container>-->
+                        <merchant-autocomplete filter="billingCustomer"
+                                               labeltext="Customer"
+                                               iseditable="false"
+                                               ng-model="cq.CustomerCode"
+                                               merchant-name="cq.CustomerName">
+                        </merchant-autocomplete>
+                    </div>
+                    <div class="col-xs-12 col-md-4">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Effective Date</label>
+                            <input mdc-datetime-picker="" class="date-icon" date="true" time="false" type="text" id="DateFrom" format="{{dateFormat}}"
+                                   min-date="mindate" ng-model="cq.EffectiveDate"
+                                   ng-required="true" ng-change="validateEffectivedate();">
+                        </md-input-container>
+                    </div>
+                    <div class="col-xs-12 col-md-4">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Expiry Date</label>
+                            <input mdc-datetime-picker="" class="date-icon" date="true" time="false" type="text" id="DateFrom" format="{{dateFormat}}"
+                                   min-date="mindate" ng-model="cq.ExpiryDate"
+                                   ng-required="true" ng-change="validateEffectivedate();">
+                        </md-input-container>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-8">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Remarks</label>
+                            <textarea ng-model="cq.Remarks"></textarea>
+                        </md-input-container>
+                    </div>
+                    <div class="col-xs-12 col-md-4">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Old Quotation No.</label>
+                            <input type="text" ng-model="cq.OldQuotationNo" ng-disabled="true" />
+                        </md-input-container>
+                    </div>
+                </div>
+               
+                <div class="row">
+                    <!--<div class="col-xs-12 col-md-4">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Trailer Detention Free Day</label>
+                            <input type="text" ng-model="cq.TrailerDetentionFreeDays" logicon-number logicon-limit maxlength="5" />
+                        </md-input-container>
+                    </div>-->
+                    <!--<div class="col-xs-8">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Remarks</label>
+                            <textarea ng-model="cq.Remarks"></textarea>
+                        </md-input-container>
+                    </div>-->
+                </div>
+            </div>
+        </div>
+        <!--<div class="card">
+            <div class="lv-header-alt clearfix m-b-5">
+                <h3 class="lvh-label">{{tab.title}} Storage Rules</h3>
+            </div>
+            <div class="card-body card-padding p-t-5 p-b-5">
+                <div class="row">
+                    <div class="col-xs-12 col-md-4">
+                        <div class="checkbox m-b-15">
+                            <md-switch class="md-primary"
+                                       aria-label="Billing Required"
+                                       ng-model="cq.IsBillingWarehouse"
+                                       ng-init="cq.IsBillingWarehouse = false">
+                                Billing Required
+                            </md-switch>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-md-4">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Calculation Period</label>
+                            <md-select ng-model="cq.CargoCalcPeriod">
+                                <md-option ng-repeat="item in lookupData.calPeriodType" ng-value="item.Value">
+                                    {{item.Text}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                    </div>
+                    <div class="col-xs-12 col-md-4">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Storage Section</label>
+                            <md-select ng-model="cq.CargoStorageMethod">
+                                <md-option ng-repeat="item in lookupData.storageType" ng-value="item.Value">
+                                    {{item.Text}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-md-4">
+                        <div class="checkbox m-b-15">
+                            <md-switch class="md-primary"
+                                       aria-label="CalendarWeek"
+                                       ng-model="cq.CalendarWeek"
+                                       ng-init="cq.CalendarWeek = false">
+                                Calendar
+                            </md-switch>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-md-4">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>custom</label>
+                            <md-select ng-model="cq.CustomStorage">
+                                <md-option ng-repeat="item in lookupData.custom" ng-value="item.Value">
+                                    {{item.Text}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                    </div>
+                    <div class="col-xs-12 col-md-4">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Custom Storage Others</label>
+                            <input type="text" class="form-control" ng-model="cq.CustomStorageOthers"></input>
+                        </md-input-container>
+                    </div>
+                </div>
+            </div>
+        </div>-->
+       
+        <div class="card">
+            <div class="lv-header-alt clearfix m-b-5">
+                <h3 class="lvh-label"><!--{{tab.title}}--> Details</h3>
+                    <div class="text-right m-r-10 pull-right"><button type="button" class="btn btn-primary"  ng-click="AddCQDetails(-1);"><i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Add</button></div>
+            </div>
+            <div class="card-body card-padding p-t-5 p-b-5">
+                <!--<div class="row">
+                    <div class="col-xs-12">
+                        <div class="pull-right"><button type="button" class="btn btn-primary m-b-10" ng-click="AddCQDetails(-1);"><i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Add</button></div>
+                    </div>
+                </div>-->
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="table-responsive">
+                            <table class="table  table-vmiddle" ng-table="tblMerchantQuotation">
+                                <tr ng-repeat="item in $data">
+                                    <td data-title="'#Action'">
+                                        <button type="button" ng-click="AddCQDetails($index)" class="btn btn-default ng-scope waves-effect">
+                                            <i class="zmdi zmdi-edit"></i>
+                                        </button>
+                                        <button ng-click="deleteCQDetails($index)" class="btn btn-danger ng-scope waves-effect">
+                                            <i class="zmdi zmdi-delete"></i>
+                                        </button>
+                                        <input type="hidden" ng-model="item.Index" ng-init="item.Index = $index" />
+                                    </td>
+                                    <td data-title="'Job'">{{item.JobTypeDescription}}</td>
+                                    <td data-title="'Shipment Type'">{{item.ShipmentTypeDescription}}</td>
+                                    <td data-title="'Job Category'">{{item.JobCategory}}</td>
+                                    <td data-title="'Charge Code'">{{item.ChargeCode}}</td>
+                                    <td data-title="'Description'">{{item.Remarks}}</td>
+                                    <td data-title="'Type Size'">{{item.Size}}- {{item.Type}}</td>
+                                    <td data-title="'Curr'">{{item.CurrencyCode}}</td>
+                                    <td data-title="'Sell Rate'">{{item.SellRate}}</td>
+                                    <td data-title="'Est Cost'">{{item.EstCost}}</td>
+                                    <td data-title="'Min. Amt.'">{{item.MinAmt}}</td>
+                                    <td data-title="'Max. Amt.'">{{item.MaxAmnt}}</td>
+                                    <td data-title="'Slab'">{{item.IsSlabRate}}</td>
+                                </tr>
+
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-md-6">
+                <div class="card">
+                    <div class="lv-header-alt clearfix m-b-5">
+                        <h3 class="lvh-label"><!--{{tab.title}}--> Cargo Storage Free Days</h3>
+                    </div>
+
+                    <div class="card-body card-padding p-t-5 p-b-5">
+                        <div class="row m-b-10">
+                            <div class="col-xs-12 col-md-6">
+                                <label>Normal</label>
+                            </div>
+                            <div class="col-xs-12 col-md-6">
+                                <label>DG</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 col-md-6">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Export</label>
+                                    <input type="text" ng-model="cq.CargoFPExport" logicon-number logicon-limit maxlength="5" />
+                                </md-input-container>
+                            </div>
+                            <div class="col-xs-12 col-md-6">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <input type="text" ng-model="cq.CargoFPExportDG" logicon-number logicon-limit maxlength="5" />
+                                </md-input-container>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 col-md-6">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Import</label>
+                                    <input type="text" ng-model="cq.CargoFPImport" logicon-number logicon-limit maxlength="5" />
+                                </md-input-container>
+                            </div>
+                            <div class="col-xs-12 col-md-6">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <input type="text" ng-model="cq.CargoFPImportDG" logicon-number logicon-limit maxlength="5" />
+                                </md-input-container>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 col-md-6">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Local</label>
+                                    <input type="text" ng-model="cq.CargoFPLocal" logicon-number logicon-limit maxlength="5" />
+                                </md-input-container>
+                            </div>
+                            <div class="col-xs-12 col-md-6">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <input type="text" ng-model="cq.CargoFPLocalDG" logicon-number logicon-limit maxlength="5" />
+                                </md-input-container>
+                            </div>
+                        </div>
+                        <div class="p-t-30 p-b-25"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-md-6">
+                <div class="card">
+                    <div class="lv-header-alt clearfix m-b-5">
+                        <h3 class="lvh-label"><!--{{tab.title}}--> Container Storage Free Days</h3>
+                    </div>
+                    <div class="card-body card-padding p-t-5 p-b-5">
+
+                        <div class="row m-b-10">
+                            <div class="col-xs-12 col-md-6">
+                                <label>Normal</label>
+                            </div>
+                            <div class="col-xs-12 col-md-6">
+                                <label>DG</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 col-md-6">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Export</label>
+                                    <input type="text" ng-model="cq.ContainerFPExport" logicon-number logicon-limit maxlength="5" />
+                                </md-input-container>
+                            </div>
+                            <div class="col-xs-12 col-md-6">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <input type="text" ng-model="cq.ContainerFPExportDG" logicon-number logicon-limit maxlength="5" />
+                                </md-input-container>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 col-md-6">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Import</label>
+
+                                    <input type="text" ng-model="cq.ContainerFPImport" logicon-number logicon-limit maxlength="5" />
+                                </md-input-container>
+                            </div>
+                            <div class="col-xs-12 col-md-6">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <input type="text" ng-model="cq.ContainerFPImportDG" logicon-number logicon-limit maxlength="5" />
+                                </md-input-container>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 col-md-6">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Local</label>
+                                    <input type="text" ng-model="cq.ContainerFPLocal" logicon-number logicon-limit maxlength="5" />
+                                </md-input-container>
+                            </div>
+                            <div class="col-xs-12 col-md-6">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <input type="text" ng-model="cq.ContainerFPLocalDG" logicon-number logiconLimit maxlength="5" />
+                                </md-input-container>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 col-md-6">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Trailer Detention Free Day</label>
+                                    <input type="text" ng-model="cq.TrailerDetentionFreeDays" logicon-number logicon-limit maxlength="5" />
+                                </md-input-container>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-body card-padding p-t-10 p-b-10">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="pull-left">
+                            <button type="submit" class="btn btn-primary" ng-click="submitted = true"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Save</button>
+                            <!--<button type="button" class="btn btn-info"><i class="fa fa-search" aria-hidden="true"></i>&nbsp;Browse</button>-->
+                            <a href="{{reportUrl}}" target="_blank" class="btn btn-warning waves-effect" ng-if="cq.QuotationNo != 'NEW'">
+                                <!--ng-click="GenerateReport('ROT','DNeX.ROT','ViewROTReport')"-->
+                                <i class="fa fa-print" aria-hidden="true"></i> Print
+                            </a>
+                            <span ng-if="cq.QuotationNo != 'NEW'">
+                                <button type="button" ng-if="cq.IsApproved" ng-click="VoidQuotation(cq.QuotationNo)" class="btn btn-primary"><i class="fa fa-thumbs-down" aria-hidden="true"></i>&nbsp;Void</button>
+                                <button type="button" ng-if="(!cq.IsApproved && !cq.IsCancel) || cq.IsCancel" ng-click="ApproveQuotation(cq.QuotationNo)" class="btn btn-danger"><i class="fa fa-thumbs-up" aria-hidden="true"></i>&nbsp;Approve</button>
+                                <button type="button" ng-click="DeleteQuotation(cq.QuotationNo)" class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i>&nbsp;Delete</button>
+                            </span>
+                            <!--<button type="button" class="btn btn-warning"><i class="fa fa-sign-out" aria-hidden="true"></i>&nbsp;Exit</button>-->
+                        </div>
+                        <div class="pull-right">
+                            <button class="btn btn-primary waves-effect" type="button" data-ui-sref="customerquotationlist" data-ng-click="mactrl.sidebarStat($event)" href="#/customerquotationlist">
+                                <i class="fa fa-backward" aria-hidden="true"></i>&nbsp;Back
+                            </button>
+                            <button type="button" ng-click="Clear()" class="btn btn-default"><i class="fa fa-eraser" aria-hidden="true"></i>&nbsp;Clear</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+       
+    </form>
+</div>

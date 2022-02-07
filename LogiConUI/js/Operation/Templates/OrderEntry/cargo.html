@@ -1,0 +1,126 @@
+﻿<div id="itemEntry">
+    <div class="card">
+        <div class="lv-header-alt clearfix m-b-5">
+            <h2 class="lvh-label">Item Entries</h2>
+            <div class="text-right pull-right m-r-10" ng-show="!IsWebOrder">
+                
+                <!--<!--<button type="button" class="btn btn-success m-r-10" ng-click="DownloadExcelSheet()">
+            <i class="fa fa-file-excel-o"></i>
+        </button>-->
+               
+
+                <!--<a href="mysite.com/uploads/asd4a4d5a.pdf" download="foo.pdf">-->
+                <span class="fileinput fileinput-new " data-provides="fileinput" ng-show="!IsWebOrder" has-Right data-rightValue="OrderEntry.UploadFile">
+                    <span class="btn btn-primary btn-file">
+                        <span class="fileinput-new"> <i class="fa fa-upload" aria-hidden="true"></i> &nbsp; Upload File</span>
+                        <span class="fileinput-exists">Change</span>
+                        <input type="file"
+                               id="cargoFile"
+                               name="cargoFile"
+                               onchange="angular.element(this).scope().CargoFileUpload(this)">
+                    </span>
+                    <span class="fileinput-filename"></span>
+                    <a href="#" class="close fileinput-exists" data-dismiss="fileinput">&times;</a>
+                </span>
+                <a href="/js/Operation/Templates/OrderEntry/OrderTemplate.xls" class="btn btn-success m-r-5"><i class="fa fa-file-excel-o"></i></a>
+
+
+
+                <button class="btn btn-primary m-r-5" type="button" ng-click="AddCargo(-1);" has-Right data-rightValue="OrderEntry.AddItem">
+    <i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Add
+</button>
+                <div class="clearfix"></div>
+            </div>
+</div>
+        <div class="card-body card-padding p-t-5 p-b-5">
+            <div class="row">
+                <div class="col-md-12 ">
+                    <div class="row chart-width ">
+                        <div class="col-xs-3 ">
+                            <div class="mini-charts-item bgm-cyan">
+                                <div class="clearfix">
+                                    <div class="chart stats-bar" data-sparkline-bar=""><canvas width="63" height="45" style="display: inline-block; width: 83px; height: 45px; vertical-align: top;"></canvas></div>
+                                    <div class="count">
+                                        <small>Quantity</small>
+                                        <h2>{{oe.orderCargoList | sumOfValue:'Qty'}}</h2>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-3">
+                            <div class="mini-charts-item bgm-lightgreen">
+                                <div class="clearfix">
+                                    <div class="chart stats-line" data-sparkline-line=""><canvas width="83" height="45" style="display: inline-block; width: 83px; height: 45px; vertical-align: top;"></canvas></div>
+                                    <div class="count">
+                                        <small>M3</small>
+                                        <h2>{{oe.orderCargoList | sumOfValue:'GrossVolume'}}</h2>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-3">
+                            <div class="mini-charts-item bgm-orange">
+                                <div class="clearfix">
+                                    <div class="chart stats-pie" data-sparkline-pie="">
+                                        <canvas width="83" height="45" style="display: inline-block; width: 83px; height: 45px; vertical-align: top;"></canvas>
+                                    </div>
+                                    <div class="count">
+                                        <small>KG</small>
+                                        <h2>{{oe.orderCargoList | sumOfValue:'GrossWeight'}}</h2>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-3">
+                            <div class="mini-charts-item bgm-blue">
+                                <div class="clearfix">
+                                    <div class="chart stats-bar" data-sparkline-bar=""><canvas width="83" height="45" style="display: inline-block; width: 83px; height: 45px; vertical-align: top;"></canvas></div>
+                                    <div class="count">
+                                        <small>Local Amt.</small>
+                                        <h2>{{oe.orderCargoList | sumOfValue:'LocalPrice'}}</h2>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="table-responsive">
+                        <table class="table table-vmiddle" ng-table="tblCargo">
+                            <tr ng-repeat="cargo in $data">
+
+                                <td data-title="'Container#'">{{cargo.ContainerNo}}</td>
+                                <!--<td data-title="'Line'">{{cargo.CargoLine}}</td>
+                                <td data-title="'Consignee Name'">{{cargo.ShipperConsigneeName}}</td>-->
+                                <td data-title="'Product'">{{cargo.ProductDescription}}</td>
+                                <td data-title="'Item Description'">{{cargo.ItemDescription}}</td>
+                                <td data-title="'Quantity'">{{cargo.Qty}}</td>
+                                <td data-title="'UOM'">{{cargo.UOM}}</td>
+                                <td data-title="'Volume'">{{cargo.GrossVolume}}</td>
+                                <td data-title="'Weight'">{{cargo.GrossWeight}}</td>
+                                <td data-title="'#Action'">
+                                    <input type="hidden" ng-model="cargo.Index" ng-init="cargo.Index = (_cargoIndex + $index)" />
+                                    <button type="button" ng-click="AddCargo(_cargoIndex + $index);" class="btn waves-effect"  ng-class="{'btn-default': !IsWebOrder, 'btn-info': IsWebOrder}" aria-label="button" has-Right data-rightValue="OrderEntry.UpdateItem">
+                                        <i class="zmdi" ng-class="{'zmdi-edit': !IsWebOrder, 'zmdi-view-dashboard': IsWebOrder}"></i>
+                                    </button>
+                                    <button class="btn bgm-teal waves-effect" type="button" uib-tooltip="Copy" tooltip-placement="top"
+                                            ng-click="CopyItemEntry(cargo)" has-Right data-rightValue="OrderEntry.CopyItem">
+                                        <i class="zmdi zmdi-refresh"></i>
+                                    </button>
+                                    <button type="button" ng-click="DeleteCargo(_cargoIndex + $index);" class="btn btn-danger waves-effect" aria-label="button" ng-show="!IsWebOrder" has-Right data-rightValue="OrderEntry.DeleteItem">
+                                        <i class="zmdi zmdi-delete" aria-hidden="true"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>

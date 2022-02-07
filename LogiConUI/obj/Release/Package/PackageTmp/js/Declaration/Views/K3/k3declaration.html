@@ -1,0 +1,2219 @@
+﻿<div class="container" ng-controller="k3Cntrl as Cntrl">
+    <style type="text/css">
+        .Activitycontainer {
+            width: 400px;
+            margin: 10px;
+        }
+
+        .txtCls {
+            width: 100px;
+            text-align: right;
+        }
+
+        .chart-width > div {
+            width: 20%;
+        }
+
+        .custom-popup-wrapper {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            z-index: 1000;
+            display: none;
+            background-color: #f9f9f9;
+        }
+
+            .custom-popup-wrapper > .message {
+                padding: 10px 20px;
+                border-bottom: 1px solid #ddd;
+                color: #868686;
+            }
+
+            .custom-popup-wrapper > .dropdown-menu {
+                position: static;
+                float: none;
+                display: block;
+                min-width: 160px;
+                background-color: transparent;
+                border: none;
+                border-radius: 0;
+                box-shadow: none;
+            }
+
+        tr.dropdown-menu {
+            display: block;
+        }
+
+        .mytable {
+            background-color: #fff;
+            -webkit-background-clip: padding-box;
+            background-clip: padding-box;
+            border: 1px solid #ccc;
+            border: 1px solid rgba(0,0,0,.15);
+            border-radius: 4px;
+            -webkit-box-shadow: 0 6px 12px rgba(0,0,0,.175);
+            box-shadow: 0 6px 12px rgba(0,0,0,.5);
+            position: absolute;
+            width: 550px;
+            z-index: 99999;
+        }
+
+            .mytable thead tr {
+                background-color: #367fa9;
+                color: #fff;
+            }
+
+                .mytable thead tr td {
+                    background-color: #367fa9;
+                    color: #fff;
+                    font-weight: bold;
+                }
+
+            .mytable > tbody > tr > td, .mytable > tbody > tr > th, .mytable > tfoot > tr > td, .mytable > tfoot > tr > th,
+            .mytable > thead > tr > td, .mytable > thead > tr > th {
+                padding: 3px;
+            }
+
+        .chart-width > div {
+            width: 20%;
+        }
+
+        .table-bordered {
+            border-bottom: 1px solid #f0f0f0;
+            border-left: 1px solid #f0f0f0;
+            border-right: 1px solid #f0f0f0;
+        }
+
+        .table tr td, .table tr th {
+            text-align: right;
+        }
+
+        /*.table tr th {
+            text-align: left;
+        }*/
+
+        .card {
+            margin-bottom: 10px !important;
+        }
+
+        /*@media screen and (min-width: 768px) .ng-table-pager {
+            background: #f4f4f4;
+        }*/
+    </style>
+
+    <script type="text/ng-template" id="activities.html">
+        <div class="Activitycontainer">
+            <div class="row" style="height:300px;overflow-y:scroll">
+                <div class="col-xs-12" ng-repeat="item in Cntrl.activityList" style="border-bottom:1px solid rgb(224,224,224);">
+                    <a href="#">
+                        <p>
+                            {{ item.ActivityBy }}
+                            <span class="pull-right"><small><i class="fa fa-clock-o"></i> {{ item.ActivityDate | date:'medium' }}</small></span>
+                        </p>
+                        <h4>{{ item.AcitivtyMessage }}</h4>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </script>
+    <script type="text/ng-template" id="voyage-autocomplete.html">
+        <table ng-show="isOpen() && !moveInProgress"
+               aria-hidden="{{!isOpen()}}"
+               class="table  table-vmiddle table-hover table-bordered mytable"
+               ng-style="{top: position().top+'px', left: position().left+'px'}"
+               style="">
+            <thead>
+                <tr>
+                    <th>Vessel ID</th>
+                    <th>Vessel Name</th>
+                    <th>ETA</th>
+                    <th>ETD</th>
+                    <th>Terminal</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="match in matches track by $index" ng-click="selectMatch($index)">
+                    <td>{{match.model.VesselID}}</td>
+                    <td>{{match.model.VesselName}}</td>
+                    <td>{{match.model.ETA | date :  'dd/MM/yyyy hh:mm a' }}</td>
+                    <td>{{match.model.ETD | date :  'dd/MM/yyyy hh:mm a' }}</td>
+                    <td>{{match.model.TerminalName}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </script>
+    <form id="frmk3" name="frmk3" ng-class="{'submitted': submitted}" ng-submit="Savek3Declaration(k3)" autocomplete="off" novalidate>
+        <div id="k3Header">
+            <div class="card" id="iFrameMaininner">
+                <div class="lv-header-alt clearfix m-b-5">
+                    <h3 class="lvh-label">K3 - IMPORT</h3>
+                    <!--<ul class="top-menu pull-right m-r-5 m-b-0 ">
+                        <li class="dropdown" uib-dropdown>
+                            <a uib-dropdown-toggle class="btn bgm-gray waves-effect ">
+                                <i class="tmn-counts">9</i>
+                                <i class="tm-icon zmdi zmdi-notifications"></i>
+
+
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-lg pull-right">
+                                <div class="listview" id="notifications">
+                                    <div class="lv-header">
+                                        Notification
+
+                                        <ul class="actions">
+                                            <li class="dropdown">
+                                                <a href="" data-clear="notification">
+                                                    <i class="zmdi zmdi-check-all"></i>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="lv-body c-overflow">
+                                        <a class="lv-item p-l-10 p-r-10" href="">
+                                            <div class="media">
+                                                <div class="pull-left  p-r-10 m-r-10 border-row-right">
+
+                                                    <strong class="c-gray f-10">May 21, 2015</strong><br />
+                                                    <small class="c-gray">09:49 AM</small>
+                                                </div>
+                                                <div class="media-body">
+                                                    <div class="lv-title">document received</div>
+                                                    <small class="lv-small username">syamsul</small>
+                                                </div>
+                                            </div>
+                                        </a>
+                                        <a class="lv-item p-l-10 p-r-10" href="">
+                                            <div class="media">
+                                                <div class="pull-left  p-r-10 m-r-10 border-row-right">
+
+                                                    <strong class="c-gray f-10">May 21, 2015</strong><br />
+                                                    <small class="c-gray">09:49 AM</small>
+                                                </div>
+                                                <div class="media-body">
+                                                    <div class="lv-title">Order Accepted</div>
+                                                    <small class="lv-small username">syamsul</small>
+                                                </div>
+                                            </div>
+                                        </a>
+                                        <a class="lv-item p-l-10 p-r-10" href="">
+                                            <div class="media">
+                                                <div class="pull-left  p-r-10 m-r-10 border-row-right">
+
+                                                    <strong class="c-gray f-10">May 21, 2015</strong><br />
+                                                    <small class="c-gray">09:49 AM</small>
+                                                </div>
+                                                <div class="media-body">
+                                                    <div class="lv-title">rate matched</div>
+                                                    <small class="lv-small username">syamsul</small>
+                                                </div>
+                                            </div>
+                                        </a>
+                                        <a class="lv-item p-l-10 p-r-10" href="">
+                                            <div class="media">
+                                                <div class="pull-left  p-r-10 m-r-10 border-row-right">
+
+                                                    <strong class="c-gray f-10">May 21, 2015</strong><br />
+                                                    <small class="c-gray">09:49 AM</small>
+                                                </div>
+                                                <div class="media-body">
+                                                    <div class="lv-title">
+                                                        job opened
+                                                    </div>
+                                                    <small class="lv-small username">syamsul</small>
+                                                </div>
+                                            </div>
+                                        </a>
+                                        <a class="lv-item p-l-10 p-r-10" href="">
+                                            <div class="media">
+                                                <div class="pull-left  p-r-10 m-r-10 border-row-right">
+
+                                                    <strong class="c-gray f-10">May 21, 2015</strong><br />
+                                                    <small class="c-gray">09:49 AM</small>
+                                                </div>
+                                                <div class="media-body">
+                                                    <div class="lv-title">
+                                                        cost sheet updated by user
+                                                    </div>
+                                                    <small class="lv-small username">syamsul</small>
+                                                </div>
+                                            </div>
+                                        </a>
+                                        <a class="lv-item p-l-10 p-r-10" href="">
+                                            <div class="media">
+                                                <div class="pull-left  p-r-10 m-r-10 border-row-right">
+
+                                                    <strong class="c-gray f-10">May 21, 2015</strong><br />
+                                                    <small class="c-gray">10:28 AM</small>
+                                                </div>
+                                                <div class="media-body">
+                                                    <div class="lv-title">payment request created </div>
+                                                    <small class="lv-small username">diyana</small>
+                                                </div>
+                                            </div>
+                                        </a>
+                                        <a class="lv-item p-l-10 p-r-10" href="">
+                                            <div class="media">
+                                                <div class="pull-left  p-r-10 m-r-10 border-row-right">
+
+                                                    <strong class="c-gray f-10">May 21, 2015</strong><br />
+                                                    <small class="c-gray">10:28 AM</small>
+                                                </div>
+                                                <div class="media-body">
+                                                    <div class="lv-title">
+                                                        cost sheet updated by user
+                                                    </div>
+                                                    <small class="lv-small username">diyana</small>
+                                                </div>
+                                            </div>
+                                        </a>
+                                        <a class="lv-item p-l-10 p-r-10" href="">
+                                            <div class="media">
+                                                <div class="pull-left  p-r-10 m-r-10 border-row-right">
+
+                                                    <strong class="c-gray f-10">May 21, 2015</strong><br />
+                                                    <small class="c-gray">10:29 AM</small>
+                                                </div>
+                                                <div class="media-body">
+                                                    <div class="lv-title">customer invoice created</div>
+                                                    <small class="lv-small username">diyana</small>
+                                                </div>
+                                            </div>
+                                        </a>
+                                        <a class="lv-item p-l-10 p-r-10" href="">
+                                            <div class="media">
+                                                <div class="pull-left  p-r-10 m-r-10 border-row-right">
+
+                                                    <strong class="c-gray f-10">May 21, 2015</strong><br />
+                                                    <small class="c-gray">10:30 AM</small>
+                                                </div>
+                                                <div class="media-body">
+                                                    <div class="lv-title">cost sheet updated by user</div>
+                                                    <small class="lv-small username">diyana</small>
+                                                </div>
+                                            </div>
+                                        </a>
+                                        <a class="lv-item p-l-10 p-r-10" href="">
+                                            <div class="media">
+                                                <div class="pull-left  p-r-10 m-r-10 border-row-right">
+
+                                                    <strong class="c-gray f-10">May 21, 2015</strong><br />
+                                                    <small class="c-gray">10:35 AM</small>
+                                                </div>
+                                                <div class="media-body">
+                                                    <div class="lv-title">payment request printed</div>
+                                                    <small class="lv-small username">diyana</small>
+                                                </div>
+                                            </div>
+                                        </a>
+                                        <a class="lv-item p-l-10 p-r-10" href="">
+                                            <div class="media">
+                                                <div class="pull-left  p-r-10 m-r-10 border-row-right">
+
+                                                    <strong class="c-gray f-10">May 21, 2015</strong><br />
+                                                    <small class="c-gray">08:50 PM</small>
+                                                </div>
+                                                <div class="media-body">
+                                                    <div class="lv-title">customer invoice approved</div>
+                                                    <small class="lv-small username">thomas</small>
+                                                </div>
+                                            </div>
+                                        </a>
+                                        <a class="lv-item p-l-10 p-r-10" href="">
+                                            <div class="media">
+                                                <div class="pull-left  p-r-10 m-r-10 border-row-right">
+
+                                                    <strong class="c-gray f-10">May 21, 2015</strong><br />
+                                                    <small class="c-gray">09:16 AM</small>
+                                                </div>
+                                                <div class="media-body">
+                                                    <div class="lv-title">customer invoice printed</div>
+                                                    <small class="lv-small username">syamsul</small>
+                                                </div>
+                                            </div>
+                                        </a>
+                                        <a class="lv-item p-l-10 p-r-10" href="">
+                                            <div class="media">
+                                                <div class="pull-left  p-r-10 m-r-10 border-row-right">
+
+                                                    <strong class="c-gray f-10">May 21, 2015</strong><br />
+                                                    <small class="c-gray">08:43 AM</small>
+                                                </div>
+                                                <div class="media-body">
+                                                    <div class="lv-title">cost sheet updated by user</div>
+                                                    <small class="lv-small username">diyana</small>
+                                                </div>
+                                            </div>
+                                        </a>
+                                        <a class="lv-item p-l-10 p-r-10" href="">
+                                            <div class="media">
+                                                <div class="pull-left  p-r-10 m-r-10 border-row-right">
+
+                                                    <strong class="c-gray f-10">May 21, 2015</strong><br />
+                                                    <small class="c-gray">02:07 PM</small>
+                                                </div>
+                                                <div class="media-body">
+                                                    <div class="lv-title">payment request approved </div>
+                                                    <small class="lv-small username">diyana</small>
+                                                </div>
+                                            </div>
+                                        </a>
+                                        <a class="lv-item p-l-10 p-r-10" href="">
+                                            <div class="media">
+                                                <div class="pull-left  p-r-10 m-r-10 border-row-right">
+
+                                                    <strong class="c-gray f-10">May 21, 2015</strong><br />
+                                                    <small class="c-gray">01:51 PM</small>
+                                                </div>
+                                                <div class="media-body">
+                                                    <div class="lv-title">cost sheet updated by user</div>
+                                                    <small class="lv-small username">diyana</small>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </div>
+
+                                    <a class="lv-footer" href="">View Previous</a>
+                                </div>
+
+                            </div>
+                        </li>
+                    </ul>-->
+                    <div class="box-tools pull-right">
+                        <button type="button" popover-placement="left" ng-if="IsDeclarationValidated"
+                                ng-click="Clonek3(k3.declarationHeaderK3.DeclarationNo)" has-Right data-rightValue="DeclarationK3.Copy"
+                                ng-disabled="IsCloneBtnDisabled"
+                                popover-trigger="mouseenter"
+                                popover="Copy to new k9 Form"
+                                class="btn bgm-gray m-r-5 waves-effect pull-right"
+                                style="margin-right:15px;">
+                            <i class="zmdi zmdi-copy"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body card-padding p-t-5 p-b-5">
+                    <input type="hidden" ng-model="k3.declarationHeaderK3.DeclarationType" name="k3.declarationHeaderK3.DeclarationType" ng-init="k3.declarationHeaderK3.DeclarationType = 9103" />
+                    <div class="row">
+                        <div class="col-xs-12 col-md-4">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Declaration Job No.</label>
+                                <input type="text"
+                                       class="form-control input-sm"
+                                       ng-model="k3.declarationHeaderK3.DeclarationNo"
+                                       name="k3.declarationHeaderK3.DeclarationNo"
+                                       disabled="disabled"
+                                       id="DeclarationNo"
+                                       ng-maxlength="100"
+                                       logicon-limit />
+                            </md-input-container>
+                        </div>
+                        <div class="col-xs-12 col-md-4">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Open Date</label>
+                                <input mdc-datetime-picker="" date="true" time="false" type="text" id="OpenDate" format="{{dateFormat}}" class="date-icon"
+                                       min-date="date" ng-model="k3.declarationHeaderK3.OpenDate"
+                                       name="k3.declarationHeaderK3.OpenDate"
+                                       ng-required="true"
+                                       ng-disabled="!IsNew">
+                            </md-input-container>
+
+
+                        </div>
+                        <div class="col-xs-12 col-md-4">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Dispatch Date</label>
+                                <input mdc-datetime-picker="" date="true" time="false" type="text" id="OpenDate" format="{{dateFormat}}" class="date-icon"
+                                       min-date="date" ng-model="k3.declarationHeaderK3.ImportDate"
+                                       name="k3.declarationHeaderK3.ImportDate"
+                                       ng-required="true"
+                                       ng-disabled="!IsNew">
+                            </md-input-container>
+
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-md-4">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Order No.</label>
+                                <input type="text"
+                                       ng-model="k3.declarationHeaderK3.OrderNo"
+                                       name="k3.declarationHeaderK3.OrderNo"
+                                       class="form-control input-sm"
+                                       ng-maxlength="100"
+                                       disabled="disabled"
+                                       logicon-limit />
+                            </md-input-container>
+                        </div>
+                        <div class="col-xs-12 col-md-4">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Reference No/Job No</label>
+                                <input type="text"
+                                       ng-model="k3.declarationHeaderK3.CustomerReferenceNo"
+                                       name="k3.declarationHeaderK3.CustomerReferenceNo"
+                                       ng-maxlength="50" logicon-limit
+                                       ng-required="true" />
+                            </md-input-container>
+                        </div>
+                        <div class="col-xs-12 col-md-4">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Declaration Shipment Type</label>
+                                <md-select ng-model="k3.declarationHeaderK3.DeclarationShipmentType" name="k3.declarationHeaderK3.DeclarationShipmentType" ng-change="changeShipmentType(k3.DeclarationShipmentType)" ng-required="true">
+                                    <md-option ng-repeat="item in lookUpData.DeclarationshipmentTypeList" ng-value="item.Value">
+                                        {{item.Text}}
+                                    </md-option>
+                                </md-select>
+                            </md-input-container>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-md-4">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Transport Mode</label>
+                                <md-select ng-model="k3.declarationHeaderK3.TransportMode" name="k3.declarationHeaderK3.TransportMode" ng-change="ChangeTransportMode(k3.declarationHeaderK3.TransportMode)" ng-required="true">
+                                    <md-option ng-repeat="item in lookUpData.transportModeList" ng-value="item.Value">
+                                        {{item.Text}}
+                                    </md-option>
+                                </md-select>
+
+                            </md-input-container>
+                        </div>
+                        <div class="col-xs-12 col-md-4">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Shipment Type</label>
+                                <md-select ng-model="k3.declarationHeaderK3.ShipmentType" name="k3.declarationHeaderK3.ShipmentType" ng-required="true"
+                                           ng-disabled="!IsNew" ng-change="changeShipmentType(k3.ShipmentType)">
+                                    <md-option ng-repeat="item in lookUpData.shipmentTypeList" ng-value="item.Value">
+                                        {{item.Text}}
+                                    </md-option>
+                                </md-select>
+
+                            </md-input-container>
+
+                        </div>
+                        <div class="col-xs-12 col-md-4">
+                            <!--<md-input-container class="md-block" flex-gt-sm>
+                                <label>SMK TRANSACTION Type</label>
+                                <md-select ng-model="k3.declarationHeaderK3.TransactionType" name="k3.declarationHeaderK3.TransactionType" ng-change="k3.TransactionTypeCode=(lookUpData.K3ATransactionTypeList | filter : {Value:k3.declarationHeaderK3.TransactionType})[0].Code">
+                                    <md-option ng-repeat="item in lookUpData.K3ATransactionTypeList" ng-value="item.Value">
+                                        {{item.Text}}
+                                    </md-option>
+                                </md-select>
+
+                            </md-input-container>-->
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>SMK TRANSACTION TYPE</label>
+                                <md-select ng-model="k3.declarationHeaderK3.TransactionType" name="k3.declarationHeaderK3.TransactionType" ng-required="true" ng-change="LoadSMKCode(k3.TransactionType)">
+                                    <md-option ng-repeat="item in lookUpData.K3ATransactionTypeList" ng-value="item.Value">
+                                        {{item.Text}}
+                                    </md-option>
+                                </md-select>
+                            </md-input-container>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-md-6">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Consignee/Importer</label>
+
+                                <input type="text"
+                                       class="search-icon"
+                                       ng-class="{'loadinggif': k3.LocalTraderDescriptionLoading}"
+                                       ng-model="k3.declarationHeaderK3.ImporterName" name="k3.declarationHeaderK3.ImporterName"
+                                       typeahead-min-length="3"
+                                       uib-typeahead="d.Text as d.Text for d in GenericMerchantResults($viewValue, 'Consignee')"
+                                       typeahead-loading="k3.LocalTraderDescriptionLoading"
+                                       typeahead-wait-ms="100"
+                                       typeahead-editable="false"
+                                       typeahead-on-select="MerchantSelected($item, 'Importer')"
+                                       ng-required="true" />
+                            </md-input-container>
+                        </div>
+                        <!--<div class="col-xs-12 col-md-4">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>SMK Code</label>
+
+                                <input type="text" logicon-number ng-model="k3.declarationHeaderK3.SMKCode" name="k3.declarationHeaderK3.SMKCode" class="form-control input-sm" readonly="readonly" />
+                            </md-input-container>
+                        </div>-->
+                        <div class="col-xs-12 col-md-6">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Consignor/Exporter</label>
+                                <input type="text" class="search-icon"
+                                       ng-class="{'loadinggif': k3.OverseasTraderDescriptionLoading}"
+                                       ng-model="k3.declarationHeaderK3.ExporterName" name="k3.declarationHeaderK3.ExporterName"
+                                       typeahead-min-length="3"
+                                       uib-typeahead="d.Text as d.Text for d in GenericMerchantResults($viewValue, 'Shipper')"
+                                       typeahead-loading="k3.OverseasTraderDescriptionLoading"
+                                       typeahead-wait-ms="100"
+                                       typeahead-editable="false"
+                                       typeahead-on-select="MerchantSelected($item, 'Exporter')"
+                                       ng-required="true" />
+                            </md-input-container>
+                        </div>
+                        <!--<div class="col-xs-12 col-md-6">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Declaration TYPE</label>
+                                <md-select ng-model="k3.declarationHeaderK3.DeclarationK3Type" ng-required="true">
+                                    <md-option ng-repeat="item in lookUpData.declarationK3TypeList" ng-value="item.Value">{{item.Text}}</md-option>
+                                </md-select>
+                            </md-input-container>
+                        </div>-->
+                    </div>
+                    <div class="row">
+                        <!--<div class="col-xs-12 col-md-6">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Consignor/Exporter</label>
+                                <input type="text" class="search-icon"
+                                       ng-class="{'loadinggif': k3.OverseasTraderDescriptionLoading}"
+                                       ng-model="k3.declarationHeaderK3.ExporterName" name="k3.declarationHeaderK3.ExporterName"
+                                       typeahead-min-length="3"
+                                       uib-typeahead="d.Text as d.Text for d in GenericMerchantResults($viewValue, 'Shipper')"
+                                       typeahead-loading="k3.OverseasTraderDescriptionLoading"
+                                       typeahead-wait-ms="100"
+                                       typeahead-editable="false"
+                                       typeahead-on-select="MerchantSelected($item, 'Exporter')"
+                                       ng-required="true" />
+                            </md-input-container>
+                        </div>-->
+
+                        <div class="col-xs-12 col-md-6">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>applicant</label>
+                                <input type="text" class="search-icon"
+                                       ng-class="{'loadinggif': k9.LocalTraderDescriptionLoading}"
+                                       ng-model="k3.declarationHeaderK3.ApplicantName" name="k3.declarationHeaderK3.ApplicantName"
+                                       typeahead-min-length="3"
+                                       uib-typeahead="d.Text as d.Text for d in GenericMerchantResults($viewValue, 'Applicant')"
+                                       typeahead-loading="k9.LocalTraderDescriptionLoading"
+                                       typeahead-wait-ms="100"
+                                       typeahead-editable="false"
+                                       typeahead-on-select="MerchantSelected($item, 'Applicant')"
+                                       ng-required="true" />
+                            </md-input-container>
+                        </div>
+                        <div class="col-xs-12 col-md-6">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Shipping Agent</label>
+                                <input type="text"
+                                       name="k3.declarationHeaderK3.ShippingAgentName"
+                                       class="search-icon"
+                                       ng-required="k3.declarationHeaderK3.TransportMode == 1021 || k3.declarationHeaderK3.TransportMode == 1020"
+                                       ng-model="k3.declarationHeaderK3.ShippingAgentName"
+                                       typeahead-min-length="3"
+                                       uib-typeahead="d.Text as d.Text for d in GenericMerchantResults($viewValue, 'Liner','ShippingAgentAddress')"
+                                       typeahead-wait-ms="100"
+                                       typeahead-editable="false"
+                                       typeahead-on-select="CustomerSelected($item, 'ShippingAgent','ShippingAgentAddress')" />
+                            </md-input-container>
+                        </div>
+
+
+                    </div>
+
+                    <div class="row m-t-25">
+                        <div class="col-xs-12 col-md-6">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Declaration TYPE</label>
+                                <md-select ng-model="k3.declarationHeaderK3.DeclarationK3Type" ng-required="true">
+                                    <md-option ng-repeat="item in lookUpData.declarationK3TypeList" ng-value="item.Value">{{item.Text}}</md-option>
+                                </md-select>
+                            </md-input-container>
+                        </div>
+                        <div class="col-xs-12 col-md-6">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Customs Station Code</label>
+                                <md-select ng-model="k3.declarationHeaderK3.CustomStationCode" name="k3.declarationHeaderK3.CustomStationCode" ng-required="true">
+                                    <md-option ng-repeat="item in lookUpData.smkList" ng-value="item.Value">
+                                        {{item.Text}}
+                                    </md-option>
+                                </md-select>
+                            </md-input-container>
+                        </div>
+
+
+
+                    </div>
+                    <div class="row ">
+                        <div class="col-xs-12 col-md-6">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Place of Import</label>
+                                <input type="text"
+                                       class="search-icon"
+                                       name="k3.declarationShipmentK3.PlaceOfImportName"
+                                       ng-class="{'loadinggif':k3.declarationShipmentK3.PlaceOfImportDescriptionLoading}"
+                                       ng-model="k3.declarationShipmentK3.PlaceOfImportName"
+                                       typeahead-min-length="3"
+                                       uib-typeahead="d.PortName as d.PortName for d in PortAutoComplete($viewValue)"
+                                       typeahead-loading="k3.PlaceOfImportDescriptionLoading"
+                                       typeahead-wait-ms="100"
+                                       typeahead-editable="false"
+                                       typeahead-on-select="PortSelected($item,'PlaceOfImport')"
+                                       ng-required="true" />
+                            </md-input-container>
+                        </div>
+                        <div class="col-xs-12 col-md-6">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Loading Port</label>
+                                <input type="text" class="search-icon"
+                                       ng-class="{'loadinggif':k3.declarationShipmentK3.LoadingPortDescriptionLoading}"
+                                       ng-model="k3.declarationShipmentK3.LoadingPortName"
+                                       typeahead-min-length="3"
+                                       uib-typeahead="d.PortName as d.PortName for d in PortAutoComplete($viewValue)"
+                                       typeahead-loading="k3.declarationShipmentK3.LoadingPortDescriptionLoading"
+                                       typeahead-wait-ms="100"
+                                       typeahead-editable="false"
+                                       typeahead-on-select="PortSelected($item, 'LoadingPort')"
+                                       ng-required="true" />
+                            </md-input-container>
+                        </div>
+
+
+                    </div>
+                    <div class="row ">
+                        <div class="col-xs-12 col-md-6">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Discharge Port</label>
+                                <input type="text"
+                                       ng-class="{'loadinggif': k3.declarationShipmentK3.DischargePortDescriptionLoading}"
+                                       ng-model="k3.declarationShipmentK3.DischargePortName"
+                                       class="search-icon"
+                                       typeahead-min-length="3"
+                                       uib-typeahead="d.PortName as d.PortName for d in PortAutoComplete($viewValue)"
+                                       typeahead-loading="k3.declarationShipmentK3.DischargePortDescriptionLoading"
+                                       typeahead-wait-ms="100"
+                                       typeahead-editable="false"
+                                       typeahead-on-select="PortSelected($item, 'DischargePort')"
+                                       ng-required="true" ng-disabled="true" />
+                            </md-input-container>
+                        </div>
+                        <div class="col-xs-12 col-md-6">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Final Destination</label>
+                                <input type="text"
+                                       ng-class="{'loadinggif': k3.declarationShipmentK3.FinalDestinationDescriptionLoading}"
+                                       ng-model="k3.declarationShipmentK3.FinalDestinationName"
+                                       class="search-icon"
+                                       typeahead-min-length="3"
+                                       uib-typeahead="d.PortName as d.PortName for d in PortAutoComplete($viewValue)"
+                                       typeahead-loading="k3.declarationShipmentK3.TranshipmentPortDescriptionLoading"
+                                       typeahead-wait-ms="100"
+                                       typeahead-editable="false"
+                                       typeahead-on-select="PortSelected($item, 'FinalDestination')"
+                                       ng-required="true" />
+                            </md-input-container>
+                        </div>
+
+
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-md-6">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Terminal Operator</label>
+
+                                <input type="text" name="k3.declarationShipmentK3.PortOperatorName"
+                                       class="search-icon"
+                                       ng-model="k3.declarationShipmentK3.PortOperatorName"
+                                       typeahead-min-length="3"
+                                       uib-typeahead="d.Text for d in PortOperatorResults($viewValue)"
+                                       typeahead-wait-ms="100"
+                                       typeahead-editable="false"
+                                       typeahead-on-select="TerminalOperaterSelected($item)"
+                                       ng-required="true" logicon-limit />
+                            </md-input-container>
+                        </div>
+                        <div class="col-xs-12 col-md-6">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Move To</label>
+                                <!--<input type="text"
+                                       ng-model="k3.declarationShipmentK3.WarehouseNo"
+                                       name="k3.declarationShipmentK3.WarehouseNo"
+                                       class="form-control input-sm" />-->
+                                <md-select ng-model="k3.declarationShipmentK3.MoveTo" ng-required="true">
+                                    <md-option ng-repeat="item in lookUpData.customStationCodeList" ng-value="item.Value">{{item.Text}}</md-option>
+                                </md-select>
+                            </md-input-container>
+                        </div>
+
+
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-md-6">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Cargo Class</label>
+                                <md-select ng-model="k3.declarationHeaderK3.CargoClass" ng-required="true">
+                                    <md-option ng-repeat="item in lookUpData.cargoClassList" ng-value="item.Value">
+                                        {{item.Text}}
+                                    </md-option>
+                                </md-select>
+                            </md-input-container>
+                        </div>
+                        <div class="col-xs-12 col-md-6">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Declarant ID</label>
+                                <input type="text"
+                                       class="search-icon"
+                                       name="k3.declarationHeaderK3.DeclarantIDText"
+                                       ng-required="true"
+                                       ng-model="k3.declarationHeaderK3.DeclarantIDText"
+                                       typeahead-min-length="3"
+                                       uib-typeahead="d.Text as d.Text for d in CustomDeclarantResults($viewValue)"
+                                       typeahead-wait-ms="100"
+                                       typeahead-editable="false"
+                                       typeahead-on-select="CustomDeclarantSelected($item)" />
+
+                            </md-input-container>
+                        </div>
+
+
+
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-md-6">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Cargo Description</label>
+                                <textarea type="text" ng-required="true"
+                                          ng-model="k3.declarationHeaderK3.CargoDescription"
+                                          md-maxlength="70" logicon-limit md-select-on-focus rows="3" style="overflow-y:auto"></textarea>
+                            </md-input-container>
+                        </div>
+                        <div class="col-xs-12 col-md-6">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Extra Cargo Description</label>
+                                <textarea ng-model="k3.declarationHeaderK3.ExtraCargoDescription"
+                                          md-maxlength="70" logicon-limit rows="3"
+                                          md-select-on-focus style="overflow-y:auto"></textarea>
+                            </md-input-container>
+                        </div>
+                    </div>
+                    <div class="row">
+
+                        <div class="col-xs-12 col-md-6">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Marks And No's</label>
+                                <textarea ng-required="true" ng-model="k3.declarationHeaderK3.MarksAndNos" md-maxlength="350" logicon-limit rows="3" md-select-on-focus style="overflow-y:auto"></textarea>
+                            </md-input-container>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" id="invoiceDetails">
+            <div class="col-xs-12">
+                <div class="card">
+                    <div class="lv-header-alt clearfix m-b-5">
+                        <h2 class="lvh-label">Invoice Details</h2>
+                    </div>
+                    <div class="card-body card-padding p-t-25 p-b-25">
+
+                        <div class="row">
+                            <div class="col-xs-12 col-md-6">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Invoice No</label>
+                                    <input type="text"
+                                           name="k3.declarationHeaderK3.InvoiceNo"
+                                           ng-model="k3.declarationInvoiceK3.InvoiceNo"
+                                           ng-maxlength="100"
+                                           logicon-limit
+                                           ng-required="true" />
+                                </md-input-container>
+                            </div>
+                            <div class="col-xs-12 col-md-6">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Invoice Date</label>
+                                    <input mdc-datetime-picker="" date="true" time="false" type="text" id="dateFrom" format="{{dateFormat}}" class="date-icon"
+                                           min-date="date" name="k3.declarationInvoiceK3.InvoiceDate"
+                                           ng-required="true"
+                                           ng-model="k3.declarationInvoiceK3.InvoiceDate">
+                                </md-input-container>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 col-md-6">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>INVOICE VALUE</label>
+                                    <input type="text"
+                                           id="InvoiceValuek3"
+                                           name="InvoiceValuek3"
+                                           logicon-format2="2"
+                                           ng-pattern="'^[0-9]{0,9}.?[0-9]{0,2}$'"
+                                           ng-model="k3.declarationInvoiceK3.InvoiceValue"
+                                           ng-required="true"
+                                           ng-blur="IncoTermCalculation(k3.declarationInvoiceK3.IsFreightCurrency, k3.declarationInvoiceK3.IsInsuranceCurrency)" />
+                                </md-input-container>
+                            </div>
+                            <div class="col-xs-12 col-md-6">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Currency / Rate</label>
+                                    <md-select name="k3.declarationInvoiceK3.InvoiceCurrencyCode"
+                                               ng-model="k3.declarationInvoiceK3.InvoiceCurrencyCode"
+                                               ng-required="true"
+                                               ng-change="
+
+                                                   k3.declarationInvoiceK3.FreightAmountCurrencyCode = k3.declarationInvoiceK3.InvoiceCurrencyCode;
+                                                  k3.declarationInvoiceK3.InsuranceAmountCurrencyCode =k3.declarationInvoiceK3.InvoiceCurrencyCode;
+
+                                                   CurrencyRateChanged();
+                                                   ChargesInfoCurrencyRateChanged(k3.declarationInvoiceK3.FreightAmountPercent,
+                                                   k3.declarationInvoiceK3.IsFreightCurrency,
+                                                   k3.declarationInvoiceK3.FreightAmountCurrencyCode,'FreightAmountValue');
+
+                                                  ChargesInfoCurrencyRateChanged(k3.declarationInvoiceK3.InsuranceAmountPercent,
+                                                   k3.declarationInvoiceK3.IsInsuranceCurrency,
+                                                   k3.declarationInvoiceK3.InsuranceAmountCurrencyCode,'InsuranceAmountValue');">
+                                        <md-option ng-repeat="item in lookUpData.currencyList" ng-value="item.Value">
+                                            {{item.Text}}
+                                        </md-option>
+                                    </md-select>
+                                </md-input-container>
+                            </div>
+                            <div class="col-xs-12 col-md-6">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Invoice Value Equivalent in MYR</label>
+                                    <input type="text"
+                                           logicon-format="2"
+                                           name="k3.declarationInvoiceK3.InvoiceLocalAmount"
+                                           ng-model="k3.declarationInvoiceK3.InvoiceLocalAmount"
+                                           ng-disabled="true"
+                                           logicon-limit
+                                           logicon-decimal />
+                                </md-input-container>
+                            </div>
+                            <div class="col-xs-12 col-md-6">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>INCOTERM</label>
+                                    <md-select name="k3.declarationInvoiceK3.IncoTerm"
+                                               ng-model="k3.declarationInvoiceK3.IncoTerm"
+                                               ng-change="IncoTermChanged()"
+                                               ng-required="true">
+                                        <md-option ng-repeat="item in lookUpData.incoTermList" ng-value="item.Value">
+                                            {{item.Text}}
+                                        </md-option>
+                                    </md-select>
+                                </md-input-container>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 col-md-3">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Gross Weight</label>
+                                    <input type="text"
+                                           name="GrossWeight"
+                                           id="GrossWeight"
+                                           logicon-format2="4"
+                                           ng-pattern="'^[0-9]{0,7}.?[0-9]{0,4}$'"
+                                           ng-model="k3.declarationInvoiceK3.GrossWeight"
+                                           ng-required="true" />
+                                </md-input-container>
+                            </div>
+                            <div class="col-xs-12 col-md-3">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>UOM</label>
+                                    <md-select name="k3.declarationInvoiceK3.UOMWeight"
+                                               ng-model="k3.declarationInvoiceK3.UOMWeight" ng-required="true">
+                                        <md-option ng-repeat="item in lookUpData.uomList" ng-value="item.Value">
+                                            {{item.Text}}
+                                        </md-option>
+                                    </md-select>
+                                </md-input-container>
+                            </div>
+                            <div class="col-xs-12 col-md-3">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Gross Volume</label>
+                                    <input type="text"
+                                           logicon-format2="4"
+                                           ng-pattern="'^[0-9]{0,7}.?[0-9]{0,4}$'"
+                                           name="GrossVolume"
+                                           id="GrossVolume"
+                                           ng-model="k3.declarationInvoiceK3.GrossVolume"
+                                           ng-required="true" />
+                                </md-input-container>
+                            </div>
+                            <div class="col-xs-12 col-md-3">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>UOM</label>
+                                    <md-select name="k3.declarationInvoiceK3.UOMVolume"
+                                               ng-model="k3.declarationInvoiceK3.UOMVolume" ng-required="true">
+                                        <md-option ng-repeat="item in lookUpData.uomList" ng-value="item.Value">
+                                            {{item.Text}}
+                                        </md-option>
+                                    </md-select>
+                                </md-input-container>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 col-md-3">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Packaging Quantity</label>
+                                    <input type="text"
+                                           name="k3.declarationInvoiceK3.PackageQty"
+                                           ng-model="k3.declarationInvoiceK3.PackageQty"
+                                           ng-maxlength="6"
+                                           logicon-limit
+                                           logicon-number
+                                           ng-required="true" />
+                                </md-input-container>
+                            </div>
+                            <div class="col-xs-12 col-md-3">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Packaging Type</label>
+                                    <md-select name="k3.declarationInvoiceK3.PackingTypeCode"
+                                               ng-model="k3.declarationInvoiceK3.PackingTypeCode" ng-required="true">
+                                        <md-option ng-repeat="item in lookUpData.packingTypeCodeList" ng-value="item.Value">
+                                            {{item.Text}}
+                                        </md-option>
+                                    </md-select>
+                                </md-input-container>
+                            </div>
+                            <div class="col-xs-12 col-md-3">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Packaging Material</label>
+                                    <md-select name="k3.declarationInvoiceK3.PackingMaterialCode"
+                                               ng-model="k3.declarationInvoiceK3.PackingMaterialCode" ng-required="true">
+                                        <md-option ng-repeat="item in lookUpData.packagingMaterialCodeList" ng-value="item.Value">
+                                            {{item.Text}}
+                                        </md-option>
+                                    </md-select>
+                                </md-input-container>
+                            </div>
+                            <div class="col-xs-12 col-md-3" ng-if="k3.declarationHeaderK3.TransportMode == 1021">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>UCN No</label>
+                                    <input type="text"
+                                           name="k3.declarationHeaderK3.UCNNo"
+                                           ng-model="k3.declarationHeaderK3.UCNNo"
+                                           ng-maxlength="25"
+                                           logicon-limit />
+                                </md-input-container>
+                            </div>
+                        </div>
+                        <!--<div class="row">
+                            <div class="col-xs-12 col-md-6">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Pay Country</label>
+                                    <md-select name="k3.declarationInvoiceK3.PayCountry"
+                                               ng-model="k3.declarationInvoiceK3.PayCountry" ng-change="PayCountryTest=(lookUpData.countryList | filter : {Value:k3.declarationInvoiceK3.PayCountry})[0].Text">
+                                        <md-option ng-repeat="item in lookUpData.countryList" ng-value="item.Value">
+                                            {{item.Text}}
+                                        </md-option>
+                                    </md-select>
+                                </md-input-container>
+                            </div>
+                        </div>-->
+                    </div>
+                </div>
+                <div style="clear:both"></div>
+
+            </div>
+        </div>
+        <div class="row" id="chargesInfo">
+            <div class="col-xs-12">
+                <div class="card">
+                    <div class="lv-header-alt clearfix m-b-5">
+                        <h2 class="lvh-label">Charges Information</h2>
+                    </div>
+                    <div class="card-body card-padding p-t-5 p-b-5">
+                        <div class="row">
+                            <div class="col-xs-12 col-md-3">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Port</label>
+                                    <input type="text"
+                                           id="PortAmountPercent"
+                                           name="PortAmountPercent"
+                                           logicon-format2="2"
+                                           ng-pattern="'^[0-9]{0,9}.?[0-9]{0,2}$'"
+                                           ng-model="k3.declarationInvoiceK3.PortAmountPercent"
+                                           ng-blur="ChargesInfoCurrencyRateChanged(k3.declarationInvoiceK3.PortAmountPercent,false,k3.declarationInvoiceK3.PortAmountCurrencyCode,'PortAmountValue');
+                                                    IncoTermCalculation(k3.declarationInvoiceK3.IsFreightCurrency, k3.declarationInvoiceK3.IsInsuranceCurrency);" />
+                                </md-input-container>
+                            </div>
+                            <div class="col-md-1"></div>
+                            <div class="col-xs-12 col-md-3">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Curr. Rate</label>
+                                    <md-select name="k3.declarationInvoiceK3.PortAmountCurrencyCode"
+                                               ng-model="k3.declarationInvoiceK3.PortAmountCurrencyCode"
+                                               ng-change="ChargesInfoCurrencyRateChanged(k3.declarationInvoiceK3.PortAmountPercent,false,k3.declarationInvoiceK3.PortAmountCurrencyCode,'PortAmountValue');
+                                                          IncoTermCalculation(k3.declarationInvoiceK3.IsFreightCurrency, k3.declarationInvoiceK3.IsInsuranceCurrency);">
+                                        <md-option md-option-empty></md-option>
+                                        <md-option ng-repeat="item in lookUpData.currencyList" ng-value="item.Value">
+                                            {{item.Text}}
+                                        </md-option>
+                                    </md-select>
+                                </md-input-container>
+                            </div>
+                            <div class="col-md-2">
+
+                            </div>
+                            <div class="col-xs-12 col-md-3">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Value In MYR</label>
+                                    <input type="text"
+                                           logicon-format="2"
+                                           name="k3.declarationInvoiceK3.PortAmountValue"
+                                           ng-model="k3.declarationInvoiceK3.PortAmountValue"
+                                           ng-maxlength="18"
+                                           logicon-control-currency="2"
+                                           logicon-decimal
+                                           logicon-limit
+                                           ng-disabled="true" />
+                                </md-input-container>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-10 col-md-3">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Freight</label>
+                                    <input type="text"
+                                           id="FreightAmountPercent"
+                                           name="FreightAmountPercent"
+                                           logicon-format2="2"
+                                           ng-pattern="'^[0-9]{0,9}.?[0-9]{0,2}$'"
+                                           ng-model="k3.declarationInvoiceK3.FreightAmountPercent"
+                                           ng-blur="ChargesInfoCurrencyRateChanged(k3.declarationInvoiceK3.FreightAmountPercent,k3.declarationInvoiceK3.IsFreightCurrency,k3.declarationInvoiceK3.FreightAmountCurrencyCode,'FreightAmountValue');
+                                                    Calculatepercentageamount();
+                                                    IncoTermCalculation(k3.declarationInvoiceK3.IsFreightCurrency, k3.declarationInvoiceK3.IsInsuranceCurrency);" />
+                                </md-input-container>
+                            </div>
+                            <div class="col-xs-2 col-md-1">
+                                <div class="checkbox m-b-15">
+                                    <label>
+                                        <input type="checkbox" value="" aria-label="Freight" name="k3.declarationInvoiceK3.IsFreightCurrency"
+                                               ng-model="k3.declarationInvoiceK3.IsFreightCurrency"
+                                               ng-click="ChargesInfoCurrencyRateChanged(k3.declarationInvoiceK3.FreightAmountPercent,k3.declarationInvoiceK3.IsFreightCurrency,k3.declarationInvoiceK3.FreightAmountCurrencyCode,'FreightAmountValue');
+                                                         Calculatepercentageamount();
+                                                         IncoTermCalculation(k3.declarationInvoiceK3.IsFreightCurrency, k3.declarationInvoiceK3.IsInsuranceCurrency);">
+                                        <i class="input-helper"></i>
+
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-md-3">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Curr. Rate</label>
+                                    <md-select name="k3.declarationInvoiceK3.FreightAmountCurrencyCode"
+                                               ng-model="k3.declarationInvoiceK3.FreightAmountCurrencyCode"
+                                               ng-change="ChargesInfoCurrencyRateChanged(k3.declarationInvoiceK3.FreightAmountPercent,k3.declarationInvoiceK3.IsFreightCurrency,k3.declarationInvoiceK3.FreightAmountCurrencyCode,'FreightAmountValue');
+                                                          Calculatepercentageamount();
+                                                          IncoTermCalculation(k3.declarationInvoiceK3.IsFreightCurrency, k3.declarationInvoiceK3.IsInsuranceCurrency);">
+                                        <md-option md-option-empty></md-option>
+                                        <md-option ng-repeat="item in lookUpData.currencyList" ng-value="item.Value">
+                                            {{item.Text}}
+                                        </md-option>
+                                    </md-select>
+                                </md-input-container>
+                            </div>
+                            <div class="col-xs-12 col-md-2">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>INCOTERM</label>
+                                    <md-select name="k3.declarationInvoiceK3.FreightIncoTerm"
+                                               ng-model="k3.declarationInvoiceK3.FreightIncoTerm">
+                                        <md-option md-option-empty></md-option>
+                                        <md-option ng-repeat="item in lookUpData.incoTermList" ng-value="item.Value">
+                                            {{item.Text}}
+                                        </md-option>
+                                    </md-select>
+                                </md-input-container>
+                            </div>
+                            <div class="col-xs-12 col-md-3">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Value In MYR</label>
+                                    <input type="text"
+                                           name="k3.declarationInvoiceK3.FreightAmountValue"
+                                           ng-model="k3.declarationInvoiceK3.FreightAmountValue"
+                                           ng-maxlength="18"
+                                           logicon-format="2"
+                                           logicon-control-currency="2"
+                                           logicon-decimal
+                                           logicon-limit
+                                           ng-disabled="true" />
+                                </md-input-container>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-10 col-md-3">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Insurance</label>
+                                    <input type="text"
+                                           id="InsuranceAmountPercent"
+                                           name="InsuranceAmountPercent"
+                                           logicon-format2="2"
+                                           ng-pattern="'^[0-9]{0,9}.?[0-9]{0,2}$'"
+                                           ng-model="k3.declarationInvoiceK3.InsuranceAmountPercent"
+                                           ng-blur="Calculatepercentageamount();
+                                           ChargesInfoCurrencyRateChanged(k3.declarationInvoiceK3.InsuranceAmountPercent,k3.declarationInvoiceK3.IsInsuranceCurrency,k3.declarationInvoiceK3.InsuranceAmountCurrencyCode,'InsuranceAmountValue');
+                                                    IncoTermCalculation(k3.declarationInvoiceK3.IsFreightCurrency, k3.declarationInvoiceK3.IsInsuranceCurrency);" />
+                                </md-input-container>
+                            </div>
+                            <div class="col-xs-2 col-md-1">
+                                <div class="checkbox m-b-15">
+                                    <label>
+                                        <input type="checkbox" value="" aria-label="Insurance" name="k3.declarationInvoiceK3.IsInsuranceCurrency"
+                                               ng-model="k3.declarationInvoiceK3.IsInsuranceCurrency"
+                                               ng-click="Calculatepercentageamount();
+                                               ChargesInfoCurrencyRateChanged(k3.declarationInvoiceK3.InsuranceAmountPercent,k3.declarationInvoiceK3.IsInsuranceCurrency,k3.declarationInvoiceK3.InsuranceAmountCurrencyCode,'InsuranceAmountValue');
+                                                         IncoTermCalculation(k3.declarationInvoiceK3.IsFreightCurrency, k3.declarationInvoiceK3.IsInsuranceCurrency)">
+                                        <i class="input-helper"></i>
+
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-md-3">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>CURR. RATE</label>
+                                    <md-select name="k3.declarationInvoiceK3.InsuranceAmountCurrencyCode"
+                                               ng-model="k3.declarationInvoiceK3.InsuranceAmountCurrencyCode"
+                                               ng-change="Calculatepercentageamount();
+                                               ChargesInfoCurrencyRateChanged(k3.declarationInvoiceK3.InsuranceAmountPercent,k3.declarationInvoiceK3.IsInsuranceCurrency,k3.declarationInvoiceK3.InsuranceAmountCurrencyCode,'InsuranceAmountValue');
+                                                          IncoTermCalculation(k3.declarationInvoiceK3.IsFreightCurrency, k3.declarationInvoiceK3.IsInsuranceCurrency);">
+                                        <md-option md-option-empty></md-option>
+                                        <md-option ng-repeat="item in lookUpData.currencyList" ng-value="item.Value">
+                                            {{item.Text}}
+                                        </md-option>
+                                    </md-select>
+                                </md-input-container>
+                            </div>
+                            <div class="col-xs-12 col-md-2">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>INCOTERM</label>
+                                    <md-select name="k3.declarationInvoiceK3.InsuranceIncoTerm"
+                                               ng-model="k3.declarationInvoiceK3.InsuranceIncoTerm">
+                                        <md-option md-option-empty></md-option>
+                                        <md-option ng-repeat="item in lookUpData.incoTermList" ng-value="item.Value">
+                                            {{item.Text}}
+                                        </md-option>
+                                    </md-select>
+                                </md-input-container>
+                            </div>
+                            <div class="col-xs-12 col-md-3">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Value In MYR</label>
+                                    <input type="text"
+                                           logicon-format="2"
+                                           name="k3.declarationInvoiceK3.InsuranceAmountValue"
+                                           ng-model="k3.declarationInvoiceK3.InsuranceAmountValue"
+                                           ng-maxlength="18"
+                                           logicon-control-currency="2"
+                                           logicon-decimal
+                                           logicon-limit
+                                           ng-disabled="true" />
+                                </md-input-container>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-xs-12 col-md-3">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Others</label>
+                                    <input type="text"
+                                           id="OthersAmountPercent"
+                                           name="OthersAmountPercent"
+                                           logicon-format2="2"
+                                           ng-pattern="'^[0-9]{0,9}.?[0-9]{0,2}$'"
+                                           ng-model="k3.declarationInvoiceK3.OthersAmountPercent"
+                                           ng-blur="ChargesInfoCurrencyRateChanged(k3.declarationInvoiceK3.OthersAmountPercent,false,k3.declarationInvoiceK3.OthersAmountCurrencyCode,'OthersAmountValue');
+                                                    IncoTermCalculation(k3.declarationInvoiceK3.IsFreightCurrency, k3.declarationInvoiceK3.IsInsuranceCurrency);" />
+                                </md-input-container>
+                            </div>
+                            <div class="col-md-1">
+
+                            </div>
+                            <div class="col-xs-12 col-md-3">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>CURR. RATE</label>
+                                    <md-select name="k3.declarationInvoiceK3.OthersAmountCurrencyCode"
+                                               ng-model="k3.declarationInvoiceK3.OthersAmountCurrencyCode"
+                                               ng-change="ChargesInfoCurrencyRateChanged(k3.declarationInvoiceK3.OthersAmountPercent,false,k3.declarationInvoiceK3.OthersAmountCurrencyCode,'OthersAmountValue');
+                                                          IncoTermCalculation(k3.declarationInvoiceK3.IsFreightCurrency, k3.declarationInvoiceK3.IsInsuranceCurrency);">
+                                        <md-option md-option-empty></md-option>
+                                        <md-option ng-repeat="item in lookUpData.currencyList" ng-value="item.Value">
+                                            {{item.Text}}
+                                        </md-option>
+                                    </md-select>
+                                </md-input-container>
+                            </div>
+                            <div class="col-md-2">
+
+                            </div>
+                            <div class="col-xs-12 col-md-3">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Value In MYR</label>
+                                    <input type="text"
+                                           logicon-format="2"
+                                           name="k3.declarationInvoiceK3.OthersAmountValue"
+                                           ng-model="k3.declarationInvoiceK3.OthersAmountValue"
+                                           ng-maxlength="18"
+                                           logicon-control-currency="2"
+                                           logicon-decimal
+                                           logicon-limit
+                                           ng-disabled="true" />
+                                </md-input-container>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card" id="shipmentDetails">
+            <div class="lv-header-alt clearfix m-b-5">
+                <h2 class="lvh-label">Shipment Details</h2>
+            </div>
+            <div class="card-body card-padding p-t-5 p-b-5">
+                <div ng-if="k3.declarationHeaderK3.TransportMode == 1021">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <h2 class="lvh-label">VESSEL DETAILS</h2>
+
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-md-6">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Ship Call No.</label>
+                                <input type="text"
+                                       class="search-icon"
+                                       name="k3.declarationShipmentK3.SCNNo"
+                                       ng-required="k3.declarationHeaderK3.TransportMode == 1021"
+                                       ng-class="{'loadinggif': k3.declarationShipmentK3.SCNNoLoading}"
+                                       ng-model="k3.declarationShipmentK3.SCNNo"
+                                       typeahead-min-length="3"
+                                       uib-typeahead="d for d in ShipCallResults($viewValue)"
+                                       typeahead-loading="k3.declarationShipmentK3.SCNNoLoading"
+                                       typeahead-popup-template-url="voyage-autocomplete.html"
+                                       typeahead-wait-ms="100"
+                                       typeahead-editable="false"
+                                       typeahead-on-select="VoyageSelected($item)" />
+                            </md-input-container>
+                        </div>
+                        <div class="col-xs-12 col-md-6">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Voyage No.</label>
+                                <input type="text"
+                                       class="search-icon"
+                                       name="k3.declarationShipmentK3.VoyageNo"
+                                       ng-required="k3.declarationHeaderK3.TransportMode == 1021"
+                                       ng-class="{'loadinggif':k3.declarationShipmentK3.VoyageNoLoading}"
+                                       ng-model="k3.declarationShipmentK3.VoyageNo"
+                                       typeahead-min-length="3"
+                                       uib-typeahead="d for d in VoyageNoInwardResults($viewValue)"
+                                       typeahead-loading="k3.declarationShipmentK3.VoyageNoLoading"
+                                       typeahead-popup-template-url="voyage-autocomplete.html"
+                                       typeahead-wait-ms="100"
+                                       typeahead-editable="false"
+                                       typeahead-on-select="VoyageSelected($item)" />
+                            </md-input-container>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-md-6">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Vessel ID</label>
+                                <input type="text"
+                                       class="search-icon"
+                                       ng-class="{'loadinggif': k3.VesselIDLoading}"
+                                       ng-model="k3.declarationShipmentK3.VesselID"
+                                       typeahead-min-length="3"
+                                       ng-required="k3.declarationHeaderK3.TransportMode == 1021"
+                                       uib-typeahead="d for d in VesselIdResults($viewValue)"
+                                       typeahead-loading="k3.VesselIDLoading"
+                                       typeahead-popup-template-url="voyage-autocomplete.html"
+                                       typeahead-wait-ms="100"
+                                       typeahead-editable="false"
+                                       typeahead-on-select="VoyageSelected($item)" ng-maxlength="40" logicon-limit />
+                            </md-input-container>
+                        </div>
+                        <div class="col-xs-12 col-md-6">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Vessel Name</label>
+                                <input type="text"
+                                       class="search-icon"
+                                       ng-class="{'loadinggif': k3.VesselNameLoading}"
+                                       ng-model="k3.declarationShipmentK3.VesselName"
+                                       typeahead-min-length="3"
+                                       uib-typeahead="d for d in VesselNameResults2($viewValue)"
+                                       typeahead-loading="k3.VesselNameLoading"
+                                       typeahead-popup-template-url="voyage-autocomplete.html"
+                                       typeahead-wait-ms="100"
+                                       typeahead-editable="false"
+                                       typeahead-on-select="VoyageSelected($item)" />
+                            </md-input-container>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xs-12 col-md-6">
+
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>ETA Date</label>
+                                <input mdc-datetime-picker="" date="true" time="false" type="text" format="{{datetimeFormat}}" class="date-icon"
+                                       ng-model="k3.declarationShipmentK3.ETADate"
+                                       ng-required="k3.declarationHeaderK3.TransportMode == 1021 ||k3.declarationHeaderK3.TransportMode == 1020">
+                            </md-input-container>
+                        </div>
+                        <div class="col-xs-12 col-md-6">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Manifest No.</label>
+                                <input type="text"
+                                       name="k3.declarationShipmentK3.ManifestNo"
+                                       ng-model="k3.declarationShipmentK3.ManifestNo" ng-maxlength="100" logicon-limit />
+                            </md-input-container>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-md-6">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Ocean B/L No.</label>
+                                <input type="text"
+                                       name="k3.declarationShipmentK3.OceanBLNo"
+                                       ng-model="k3.declarationShipmentK3.OceanBLNo"
+                                       ng-maxlength="15" logicon-limit
+                                       ng-required="k3.declarationHeaderK3.TransportMode == 1021" />
+                            </md-input-container>
+                        </div>
+                        <div class="col-xs-12 col-md-6">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>House B/L No.</label>
+                                <input type="text"
+                                       name="k3.declarationShipmentK3.HouseBLNo"
+                                       ng-model="k3.declarationShipmentK3.HouseBLNo" ng-maxlength="15" logicon-limit />
+                            </md-input-container>
+                        </div>
+                    </div>
+                </div>
+
+                <div ng-if="k3.declarationHeaderK3.TransportMode == 1020">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <h2 class="lvh-label">FLIGHT DETAILS</h2>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-md-6">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Master Airway B/L No.</label>
+                                <input type="text"
+                                       name="k3.declarationShipmentK3.MasterAWBNo"
+                                       ng-model="k3.declarationShipmentK3.MasterAWBNo"
+                                       ng-maxlength="15"
+                                       logicon-limit
+                                       ng-required="k3.declarationHeaderK3.TransportMode == 1020" />
+                            </md-input-container>
+                        </div>
+                        <div class="col-xs-12 col-md-6">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>House Airway B/L No.</label>
+                                <input type="text"
+                                       name="k3.declarationShipmentK3.HouseAWBNo"
+                                       ng-model="k3.declarationShipmentK3.HouseAWBNo"
+                                       ng-maxlength="15"
+                                       logicon-limit />
+                            </md-input-container>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-md-6">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Flight No.</label>
+                                <input type="text"
+                                       name="k3.declarationShipmentK3.FlightNo"
+                                       ng-model="k3.declarationShipmentK3.FlightNo"
+                                       ng-maxlength="7"
+                                       logicon-limit
+                                       ng-required="k3.declarationHeaderK3.TransportMode == 1020" />
+                            </md-input-container>
+                        </div>
+                        <div class="col-xs-12 col-md-6">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Co Load No.</label>
+                                <input type="text"
+                                       name="k3.declarationShipmentK3.AIRCOLoadNo"
+                                       ng-model="k3.declarationShipmentK3.AIRCOLoadNo"
+                                       ng-maxlength="70"
+                                       logicon-limit />
+                            </md-input-container>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-md-6">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>ETA DATE</label>
+                                <input mdc-datetime-picker="" date="true" time="true" type="text" format="{{datetimeFormat}}" class="date-icon"
+                                       min-date="date"
+                                       ng-model="k3.declarationShipmentK3.ETADate"
+                                       ng-required="k3.declarationHeaderK3.TransportMode == 1021 || k3.declarationHeaderK3.TransportMode == 1020">
+                            </md-input-container>
+                        </div>
+                        <div class="col-xs-12 col-md-6">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>ARN No.</label>
+                                <input type="text"
+                                       name="k3.declarationShipmentK3.ARNNo"
+                                       ng-model="k3.declarationShipmentK3.ARNNo"
+                                       ng-maxlength="70"
+                                       logicon-limit />
+                            </md-input-container>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div id="securityDetails">
+            <div class="card">
+                <div class="lv-header-alt clearfix m-b-5">
+                    <h3 class="lvh-label">Security Details</h3>
+                </div>
+                <div class="card-body card-padding p-t-25 p-b-25">
+                    <div class="row">
+                        <div class="col-xs-12 col-md-3">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Ref. No.</label>
+                                <input type="text" name="k3.declarationHeaderK3.ReferenceNo"
+                                       ng-model="k3.declarationHeaderK3.ReferenceNo"
+                                       ng-maxlength="50" logicon-limit
+                                       class="form-control input-sm" />
+                            </md-input-container>
+                        </div>
+                        <div class="col-xs-12 col-md-3">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Year</label>
+                                <!--<input mdc-datetime-picker="" class="date-icon" date="true" time="false" type="text" id="dateFrom" format="{{dateFormat}}"
+                                       min-date="date" name="k3.declarationHeaderK3.SecurityYear"
+                                       ng-required="k3.declarationHeaderK3.ReferenceNo != '' && k3.declarationHeaderK3.ReferenceNo != null"
+                                       ng-model="k3.declarationHeaderK3.SecurityYear">-->
+                                <input type="text" name="k3.declarationHeaderK3.SecurityYear"
+                                       ng-model="k3.declarationHeaderK3.SecurityYear"
+                                       ng-maxlength="4" logicon-limit logicon-number />
+                            </md-input-container>
+
+                        </div>
+
+                        <div class="col-xs-12 col-md-3">
+                            <!--<md-input-container class="md-block" flex-gt-sm>
+                                <label>Station</label>
+
+                                <input type="text" name="k3.declarationHeaderK3.Station"
+                                       ng-model="k3.declarationHeaderK3.Station"
+                                       ng-maxlength="40"
+                                       logicon-limit
+                                       class="form-control input-sm" />
+                            </md-input-container>-->
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Station</label>
+                                <md-select ng-model="k3.declarationHeaderK3.Station" name="k3.declarationHeaderK3.Station">
+                                    <md-option md-option-empty></md-option>
+                                    <md-option ng-repeat="item in lookUpData.smkList" ng-value="item.Value">
+                                        {{item.Text}}
+                                    </md-option>
+                                </md-select>
+                            </md-input-container>
+                        </div>
+                        <div class="col-xs-12 col-md-3">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Amount</label>
+                                <input type="text"
+                                       name="HeaderK3Amount"
+                                       id="HeaderK3Amount"
+                                       ng-model="k3.declarationHeaderK3.Amount"
+                                       logicon-format2="7"
+                                       ng-pattern="'^[0-9]{0,7}.?[0-9]{0,7}$'"
+                                       class="form-control input-sm" />
+                            </md-input-container>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="containerInfo">
+            <div class="card" ng-if="!isConventionalCargo">
+                <div class="lv-header-alt clearfix m-b-5">
+                    <h2 class="lvh-label">Container Info.</h2> <div class="text-right m-r-10 pull-right"><button class="btn btn-primary" type="button" ng-click="editConInfo(-1)" has-Right data-rightValue="DeclarationK3.AddContainer"><i class="fa fa-plus"></i>&nbsp;Add</button></div>
+                    <span class="fileinput fileinput-new pull-right" data-provides="fileinput" has-Right data-rightValue="DeclarationK3.UploadContainer">
+                        <span class="btn btn-primary btn-file m-r-10">
+                            <span class="fileinput-new"> <i class="fa fa-upload" aria-hidden="true"></i> Upload File</span>
+                            <span class="fileinput-exists">Change</span>
+                            <input type="file"
+                                   id="containerFile"
+                                   name="containerFile"
+                                   onchange="angular.element(this).scope().ContainerFileUpload(this)">
+                        </span>
+                        <span class="fileinput-filename"></span>
+                        <a href="#" class="close fileinput-exists" data-dismiss="fileinput">&times;</a>
+                    </span>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="card-body card-padding p-t-5 p-b-5">
+                    <div class="row">
+                        <div class="col-md-12 ">
+                            <div class="row chart-width ">
+                                <div class="col-xs-3 ">
+                                    <div class="mini-charts-item bgm-cyan">
+                                        <div class="clearfix">
+                                            <div class="chart stats-bar" data-sparkline-bar=""><canvas width="63" height="45" style="display: inline-block; width: 83px; height: 45px; vertical-align: top;"></canvas></div>
+                                            <div class="count">
+                                                <small>Total 20 footer</small>
+                                                <h2>{{(k3.declarationContainerK3 | filter : {Size: 20}).length}}</h2>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-3">
+                                    <div class="mini-charts-item bgm-lightgreen">
+                                        <div class="clearfix">
+                                            <div class="chart stats-line" data-sparkline-line=""><canvas width="83" height="45" style="display: inline-block; width: 83px; height: 45px; vertical-align: top;"></canvas></div>
+                                            <div class="count">
+                                                <small>Total 40 footer</small>
+                                                <h2>{{(k3.declarationContainerK3 | filter : {Size: 40}).length}}</h2>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-3">
+                                    <div class="mini-charts-item bgm-orange">
+                                        <div class="clearfix">
+                                            <div class="chart stats-pie" data-sparkline-pie="">
+                                                <canvas width="83" height="45" style="display: inline-block; width: 83px; height: 45px; vertical-align: top;"></canvas>
+                                            </div>
+                                            <div class="count">
+                                                <small>Total 45 footer</small>
+                                                <h2>{{(k3.declarationContainerK3 | filter : {Size: 45}).length}}</h2>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-3">
+                                    <div class="mini-charts-item bgm-blue">
+                                        <div class="clearfix">
+                                            <div class="chart stats-bar" data-sparkline-bar=""><canvas width="83" height="45" style="display: inline-block; width: 83px; height: 45px; vertical-align: top;"></canvas></div>
+                                            <div class="count">
+                                                <small>No. Of Containers</small>
+                                                <h2>{{k3.declarationContainerK3.length}}</h2>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="table-responsive">
+                                <table class="table  table-vmiddle" ng-table="tblK3Container">
+                                    <tr ng-repeat="item in $data">
+                                        <td data-title="'Item No'" class="no">{{K3ContainerIndex+($index + 1)}}</td>
+                                        <td data-title="'Container No.'">{{item.ContainerNo}}</td>
+                                        <td data-title="'Size'">{{(lookUpData.sizeList|filter:{Value:item.Size})[0].Text}}</td>
+                                        <td data-title="'Type'">{{item.Type}}</td>
+                                        <td data-title="'Container Type'">{{(lookUpData.jobTypeList | filter : {Value:item.EQDStatus})[0].Text}}</td>
+                                        <td data-title="'Status'">{{(lookUpData.containerStatusList | filter : {Value:item.ContainerStatus})[0].Text}}</td>
+                                        <td data-title="'#Action'" class="action">
+                                            <button class="btn bgm-lightgreen waves-effect"
+                                                    type="button"
+                                                    ng-click="editConInfo(K3ContainerIndex+($index))" has-Right data-rightValue="DeclarationK3.UpdateContainer"
+                                                    aria-label="button" uib-tooltip="Edit" tooltip-placement="top">
+                                                <i class="zmdi zmdi-edit"></i>
+                                            </button>
+                                            <button class="btn bgm-teal waves-effect"
+                                                    type="button"
+                                                    ng-click="CopyContainer(item)" has-Right data-rightValue="DeclarationK3.CopyContainer"
+                                                    uib-tooltip="Copy" tooltip-placement="top">
+
+                                                <i class="zmdi zmdi-refresh"></i>
+                                            </button>
+                                            <button class="btn btn-danger waves-effect"
+                                                    type="button"
+                                                    ng-click="deleteContainer(K3ContainerIndex+($index))" has-Right data-rightValue="DeclarationK3.DeleteContainer"
+                                                    aria-label="button" uib-tooltip="Delete" tooltip-placement="top">
+                                                <i class="zmdi zmdi-delete"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--<div id="containerInfo">
+            <div class="card">
+                <div class="lv-header-alt clearfix m-b-5">
+                    <h3 class="lvh-label">Container Info.</h3>
+                </div>
+                <div class="card-body card-padding p-t-25 p-b-25">
+                    <div class="row ">
+                        <div class="col-xs-12">
+                            <div class="text-right m-b-10"><button class="btn btn-primary" type="button" ng-click="editConInfo(-1)"><i class="fa fa-plus"></i>&nbsp;Add</button></div>
+                        </div>
+                    </div>
+                    <div class="row ">
+                        <div class="col-xs-12">
+                            <table class="table  table-vmiddle">
+                                <thead class="thCss">
+                                    <tr>
+
+                                        <th>Select</th>
+                                        <th>Container No.</th>
+                                        <th>Size</th>
+                                        <th>Type</th>
+                                        <th>Container Type</th>
+                                        <th>Status</th>
+                                        <th>Marks & Numbers</th>
+                                        <th>#Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="item in k3.declarationContainerK3">
+
+                                        <td>{{$index + 1}}</td>
+                                        <td>{{item.ContainerNo}}</td>
+                                        <td>{{(lookUpData.sizeList|filter:{Value:item.Size})[0].Text}}</td>
+                                        <td>{{item.Type}}</td>
+                                        <td>{{(lookUpData.jobTypeList | filter : {Value:item.EQDStatus})[0].Text}}</td>
+                                        <td>{{(lookUpData.containerStatusList | filter : {Value:item.ContainerStatus})[0].Text}}</td>
+                                        <td style="width:15%">{{item.MarksNos}}</td>
+                                        <td>
+                                            <button class="btn bgm-lightgreen waves-effect"
+                                                    type="button"
+                                                    ng-click="editConInfo($index)"
+                                                    aria-label="button" uib-tooltip="Edit" tooltip-placement="top">
+                                                <i class="zmdi zmdi-edit"></i>
+                                            </button>
+                                            <button class="btn bgm-teal waves-effect"
+                                                    type="button"
+                                                    uib-tooltip="Copy" tooltip-placement="top">
+                                                <i class="zmdi zmdi-refresh"></i>
+                                            </button>
+                                            <button class="btn btn-danger waves-effect"
+                                                    type="button"
+                                                    ng-disabled="item.BranchID != null"
+                                                    ng-click="deleteContainer($index)"
+                                                    aria-label="button" uib-tooltip="Delete" tooltip-placement="top">
+                                                <i class="zmdi zmdi-delete"></i>
+                                            </button>
+
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>-->
+
+        <div id="itemEntries">
+            <div class="card">
+                <div class="lv-header-alt clearfix m-b-5">
+                    <h3 class="lvh-label">ITEM ENTRY</h3>
+
+                    <div class="text-right pull-right m-r-10" ng-if="showAddBtn"><button type="button" ng-click="editItem(-1);" has-Right data-rightValue="DeclarationK3.AddItem" class="btn btn-primary"><i class="fa fa-plus"></i>&nbsp;Add</button></div>
+                    <span class="fileinput fileinput-new pull-right" data-provides="fileinput" has-Right data-rightValue="DeclarationK3.UploadItem">
+                        <span class="btn btn-primary btn-file m-r-10">
+                            <span class="fileinput-new"> <i class="fa fa-upload" aria-hidden="true"></i> Upload File</span>
+                            <span class="fileinput-exists">Change</span>
+                            <input type="file"
+                                   id="cargoFile"
+                                   name="cargoFile"
+                                   onchange="angular.element(this).scope().CargoFileUpload(this)">
+                        </span>
+                        <span class="fileinput-filename"></span>
+                        <a href="#" class="close fileinput-exists" data-dismiss="fileinput">&times;</a>
+                    </span>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="card-body card-padding p-t-25 p-b-25">
+                    <div class="row">
+                        <div class="col-xs-12 ">
+                            <div class="row chart-width ">
+                                <div class="col-xs-2 ">
+                                    <div class="mini-charts-item bgm-cyan">
+                                        <div class="clearfix">
+                                            <div class="chart stats-bar" data-sparkline-bar=""><canvas width="63" height="45" style="display: inline-block; width: 83px; height: 45px; vertical-align: top;"></canvas></div>
+                                            <div class="count">
+                                                <small>Total Invoice Value</small>
+                                                <h2>{{k3.declarationItemK3 | sumOfValue:'ItemAmount' | currency: ''}}</h2>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--<div class="col-xs-2">
+                                    <div class="mini-charts-item bgm-lightgreen">
+                                        <div class="clearfix">
+                                            <div class="chart stats-line" data-sparkline-line=""><canvas width="83" height="45" style="display: inline-block; width: 83px; height: 45px; vertical-align: top;"></canvas></div>
+                                            <div class="count">
+                                                <small>Total Duty Payable</small>
+                                                <h2>{{k3.declarationItemK3 | sumOfValue:'TotalDutyPayable' | currency: ''}}</h2>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-2">
+                                    <div class="mini-charts-item bgm-orange">
+                                        <div class="clearfix">
+                                            <div class="chart stats-pie" data-sparkline-pie="">
+                                                <canvas width="83" height="45" style="display: inline-block; width: 83px; height: 45px; vertical-align: top;"></canvas>
+                                            </div>
+                                            <div class="count">
+                                                <small>Total GST Payable</small>
+                                                <h2>{{k3.declarationItemK3 | sumOfValue:'TotalGSTPayable' | currency: ''}}</h2>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>-->
+                                <div class="col-xs-2">
+                                    <div class="mini-charts-item bgm-blue">
+                                        <div class="clearfix">
+                                            <div class="chart stats-bar" data-sparkline-bar=""><canvas width="83" height="45" style="display: inline-block; width: 83px; height: 45px; vertical-align: top;"></canvas></div>
+                                            <div class="count">
+                                                <small>No. Of Items</small>
+                                                <h2>{{k3.declarationItemK3.length}}</h2>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-2">
+                                    <div class="mini-charts-item bgm-pink">
+                                        <div class="clearfix">
+                                            <div class="chart stats-pie" data-sparkline-pie=""><canvas width="83" height="45" style="display: inline-block; width: 83px; height: 45px; vertical-align: top;"></canvas></div>
+                                            <div class="count">
+                                                <small>Total In Local Currency</small>
+                                                <h2>{{k3.declarationItemK3 | sumOfValue:'TotalUnitLocalAmount' | currency: ''}}</h2>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row ">
+                        <div class="col-xs-12">
+                            <table class="table  table-vmiddle" ng-table="tblK3Items">
+                                <tr ng-repeat="item in $data">
+                                    <td data-title="'Item No'" class="no">
+                                        {{ itemEntryIndex + ($index + 1) }}
+                                    </td>
+                                    <td data-title="'Product Code'">{{item.ProductCode}}</td>
+                                    <td data-title="'Origin'">{{item.OriginCountryCode}}</td>
+                                    <td data-title="'HS Code'">
+                                        {{ item.HSCode }}
+                                    </td>
+                                    <td data-title="'Declared Qty'">
+                                        {{ item.DeclaredQty }}
+                                    </td>
+                                    <td data-title="'Declared UOM'">
+                                        {{ item.DeclaredUOM }}
+                                    </td>
+                                    <td data-title="'Item Amount'">{{item.ItemAmount}}</td>
+                                    <td data-title="'Unit Price'">
+                                        {{ item.UnitLocalAmount | currency: '' }}
+                                    </td>
+                                    <td data-title="'Total In MYR'">
+                                        {{ item.TotalUnitLocalAmount | currency: '' }}
+                                    </td>
+                                    <!--<td data-title="'Description'">{{item.ItemDescription1}}</td>-->
+
+
+                                    <td data-title="'Action'" class="action">
+                                        <button class="btn bgm-lightgreen waves-effect"
+                                                type="button"
+                                                ng-click="editItem($index)" has-Right data-rightValue="DeclarationK3.UpdateItem"
+                                                aria-label="button" uib-tooltip="Edit" tooltip-placement="top">
+                                            <i class="zmdi zmdi-edit"></i>
+                                        </button>
+                                        <button class="btn bgm-teal waves-effect"
+                                                type="button"
+                                                ng-click="CopyItemEntry(item)" has-Right data-rightValue="DeclarationK3.CopyItem"
+                                                uib-tooltip="Copy" tooltip-placement="top">
+                                            <i class="zmdi zmdi-refresh"></i>
+                                        </button>
+                                        <button class="btn btn-danger waves-effect"
+                                                type="button"
+                                                ng-click="deleteItem($index)" has-Right data-rightValue="DeclarationK3.DeleteItem"
+                                                aria-label="button" uib-tooltip="Delete" tooltip-placement="top">
+                                            <i class="zmdi zmdi-delete"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="documents">
+            <div class="card">
+                <div class="lv-header-alt clearfix m-b-5">
+                    <h3 class="lvh-label">Supporting Documents</h3><div class="text-right m-r-10 pull-right"><button type="button" ng-click="editDocument(-1);" has-Right data-rightValue="DeclarationK3.UploadDocument" class="btn btn-primary"><i class="fa fa-plus"></i>&nbsp;Add</button></div> <div class="clearfix"></div>
+
+                </div>
+                <div class="card-body card-padding p-t-25 p-b-25">
+
+                    <div class="row ">
+                        <div class="col-xs-12">
+                            <table class="table  table-vmiddle" ng-table="tblK3Documents">
+                                <!--<thead class="thCss">
+                                    <tr>
+                                        <th>Select</th>
+                                        <th>Code</th>
+                                        <th>Reference No.</th>
+                                        <th>Custom Station</th>
+                                        <th>Date Type</th>
+                                        <th>Doc. Date</th>
+                                        <th>#Action</th>
+
+                                    </tr>
+                                </thead>-->
+                                <tr ng-repeat="item in $data">
+
+                                    <td data-title="'Item No'" class="no">{{$index + 1}}</td>
+                                    <td data-title="'Code'">{{(lookUpData.SupportingDocumentTypeList | filter : {Value:item.SupportingDocumentType})[0].Text}}</td>
+                                    <td data-title="'Reference No.'">
+                                        {{item.ReferenceNo}}
+                                    </td>
+                                    <td data-title="'Custom Station'">
+                                        {{(lookUpData.smkList | filter : {Value:item.CustomStationCode})[0].Text}}
+                                    </td>
+                                    <td data-title="'Date Type'">{{(lookUpData.docDateTypeList | filter : { Value:item.DocDateType })[0].Text}}</td>
+
+                                    <td data-title="'Doc. Date'">
+                                        <!--{{ item.DocDate | date:'shortDate' }}-->
+                                        {{formatDate(item.DocDate)}}
+                                    </td>
+                                    <td data-title="'#Action'" class="action">
+                                        <button class="btn bgm-lightgreen waves-effect"
+                                                type="button"
+                                                ng-click="editDocument($index)" has-Right data-rightValue="DeclarationK3.ViewDocument"
+                                                aria-label="button" uib-tooltip="Edit" tooltip-placement="top">
+                                            <i class="zmdi zmdi-edit"></i>
+                                        </button>
+
+                                        <button class="btn btn-danger waves-effect"
+                                                type="button"
+                                                ng-click="deleteDocument($index)" has-Right data-rightValue="DeclarationK3.DeleteDocument"
+                                                aria-label="button" uib-tooltip="Delete" tooltip-placement="top">
+                                            <i class="zmdi zmdi-delete"></i>
+                                        </button>
+
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="responses">
+            <div class="card" ng-if="customresponses.length>0">
+                <div class="lv-header-alt clearfix m-b-5">
+                    <h3 class="lvh-label">Responses</h3>
+                </div>
+                <div class="card-body card-padding p-t-25 p-b-25">
+                    <div class="row ">
+                        <div class="col-xs-12">
+                            <table class="table  table-vmiddle">
+                                <thead>
+                                    <tr>
+                                        <th>Reg No.</th>
+                                        <th>Date</th>
+                                        <th>Time</th>
+                                        <th>Remark</th>
+                                        <th>Code</th>
+                                        <th>SNRF</th>
+                                        <th>Status</th>
+                                        <th>Office ID</th>
+                                        <th>Office Name</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="item in customresponses" ng-click="DisplayResponseData(item)" style="cursor:pointer;">
+                                        <td> {{item.RegistrationNo}}</td>
+                                        <td>{{item.RegistrationDate | date : 'dd/MM/yyyy'}}</td> <!--| date : 'dd/MM/yyyy'-->
+                                        <td>{{(item.RegistrationNo != null && item.RegistrationNo != '' ? '': (item.RegistrationDate | date : 'hh:mm a'))}}</td>
+                                        <td>{{item.Remark}}</td>
+                                        <td>{{item.Code}}</td>
+                                        <td>{{item.SNRF}}</td>
+                                        <td>{{item.Status}}</td>
+                                        <td>{{item.OfficerID}}</td>
+                                        <td>{{item.OfficeName}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-md-6 border-row-right">
+
+                            <h3 class="lvh-label">Customs Registration Details</h3>
+
+
+                            <div class="row">
+                                <div class="col-xs-12 ">
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>Registration No.</label>
+
+                                        <input type="text"
+                                               ng-model="customresponseheaderItem.RegistrationNo" readonly="readonly" />
+                                    </md-input-container>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12 col-md-7">
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>Registration Date</label>
+                                        <input mdc-datetime-picker="" date="true" time="false" type="text" id="dateFrom" format="{{dateFormat}}" class="date-icon"
+                                               min-date="date" ng-model="customresponseheaderItem.RegistrationDate" name="customresponseheaderItem.RegistrationDate" ng-disabled="true">
+                                    </md-input-container>
+
+                                </div>
+                                <div class="col-xs-12 col-md-5" ng-if="customresponseheaderItem.RegistrationNo==null || customresponseheaderItem.RegistrationNo==''">
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>Time</label>
+                                        <input mdc-datetime-picker="" date="true" time="true" type="text" id="dateFrom" format="{{timeFormat}}" class="date-icon"
+                                               ng-model="customresponseheaderItem.RegistrationDate" ng-disabled="true">
+                                    </md-input-container>
+                                </div>
+                                <div class="col-xs-12 col-md-5" ng-if="customresponseheaderItem.RegistrationNo!=null && customresponseheaderItem.RegistrationNo!=''">
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>Time</label>
+                                        <input mdc-datetime-picker="" date="true" time="true" type="text" id="dateFrom" class="date-icon"
+                                               ng-model="time" ng-disabled="true">
+                                    </md-input-container>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12 col-md-4">
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>Total Duty Amount(MYR)</label>
+
+                                        <input type="text" readonly="readonly" ng-model="dutyAmountlist.TotalDutyPayable" logicon-format="2" />
+                                    </md-input-container>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12 col-md-4">
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>Total GST Amount(MYR)</label>
+
+                                        <input type="text" readonly="readonly" ng-model="dutyAmountlist.TotalGSTPayable" logicon-format="2" />
+                                    </md-input-container>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12 col-md-4">
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label class="control-label pull-right text-nowrap">Total Duty Amount Amended(MYR)</label>
+
+                                        <input type="text" readonly="readonly" />
+                                    </md-input-container>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-xs-12 col-md-6">
+
+                            <h3 class="lvh-label">Response(s) from Declaration and Customs</h3>
+
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <table class="table table-vmiddle">
+                                        <thead>
+                                            <tr>
+                                                <th>Code</th>
+                                                <th>Description</th>
+                                                <th>Line No.</th>
+                                                <th>SNRF</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="item in customresponseheaderItem.customResponseDetails">
+                                                <td>{{item.Code}}</td>
+                                                <td>{{item.Description}}</td>
+                                                <td>{{item.ItemLine}}</td>
+                                                <td>{{customresponseheaderItem.SNRF}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="row border-row-top p-t-25">
+                        <div class="col-xs-12">
+                            <h2 class="lvh-label">Amended Declaration Details</h2>
+                            <div class="table-responsive">
+                                <table class="table table-vmiddle">
+                                    <thead>
+                                        <tr>
+                                            <th>Code</th>
+                                            <th>HS Original</th>
+                                            <th>HS Amended</th>
+                                            <th>Unit Price Original</th>
+                                            <th>Unit Price Amended</th>
+                                            <th>Item No.</th>
+                                            <th>SNRF</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="item in ammendantsResponse">
+                                            <td>{{item.Code}}</td>
+                                            <td>{{item.OldHSCode}}</td>
+                                            <td>{{item.NewHSCode}}</td>
+                                            <td>{{item.OldUnitPrice}}</td>
+                                            <td>{{item.NewUnitPrice}}</td>
+                                            <td>{{item.ItemNo}}</td>
+                                            <td>{{item.SNRF}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card" ng-if="ediResponse.length>0">
+            <div class="lv-header-alt clearfix m-b-5">
+                <h2 class="lvh-label">EDI Status Response</h2>
+            </div>
+            <div class="card-body card-padding p-t-5 p-b-5 m-t-15">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="table-responsive">
+                            <table class="table  table-vmiddle no-table-nowrap">
+                                <thead>
+                                    <tr>
+                                        <th>Message Type</th>
+                                        <th>EDI Send Date</th>
+                                        <th>File Name</th>
+                                        <th>Error Message</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="item in ediResponse">
+                                        <td>{{item.MessageType}}</td>
+                                        <td>{{formatDate(item.EDIDateTime)}}</td>
+                                        <td>{{item.FileName}}</td>
+                                        <td>{{item.ErrorMessage}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--<div class="card" ng-if="declarationOrderStatus.length > 0">
+            <div class="lv-header-alt clearfix m-b-5">
+                <h2 class="lvh-label">Agent Status</h2>
+            </div>
+            <div class="card-body card-padding p-t-5 p-b-5 m-t-15">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="table-responsive">
+                            <table class="table  table-vmiddle">
+                                <thead>
+                                    <tr>
+                                        <th>Forwarding Agent</th>
+                                        <th>Declaration No</th>
+                                        <th>Date</th>
+                                        <th>Time</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="item in declarationOrderStatus">
+                                        <td>{{item.FwdAgent}}</td>
+                                        <td>{{item.DeclarationNo}}</td>
+                                        <td>{{item.DeclinedOn| date : 'dd/MM/yyyy'}}</td>
+                                        <td>{{item.DeclinedOn| date : 'hh:mm'}}</td>
+                                        <td>
+                                            <div class="all-status" ng-switch="item.Status | lowercase">
+                                                <h5 ng-switch-when="declaration generated"> <span>JOB SENT TO AGENT</span></h5>
+                                                <h5 ng-switch-default><span>{{item.Status}}</span></h5>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>-->
+        <div class="card">
+            <div class="card-body card-padding p-t-25 p-b-25">
+                <div class="row ">
+                    <div class="col-xs-12">
+                        <button type="button" class="btn bgm-bluegray pull-left m-r-5" ng-click="Savek3DeclarationPartial(k3)" has-Right data-rightValue="DeclarationK3.DeclarationK3" data-accessRight="2"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Save Declaration</button>
+                        <button class="btn btn-primary pull-left m-r-5" type="submit" ng-click="submitted = true;" has-Right data-rightValue="DeclarationK3.DeclarationK3" data-accessRight="2"><i class="fa fa-check-circle" aria-hidden="true"></i>&nbsp;Validate Declaration</button>
+                        <button class="btn btn-success pull-left m-r-5" type="button" ng-if="IsDeclarationValidated" ng-click="GenerateFile(k3,k3.declarationHeaderK3.DeclarationNo)" has-Right data-rightValue="DeclarationK3.SubmitDeclaration"><i class="fa fa-cogs" aria-hidden="true"></i>&nbsp;Send to Customs</button>
+                        <!--<span class="pull-left">&nbsp;</span>-->
+                        <span class="pull-left  m-r-5">
+                            <div class="btn-group" ng-if="IsDeclarationValidated" has-Right data-rightValue="DeclarationK3.Print">
+                                <div class="btn-group" uib-dropdown>
+                                    <button type="button" class="btn btn-primary" uib-dropdown-toggle>
+                                        <i class="fa fa-print" aria-hidden="true"></i>&nbsp;Print
+                                        <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li><a class="cursorCss" ng-click="GenerateReportPDF('A4')" href="#">&nbsp;K3 A4</a></li>
+                                        <li><a class="cursorCss" ng-click="GenerateReportPDF('PDF')" href="#">&nbsp;K3 Pdf</a></li>
+                                        <li><a class="cursorCss" ng-click="GenerateReport('K3 Chit','DNeX.DeclarationK3Chit','ViewReportK1')" href="#">&nbsp;K3 Chit</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <!--<button type="button" class="btn bgm-bluegray" ng-click="DeclineDeclaration(k3.declarationHeaderK3.DeclarationNo,k3.declarationHeaderK3.OrderNo)"><i class="fa fa-floppy-o" aria-hidden="true">DECLINE</i>&nbsp;</button>-->
+                        </span>
+                        <span class="pull-right">
+                            <!--<button class="btn btn-default" type="button" ng-click="submitted = true;"><i class="fa fa-eraser" aria-hidden="true"></i>&nbsp;Clear</button>-->
+                            <button class="btn btn-default" type="button" ng-click="clear();">
+                                <i class="fa fa-eraser" aria-hidden="true"></i>&nbsp;Clear
+                            </button>
+                            <button class="btn btn-primary" type="button" data-ui-sref="k3Inquiry" data-ng-click="mactrl.sidebarStat($event)">
+                                <i class="fa fa-backward" aria-hidden="true"></i>&nbsp;Back
+                            </button>
+                        </span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12" style="margin-top:10px; font-size:12px;">
+                        FOB: {{k3.declarationInvoiceK3.FOBAmount}} CIF: {{k3.declarationInvoiceK3.CIFAmount}} EXW: {{k3.declarationInvoiceK3.EXWAmount}} CNF: {{k3.declarationInvoiceK3.CNFAmount}} CNI: {{k3.declarationInvoiceK3.CNIAmount}} Freight: {{k3.declarationInvoiceK3.FreightAmount}} insurance: {{k3.declarationInvoiceK3.InsuranceAmount}} CIFC: {{k3.declarationInvoiceK3.CIFCAmount}}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--<div class="overlay" style="opacity:0.8;" ng-show="showLoading">
+            <i class="fa fa-refresh fa-spin"></i>
+        </div>-->
+
+    </form>
+    <div id="feedback">
+        <div class="feedback-links">
+
+            <button style="display:block;" type="button" class="btn btn-default btn-block waves-effect" ng-click="navigateTo('iFrameMaininner')"> <i class="fa fa-clone f-12" aria-hidden="true"></i>  Header Information</button>
+            <button style="display:block;" type="button" class="btn btn-default btn-block waves-effect" ng-click="navigateTo('invoiceDetails')"> <i class="fa fa-bar-chart f-12" aria-hidden="true"></i> Invoice Details</button>
+            <button style="display:block;" type="button" class="btn btn-default btn-block waves-effect" ng-click="navigateTo('chargesInfo')"> <i class="fa fa-list-alt f-12" aria-hidden="true"></i> Charges Information</button>
+            <button style="display:block;" type="button" class="btn btn-default btn-block waves-effect" ng-click="navigateTo('shipmentDetails')"> <i class="fa fa-list-alt f-12" aria-hidden="true"></i> Shipment Details</button>
+            <button style="display:block;" type="button" class="btn btn-default btn-block waves-effect" ng-click="navigateTo('securityDetails')"> <i class="fa fa-key f-12" aria-hidden="true"></i> Security Details</button>
+            <!--<button style="display:block;" type="button" class="btn btn-default btn-block waves-effect" ng-click="navigateTo('tradingPartner')"> <i class="fa fa-street-view f-12" aria-hidden="true"></i> Trading Partner</button>-->
+
+            <button ng-if="!isConventionalCargo" style="display:block;" type="button" class="btn btn-default btn-block waves-effect" ng-click="navigateTo('containerInfo')"> <i class="fa fa-th-large f-12" aria-hidden="true"></i> Container Information</button>
+
+            <button style="display:block;" type="button" class="btn btn-default btn-block waves-effect" ng-click="navigateTo('itemEntries')"> <i class="fa fa-server f-12" aria-hidden="true"></i>  Item Entry</button>
+            <button style="display:block;" type="button" class="btn btn-default btn-block waves-effect" ng-click="navigateTo('documents')"> <i class="fa fa-file-word-o f-12" aria-hidden="true"></i>  Supporting Documents</button>
+
+            <button ng-if="customresponses.length>0" style="display:block;" type="button" class="btn btn-default btn-block waves-effect" ng-click="navigateTo('responses')"><i class="fa fa-envelope-o" aria-hidden="true"></i> Responses</button>
+
+
+        </div>
+        <a class="pull_feedback" style="display:block; font-size:18px;cursor:pointer;" ng-click="toggleFeedback()"><i class="zmdi zmdi-settings"></i></a>
+    </div>
+</div>

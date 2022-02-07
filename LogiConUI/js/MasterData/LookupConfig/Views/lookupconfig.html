@@ -1,0 +1,41 @@
+﻿<div class="container"> <!--ng-controller="LookupConfigController"-->
+    <div class="card">
+        <div class="lv-header-alt clearfix m-b-5">
+            <h3 class="lvh-label">Other Profiles</h3>
+        </div>
+        <div class="card-body card-padding p-t-25 p-b-25">
+            <div class="row">
+                <div class="col-xs-6 col-md-3">
+                    <div class="card">
+                        <div class="lv-header-alt clearfix m-b-5">
+                            <h3 class="lvh-label">Common Tables</h3>
+                        </div>
+                        <div class="card-body card-padding p-t-25 p-b-25" style="max-height: 500px;overflow-y:auto;min-height:500px;">
+                            <treecontrol class="tree-light" tree-model="treedata" expanded-nodes="expandedNodes" on-selection="showSelected(node)">
+                                {{node.label}}
+                            </treecontrol>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-md-9">
+                    <div class="row">
+                       
+                        <div class="col-xs-6 col-md-6">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Search By Country Code</label>
+
+                                <input type="text" ng-model=""/>
+                                </md-input-container>
+</div>
+                        <div class="col-xs-12 col-md-6">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <input type="text" />
+                                </md-input-container>
+</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

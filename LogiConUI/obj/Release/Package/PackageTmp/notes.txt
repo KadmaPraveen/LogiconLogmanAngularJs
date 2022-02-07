@@ -1,0 +1,115 @@
+﻿$scope.refresh = function () {
+    $state.transitionTo($state.current, $stateParams, {
+        reload: true,
+        inherit: false,
+        notify: true
+    });
+}
+
+$state.go('ClaimantList', { reload: true });
+
+Select S.name + '.' + O.name as procedurename, O.create_date, O.modify_date From sys.objects as O
+inner join Sys.schemas as S
+On O.schema_id = S.schema_id
+Where Type = 'p' order by O.create_date desc;
+
+table table-vmiddle
+
+http://plnkr.co/edit/bgUG0vbQ3nwuZXfiS71W?p=preview
+
+detecting browsers
+https://stackoverflow.com/questions/9847580/how-to-detect-safari-chrome-ie-firefox-and-opera-browser
+
+
+Update [Master].[CustomCurrencyRate] Set EndDate = '2017-12-31 00:00:00.000' Where EndDate >= '2017-05-16 00:00:00.000'
+
+k1 - import
+k2 - export
+k8 - export (place to place within the country - no DUTY)
+k9 - import/export
+k3 - import
+
+ImportDuty
+
+0 - 0101290000 - NO DUTY
+1 - 0101210000 - DUTY BY AD VALOREM
+2 - 0804300000 - DUTY BY SPECIFIC
+3 - 4808902000 - DUTY BY WHICH EVER IS HIGHER
+4 - 0803100000 - DUTY BY BOTH
+5 - 0103910000 - DUTY BY QUOTA
+6 - 2206002000 - DUTY BY VOLUME PER LITER
+
+ImportExciseDuty
+
+0 - 0101210000 - NO DUTY
+1 - 8703214200 - DUTY BY AD VALOREM
+2 - 2402100000 - DUTY BY SPECIFIC
+3 -            - DUTY BY WHICH EVER IS HIGHER
+4 - 2207201100 - DUTY BY BOTH
+5 -            - DUTY BY QUOTA
+6 - 2203001100 - DUTY BY VOLUME PER LITER
+
+https://stackoverflow.com/questions/26752030/rootscope-broadcast-vs-scope-emit
+https://stackoverflow.com/questions/16709373/angularjs-how-to-call-controller-function-from-outside-of-controller-component
+
+TabsCtrl: app.main.js
+iframeController: app.routes.js
+materialadminCtrl: main.js NEW_TAB_REQUEST
+
+yyMMddHHmm
+
+$scope.frmk3.GrossWeight.$$runValidators($scope.frmk3.GrossWeight.$modalValue, $scope.frmk3.GrossWeight.$viewValue, function () {
+    //$scope.k3.declarationInvoiceK3.GrossWeight = $scope.frmk3.GrossWeight.$viewValue.replace(/[^\d|\-+|\.+]/g, '');
+    //$scope.frmk3.GrossWeight.$viewValue = $scope.frmk3.GrossWeight.$viewValue.replace(/[^\d|\-+|\.+]/g, '');
+    $scope.frmk3.GrossWeight.$setViewValue($scope.frmk3.GrossWeight.$viewValue.replace(/[^\d|\-+|\.+]/g, ''));
+});
+
+chandra@dagangnet.com
+@123Abcd
+1009
+
+james@dagangnet.com
+0LiT4y99$
+1003
+
+CHANDRA@DNEX.COM.MY
+@123aBCD
+
+Select * From Config.Lookup Where LookupCategory like '%SupportingDocumentType%' and LookupCode = 'TEN'
+
+Select * From Config.Lookup Where LookupCategory = 'ExcemptionType'
+
+Select * From Config.Lookup Where Lookupid = 10307
+
+insert into Config.Lookup(LookupID, LookupCode, LookupDescription, LookupCategory, Status, ISOCode, MappingCode, CreatedBy, CreatedOn, ModifiedBy, ModifiedOn)
+						Values(25837, 'MRA', 'Mutual Recognition Arrangement', 'SupportingDocumentType', 1, '', '', 'ADMIN', GETDATE(), 'ADMIN', GETDATE())
+
+http://localhost:8080/index.html#/emailverification/566EEF37-E739-4418-A7E0-5044C2B3E14D
+[Operation].[usp_DeleteRegistrationInfo]
+[Root].[usp_UpdateCompanyRegistrationStatus]
+
+	MERCHANT BRANCH
+	REGNO    REGNO
+	TAXID    GSTNO
+
+[Operation].[usp_GenerateCostSheet]
+[Billing].[usp_LoadQuotation]
+[Billing].[usp_ProcessMerchantQuotation]
+[Billing].[usp_ProcessStandardQuotation]
+
+.no-table-dots td {
+    white-space:normal;
+}
+button           button-class      button-icon                                                position
+clear            btn-default       <i class="fa fa-eraser" aria-hidden="true"></i>            right (first) 
+save             btn-primary       <i class="fa fa-floppy-o" aria-hidden="true"></i>          left (first)
+Validate         btn-primary       <i class="fa fa-check-circle-o" aria-hidden="true"></i>    after save left
+submit           success
+next             btn-primary       <i class="fa fa-forward" aria-hidden="true"></i>           right
+update           btn-success       <i class="fa fa-refresh" aria-hidden="true"></i>           left
+validate order   btn-primary       <i class="fa fa-check-circle-o" aria-hidden="true"></i>    left 
+save order       bgm-bluegray      <i class="fa fa-floppy-o" aria-hidden="true"></i>          left
+delete           btn-danger        <i class="fa fa-trash-o" aria-hidden="true"></i>           left
+Reject           btn-danger        <i class="fa fa-times-circle-o" aria-hidden="true"></i>    left
+Accept           btn-success       <i class="fa fa-check-square-o" aria-hidden="true"></i>    left
+generate         bgm-orange        <i class="fa fa-cogs" aria-hidden="true"></i>              left

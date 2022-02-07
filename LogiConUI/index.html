@@ -1,0 +1,354 @@
+﻿<!DOCTYPE html>
+<html data-ng-app="LogiConMain" data-ng-controller="materialadminCtrl as mactrl">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>1Trade.Exchange</title>
+    <!-- Vendor CSS -->
+    <link href="fonts/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="vendors/bower_components/animate.css/animate.min.css" rel="stylesheet">
+    <link href="vendors/bower_components/material-design-iconic-font/dist/css/material-design-iconic-font.min.css" rel="stylesheet">
+    <link href="vendors/bower_components/bootstrap-sweetalert/lib/sweet-alert.css" rel="stylesheet">
+    <link href="vendors/bower_components/angular-loading-bar/src/loading-bar.css" rel="stylesheet">
+    <link href="vendors/bower_components/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.min.css" rel="stylesheet">
+    <link href="css/angular-material.min.css" rel="stylesheet" />
+    <link href="css/material-datetimepicker.css" rel="stylesheet" />
+    <link href="css/tree-control.css" rel="stylesheet" />
+    <link href="css/angular-bootstrap-calendar.min.css" rel="stylesheet" />
+    <link href="css/ng-tags-input.min.css" rel="stylesheet" />
+    <script src="vendors/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="vendors/fileinput/fileinput.js"></script>
+    <script type="text/javascript">
+        var version;
+        function WriteCss() {
+            var d = new Date();
+            version = $.now();
+            document.write('<link href=\"css/app.min.1.css?v=' + version + '\" rel=\"stylesheet\" id=\"app-level\">');
+            document.write('<link href=\"css/app.min.2.css?v=' + version + '\" rel=\"stylesheet\" />');
+            document.write('<link href=\"css/demo.css?v=' + version + '\" rel=\"stylesheet\" />');
+            document.write('<link href=\"css/style.css?v=' + version + '\" rel=\"stylesheet\" />');
+            document.write('<link href=\"css/responsive.css?v=' + version + '\" rel=\"stylesheet\" />');
+        }
+        WriteCss();
+    </script>    
+    <style type="text/css">
+        .table-striped > tbody > tr:nth-of-type(2n+1) {
+            background-color: transparent;
+        }
+        .poweredlogodiv {
+        padding-right:0px !important;
+        }
+    </style>
+    <link href="css/tabstyles.scss" rel="stylesheet/scss" type="text/css" />
+    <style class="cp-pen-styles">
+        .tab-container {
+            background: rgb(189,189,189);
+            margin: 0;
+            padding: 0;
+            max-height: 40px;
+            position:relative;
+            top:41px;
+        }
+
+            .tab-container ul.nav-tabs {
+                margin: 0;
+                list-style-type: none;
+                line-height: 40px;
+                max-height: 40px;
+                overflow: hidden;
+                display: inline-block;
+                display: -webkit-flex;
+                display: flex;
+                padding-right: 20px;
+                border-bottom: 5px solid #f7f7f7;
+            }
+
+                .tab-container ul.nav-tabs > li {
+                    margin: 5px -14px 0;
+                    -moz-border-radius-topleft: 28px 145px;
+                    -webkit-border-top-left-radius: 28px 145px;
+                    border-top-left-radius: 28px 145px;
+                    -moz-border-radius-topright: 28px 145px;
+                    -webkit-border-top-right-radius: 28px 145px;
+                    border-top-right-radius: 28px 145px;
+                    padding: 0 30px 0 25px;
+                    height: 170px;
+                    background: #c3d5e6;
+                    position: relative;
+                    -moz-box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+                    -webkit-box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+                    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+                    width: 200px;
+                    max-width: 200px;
+                    min-width: 20px;
+                    border: 1px solid #aaa;
+                }
+
+                    .tab-container ul.nav-tabs > li:first-child {
+                        margin-left: 0;
+                    }
+
+                    .tab-container ul.nav-tabs > li:last-of-type {
+                        margin-right: 0;
+                    }
+        
+                    #content {
+                        padding:0px;
+        }
+                    .tab-container ul.nav-tabs > li > a {
+                        display: block;
+                        max-width: 100%;
+                        text-decoration: none;
+                        color: #222;
+                        padding: 5px 7px;
+                    }
+
+                        .tab-container ul.nav-tabs > li > a span {
+                            overflow: hidden;
+                            white-space: nowrap;
+                            display: block;
+                        }
+
+                        .tab-container ul.nav-tabs > li > a:focus, .tab-container ul.nav-tabs > li > a:hover {
+                            background-color: transparent;
+                            border-color: transparent;
+                        }
+
+                        .tab-container ul.nav-tabs > li > a .glyphicon-remove {
+                            color: #777;
+                            display: inline-block;
+                            padding: 3px;
+                            font-size: 10px;
+                            position: absolute;
+                            z-index: 10;
+                            top: 7px;
+                            right: -10px;
+                            -moz-border-radius: 50%;
+                            -webkit-border-radius: 50%;
+                            border-radius: 50%;
+                        }
+
+                            .tab-container ul.nav-tabs > li > a .glyphicon-remove:hover {
+                                background: #d39ea3;
+                                color: white;
+                                -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.25);
+                                -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.25);
+                                box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.25);
+                                text-shadow: 0 1px 1px rgba(0, 0, 0, 0.25);
+                            }
+
+                    .tab-container ul.nav-tabs > li.active {
+                        z-index: 2;
+                        background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjAuNSIgeTE9IjAuMCIgeDI9IjAuNSIgeTI9IjEuMCI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI2Y3ZjdmNyIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JhZCkiIC8+PC9zdmc+IA==');
+                        background-size: 100%;
+                        background-image: -webkit-gradient(linear, 50% 0%, 50% 30, color-stop(0%, #ffffff), color-stop(100%, #f7f7f7));
+                        background-image: -moz-linear-gradient(#ffffff, #f7f7f7 30px);
+                        background-image: -webkit-linear-gradient(#ffffff, #f7f7f7 30px);
+                        background-image: linear-gradient(#ffffff, #f7f7f7 30px);
+                    }
+
+                        .tab-container ul.nav-tabs > li.active > a {
+                            background-color: transparent;
+                            border-color: transparent;
+                            border-bottom-color: transparent;
+                        }
+
+                            .tab-container ul.nav-tabs > li.active > a:focus, .tab-container ul.nav-tabs > li.active > a:hover {
+                                background-color: transparent;
+                                border-color: transparent;
+                                border-bottom-color: transparent;
+                            }
+
+                .tab-container ul.nav-tabs .btn {
+                    float: left;
+                    height: 20px;
+                    width: 35px;
+                    min-width: 35px;
+                    max-width: 35px;
+                    margin: 10px 0 0 0;
+                    border-color: #71a0c9;
+                    outline: none;
+                    -moz-transform: skew(30deg);
+                    -ms-transform: skew(30deg);
+                    -webkit-transform: skew(30deg);
+                    transform: skew(30deg);
+                }
+
+                    .tab-container ul.nav-tabs .btn.btn-default {
+                        background: #c3d5e6;
+                    }
+
+                        .tab-container ul.nav-tabs .btn.btn-default:hover {
+                            background: #d2deeb;
+                        }
+
+                        .tab-container ul.nav-tabs .btn.btn-default:active {
+                            background: #9cb5cc;
+                        }
+
+        /*.tab-container .tab-pane {
+                padding: 60px 40px;
+                text-align: center;
+            } .tab-container .tab-pane.active {
+                border-top: 1px solid #ddd;
+            }#content .tab-content {
+            padding: 5px 0;
+        } #main {
+            padding-top: 37px;
+        }#iFrameMain data .container {
+        }
+        */
+
+        [ui-view="workspaceEditorContent"] : nth-child(2) {
+            display: none;
+        }
+        /*#main{position:relative;top:41px;}*/
+    </style>
+</head>
+
+<body data-ng-class="{ 'sw-toggled': mactrl.layoutType === '1'}" autocomplete="off" prevent-right-click>
+    <header id="header" class="headerCntrlCss" data-current-skin={{mactrl.currentSkin}} data-ng-include="headerUrl" data-ng-controller="headerCtrl as hctrl"></header>
+    <div id="main">
+   
+        <div ng-if="companyType == 'OTHER'">
+            <aside id="sidebar" data-ng-include="sideMenuOtherUrl" data-ng-class="{ 'toggled': mactrl.sidebarToggle.left === true }"></aside>
+
+        </div>
+        <div ng-if="companyType == 'OWNER'">
+            <aside id="sidebar" data-ng-include="sideMenuAdminUrl" data-ng-class="{ 'toggled': mactrl.sidebarToggle.left === true }"></aside>
+        </div>
+        <div id="content"  >
+            <data ui-view></data>
+            
+        </div>
+       
+    </div>
+ 
+  
+    <!-- Core -->
+    
+    <!-- Angular -->
+
+    <script src="Scripts/angular/angular.js"></script>
+    <script src="Scripts/angular-animate/angular-animate.js"></script>
+    <script src="Scripts/angular-aria/angular-aria.js"></script>
+    <script src="Scripts/angular-material/angular-material.js"></script>
+    <script src="Scripts/angular-material-datetimepicker.js"></script>
+    <script src="vendors/bower_components/angular-resource/angular-resource.min.js"></script>
+
+    <!-- Angular Modules -->
+    <script src="vendors/bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+    <script src="vendors/bower_components/angular-loading-bar/src/loading-bar.js"></script>
+    <script src="vendors/bower_components/oclazyload/dist/ocLazyLoad.js"></script>
+    <script src="old/Scripts/ui-bootstrap-tpls-1.3.2.js"></script>
+    <!-- Common Vendors -->
+    <script src="vendors/bower_components/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js"></script>
+    <script src="vendors/bower_components/bootstrap-sweetalert/lib/sweet-alert.min.js"></script>
+    <script src="vendors/bower_components/Waves/dist/waves.min.js"></script>
+    <script src="vendors/bootstrap-growl/bootstrap-growl.min.js"></script>
+    <script src="vendors/bower_components/flot/jquery.flot.js"></script>
+    <script src="vendors/bower_components/flot.curvedlines/curvedLines.js"></script>
+    <script src="vendors/bower_components/flot/jquery.flot.resize.js"></script>
+    <script src="vendors/bower_components/moment/min/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment-with-locales.min.js"></script>
+    
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/jszip.js"></script>
+
+    <script src="vendors/bower_components/fullcalendar/dist/fullcalendar.min.js"></script>
+    <script src="vendors/bower_components/flot-orderBars/js/jquery.flot.orderBars.js"></script>
+    <script src="vendors/bower_components/flot/jquery.flot.pie.js"></script>
+    <script src="vendors/bower_components/flot.tooltip/js/jquery.flot.tooltip.min.js"></script>
+    <script src="vendors/bower_components/angular-nouislider/src/nouislider.min.js"></script>
+    <script src="Scripts/arrive.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.2.2/js/material.min.js"></script>
+    <script src="Scripts/angular-sanitize.js"></script>
+    <script type="text/javascript" src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/data.js"></script>
+    <script src="Scripts/ng-currency-mask.js"></script>
+    <script src="vendors/sparklines/jquery.sparkline.js"></script>
+    <script src="vendors/bower_components/jquery.easy-pie-chart/dist/easypiechart.js"></script>
+    <script src="vendors/bower_components/jquery.easy-pie-chart/dist/jquery.easypiechart.js"></script>
+    <script src="vendors/bower_components/ng-table/dist/ng-table.js"></script>
+
+    <script type="text/javascript">        
+        function WriteScripts() {
+            document.write('<script src=\"Scripts/app.main.js?v=' + version + '\"><\/script>');
+            document.write('<script src=\"Scripts/app.connection.js?v=' + version + '\"><\/script>');
+            document.write('<script src=\"Scripts/app.common.js?v=' + version + '\"><\/script>');
+            document.write('<script src=\"Scripts/app.main.routes.js?v=' + version + '\"><\/script>');
+            document.write('<script src=\"Scripts/app.utility.js?v=' + version + '\"><\/script>');
+        }
+        WriteScripts();
+    </script>
+    <!--App level--> 
+    <script src="Scripts/datetimepicker.js"></script>
+    <script src="Scripts/dateTimeInput.js"></script>
+    <script src="Scripts/angular-tree-control.js"></script>
+    <script src="Scripts/angular-bootstrap-calendar-tpls.min.js"></script>
+    <script src="Scripts/ng-tags-input.min.js"></script>
+    <script src="Scripts/download2.js"></script>
+    <script src="Scripts/jquery.countdownTimer.min.js"></script>
+    <script src="js/controllers/main.js"></script>
+    <script src="js/services.js"></script>
+    <script src="js/templates.js"></script>
+    <script src="js/controllers/ui-bootstrap.js"></script>
+    <script src="js/controllers/table.js"></script>
+    
+
+    <!-- Template Modules -->
+    <script src="js/modules/template.js"></script>
+    <script src="js/modules/ui.js"></script>
+    <script src="js/modules/charts/flot.js"></script>
+    <script src="js/modules/charts/other-charts.js"></script>
+    <script src="js/modules/form.js"></script>
+    <script src="js/modules/media.js"></script>
+    <script src="js/modules/components.js"></script>
+    <script src="js/modules/calendar.js"></script>    
+    <!--<script type="text/javascript">
+        $(function () {
+            if (window.history && window.history.pushState) {
+                window.history.pushState('', null, './');
+                $(window).on('popstate', function () {
+                    // alert('Back button was pressed.');
+                    document.location.href = '#';
+
+                });
+            }
+        });
+    </script>-->
+    <script type="text/javascript">
+
+        $(function () {
+            $('body').css({ height: $(window).innerHeight() });
+            $(window).resize(function () {
+                $('body').css({ height: $(window).innerHeight() });
+            });
+        });
+
+        function MainModuleFunction(obj, state, title) {   
+            debugger;
+            var scope = angular.element($('.TabsCtrlCss')).scope();
+            sessionStorage.setItem('ROUTE_PARAMS', JSON.stringify(obj));
+            scope.$apply(function () {
+                scope.addTab({
+                    Title: title,
+                    State: state
+                });
+            });
+        };
+
+        $("div").prependTo($(".table-responsive .ng-table"));
+        
+        //(function ($) {
+        //    $(window).on("load", function () {
+        //        $(".content").mCustomScrollbar({
+        //            axis: "yx" // vertical and horizontal scrollbar
+        //        });
+        //    });
+
+        //})(jQuery);
+    </script>
+</body>
+</html>
+

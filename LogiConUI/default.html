@@ -1,0 +1,197 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <title>1Trade.Exchange</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="old/Css/font-awesome-4.6.2/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="old/Css/bootstrap.min.css" rel="stylesheet" />
+    <link href="old/Css/AdminLTE.min.css" rel="stylesheet" />
+    <link href="old/Css/angular-growl.css" rel="stylesheet" />
+    <link href="old/Css/loginpage.css" rel="stylesheet" />
+    <script src="old/Scripts/jquery-2.2.4.min.js"></script>
+    <script src="old/Scripts/bootstrap.min.js"></script>
+    <script src="old/Scripts/angular.js"></script>
+    <script src="old/Scripts/angular-growl.js"></script>
+    <style type="text/css">
+        .box.box-solid.box-default {
+            border: 0px solid #d2d6de;
+        }
+
+        .box {
+            position: relative;
+            border-radius: 0px;
+            background: #ffffff;
+            border-top: 3px solid #d2d6de;
+            margin-bottom: 20px;
+            width: 100%;
+            box-shadow: 0 0px 0px rgba(0,0,0,0.1);
+        }
+
+        .submitted .ng-invalid {
+            border: 1px solid red;
+        }
+    </style>
+</head>
+<body ng-app="LogiCon">
+    <div growl limit-messages="3"></div>
+    <div class="main-container" ng-controller="LoginCntrl as Cntrl">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="left-container col-xs-2 col-sm-4 col-md-6 col-lg-7">
+
+                </div>
+                <div class="right-container  col-xs-10 col-sm-8 col-md-6 col-lg-5" style="position:relative; ">
+
+
+
+
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div style="padding-left:15px;padding-right:15px; width:90%;" ng-include="'Js/Default/Templates/body.html?v=' + version"></div>
+                        </div>
+                    </div>
+                    <!--hidepk-->
+                    <!--<footer class="">
+                        <div ng-include="'Js/Default/Templates/footer.html?v=' + version"></div>
+                    </footer>-->
+
+                    <div class="overlay" style="opacity:0.8;" ng-show="showLoading">
+                        <i class="fa fa-refresh fa-spin"></i>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        var version;
+        var d = new Date();
+        version = $.now();
+        var app = angular.module('LogiCon', ['angular-growl']);
+        angular.forEach(sessionStorage, function (value, key) {
+            sessionStorage.removeItem(key);
+        });
+        document.write('<script src=\"Scripts/app.connection.js?v=' + version + '\"><\/script>');
+    </script>
+    <script type="text/javascript">
+        app.config(function (growlProvider, $sceProvider) {
+            $sceProvider.enabled(false);
+
+            growlProvider.onlyUniqueMessages(false);
+            growlProvider.globalTimeToLive(4000);
+            growlProvider.globalDisableIcons(false);
+            growlProvider.globalDisableCountDown(true);
+        });
+
+        app.service('RegistrationService', ['$http', '$q', 'Utility', function ($http, $q, Utility) {
+            this.Login = function (obj) {
+                var deferred = $q.defer();
+                $http.post(Utility.ServiceUrl + '/root/registration/login', JSON.stringify(obj)).then(function (res) {
+                    deferred.resolve(res);
+                }, function (err) {
+                    deferred.reject(err);
+                });
+                return deferred.promise;
+            };
+        }]);
+
+        app.service('LayoutService', ['$http', '$q', 'Utility', function ($http, $q, Utility) {
+            this.GetUserRights = function (UserID) {
+                debugger
+                var deferred = $q.defer();
+                $http.get(Utility.ServiceUrl + '/security/securables/userrights/' + UserID + '/').then(function (res) {
+                    deferred.resolve(res);
+                }, function (err) {
+                    deferred.reject(err);
+                });
+                return deferred.promise;
+            };
+        }]);
+
+        app.controller('LoginCntrl', ['$scope', 'RegistrationService', 'LayoutService', 'growl', '$location', 'Utility', '$timeout', '$window', function ($scope, RegistrationService, LayoutService, growl, $location, Utility, $timeout, $window) {
+            $scope.forceSSL = function () {
+                if ($location.protocol() !== 'https' &&
+                    $location.$$host != 'localhost' &&
+                    $location.$$host != 'ragsarma-001-site18.htempurl.com' &&
+                    $location.$$host != 'uat.1trade.exchange') {
+                    $window.location.href = $location.absUrl().replace('http', 'https');
+                }
+            };
+
+            $scope.version = $.now();
+            $scope.log = {};
+
+            $scope.appVersion = Utility.appVersion;
+
+            $scope.isFrmLoginValid = false;
+            $scope.$watch('Cntrl.frmLogin.$valid', function (isValid) {
+                $scope.isFrmLoginValid = isValid;
+            });
+            $scope.buttonResendOTPEnabled = false;
+            $scope.Login = function (log) {
+                if ($scope.isFrmLoginValid) {
+                    $scope.showLoading = true;
+                    RegistrationService.Login(log).then(function (d) {
+                        $scope.showLoading = false;
+                        sessionStorage.removeItem('SsnRegUserID');
+                        if (!angular.isUndefined(d.data.USERID)) {
+                            if (d.data.IS_AUTHENTICATE) {
+
+                                growl.success(d.data.Message, {});
+                                sessionStorage.setItem('IS_AUTHENTICATE', d.data.IS_AUTHENTICATE);
+                                sessionStorage.setItem('COMPANYTYPE', d.data.COMPANYTYPE);
+                                sessionStorage.setItem('USERID', d.data.USERID);
+                                sessionStorage.setItem('COMPANYID', d.data.COMPANYID);
+                                sessionStorage.setItem('BRANCHID', d.data.BRANCHID);
+                                sessionStorage.setItem('USERNAME', d.data.USERNAME);
+                                sessionStorage.setItem('USERDESIGNATION', d.data.USERDESIGNATION);
+                                sessionStorage.setItem('LOGO', d.data.LOGO);
+                                sessionStorage.setItem('COMPANYSUBSCRIPTIONLIST', JSON.stringify(d.data.COMPANYSUBSCRIPTIONLIST));
+                                sessionStorage.setItem('SECURABLES', JSON.stringify(d.data.Securables));
+                                sessionStorage.setItem('AUTHTOKEN', d.data.AUTHTOKEN);
+                                LayoutService.GetUserRights(d.data.USERID).then(function (res) {
+                                    location.href = 'index.html?v=' + version;
+                                    //location.href = 'iframe.html';
+                                    sessionStorage.setItem('SsnUserRights', JSON.stringify(res.data));
+                                }, function (err) { });
+                            } else {
+                                growl.success(d.data.Message, {});
+                                location.href = 'index.html?v=' + version + '#/registration';
+
+                                sessionStorage.setItem('SsnRegUserID', d.data.USERID);
+                                sessionStorage.setItem('SsnRegUserName', log.Email);
+                                $timeout(function () {
+                                    $scope.buttonResendOTPEnabled = true;
+                                }, 5000);
+                            }
+                        } else {
+                            if (!angular.isUndefined(d.data.Message))
+                                growl.warning(d.data.Message, {});
+                            else
+                                growl.warning(d.data, { ttl: 20000 });
+                        }
+                        $scope.showLoading = false;
+                    }, function (err) { });
+                } else {
+                    growl.error('Please enter all mandatory fields', {});
+                }
+            };
+
+            $scope.forceSSL();
+        }]);
+
+        $(function () {
+            $('.right-container').css({ height: $(window).innerHeight() });
+            $(window).resize(function () {
+                $('.right-container').css({ height: $(window).innerHeight() });
+            });
+            $('.left-container').css({ height: $(window).innerHeight() });
+            $(window).resize(function () {
+                $('.left-container').css({ height: $(window).innerHeight() });
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,97 @@
+﻿<div class="row" >
+    <div class="col-xs-12 col-md-6">
+        <div class="row" >
+            <div class="col-xs-6 col-md-3">
+                <label>No. Of Package</label>
+            </div>
+            <div class="col-xs-12 col-md-9">
+                <input type="text" class="form-control input-sm" ng-model="oe.orderText.NoOfpacks" ng-required="true" />
+            </div>
+        </div>
+        <div class="row" >
+            <div class="col-xs-6 col-md-3">
+                <label>Cargo Class</label>
+            </div>
+            <div class="col-xs-6 col-md-3">
+                <select class="form-control input-sm" 
+                        ng-model="oe.orderText.CargoClass"
+                        ng-required="true"
+                        ng-options="s.Value as s.Text for s in lookupData.cargoClassList"></select>
+            </div>            
+        </div>
+        <div class="row" >
+            <div class="col-xs-6 col-md-3">
+                <label>Total M3</label>
+            </div>
+            <div class="col-xs-6 col-md-3">
+                <input type="text" class="form-control input-sm" ng-model="oe.orderText.TotalM3" ng-required="true" />
+            </div>
+        </div>
+        <div class="row" >
+            <div class="col-xs-6 col-md-3">
+                <label>Total KG</label>
+            </div>
+            <div class="col-xs-6 col-md-3">
+                <input type="text" class="form-control input-sm" ng-model="oe.orderText.TotalMT" ng-required="true" />
+            </div>
+            <div class="col-md-2 center-block">                
+                <div class="btn-group" uib-dropdown is-open="status.cargoGenerate">                    
+                    <md-button class="md-fab md-mini-1 md-primary btn-box-tool" uib-tooltip="Generate" uib-dropdown-toggle aria-label="button">
+                        <i class="fa fa-cogs" aria-hidden="true"></i>
+                    </md-button>
+                    <ul class="dropdown-menu" style="margin:2px -127px 0" uib-dropdown-menu role="menu" aria-labelledby="single-button">
+                        <li role="menuitem"><a ng-click="generate(true, true)">All</a></li>
+                        <li role="menuitem"><a ng-click="CloneCargo(true, false)">Marks</a></li>
+                        <li role="menuitem"><a ng-click="CloneCargo(false, true)">Cargo Desc</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>        
+    </div>
+    <div class="col-xs-12 col-md-6">
+        <div class="row" > 
+            <div class="col-xs-12 col-md-6">
+                <label>Shipper Invoice</label>
+                <textarea class="form-control input-sm" ng-model="oe.orderText.ShipperInvoice"></textarea>
+            </div>
+            <div class="col-xs-12 col-md-6">
+                <label>PO No.</label>
+                <textarea class="form-control input-sm" ng-model="oe.orderText.PONo"></textarea>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row" >
+    <div class="col-xs-12 col-md-4">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="card">            
+                    <div  class="card-body card-padding p-t-25 p-b-25">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <h5>Marks & Numbers</h5>
+                                <p ng-bind-html="oe.orderText.MarksNumbers"></p>
+                            </div>                            
+                        </div>
+                    </div>                    
+                </div>
+            </div>
+        </div>        
+    </div>
+    <div class="col-md-8">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="card">
+                    <div  class="card-body card-padding p-t-25 p-b-25">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <h5>Cargo Description</h5>
+                                <p ng-bind-html="oe.orderText.CargoDescription"></p>                                
+                            </div>                            
+                        </div>
+                    </div>                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

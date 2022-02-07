@@ -1,0 +1,260 @@
+<style type="text/css">
+    .sidebar-inner ul li a {
+        cursor: pointer;
+    }
+</style>
+<div class="sidebar-inner c-overflow">
+    <ul class="main-menu">
+        <li class="sub-menu" has-module data-module="Trader, Agent, Manifest">
+            <a href="" toggle-submenu><i class="zmdi zmdi-collection-text"></i> Manifest</a>
+            <ul>
+                <li><a href="#">K4 (inward)</a></li>
+                <li><a href="#">K5 (outward)</a></li>
+                <li><a href="#">K6 (transhipment)</a></li>
+            </ul>
+        </li>
+        <li class="sub-menu">
+            <a href="" toggle-submenu><i class="zmdi zmdi-collection-text"></i> Job</a>
+            <ul>
+                <li has-Right data-rightValue="OrderEntry.OrderEntry"><a ng-click="mactrl.sidebarStat($event, 'orderentrylist', 'Order Entry List')">Order Entry</a></li>
+                <li has-Right data-rightValue="VesselMaster"><a ng-click="mactrl.sidebarStat($event, 'vesselprofilelist', 'Vessel Profile List')">Vessel Information</a></li>
+                <li has-Right data-rightValue="VesselSchedule"><a ng-click="mactrl.sidebarStat($event, 'vesselschedule', 'Vessel Schedule')">Vessel Schedule</a></li>
+            </ul>
+        </li>
+        <li class="sub-menu" has-module data-module="Declaration">
+            <a href="" toggle-submenu><i class="zmdi zmdi-collection-text"></i> Declaration</a>
+            <ul>
+                <li has-Right data-rightValue="DeclarationK1.DeclarationK1"><a ng-click="mactrl.sidebarStat($event, 'declarationInquiry', 'Declaration Inquiry')">Declaration Inquiry</a></li>
+                <li has-Right data-rightValue="DeclarationK1.DeclarationK1"><a ng-click="mactrl.sidebarStat($event, 'k1Inquiry', 'k1 Inquiry')">K1</a></li>
+                <li has-Right data-rightValue="DeclarationK2.DeclarationK2"><a ng-click="mactrl.sidebarStat($event, 'k2Inquiry', 'k2 Inquiry')">K2</a></li>
+                <li has-Right data-rightValue="DeclarationK3.DeclarationK3"><a ng-click="mactrl.sidebarStat($event,'k3Inquiry', 'k3 Inquiry')">K3</a></li>
+                <li has-Right data-rightValue="DeclarationK8.DeclarationK8"><a ng-click="mactrl.sidebarStat($event, 'k8Inquiry', 'k8 Inquiry')">K8</a></li>
+                <li has-Right data-rightValue="DeclarationK9.DeclarationK9"><a ng-click="mactrl.sidebarStat($event, 'k9Inquiry', 'k9 Inquiry')">K9</a></li>
+                <li><a ng-click="mactrl.sidebarStat($event, 'k1AInquiry', 'k1A Inquiry')">K1A</a></li>
+            </ul>
+        </li>
+        <li class="sub-menu">
+            <a href="" toggle-submenu><i class="zmdi zmdi-collection-text"></i>Billing</a>
+            <ul>
+                <li>
+                <a ng-click="mactrl.sidebarStat($event, 'costsheetList', 'Cost Sheet List')">Cost Sheet List</a></li>
+                <li><a ng-click="mactrl.sidebarStat($event, 'costsheet', 'Cost Sheet')">Cost Sheet</a></li>
+                <li><a ng-click="mactrl.sidebarStat($event,'unbilledorderslist','Unbilled Orders List')">Unbilled Orders List</a></li>
+                <li><a ng-click="mactrl.sidebarStat($event, 'unbilledorders','Unbilled Orders')">Unbilled Orders</a></li>
+                <!--<li><a href="#">Ad-hoc Charge Verification</a></li>
+                <li><a href="#">Rebates Processing</a></li>-->
+                <li class="divider"></li>
+                <li><a ng-click="mactrl.sidebarStat($event,'customerinvoice','invoice list')">Customer Invoice List</a></li>
+                <li><a ng-click="mactrl.sidebarStat($event,'customercashbilllist','Customer Cash Bill')">Customer Cash Bill List</a></li>
+                <!--<li><a ng-click="mactrl.sidebarStat($event,'customercreditnote','Customer Credit Note')">Customer Credit Note</a></li>-->
+                <li><a ng-click="mactrl.sidebarStat($event,'customercreditnotelist','Customer Credit Note List')">Customer Credit Note List</a></li>
+                <!--<li><a ng-click="mactrl.sidebarStat($event,'customercashbill','Customer Cash Bill')">Customer Cash Bill</a></li>
+               
+                <li><a ng-click="mactrl.sidebarStat($event,'cnsubmission','CN Submission')">Customer Invoice / CN Submission</a></li>
+                <li class="divider"></li>
+                <li><a ng-click="mactrl.sidebarStat($event,'vendorinvoice','Vendor Invoice')">Vendor Invoice</a></li>
+                <li><a ng-click="mactrl.sidebarStat($event,'vendorreversebilling','Vendor Reverse Billing')">Vendor Reverse Billing</a></li>
+                <li><a ng-click="mactrl.sidebarStat($event,'vendorcreditnote','Vendor Credit Note')">Vendor Credit Note</a></li>
+                <li><a ng-click="mactrl.sidebarStat($event,'paymentrequest','Payment Request')">Payment Request</a></li>
+                <li><a href="#">Payment Status Inquiry</a></li>
+                <li class="divider"></li>
+                <li><a href="#">Advance Template</a></li>
+                <li><a ng-click="mactrl.sidebarStat($event,'advanceentry','Advance Entry')">Advance Entry</a></li>
+                <li><a ng-click="mactrl.sidebarStat($event,'advancesettlement','Advance Settlement')">Advance Settlement</a></li>
+                <li><a href="#">Advance Payment Monitoring</a></li>
+                <li class="divider"></li>
+                <li><a ng-click="mactrl.sidebarStat($event,'billcostapproval','Approval')">Approval</a></li>-->
+            </ul>
+        </li>
+        <li class="sub-menu">
+            <a href="" toggle-submenu><i class="zmdi zmdi-collection-text"></i>Inquiries</a>
+            <ul>
+                <li><a data-ui-sref-active="active" data-ui-sref="orderinquiry" data-ng-click="mactrl.sidebarStat($event,'orderinquiry','Order Inquiry')">Order Inquiry</a></li>
+                <li><a href="#">Container Movement Overdue Inquiry</a></li>
+                <li><a data-ui-sref-active="active" data-ui-sref="outstandingmvtsinquiry" data-ng-click="mactrl.sidebarStat($event,'outstandingmvtsinquiry','Outstanding Movements Inquiry')">Outstanding Movements Inquiry</a></li>
+                <li><a data-ui-sref-active="active" data-ui-sref="containercargostatus" data-ng-click="mactrl.sidebarStat($event,'containercargostatus','Container & Cargo Status Inquiry')">Container & Cargo Status Inquiry</a></li>
+                <li class="divider"></li>
+                <li><a href="#">Vendor Rate Inquiry</a></li>
+                <li class="divider"></li>
+                <li><a href="#">Customer History</a></li>
+                <li class="divider"></li>
+                <li><a data-ui-sref-active="active" data-ui-sref="bookinginquiry" data-ng-click="mactrl.sidebarStat($event,'bookinginquiry','Booking Inquiry')">Booking Inquiry</a></li>
+                <li><a href="#">Container Movement Inquiry</a></li>
+                <li><a href="#">EDI Orders Inquiry</a></li>
+                <li class="divider"></li>
+                <li class="sub-menu">
+                    <a href="" toggle-submenu>Monitoring</a>
+                    <ul>
+                        <li><a data-ui-sref-active="active" href="#">Import / Export Container</a></li>
+                        <li><a data-ui-sref-active="active" href="#">Order Hold Status</a></li>
+                        <li><a data-ui-sref-active="active" href="#">Container Hold Status</a></li>
+                        <li><a data-ui-sref-active="active" href="#">Cargo Hold Status</a></li>
+                        <li><a data-ui-sref-active="active" href="#">Expiry Date</a></li>
+                        <li><a data-ui-sref-active="active" href="#">EDI</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+        <li class="sub-menu" has-module data-module="Freight">
+            <a href="" toggle-submenu><i class="zmdi zmdi-collection-text"></i>Freight</a>
+            <ul>
+                <li><a ng-click="mactrl.sidebarStat($event,'containerrequestinquiry','Container Request')">Container Request</a></li>
+                <li><a ng-click="mactrl.sidebarStat($event,'containermonitor','Container Monitoring')">Container Monitoring</a></li>
+                <li><a ng-click="mactrl.sidebarStat($event,'collectionadvice','Collection Advice')">Collection Advice</a></li>
+                <!--<li class="divider"></li>-->
+                <!--<li><a ng-click="mactrl.sidebarStat($event,'transportrequest','Transport Request')">Transport Request</a></li>-->
+                <!--<li><a ng-click="mactrl.sidebarStat($event,'transportmonitor','Transport Monitoring')">Transport Monitoring</a></li>-->
+                <!--<li class="divider"></li>
+                <li><a ng-click="mactrl.sidebarStat($event,'billoflad','Bill Of Lading')">Bill Of Lading</a></li>
+                <li><a ng-click="mactrl.sidebarStat($event,'shippinginstruction','Shipping Instruction')">Shipping Instruction</a></li>
+                <li><a ng-click="mactrl.sidebarStat($event,'shipperinvoice','Shipper Invoice')">Shipper Invoice</a></li>
+                <li><a ng-click="mactrl.sidebarStat($event,'documentation','Documentation')">Documentation</a></li>
+                <li><a ng-click="mactrl.sidebarStat($event,'houseairwaybill','House Air Waybill')">House Air Waybill</a></li>-->
+            </ul>
+        </li>
+        <li class="sub-menu" has-module data-module="Depot">
+            <a href="" toggle-submenu><i class="zmdi zmdi-collection-text"></i>Depot&nbsp;</a>
+            <ul>
+                <li><a ng-click="mactrl.sidebarStat($event,'depotbookingentrylist','Depot Booking Entry')">Depot Booking Entry</a></li>
+                <li><a ng-click="mactrl.sidebarStat($event,'depotgatein','Gate In')">Gate In</a></li>
+                <li><a ng-click="mactrl.sidebarStat($event,'depotgateout','Gate Out')">Gate Out</a></li>
+                <li class="divider"></li>
+                <li><a ng-click="mactrl.sidebarStat($event,'containermaster','Container Master')">Container Master</a></li>
+            </ul>
+        </li>
+        <li class="sub-menu" has-module data-module="Haulage">
+            <a href="" toggle-submenu><i class="zmdi zmdi-collection-text"></i>Haulage</a>
+            <ul>
+                <li><a ng-click="mactrl.sidebarStat($event,'EquipmentPlanning','Equipment Planning')">Equipment Planning</a></li>
+                <li><a ng-click="mactrl.sidebarStat($event,'OperationMonitor','Operation Monitor')">Operation Monitor</a></li>
+                <li><a href="#">Haulage Timeline</a></li>
+                <li><a ng-click="mactrl.sidebarStat($event,'HaulageCollectionAdvice','Collection Advice')">Collection Advice</a></li>
+                <li class="divider"></li>
+                <li><a ng-click="mactrl.sidebarStat($event,'DriverPaymentByVendor','Driver Payment By Vendor')">Driver Payment By Vendor</a></li>
+                <li><a ng-click="mactrl.sidebarStat($event,'DriverPaymentBreakDown','Driver Payment Breakdown')">Driver Payment Breakdown</a></li>
+                <li><a ng-click="mactrl.sidebarStat($event,'DriverPaymentApproval','Driver Payment Approval')">Driver Payment Approval</a></li>
+                <li><a ng-click="mactrl.sidebarStat($event,'EquipmentCostEntry','Equipment Cost Entry')">Equipment Cost Entry</a></li>
+                <li><a ng-click="mactrl.sidebarStat($event,'fuelusage','Fuel Usage')">Fuel Usage</a></li>
+                <li class="divider"></li>
+                <li><a ng-click="mactrl.sidebarStat($event,'PortTimeSlot','Port Time Slot Maintenance')">Port Time Slot Maintenance</a></li>
+                <li><a ng-click="mactrl.sidebarStat($event,'DriverIncentive','Driver Rate Table')">Driver Rate Table</a></li>
+            </ul>
+        </li>
+        <li class="sub-menu" has-module data-module="Transporter">
+            <a href="" toggle-submenu><i class="zmdi zmdi-collection-text"></i>Transport </a>
+            <ul>
+                <li><a ng-click="mactrl.sidebarStat($event,'loadplanning','Load Planning')">Load Planning</a></li>
+                <li><a ng-click="mactrl.sidebarStat($event,'equipmentplanning','Equipment Planning')">Equipment Planning</a></li>
+                <li><a href="#">Operation Monitor</a></li>
+                <li class="divider"></li>
+                <li><a ng-click="mactrl.sidebarStat($event,'driverpaymentvendor','Driver Payment By Vendor')">Driver Payment By Vendor</a></li>
+                <li><a ng-click="mactrl.sidebarStat($event,'driverpaymentbreakdown','Driver Payment Breakdown')">Driver Payment Breakdown</a></li>
+                <li><a ng-click="mactrl.sidebarStat($event,'equipmentcostentry','Equipment Cost Entry')">Equipment Cost Entry</a></li>
+                <li><a ng-click="mactrl.sidebarStat($event,'fuelusage','Fuel Usage')">Fuel Usage</a></li>
+                <li class="divider"></li>
+                <li><a href="#">Activity Update</a></li>
+                <li><a ng-click="mactrl.sidebarStat($event,'','')">Variance Acknowledgement</a></li>
+                <li><a ng-click="mactrl.sidebarStat($event,'','')">Driver Rate Table</a></li>
+            </ul>
+        </li>
+        <li class="sub-menu" has-module data-module="Warehouse">
+            <a href="" toggle-submenu><i class="zmdi zmdi-collection-text"></i>WMS </a>
+            <ul>
+                <li><a href="#">Tally In</a></li>
+                <li><a href="#">Tally In Approval</a></li>
+                <li><a href="#">Put Away</a></li>
+                <li class="divider"></li>
+                <li><a href="#">Wave Planning</a></li>
+                <li><a href="#">Shipping Instruction</a></li>
+                <li><a href="#">Picking Task</a></li>
+                <li><a href="#">Tally Out</a></li>
+                <li><a href="#">Tally Out Approval</a></li>
+                <li><a href="#">Load Manifest</a></li>
+                <li class="divider"></li>
+                <li><a href="#">Work Order</a></li>
+                <li><a href="#">Stock Adjustment</a></li>
+                <li><a href="#">Cycle Count</a></li>
+                <li><a href="#">Cargo Details Correction</a></li>
+                <li><a href="#">Opening Balance</a></li>
+                <li class="divider"></li>
+                <li><a href="#">WMS Product Inquiry</a></li>
+                <li><a href="#">WMS Cargo Tracking</a></li>
+                <li><a href="#">Location Status</a></li>
+                <li><a href="#">Warehouse Map</a></li>
+                <li><a href="#">WMS Monitoring</a></li>
+                <li><a href="#">WMS Pallet Inquiry</a></li>
+            </ul>
+        </li>
+        <li class="sub-menu" has-module data-module="Cfs">
+            <a href="" toggle-submenu><i class="zmdi zmdi-collection-text"></i>CFS </a>
+            <ul>
+                <li><a href="#">Tally In</a></li>
+                <li><a href="#">Tally In Approval</a></li>
+                <li class="divider"></li>
+                <li><a href="#">Shipping Instruction</a></li>
+                <li><a href="#">Tally Out</a></li>
+                <li><a href="#">Tally Out Approval</a></li>
+                <li class="divider"></li>
+                <li><a href="#">Work Order</a></li>
+                <li><a href="#">Cycle Count</a></li>
+                <li><a href="#">Cargo Details Correction</a></li>
+                <li class="divider"></li>
+                <li><a href="#">CFS Product Inquiry</a></li>
+                <li><a href="#">CFS Map</a></li>
+                <li><a href="#">CFS Monitoring</a></li>
+            </ul>
+        </li>
+        <li class="sub-menu" has-module data-module="Port">
+            <a href="" toggle-submenu><i class="zmdi zmdi-collection-text"></i>Port</a>
+            <ul>
+                <li has-Right data-rightValue="Booking.Booking"><a ng-click="mactrl.sidebarStat($event,'bookingentrylist','Booking Entry')">Booking Entry</a></li>
+                <li has-Right data-rightValue="GateIN.GateIN"><a ng-click="mactrl.sidebarStat($event,'gatein','Gate In')">Gate In</a></li>
+                <li has-Right data-rightValue="GateOUT.GateOUT"><a ng-click="mactrl.sidebarStat($event,'gateout','Gate Out')">Gate Out</a></li>
+            </ul>
+        </li>
+        <li class="sub-menu">
+            <a href="" toggle-submenu><i class="zmdi zmdi-collection-text"></i>Administration </a>
+            <ul>
+                <li><a ng-click="mactrl.sidebarStat($event,'company','Company Profile')">Company Profile</a></li>
+                <li><a ng-click="mactrl.sidebarStat($event,'merchantlist','Merchant Profile')">Merchant Profile</a></li>
+                <li><a ng-click="mactrl.sidebarStat($event,'userlist','Users')">Users</a></li>
+                <li class="divider"></li>
+                <li><a ng-click="mactrl.sidebarStat($event,'CompanyBilling','Company Billing')">Company Billing</a></li>
+                <li><a ng-click="mactrl.sidebarStat($event,'DeclarantList','Declarant')">Declarant</a></li>
+                <li><a ng-click="mactrl.sidebarStat($event,'ClaimantList','Claimant')">Claimant</a></li>
+                <li><a ng-click="mactrl.sidebarStat($event,'Clause',' Declaration Clause')">Declaration Clause</a></li>
+                <!--<li ng-if="IsDefaultBranch"><a ng-click="mactrl.sidebarStat($event,'ActivityMaster',' Activity Master')">Activity Master</a></li>-->
+                <li class="sub-menu">
+                    <a href="" toggle-submenu>Roles & Rights</a>
+                    <ul>
+                        <li><a ng-click="mactrl.sidebarStat($event,'roles','Roles')">Roles</a></li>
+                        <li><a ng-click="mactrl.sidebarStat($event,'rolerights','Role Rights')">Role Rights</a></li>
+                    </ul>
+                </li>
+
+            </ul>
+        </li>
+        <li class="sub-menu">
+            <a href="" toggle-submenu><i class="zmdi zmdi-collection-text"></i>Reports</a>
+            <ul>
+                <li><a ng-click="mactrl.sidebarStat($event,'statutory','Statutory Reports')">Statutory Reports</a></li>
+                <li><a ng-click="mactrl.sidebarStat($event,'operational','Operational Reports')">Operational Reports</a></li>
+                <li><a ng-click="mactrl.sidebarStat($event,'management','Management Reports')">Management Reports</a></li>
+            </ul>
+        </li>
+        <li class="sub-menu">
+            <a href="" toggle-submenu><i class="zmdi zmdi-collection-text"></i>1Stat</a>
+            <ul>
+                <li><a ng-click="mactrl.sidebarStat($event,'report','BI')">BI</a></li>
+            </ul>
+        </li>
+        <li class="sub-menu">
+            <a href="" toggle-submenu><i class="zmdi zmdi-collection-text"></i>Sales</a>
+            <ul>
+                <li><a ng-click="mactrl.sidebarStat($event,'standardquotationlist','Standard Quotation')">Standard Rate Profile</a></li>
+                <li><a ng-click="mactrl.sidebarStat($event,'customerquotationlist','Merchant Quotation')">Merchant Quotation</a></li>
+                <li><a ng-click="mactrl.sidebarStat($event,'vendorquotationlist','Vendor Quotation')">Vendor Quotation</a></li>
+            </ul>
+        </li>
+    </ul>
+</div>
